@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/></meta>
+        <title>LogIn</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+        <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"></link>
+    </head>
+    <body>
+          <br>          
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Ingrese sus Credenciales</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-inline" role="form" method="post">
+                                {% csrf_token %}
+                                <div>
+                                	{% for error in form.non_field_errors %}
+                                		<p>{{ error|safe }}</p>
+                                	{% endfor %}
+                                </div>
+                                <div class="form-group">
+                                    <label>Usuario:</label>
+                                    <input type="text" name="username" class="form-control" placeholder="Usuario">
+                                    {% if form.username.errors%}
+                                    	<label class="help-block">
+                                    		<span class="glyphicon glyphicon-info-sign">{{ form.username.errors }}</span>
+                                    	</label>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label>Contraseña:</label>
+                                    <input type="password" name="password" class="form-control" placeholder="Contraseña">
+                                    {% if form.password.errors%}
+                                    	<label class="help-block">
+                                    		<span class="help-block"></span>
+                                    		<span class="glyphicon glyphicon-info-sign">{{ form.password.errors }}</span>
+                                    	</label>
+                                    {% endif %}                                    
+                                </div>                                    
+                                <button class="btn btn-lg btn-success btn-block" type="submit" name="login" value="Iniciar" />Login</button>                             
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</html>
