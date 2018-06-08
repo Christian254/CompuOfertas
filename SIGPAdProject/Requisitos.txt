@@ -1,0 +1,3 @@
+Python 2.7
+Django 1.11
+Todavia no ponemos el conector de MySQL por facilidad de eliminar y actualizar la BD de Sqlite.

@@ -1,0 +1,97 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{% block META %}
+		
+	{% endblock META %}
+
+	<title>
+		{% block Titulo %}
+			SIGPAd
+		{% endblock Titulo %}
+	</title>
+
+	<!-- Archivos CSS -->
+
+	<!--===============================================================================================-->	
+		<link rel="icon" type="image/png" href="{% static "exterior/images/icons/favicon.ico" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/bootstrap/css/bootstrap.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/animate/animate.css" %}">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/css-hamburgers/hamburgers.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/animsition/css/animsition.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/select2/select2.min.css" %}">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/daterangepicker/daterangepicker.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/util.css" %}">
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/main.css" %}">
+	<!--===============================================================================================-->
+
+	{% block CSS %}
+
+	{% endblock CSS %}
+
+</head>
+<body>
+
+	<!--Menú de navegación-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<ul class="nav navbar-nav pull-xs-left">
+    		<a class="navbar-brand">SIGPAd</a>
+    	</ul>
+    	<ul class="nav navbar-nav pull-xs-right">
+		    		<li class="nav-item">
+		        		<a class="nav-link" href="{% url 'SIGPAd:Index' %}">Foro</a>
+		    		</li>
+		    <li class="nav-item">
+		        <a class="nav-link" href="{% url 'SIGPAd:LogIn' %}">LogIn</a>
+		    </li>
+		    <li class="nav-item">
+		        <a class="nav-link" href="{% url 'SIGPAd:RegistrarCliente' %}">Registrarse (Clientes)</a>
+		    </li>
+		</ul>
+  	</nav>
+
+  	{% block Body %}
+
+  	{% endblock Body%}
+</body>
+
+	<!-- Archivos JavaScript, JQuery, etc -->
+
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/jquery/jquery-3.2.1.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/animsition/js/animsition.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/bootstrap/js/popper.js" %}"></script>
+		<script src="{% static "exterior/vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/select2/select2.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/daterangepicker/moment.min.js" %}"></script>
+		<script src="{% static "exterior/vendor/daterangepicker/daterangepicker.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/countdowntime/countdowntime.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/js/main.js" %}"></script>
+
+	{% block JavaScript %}
+
+	{% endblock JavaScript %}
+
+</html>

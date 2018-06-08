@@ -1,0 +1,50 @@
+{% extends "baseExterior.html" %}
+{% load staticfiles %}
+
+	{% block CSS %}
+		<style type="text/css">
+			.login100-form-title{
+				background-image: url( '/static/exterior/images/bg-01.jpg' );
+			}
+		</style>
+	{% endblock CSS %}
+
+
+	{% block Body %}
+		<div class="limiter">
+			<div class="container-login100">
+				<div class="wrap-login100">
+					<div class="login100-form-title">
+						<span class="login100-form-title-1">
+							SIGN IN
+						</span>
+					</div>
+
+					<form class="login100-form validate-form" action="" method="POST">
+
+						{% csrf_token %} 
+
+						<div class="wrap-input100 validate-input m-b-26" data-validate="Usuario es campo requerido.">
+							<span class="label-input100">Usuario </span>
+							<input class="input100" type="text" placeholder="Ingresa Usuario" id="usr" name="usr">
+							<span class="focus-input100"></span>
+						</div>
+
+						<div class="wrap-input100 validate-input m-b-18" data-validate = "Contraseña es campo requerido.">
+							<span class="label-input100">Contraseña</span>
+							<input class="input100" type="password" placeholder="Ingresa Contraseña" id="pwd" name="pwd">
+							<span class="focus-input100"></span>
+						</div>
+
+						<div class="container-login100-form-btn">
+							<button class="login100-form-btn" type="submit">
+								Login
+							</button>
+						</div>
+
+						{{validar}}
+					</form>
+				</div>
+			</div>
+		</div>
+	{% endblock Body %}
