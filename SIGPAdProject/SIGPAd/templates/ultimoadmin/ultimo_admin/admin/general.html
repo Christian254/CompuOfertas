@@ -1,0 +1,792 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ULTIMO Admin Dashboard Template</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+<link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="css/animate.css" rel="stylesheet" type="text/css" />
+<link href="css/admin.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="light_theme  fixed_header left_nav_fixed">
+<div class="wrapper">
+  <!--\\\\\\\ wrapper Start \\\\\\-->
+  <div class="header_bar">
+    <!--\\\\\\\ header Start \\\\\\-->
+    <div class="brand">
+      <!--\\\\\\\ brand Start \\\\\\-->
+      <div class="logo" style="display:block"><span class="theme_color">ULTIMO</span> Admin</div>
+      <div class="small_logo" style="display:none"><img src="images/s-logo.png" width="50" height="47" alt="s-logo" /> <img src="images/r-logo.png" width="122" height="20" alt="r-logo" /></div>
+    </div>
+    <!--\\\\\\\ brand end \\\\\\-->
+    <div class="header_top_bar">
+      <!--\\\\\\\ header top bar start \\\\\\-->
+      <a href="javascript:void(0);" class="menutoggle"> <i class="fa fa-bars"></i> </a>
+      <div class="top_left">
+        <div class="top_left_menu">
+          <ul>
+            <li> <a href="javascript:void(0);"> <i class="fa fa-repeat"></i> </a> </li>
+            <li> <a href="javascript:void(0);"> <i class="fa fa-th-large"></i> </a> </li>
+          </ul>
+        </div>
+      </div>
+      <a href="javascript:void(0);" class="add_user" data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus-square"></i> <span> New Task</span> </a>
+      <div class="top_right_bar">
+        <div class="top_right">
+          <div class="top_right_menu">
+            <ul>
+              <li class="dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"> Tasks <span class="badge badge">8</span> </a>
+                <ul class="drop_down_task dropdown-menu">
+                  <div class="top_pointer"></div>
+                  <li>
+                    <p class="number">You have 7 pending tasks</p>
+                  </li>
+                  <li> <a href="task.html" class="task">
+                    <div class="green_status task_height" style="width:80%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right green_label">80%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <a href="task.html" class="task">
+                    <div class="yellow_status task_height" style="width:50%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right yellow_label">50%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <a href="task.html" class="task">
+                    <div class="blue_status task_height" style="width:70%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right blue_label">70%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <a href="task.html" class="task">
+                    <div class="red_status task_height" style="width:85%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right red_label">85%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <span class="new"> <a href="task.html" class="pull_left">Create New</a> <a href="task.html" class="pull-right">View All</a> </span> </li>
+                </ul>
+              </li>
+              <li class="dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"> Mail <span class="badge badge color_1">4</span> </a>
+                <ul class="drop_down_task dropdown-menu">
+                  <div class="top_pointer"></div>
+                  <li>
+                    <p class="number">You have 4 mails</p>
+                  </li>
+                      <li> <a href="readmail.html" class="mail"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+                  <li> <a href="readmail.html" class="mail"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+                  <li> <a href="readmail.html" class="mail red_color"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+                  <li> <a href="readmail.html" class="mail"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+              
+                </ul>
+              </li>
+              <li class="dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"> notification <span class="badge badge color_2">6</span> </a>
+                <div class="notification_drop_down dropdown-menu">
+                  <div class="top_pointer"></div>
+                  <div class="box"> <a href="inbox.html"> <span class="block primery_6"> <i class="fa fa-envelope-o"></i> </span> <span class="block_text">Mailbox</span> </a> </div>
+                  <div class="box"> <a href="calendar.html"> <span class="block primery_2"> <i class="fa fa-calendar-o"></i> </span> <span class="block_text">Calendar</span> </a> </div>
+                  <div class="box"> <a href="maps.html"> <span class="block primery_4"> <i class="fa fa-map-marker"></i> </span> <span class="block_text">Map</span> </a> </div>
+                  <div class="box"> <a href="todo.html"> <span class="block primery_3"> <i class="fa fa-plane"></i> </span> <span class="block_text">To-Do</span> </a> </div>
+                  <div class="box"> <a href="task.html"> <span class="block primery_5"> <i class="fa fa-picture-o"></i> </span> <span class="block_text">Tasks</span> </a> </div>
+                  <div class="box"> <a href="timeline.html"> <span class="block primery_1"> <i class="fa fa-clock-o"></i> </span> <span class="block_text">Timeline</span> </a> </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="user_admin dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"><img src="images/user.png" /><span class="user_adminname">John Doe</span> <b class="caret"></b> </a>
+          <ul class="dropdown-menu">
+            <div class="top_pointer"></div>
+            <li> <a href="profile.html"><i class="fa fa-user"></i> Profile</a> </li>
+            <li> <a href="help.html"><i class="fa fa-question-circle"></i> Help</a> </li>
+            <li> <a href="settings.html"><i class="fa fa-cog"></i> Setting </a></li>
+            <li> <a href="login.html"><i class="fa fa-power-off"></i> Logout</a> </li>
+          </ul>
+        </div>
+        <a href="javascript:;" class="toggle-menu menu-right push-body jPushMenuBtn rightbar-switch"><i class="fa fa-comment chat"></i></a>
+      </div>
+    </div>
+    <!--\\\\\\\ header top bar end \\\\\\-->
+  </div>
+  <!--\\\\\\\ header end \\\\\\-->
+  <div class="inner">
+    <!--\\\\\\\ inner start \\\\\\-->
+    <div class="left_nav">
+      <!--\\\\\\\left_nav start \\\\\\-->
+      <div class="search_bar"> <i class="fa fa-search"></i>
+        <input name="" type="text" class="search" placeholder="Search Dashboard..." />
+      </div>
+      <div class="left_nav_slidebar">
+        <ul>
+          <li><a href="javascript:void(0);"><i class="fa fa-home"></i> DASHBOARD <span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="index.html" class="left_nav_sub_active"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Dashboard</b> </a> </li>
+              <li> <a href="settings.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Settings</b> </a> </li>
+              <li> <a href="layouts.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Layouts</b> </a> </li>
+              <li> <a href="themes.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Themes</b> </a> </li>
+              <li> <a href="widgets.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Widgets</b> </a> </li>
+              <li> <a href="animations.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Animations</b> </a> </li>
+            </ul>
+          </li>
+          <li class="left_nav_active theme_border"> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> UI KIT <span class="plus"><i class="fa fa-plus"></i></span></a>
+            <ul class="opened" style="display:block">
+              <li> <a href="typography.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Typography</b> </a> </li>
+              <li> <a href="buttons.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Buttons</b> </a> </li>
+              <li> <a href="icons.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Icons</b> </a> </li>
+              <li> <a href="grid.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Grid</b> </a> </li>
+              
+              <li> <a href="alert.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Alert & Notification</b> </a> </li>
+              <li> <a href="tabs.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Tabs & Accordion</b> </a> </li>
+              <li> <a href="tree.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Tree View</b> </a> </li>
+              <li> <a href="list.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>List Group</b> </a> </li>
+              <li> <a href="portlets.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Portlets</b> </a> </li>
+          <li> <a href="general.html"> <span>&nbsp;</span> <i class="fa fa-circle theme_color"></i> <b  class="theme_color">General</b> </a> </li>
+            </ul>
+          </li>
+          
+          <li> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Forms <span class="plus"><i class="fa fa-plus"></i></span></a>
+            <ul>
+              <li> <a href="components.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Components</b> </a> </li>
+              <li> <a href="validation.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Validation</b> </a> </li>
+              <li> <a href="multi-upload.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Multi-upload</b> </a> </li>
+              <li> <a href="other-forms.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Others</b> </a> </li>
+            </ul>
+          </li>
+          
+          
+          
+          
+          <li> <a href="javascript:void(0);"> <i class="fa fa-users icon"></i> APPS <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="todo.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>To-Do</b> </a> </li>
+              <li> <a href="task.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Task</b> </a> </li>
+              <li> <a href="notes.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Notes</b> </a> </li>
+              <li> <a href="media.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Media Manager</b> </a> </li>
+              <li> <a href="calendar.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Calendar</b> </a> </li>
+              <li> <a href="ticket.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Ticket Support</b> </a> </li>
+              <li> <a href="invoice.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Invoice</b> </a> </li>
+            </ul>
+          </li>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-envelope"></i> EMAIL <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="inbox.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Inbox</b> </a> </li>
+              <li> <a href="compose.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Compose</b> </a> </li>
+              <li> <a href="readmail.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Read Mail</b> </a> </li>
+            </ul>
+          </li>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-folder-open-o"></i> PAGES <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="login.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Login</b> </a> </li>
+              <li> <a href="registration.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Registration</b> </a> </li>
+              <li> <a href="lockscreen.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Lock Screen</b> </a> </li>
+              <li> <a href="blankpage.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Blank Page</b> </a> </li>
+              <li> <a href="404error.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>404 Error</b> </a> </li>
+              <li> <a href="500error.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>500 Error</b> </a> </li>
+              <li> <a href="search.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Search</b> </a> </li>
+              <li> <a href="about.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>About</b> </a> </li>
+              <li> <a href="contact.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Contact</b> </a> </li>
+            </ul>
+          </li>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-th"></i> TABLES <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="statictable.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Static Table</b> </a> </li>
+              <li> <a href="datatable.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Data Table</b> </a> </li>
+            </ul>
+          </li>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-glass"></i> EXTRA <span class="plus"><i class="fa fa-plus"></i></span></a>
+            <ul>
+              <li> <a href="timeline.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Timeline</b> </a> </li>
+              <li> <a href="profile.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Profile</b> </a> </li>
+              <li> <a href="contactlist.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Contact List</b> </a> </li>
+              <li> <a href="maps.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Maps</b> </a> </li>
+              <li> <a href="gallery.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gallery</b> </a> </li>
+              <li> <a href="help.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Help</b> </a> </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--\\\\\\\left_nav end \\\\\\-->
+    <div class="contentpanel">
+      <!--\\\\\\\ contentpanel start\\\\\\-->
+      <div class="pull-left breadcrumb_admin clear_both">
+        <div class="pull-left page_title theme_color">
+          <h1>general</h1>
+          <h2 class="">Subtitle goes here...</h2>
+        </div>
+        <div class="pull-right">
+          <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">UI KIT</a></li>
+            <li class="active">General</li>
+          </ol>
+        </div>
+      </div>
+      <div class="container clear_both padding_fix">
+        <!--\\\\\\\ container  start \\\\\\-->
+        
+      
+      <div class="row">
+  
+          <div class="col-lg-6 col-sm-6">
+            <section class="panel default blue_title h2">
+            
+                <div class="panel-body">
+                <div class="panel-heading border">Default <span class="semi-bold"> Alerts</span> </div>	
+                <div class="alert alert-success">
+      <strong>Well done!</strong> You successfully read this important alert message.
+    </div>
+    <div class="alert alert-info">
+      <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+    </div>
+    <div class="alert alert-danger">
+      <strong>Oh snap!</strong> Change a few things up and try submitting again.
+    </div>
+    
+                </div>
+            </section>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+            <section class="panel default blue_title h2">
+            	
+                <div class="panel-body">
+                <div class="panel-heading border">Dismissable<span class="semi-bold"> alerts</span> </div>
+                <div class="alert alert-warning alert-dismissable">
+      <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+      <strong>Warning!</strong> Better check yourself, you're not looking too good.
+    </div>
+    <div class="panel-heading border">Links in <span class="semi-bold"> alerts</span> </div>
+    
+    <div class="alert alert-success">
+    <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+      <strong>Well done!</strong> You successfully read <a class="alert-link" href="#">this important alert message</a>.
+    </div>
+                </div>
+            </section>
+            </div>
+            </div>
+            
+      
+          
+           <div class="row">
+          <div class="col-lg-8">
+            <section class="panel default blue_title h2">
+            <div class="panel-heading">Progress <span class="semi-bold"> Bars</span> </div>	
+                <div class="panel-body">
+                <div class="bs-callout bs-callout-danger">
+    <h4>Cross-browser compatibility</h4>
+    <p>Progress bars use CSS3 transitions and animations to achieve some of their effects. These features are not supported in Internet Explorer 9 and below or older versions of Firefox. Opera 12 does not support animations.</p>
+  </div>
+           
+       <div class="panel-heading">Basic<span class="semi-bold"> Bars</span> </div>	    
+       <div class="progress">
+      <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-info">
+        <span class="sr-only">60% Complete</span>
+      </div>
+    </div>  
+     <div class="progress">
+      <div style="width: 80%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning">
+        <span class="sr-only">60% Complete</span>
+      </div>
+    </div> 
+     <div class="progress">
+      <div style="width: 30%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-danger">
+        <span class="sr-only">60% Complete</span>
+      </div>
+    </div>  
+    <div class="panel-heading">Striped<span class="semi-bold"> Bars</span> </div>	   
+    <div class="progress progress-striped">
+      <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+        <span class="sr-only">40% Complete (success)</span>
+      </div>
+    </div> 
+    <div class="progress progress-striped">
+      <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
+        <span class="sr-only">20% Complete</span>
+      </div>
+    </div>
+    <div class="progress progress-striped">
+      <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning">
+        <span class="sr-only">60% Complete (warning)</span>
+      </div>
+    </div>
+    
+    <div class="panel-heading">Animated<span class="semi-bold"> Bars</span> </div>	   
+    <div class="progress progress-striped active">
+      <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
+        <span class="sr-only">40% Complete (success)</span>
+      </div>
+    </div> 
+    <div class="progress progress-striped active">
+      <div style="width: 20%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
+        <span class="sr-only">20% Complete</span>
+      </div>
+    </div>
+    <div class="progress progress-striped active">
+      <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-danger">
+        <span class="sr-only">60% Complete (warning)</span>
+      </div>
+    </div>
+      <div class="panel-heading">Stacked<span class="semi-bold"> Bars</span> </div>	 
+      
+      <div class="progress">
+      <div style="width: 35%" class="progress-bar progress-bar-success">
+        <span class="sr-only">35% Complete (success)</span>
+      </div>
+      <div style="width: 20%" class="progress-bar progress-bar-warning">
+        <span class="sr-only">20% Complete (warning)</span>
+      </div>
+      <div style="width: 10%" class="progress-bar progress-bar-danger">
+        <span class="sr-only">10% Complete (danger)</span>
+      </div>
+    </div>
+    
+    
+    
+    <div class="progress">
+      <div style="width: 25%" class="progress-bar progress-bar-danger">
+        <span class="sr-only">35% Complete (success)</span>
+      </div>
+      <div style="width: 30%" class="progress-bar progress-bar-warning">
+        <span class="sr-only">20% Complete (warning)</span>
+      </div>
+      <div style="width: 40%" class="progress-bar progress-bar-success">
+        <span class="sr-only">10% Complete (danger)</span>
+      </div>
+    </div>
+    
+    
+    
+    <div class="progress">
+      <div style="width: 45%" class="progress-bar progress-bar-warning">
+        <span class="sr-only">35% Complete (success)</span>
+      </div>
+      <div style="width: 10%" class="progress-bar progress-bar-success">
+        <span class="sr-only">20% Complete (warning)</span>
+      </div>
+      <div style="width: 20%" class="progress-bar progress-bar-danger">
+        <span class="sr-only">10% Complete (danger)</span>
+      </div>
+    </div>
+      
+                
+    
+                </div>
+            </section>
+            </div>
+            <div class="col-lg-4">
+            <section class="panel default blue_title h2">
+            
+                <div class="panel-body">              
+          <div class="panel-heading"><span class="semi-bold"> Pagination</span> </div>	     
+               <ul class="pagination pagination-lg">
+      <li><a href="#">«</a></li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">»</a></li>
+    </ul>
+    <ul class="pagination">
+      <li class="disabled"><a href="#">«</a></li>
+      <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">»</a></li>
+   </ul>
+    
+    <ul class="pagination pagination-sm">
+      <li class="disabled"><a href="#">«</a></li>
+      <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">»</a></li>
+   </ul>
+            
+            
+           <div class="panel-heading"><span class="semi-bold">  Badges</span> </div>	
+            <ul class="list-group">
+      <li class="list-group-item">
+        <span class="badge">14</span>
+        Cras justo odio
+      </li>
+      <li class="list-group-item">
+        <span class="badge">2</span>
+        Dapibus ac facilisis in
+      </li>
+      <li class="list-group-item">
+        <span class="badge">5</span>
+        Morbi leo risus
+      </li>
+      <li class="list-group-item">
+        <span class="badge">7</span>
+        Morbi leo risus
+      </li>
+      <li class="list-group-item">
+        <span class="badge">9</span>
+        Morbi leo risus
+      </li>
+    </ul>
+            
+       <div class="panel-heading"><span class="semi-bold">Panel with heading</span> </div>
+       <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Panel title</h3>
+      </div>
+      <div class="panel-body">
+        Panel content
+      </div>
+    </div>
+            
+                </div>
+            </section>
+            </div>
+            </div>
+            
+        <div class="row">
+          <div class="col-lg-6 col-sm-6">
+            <section class="panel default blue_title h2">
+            
+                <div class="panel-body">
+                <div class="panel-heading">Labels In <span class="semi-bold"> Headings </span> </div>	
+                <div>
+    <h1>Example heading <span class="label label-default">New</span></h1>
+    <h2>Example heading <span class="label label-success">New</span></h2>
+    <h3>Example heading <span class="label label-info">New</span></h3>
+    <h4>Example heading <span class="label label-warning">New</span></h4>
+ 
+  </div>
+    
+                </div>
+            </section>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+            <section class="panel default blue_title h2">
+            	
+                <div class="panel-body">
+                <div class="panel-heading">List <span class="semi-bold"> Groups</span> </div>
+                
+                <ul class="list-group">
+      <li class="list-group-item">Cras justo odio</li>
+      <li class="list-group-item">Dapibus ac facilisis in</li>
+      <li class="list-group-item">Morbi leo risus</li>
+      <li class="list-group-item">Porta ac consectetur ac</li>
+      
+    </ul>
+                
+                </div>
+            </section>
+            </div>
+            </div>  
+          
+          
+          
+          
+           <div class="row">
+          <div class="col-lg-6 col-sm-6">
+            <section class="panel default blue_title h2">
+            
+                <div class="panel-body">
+                <div class="panel-heading"><span class="semi-bold">Blockquote  </span> </div>	
+                
+   <blockquote>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+      <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+    </blockquote>
+ <blockquote class="blockquote-reverse">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+      <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+    </blockquote>
+  
+    
+                </div>
+            </section>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+            <section class="panel default blue_title h2">
+            	
+                <div class="panel-body">
+                <div class="panel-heading"><span class="semi-bold"> Colors</span> </div>
+                
+                <ul class="list-group">
+      <li class="list-group-item red_bg">Cras justo odio</li>
+      <li class="list-group-item blue_bg">Dapibus ac facilisis in</li>
+      <li class="list-group-item magento_bg">Morbi leo risus</li>
+      <li class="list-group-item green_bg">Porta ac consectetur ac</li>
+      
+    </ul>
+                
+                </div>
+            </section>
+            </div>
+            </div>  
+          
+          
+          
+          
+          <div class="row">
+          <div class="col-lg-6">
+            <section class="panel default blue_title h2">
+             <div class="panel-heading"><span class="semi-bold">Thumbnails</span> </div>	
+                <div class="panel-body">
+                
+   <div class="row">
+      <div class="col-xs-6 col-md-3">
+        <a class="thumbnail" href="#">
+          <img alt="100%x180" data-src="holder.js/100%x180" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=">
+        </a>
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <a class="thumbnail" href="#">
+          <img alt="100%x180" data-src="holder.js/100%x180" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=">
+        </a>
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <a class="thumbnail" href="#">
+          <img alt="100%x180" data-src="holder.js/100%x180" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=">
+        </a>
+      </div>
+      <div class="col-xs-6 col-md-3">
+        <a class="thumbnail" href="#">
+          <img alt="100%x180" data-src="holder.js/100%x180" style="height: 180px; width: 100%; display: block;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=">
+        </a>
+      </div>
+    </div>
+  <div class="row">
+  <div class="panel-heading border"><span class="semi-bold">Custom Content</span> </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img alt="300x200" data-src="holder.js/300x200" style="width: 300px; height: 200px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjE1MCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjE5cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MzAweDIwMDwvdGV4dD48L3N2Zz4=">
+          <div class="caption">
+            <h3>Thumbnail label</h3>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a role="button" class="btn btn-primary" href="#">Button</a> <a role="button" class="btn btn-default" href="#">Button</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img alt="300x200" data-src="holder.js/300x200" style="width: 300px; height: 200px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjE1MCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjE5cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MzAweDIwMDwvdGV4dD48L3N2Zz4=">
+          <div class="caption">
+            <h3>Thumbnail label</h3>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a role="button" class="btn btn-primary" href="#">Button</a> <a role="button" class="btn btn-default" href="#">Button</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img alt="300x200" data-src="holder.js/300x200" style="width: 300px; height: 200px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjE1MCIgeT0iMTAwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjE5cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MzAweDIwMDwvdGV4dD48L3N2Zz4=">
+          <div class="caption">
+            <h3>Thumbnail label</h3>
+            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <p><a role="button" class="btn btn-primary" href="#">Button</a> <a role="button" class="btn btn-default" href="#">Button</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+                </div>
+            </section>
+            </div>
+            <div class="col-lg-6">
+            <section class="panel default blue_title h2">
+            	
+                <div class="panel-body">
+                <div class="panel-heading"><span class="semi-bold"> With Tables</span> </div>
+               <div class="panel-body">
+               <div class="panel panel-success">
+               <div class="panel-heading">
+			<h3 class="panel-title">Panel Title</h3></div>
+					 <div class="panel-body">				
+										<b>
+											Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+										</b>
+                                        </div>
+									
+               <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+    </div> 
+              </div>  
+                </div>
+            </section>
+            </div>
+            </div>  
+          
+          
+          
+          
+          
+          
+          
+      </div>
+      <!--\\\\\\\ container  end \\\\\\-->
+    </div>
+    <!--\\\\\\\ content panel end \\\\\\-->
+  </div>
+  <!--\\\\\\\ inner end\\\\\\-->
+</div>
+<!--\\\\\\\ wrapper end\\\\\\-->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Compose New Task</h4>
+      </div>
+      <div class="modal-body"> content </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Compose New Task</h4>
+      </div>
+      <div class="modal-body"> sgxdfgxfg </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sidebar chats -->
+<nav class="atm-spmenu atm-spmenu-vertical atm-spmenu-right side-chat">
+	<div class="header">
+    <input type="text" class="form-control chat-search" placeholder=" Search">
+  </div>
+  <div href="#" class="sub-header">
+    <div class="icon"><i class="fa fa-user"></i></div> <p>Online (4)</p>
+  </div>
+  <div class="content">
+    <p class="title">Family</p>
+    <ul class="nav nav-pills nav-stacked contacts">
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Steven Smith</a></li>
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> John Doe</a></li>
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Michael Smith</a></li>
+      <li class="busy"><a href="#"><i class="fa fa-circle-o"></i> Chris Rogers</a></li>
+    </ul>
+    
+    <p class="title">Friends</p>
+    <ul class="nav nav-pills nav-stacked contacts">
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Vernon Philander</a></li>
+      <li class="outside"><a href="#"><i class="fa fa-circle-o"></i> Kyle Abbott</a></li>
+      <li><a href="#"><i class="fa fa-circle-o"></i> Dean Elgar</a></li>
+    </ul>   
+    
+    <p class="title">Work</p>
+    <ul class="nav nav-pills nav-stacked contacts">
+      <li><a href="#"><i class="fa fa-circle-o"></i> Dale Steyn</a></li>
+      <li><a href="#"><i class="fa fa-circle-o"></i> Morne Morkel</a></li>
+    </ul>
+    
+  </div>
+  <div id="chat-box">
+    <div class="header">
+      <span>Richard Avedon</span>
+      <a class="close"><i class="fa fa-times"></i></a>    </div>
+    <div class="messages nano nscroller has-scrollbar">
+      <div class="content" tabindex="0" style="right: -17px;">
+        <ul class="conversation">
+          <li class="odd">
+            <p>Hi John, how are you?</p>
+          </li>
+          <li class="text-right">
+            <p>Hello I am also fine</p>
+          </li>
+          <li class="odd">
+            <p>Tell me what about you?</p>
+          </li>
+          <li class="text-right">
+            <p>Sorry, I'm late... see you</p>
+          </li>
+          <li class="odd unread">
+            <p>OK, call me later...</p>
+          </li>
+        </ul>
+      </div>
+    <div class="pane" style="display: none;"><div class="slider" style="height: 20px; top: 0px;"></div></div></div>
+    <div class="chat-input">
+      <div class="input-group">
+        <input type="text" placeholder="Enter a message..." class="form-control">
+        <span class="input-group-btn">
+        <button class="btn btn-danger" type="button">Send</button>
+        </span>      </div>
+    </div>
+  </div>
+</nav>
+<!-- /sidebar chats -->   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="demo"><span id="demo-setting"><i class="fa fa-cog txt-color-blueDark"></i></span> <form><legend class="no-padding margin-bottom-10" style="color:#6e778c;">Layout Options</legend><section><label><input type="checkbox" class="checkbox style-0" id="smart-fixed-header" name="subscription"><span>Fixed Header</span></label><label><input type="checkbox" class="checkbox style-0" id="smart-fixed-navigation" name="terms"><span>Fixed Navigation</span></label><label><input type="checkbox" class="checkbox style-0" id="smart-rigth-navigation" name="terms"><span>Right Navigation</span></label><label><input type="checkbox" class="checkbox style-0" id="smart-boxed-layout" name="terms"><span>Boxed Layout</span></label><span id="smart-bgimages" style="display: none;"></span></section><section><h6 class="margin-top-10 semi-bold margin-bottom-5">Clear Localstorage</h6><a id="reset-smart-widget" class="btn btn-xs btn-block btn-primary" href="javascript:void(0);"><i class="fa fa-refresh"></i> Factory Reset</a></section> <h6 class="margin-top-10 semi-bold margin-bottom-5">Ultimo Skins</h6><section id="smart-styles"><a style="background-color:#23262F;" class="btn btn-block btn-xs txt-color-white margin-right-5" id="dark_theme" href="javascript:void(0);"><i id="skin-checked" class="fa fa-check fa-fw"></i> Dark Theme</a><a style="background:#E35154;" class="btn btn-block btn-xs txt-color-white" id="red_thm" href="javascript:void(0);">Red Theme</a><a style="background:#34B077;" class="btn btn-xs btn-block txt-color-darken margin-top-5" id="green_thm" href="javascript:void(0);">Green Theme</a><a style="background:#56A5DB" class="btn btn-xs btn-block txt-color-white margin-top-5" data-skinlogo="img/logo-pale.png" id="blue_thm" href="javascript:void(0);">Blue Theme</a><a style="background:#9C6BAD" class="btn btn-xs btn-block txt-color-white margin-top-5" id="magento_thm" href="javascript:void(0);">Magento Theme</a><a style="background:#FFFFFF" class="btn btn-xs btn-block txt-color-black margin-top-5" id="light_theme" href="javascript:void(0);">Light Theme</a></section></form> </div>
+
+
+
+
+
+
+
+
+
+<script src="js/jquery-2.1.0.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/common-script.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
+<script src="js/jPushMenu.js"></script> 
+<script src="js/side-chats.js"></script>
+
+
+</body>
+</html>
