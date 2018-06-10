@@ -25,7 +25,10 @@ SECRET_KEY = 'ti=eu2@e=!vtrlan8$_*nav+fq+z9p9i1j8=75ns!s1$$etp85'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+ '127.0.0.1:8000',
+ "*",
+]
 
 
 # Application definition
@@ -119,3 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+STATICFILES_DIRS = (os.path.join('static'),)
