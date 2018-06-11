@@ -3,7 +3,7 @@ Django==1.11.13
 gunicorn==19.8.1
 mpmath==1.0.0
 Pillow==5.1.0
-python-dateutil==2.7.0
+python-dateutil==2.7.15
 pytz==2018.4
 reportlab==3.4.0
 six==1.11.0
