@@ -17,11 +17,21 @@
 		{% endblock Titulo %}
 	</title>
 
+  <!-- Script -->
+  <script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+  <script type="text/javascript" src="{% static "alertas/alertas.js" %}"></script>
+
+
 	<!-- Archivos CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/font-awesome.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/bootstrap.min.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/animate.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/admin.css" %}">
+  
+  {% block Script %}
+
+  {% endblock Script %}
 
 	{% block CSS %}
 
@@ -112,13 +122,13 @@
             </ul>
           </div>
         </div>
-        <div class="user_admin dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"><img src="images/user.png" /><span class="user_adminname">John Doe</span> <b class="caret"></b> </a>
+        <div class="user_admin dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"><img src="images/user.png" /><span class="user_adminname" id="nombre">John Doe</span> <b class="caret"></b> </a>
           <ul class="dropdown-menu">
             <div class="top_pointer"></div>
             <li> <a href="profile.html"><i class="fa fa-user"></i> Profile</a> </li>
             <li> <a href="help.html"><i class="fa fa-question-circle"></i> Help</a> </li>
             <li> <a href="settings.html"><i class="fa fa-cog"></i> Setting </a></li>
-            <li> <a href="login.html"><i class="fa fa-power-off"></i> Logout</a> </li>
+            <li> <a href="#" id="salir"><i class="fa fa-power-off" ></i> Logout</a> </li>            
           </ul>
         </div>
         <a href="javascript:;" class="toggle-menu menu-right push-body jPushMenuBtn rightbar-switch"><i class="fa fa-comment chat"></i></a>

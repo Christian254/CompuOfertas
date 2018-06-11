@@ -16,6 +16,11 @@
 		{% endblock Titulo %}
 	</title>
 
+	<script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>  
+    <script type="text/javascript" src="{% static "alertas/alertas.js" %}"></script>
+
 	<!-- Archivos CSS -->
 
 	<!--===============================================================================================-->	
@@ -46,8 +51,7 @@
 	{% endblock CSS %}
 
 </head>
-<body>
-
+<body>	
 	<!--Menú de navegación-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<ul class="nav navbar-nav pull-xs-left">
