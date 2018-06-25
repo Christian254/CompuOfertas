@@ -21,5 +21,6 @@ urlpatterns = [
 
 	#URL Cliente.
 	url(r'registrarCliente$', registrarCliente, name="RegistrarCliente"),
-	url(r'indexCliente$', login_required(indexCliente), name="ClienteIndex")
+	url(r'indexCliente$', login_required(indexCliente), name="ClienteIndex"),
+
 ]

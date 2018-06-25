@@ -19,7 +19,7 @@ class Empleado(models.Model):
 	usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE, null=True)
 	nombre = models.CharField(max_length=25)
-	apellido = models.CharField(max_length=25)
+	apellido = models.CharField(max_length=25, null=True)
 	telefono = models.CharField(max_length=8, null=True)
 	fechaNac = models.DateField(auto_now=False, auto_now_add=False, null=True)
 	sexo = models.CharField(max_length=10, blank=True)
@@ -91,7 +91,7 @@ class Cliente(models.Model):
 class Sancion(models.Model):
 	empleado=models.ForeignKey(Empleado, on_delete=models.CASCADE)
 	sancion=models.CharField(max_length=30)
-	descripcion=models.TextField(max_length=150)
+	descripcion=models.CharField(max_length=150)
 	descuento=models.DecimalField(max_digits=8, decimal_places=2)
 	fecha_sancion=models.DateField(auto_now=False, auto_now_add=False)
 
