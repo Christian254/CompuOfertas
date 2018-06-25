@@ -39,6 +39,8 @@ table{
 	width: 100%;
 }
 th, td{
+	font-size: 12px;
+    color: #555555;
 	border: solid 1px black;
 	padding: 20px;
 }
