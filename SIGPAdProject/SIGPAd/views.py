@@ -90,18 +90,50 @@ def crearUsuario(request):
 
 @permission_required('SIGPAd.view_superuser')
 def editarEmpleado(request, pk):
-	empleadoAntiguo = Empleado.objects.get(empleado=pk)
-	empleadoFechaNac = Empleado.objects.filter(empleado=pk).values('fechaNac')
-	puestos = Puesto.objects.all()
-	formato = "%Y-%m-%d"
-	fechaNacimiento = empleadoAntiguo.fechaNac
-	fechaNac = fechaNacimiento.strftime(formato)  
-	context = {
-		'puestos':puestos,
-		'empleadoAntiguo':empleadoAntiguo,
-		'fechaNac':fechaNac,
-	}
-	return render(request, 'AdministradorTemplates/editarEmpleado.html', context)
+	mensaje = None
+	existe = None
+	try:
+		empleado = Empleado.objects.get(empleado=pk)
+	except Empleado.DoesNotExist:
+		empleado = None
+	if empleado is not None:
+		puestos = Puesto.objects.all()
+		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
+		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		if request.method == 'POST':
+			cargo = Puesto.objects.get(nombre=request.POST.get('puestoEmpleado', None))
+			empleado.puesto = cargo
+			empleado.nombre = request.POST.get('nombre',None)
+			empleado.apellido = request.POST.get('apellido',None)
+			empleado.telefono = request.POST.get('telefono',None)
+			empleado.fechaNac = request.POST.get('fecha_nacimiento',None)
+			empleado.sexo = request.POST.get('sexo',None)
+			empleado.email = request.POST.get('email',None)
+			#empleado.foto = request.FILES.get('foto',None) 
+			empleado.fecha_trabajo = request.POST.get('fecha_trabajo',None)
+			empleado.dui = request.POST.get('dui',None)
+			empleado.nit = request.POST.get('nit',None)
+			empleado.afp = request.POST.get('afp',None)
+			empleado.isss = request.POST.get('isss',None)
+			empleado.save()
+			return redirect("/empleados")
+		else:
+			context = {
+				'puestos':puestos,
+				'empleado':empleado,
+				'mensaje':mensaje,
+			}
+		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
+
+	else:
+		existe = "El empledo no existe"
+		context = {
+			'empleado':empleado,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
+
 
 @permission_required('SIGPAd.view_superuser')
 def eliminarEmpleado(request, pk):

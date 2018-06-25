@@ -7,7 +7,6 @@
 {% block Body %}
 
 	<h3>EDITAR EMPLEADO</h3>
-	<b>{{exito}}</b><br />
 
 	<!-- Formulario -->
 	<form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -15,6 +14,7 @@
 		<div>
 			<span class="label-input100">Puesto:</span>
 			<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
+				<option id="{{empleado.puesto.nombre}}" value="{{empleado.puesto.nombre}}" selected="selected">{{empleado.puesto.nombre}}</option>
 				{% for puesto in puestos %}
 					<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
 	            {% endfor %}
@@ -23,22 +23,22 @@
 
 		<div>
 			<span class="label-input100">Nombre:</span>
-			<input class="input100" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleadoAntiguo.nombre}}">
+			<input class="input100" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleado.nombre}}">
 		</div>
 
 		<div>
 			<span class="label-input100">Apellido:</span>
-			<input class="input100" type="text" value="{{empleadoAntiguo.apellido}}" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
+			<input class="input100" type="text" value="{{empleado.apellido}}" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
 		</div>
 
 		<div>
 			<span class="label-input100">Telefóno:</span>
-			<input type="text" class="input100" id="telefono" name="telefono" value="{{empleadoAntiguo.telefono}}" pattern="[0-9]{8}" required="required">
+			<input type="text" class="input100" id="telefono" name="telefono" value="{{empleado.telefono}}" pattern="[0-9]{8}" required="required">
 		</div>
 
 		<div>
 			<span class="label-input100">Fecha de nacimiento:</span>
-			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{fechaNac}}" required="required">
+			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{empleado.fechaNac}}" required="required">
 		</div>
 
 		<div>
@@ -51,44 +51,59 @@
 
 		<div>
 			<span class="label-input100">Correo</span>
-			<input class="input100" type="email" placeholder="Ingresa Correo" id="email" name="email" required="required" value="{{empleadoAntiguo.email}}" >
+			<input class="input100" type="email" id="email" name="email" required="required" value="{{empleado.email}}" >
 		</div>
 
 		<div>
-			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
-			<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleadoAntiguo.foto}}" multiple>
+			{{empleado.foto}}
+			{{empleado.foto.url}}
+			<div class="col-sm-1 col-md-1">
+				{% if empleado.foto %}
+	            	<img src="{{empleado.foto.url}}" alt="" class="img-rounded img-responsive"  width="100" height="100" />
+	        	{% else %}
+	        		<!-- No existe foto -->
+	       		{% endif %}
+       		</div>
+       		{% if empleado.foto %}
+       			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
+				<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleado.foto.url}}" multiple>
+				<input type="image" src="{{empleado.foto.url}}" alt="Submit" width="48" height="48">
+       		{% else %}
+       			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
+				<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+       		{% endif %}
 		</div>
 
+		<br />
 		<div>
 			<span class="label-input100">Fecha de Inicio de Trabajo:</span>
-			<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required">
+			<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required" value="{{empleado.fecha_trabajo}}">
 		</div>
 
 		<div>
 			<span class="label-input100">DUI:</span>
-			<input class="input100" type="text" placeholder="DUI" id="dui" name="dui" >
+			<input class="input100" type="text" value="{{empleado.dui}}" id="dui" name="dui" >
 		</div>
 
 		<div>
 			<span class="label-input100">NIT:</span>
-			<input class="input100" type="text" placeholder="NIT" id="nit" name="nit">
+			<input class="input100" type="text" value="{{empleado.nit}}" id="nit" name="nit">
 		</div>
 
 		<div>
 			<span class="label-input100">AFP:</span>
-			<input class="input100" type="text" placeholder="AFP" id="afp" name="afp" >
+			<input class="input100" type="text" value="{{empleado.afp}}" id="afp" name="afp" >
 		</div>
 
 		<div>
 			<span class="label-input100">ISSS:</span>
-			<input class="input100" type="text" placeholder="ISSS" id="isss" name="isss">
+			<input class="input100" type="text" value="{{empleado.isss}}" id="isss" name="isss">
 		</div>
-
 
 
 		<div class="container-login100-form-btn">
 			<button class="btn btn-success" type="submit">
-								Registrarse
+				Editar Empleado
 			</button>
 		</div>
 

@@ -23,13 +23,13 @@
     <tbody>
     	{% for empleado in empleados %}
     		<tr>
-		     	<td>{{empleado.empleado}}</td>
-		      <td>{{empleado.nombre}}</td>
-		      <td>{{empleado.apellido}}</td>
-		      <td>{{empleado.dui}}</td>
-		      <td>{{empleado.nit}}</td>
-		      <td>{{empleado.puesto.nombre}}</td>
-		      <td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+		      	<td>{{ forloop.counter }}</td>
+		      	<td>{{empleado.nombre}}</td>
+		      	<td>{{empleado.apellido}}</td>
+		      	<td>{{empleado.dui}}</td>
+		      	<td>{{empleado.nit}}</td>
+		      	<td>{{empleado.puesto.nombre}}</td>
+		      	<td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 		      	    /
 		      	    <a href=""><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
 		      	    /
