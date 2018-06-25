@@ -38,6 +38,57 @@ def  iniciar_sesion(request):
 def  indexAdministrador(request):
 	return render_to_response('AdministradorTemplates/adminIndex.html')
 
+
+@permission_required('SIGPAd.view_superuser')
+def listadoDeEmpleados(request):
+	empleados = Empleado.objects.all()
+	context = {
+		'empleados':empleados,
+	}
+	return render(request, 'AdministradorTemplates/empleados.html', context)
+
+
+@permission_required('SIGPAd.view_superuser')
+def  crearEmpleado(request):
+	if request.method == 'POST':
+		empleado = Empleado()
+		cargo = Puesto.objects.get(nombre=request.POST.get('puestoEmpleado', None))
+		empleado.puesto = cargo
+		empleado.nombre = request.POST.get('nombre',None)
+		empleado.apellido = request.POST.get('apellido',None)
+		empleado.telefono = request.POST.get('telefono',None)
+		empleado.fechaNac = request.POST.get('fecha_nacimiento',None)
+		empleado.sexo = request.POST.get('sexo',None)
+		empleado.email = request.POST.get('email',None)
+		empleado.foto = request.FILES.get('foto',None)
+		empleado.fecha_trabajo = request.POST.get('fecha_trabajo',None)
+		empleado.dui = request.POST.get('dui',None)
+		empleado.nit = request.POST.get('nit',None)
+		empleado.afp = request.POST.get('afp',None)
+		empleado.isss = request.POST.get('isss',None)
+		empleado.save()
+
+		puestos = Puesto.objects.all()
+		exito = "Empleado guardado con éxito."
+		context = {
+			'cargo':cargo,
+			'puestos':puestos,
+			'exito':exito,
+		}
+		return render(request, 'AdministradorTemplates/crearEmpleado.html', context)
+	puestos = Puesto.objects.all()
+	context = {
+		'puestos':puestos,
+	}
+	return render(request, 'AdministradorTemplates/crearEmpleado.html', context)
+
+@permission_required('SIGPAd.view_superuser')
+def crearUsuario(request):
+	return render_to_response('AdministradorTemplates/crearUsuario.html')
+
+
+
+#Vistas vendedores.
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
@@ -56,23 +107,6 @@ def registrarCliente(request):
 			context = { 'validar':validar }
 			return render(request, 'ClienteTemplates/registrarCliente.html', context)
 		if password==password2:
-			"""cliente = Cliente()
-			cliente.nombre = request.POST.get('nombre', None)
-			cliente.apellido = request.POST.get('apellido', None)
-			cliente.sexo = request.POST.get('sexo', None)
-			cliente.email = request.POST.get('correo', None)
-			user = User.objects.create_user(username=username, password=password)
-			content_type = ContentType.objects.get_for_model(Cliente)
-			permission = Permission.objects.get(
-				codename='view_client',
-				content_type = content_type, 
-			),
-			user.user_permissions.add(permission)
-			user.save()
-			cliente.usuario = user
-			cliente.save()
-			return redirect('/indexCliente')
-			"""
 			cliente = Cliente()
 			cliente.nombre = request.POST.get('nombre', None)
 			cliente.apellido = request.POST.get('apellido', None)

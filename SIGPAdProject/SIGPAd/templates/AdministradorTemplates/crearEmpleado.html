@@ -1,0 +1,96 @@
+{% extends "baseInterior.html" %}
+{% load staticfiles %}
+{% block Titulo %}
+	Ingresar Nuevo Empleado
+{% endblock Titulo %}
+
+{% block Body %}
+
+	{{valor}}
+
+	<!-- Formulario -->
+	<form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
+	{% csrf_token %}
+		<div>
+			<span class="label-input100">Puesto:</span>
+			<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
+				{% for puesto in puestos %}
+					<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
+	            {% endfor %}
+			</select>
+		</div>	
+
+		<div>
+			<span class="label-input100">Nombre:</span>
+			<input class="input100" type="text" placeholder="Ingresa Nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required">
+		</div>
+
+		<div>
+			<span class="label-input100">Apellido:</span>
+			<input class="input100" type="text" placeholder="Ingresa Apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
+		</div>
+
+		<div>
+			<span class="label-input100">Telefóno:</span>
+			<input type="text" class="input100" id="telefono" name="telefono" placeholder="00000000" pattern="[0-9]{8}" required="required">
+		</div>
+
+		<div>
+			<span class="label-input100">Fecha de nacimiento:</span>
+			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" required="required">
+		</div>
+
+		<div>
+			<span class="label-input100">Sexo:</span>
+			<select id="sexo" name="sexo" class="input100">
+				<option id="masculino" value="masculino">Masculino</option>
+	            <option id="femenino" value="femenino">Femenino</option>
+			</select>
+		</div>	
+
+		<div>
+			<span class="label-input100">Correo</span>
+			<input class="input100" type="email" placeholder="Ingresa Correo" id="email" name="email" required="required">
+		</div>
+
+		<div>
+			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
+			<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+		</div>
+
+		<div>
+			<span class="label-input100">Fecha de Inicio de Trabajo:</span>
+			<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required">
+		</div>
+
+		<div>
+			<span class="label-input100">DUI:</span>
+			<input class="input100" type="text" placeholder="DUI" id="dui" name="dui" >
+		</div>
+
+		<div>
+			<span class="label-input100">NIT:</span>
+			<input class="input100" type="text" placeholder="NIT" id="nit" name="nit">
+		</div>
+
+		<div>
+			<span class="label-input100">AFP:</span>
+			<input class="input100" type="text" placeholder="AFP" id="afp" name="afp" >
+		</div>
+
+		<div>
+			<span class="label-input100">ISSS:</span>
+			<input class="input100" type="text" placeholder="ISSS" id="isss" name="isss">
+		</div>
+
+
+
+		<div class="container-login100-form-btn">
+			<button class="btn btn-success" type="submit">
+								Registrarse
+			</button>
+		</div>
+
+	</form>
+
+{% endblock Body %}
