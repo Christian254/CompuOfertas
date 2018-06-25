@@ -23,4 +23,6 @@ urlpatterns = [
 	url(r'registrarCliente$', registrarCliente, name="RegistrarCliente"),
 	url(r'indexCliente$', login_required(indexCliente), name="ClienteIndex"),
 
+	url(r'ingresarPuesto$', ingresarPuesto, name="IngresarPuesto"),
+
 ]
