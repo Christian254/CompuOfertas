@@ -158,3 +158,16 @@ def index(request):
 
 def handler404(request):
     return render(request, '404.html')
+
+def ingresarPuesto(request):
+	if request.method == 'POST':
+		puesto = Puesto()
+		puesto.nombre = request.POST.get('nombre', None)
+		puesto.salario = request.POST.get('salario', None)
+		content_type = ContentType.objects.get_for_model(Puesto)
+		puesto.save()
+		return redirect('/ingresarPuesto')
+	else:
+		context = {}
+		return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
+	return render_to_response('PuestoTemplates/ingresarPuesto.html')
