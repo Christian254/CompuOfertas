@@ -7,6 +7,7 @@ from django.contrib.auth.models import User,Permission
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
+from datetime import datetime
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
@@ -87,7 +88,22 @@ def  crearEmpleado(request):
 def crearUsuario(request):
 	return render_to_response('AdministradorTemplates/crearUsuario.html')
 
+@permission_required('SIGPAd.view_superuser')
+def editarEmpleado(request, pk):
+	empleadoAntiguo = Empleado.objects.get(empleado=pk)
+	empleadoFechaNac = Empleado.objects.filter(empleado=pk).values('fechaNac')
+	puestos = Puesto.objects.all()
+	formato = "%Y-%m-%d"
+	fechaNacimiento = empleadoAntiguo.fechaNac
+	fechaNac = fechaNacimiento.strftime(formato)  
+	context = {
+		'puestos':puestos,
+		'empleadoAntiguo':empleadoAntiguo,
+		'fechaNac':fechaNac,
+	}
+	return render(request, 'AdministradorTemplates/editarEmpleado.html', context)
 
+@permission_required('SIGPAd.view_superuser')
 def eliminarEmpleado(request, pk):
 	empleado = get_object_or_404(Empleado, empleado=pk)
 	try:

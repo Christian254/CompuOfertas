@@ -5,15 +5,19 @@
 {% endblock Titulo %}
 
 {% block Body %}
+
+<h3>EMPLEADOS</h3>
+
 <table class="table">
     <thead>
       <tr>
         <th>#</th>
         <th>Nombre</th>
         <th>Apellido</th>
+        <th>DUI</th>
+        <th>NIT</th>
         <th>Puesto</th>
         <th>Acciones</th>
-        <th>Crear Usuario</th>
       </tr>
     </thead>
     <tbody>
@@ -22,16 +26,19 @@
 		      <td>{{empleado.empleado}}</td>
 		      <td>{{empleado.nombre}}</td>
 		      <td>{{empleado.apellido}}</td>
+		      <td>{{empleado.dui}}</td>
+		      <td>{{empleado.nit}}</td>
 		      <td>{{empleado.puesto.nombre}}</td>
-		      <td> <a href=""><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+		      <td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 		      	    /
-		       	<a href="{% url 'SIGPAd:EliminarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+		      	    <a href=""><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
+		      	    /
+		       		<a href="{% url 'SIGPAd:EliminarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
 		      </td>
-		      <td></td>
 		    </tr>
       	{% endfor %}
     </tbody>
   </table>
 
-  <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">Nuevo empleado</a>
+  <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">NUEVO EMPLEADO</a>
 {% endblock Body %}

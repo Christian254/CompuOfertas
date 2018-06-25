@@ -21,8 +21,10 @@ urlpatterns = [
 	url(r'empleados$', login_required(listadoDeEmpleados), name="Empleados"),
 	url(r'ingresarNuevoEmpleado$', login_required(crearEmpleado), name="NuevoEmpleado"),
 	url(r'ingresarNuevoUsuario$', login_required(crearUsuario), name="NuevoUsuario"),
-	url(r'^(?P<pk>\d+)/eliminarEmpleado$', login_required(eliminarEmpleado), name="EliminarEmpleado"),
+	url(r'^eliminarEmpleado/(?P<pk>\d+)$', login_required(eliminarEmpleado), name="EliminarEmpleado"),
+	url(r'^editarEmpleado/(?P<pk>\d+)$', login_required(editarEmpleado), name="EditarEmpleado"),
 
+	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 
 	#URL Cliente.

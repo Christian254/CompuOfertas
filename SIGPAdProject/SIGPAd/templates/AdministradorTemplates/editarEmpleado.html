@@ -1,12 +1,12 @@
 {% extends "baseInterior.html" %}
 {% load staticfiles %}
 {% block Titulo %}
-	Ingresar Nuevo Empleado
+	Editar Empleado
 {% endblock Titulo %}
 
 {% block Body %}
 
-	<h3>NUEVO EMPLEADO</h3>
+	<h3>EDITAR EMPLEADO</h3>
 	<b>{{exito}}</b><br />
 
 	<!-- Formulario -->
@@ -23,27 +23,27 @@
 
 		<div>
 			<span class="label-input100">Nombre:</span>
-			<input class="input100" type="text" placeholder="Ingresa Nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required">
+			<input class="input100" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleadoAntiguo.nombre}}">
 		</div>
 
 		<div>
 			<span class="label-input100">Apellido:</span>
-			<input class="input100" type="text" placeholder="Ingresa Apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
+			<input class="input100" type="text" value="{{empleadoAntiguo.apellido}}" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
 		</div>
 
 		<div>
 			<span class="label-input100">Telefóno:</span>
-			<input type="text" class="input100" id="telefono" name="telefono" placeholder="00000000" pattern="[0-9]{8}" required="required">
+			<input type="text" class="input100" id="telefono" name="telefono" value="{{empleadoAntiguo.telefono}}" pattern="[0-9]{8}" required="required">
 		</div>
 
 		<div>
 			<span class="label-input100">Fecha de nacimiento:</span>
-			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" required="required">
+			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{fechaNac}}" required="required">
 		</div>
 
 		<div>
 			<span class="label-input100">Sexo:</span>
-			<select id="sexo" name="sexo" class="input100">
+			<select id="sexo" name="sexo" class="input100" value="{{empleado.sexo}}">
 				<option id="masculino" value="masculino">Masculino</option>
 	            <option id="femenino" value="femenino">Femenino</option>
 			</select>
@@ -51,12 +51,12 @@
 
 		<div>
 			<span class="label-input100">Correo</span>
-			<input class="input100" type="email" placeholder="Ingresa Correo" id="email" name="email" required="required">
+			<input class="input100" type="email" placeholder="Ingresa Correo" id="email" name="email" required="required" value="{{empleadoAntiguo.email}}" >
 		</div>
 
 		<div>
 			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
-			<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+			<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleadoAntiguo.foto}}" multiple>
 		</div>
 
 		<div>
