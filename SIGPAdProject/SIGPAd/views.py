@@ -38,6 +38,16 @@ def  iniciar_sesion(request):
 def  indexAdministrador(request):
 	return render_to_response('AdministradorTemplates/adminIndex.html')
 
+
+@permission_required('SIGPAd.view_superuser')
+def listadoDeEmpleados(request):
+	empleados = Empleado.objects.all()
+	context = {
+		'empleados':empleados,
+	}
+	return render(request, 'AdministradorTemplates/empleados.html', context)
+
+
 @permission_required('SIGPAd.view_superuser')
 def  crearEmpleado(request):
 	if request.method == 'POST':
@@ -72,6 +82,13 @@ def  crearEmpleado(request):
 	}
 	return render(request, 'AdministradorTemplates/crearEmpleado.html', context)
 
+@permission_required('SIGPAd.view_superuser')
+def crearUsuario(request):
+	return render_to_response('AdministradorTemplates/crearUsuario.html')
+
+
+
+#Vistas vendedores.
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
 	return render_to_response('VendedorTemplates/vendedorIndex.html')

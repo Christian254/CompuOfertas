@@ -18,7 +18,9 @@ urlpatterns = [
 	url(r'^logout/$',auth_views.logout, {'next_page':'/login'}, name='logout'),
 	#URL Administrador.
 	url(r'indexAdministrador$', login_required(indexAdministrador), name="AdminIndex"),
+	url(r'empleados$', login_required(listadoDeEmpleados), name="Empleados"),
 	url(r'ingresarNuevoEmpleado$', login_required(crearEmpleado), name="NuevoEmpleado"),
+	url(r'ingresarNuevoUsuario$', login_required(crearUsuario), name="NuevoUsuario"),
 
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 
