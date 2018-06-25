@@ -32,5 +32,7 @@ urlpatterns = [
 	url(r'indexCliente$', login_required(indexCliente), name="ClienteIndex"),
 
 	url(r'ingresarPuesto$', ingresarPuesto, name="IngresarPuesto"),
+	url(r'sancionarEmpleado$', sancionarEmpleado, name="SancionarEmpleado"),
+	url(r'gestionarEmpleado$', gestionarEmpleado, name="GestionarEmpleado"),
 
 ]
