@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 # Create your models here.
 class Puesto(models.Model):
-	nombre=models.CharField(max_length=25)
+	nombre=models.CharField(max_length=25, unique=True)
 	salario=models.DecimalField(max_digits=8, decimal_places=2)
 	
 	def __str__(self):
@@ -17,7 +17,7 @@ class Puesto(models.Model):
 
 class Empleado(models.Model):
 	empleado = models.AutoField(primary_key=True)
-	usuario = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+	usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE)
 	nombre = models.CharField(max_length=25)
 	apellido = models.CharField(max_length=25, null=True)
@@ -31,7 +31,6 @@ class Empleado(models.Model):
 	nit = models.CharField(max_length=17, null=True)
 	afp=models.CharField(max_length=12, null=True)
 	isss = models.CharField(max_length=9, null=True)
-
 	def __str__(self):
 		return self.nombre
 
