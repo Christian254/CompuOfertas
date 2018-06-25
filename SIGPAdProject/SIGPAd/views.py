@@ -153,3 +153,9 @@ def ingresarPuesto(request):
 		context = {}
 		return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
 	return render_to_response('PuestoTemplates/ingresarPuesto.html')
+
+def sancionarEmpleado(request):
+	return render_to_response('AdministradorTemplates/sancionarEmpleado.html')
+
+def gestionarEmpleado(request):
+	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')

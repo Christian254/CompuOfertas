@@ -53,13 +53,13 @@
 			<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
 	            {% csrf_token %}
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Nombre es un campo requerido.">
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
 					<span class="label-input100">Nombre del Puesto </span>
 					<input class="input100" type="text" placeholder="Ingresar Puesto" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}">
 					<span class="focus-input100"></span>
 				</div>
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Apellido es uncampo requerido.">
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
 					<span class="label-input100">Salario Base </span>
 					<input class="input100" type="number" placeholder="Ingresar Salario Base" id="salario" name="salario" min="0" step=".01">
 					<span class="focus-input100"></span>
