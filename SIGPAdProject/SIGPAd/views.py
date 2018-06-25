@@ -34,6 +34,8 @@ def  iniciar_sesion(request):
 	context = {}
 	return render(request, 'LogIn.html', context)
 
+#Vista administrador.
+
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
 	return render_to_response('AdministradorTemplates/adminIndex.html')
@@ -46,7 +48,6 @@ def listadoDeEmpleados(request):
 		'empleados':empleados,
 	}
 	return render(request, 'AdministradorTemplates/empleados.html', context)
-
 
 @permission_required('SIGPAd.view_superuser')
 def  crearEmpleado(request):
@@ -86,6 +87,23 @@ def  crearEmpleado(request):
 def crearUsuario(request):
 	return render_to_response('AdministradorTemplates/crearUsuario.html')
 
+
+def eliminarEmpleado(request, pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+		empleado.delete()
+		mensaje = "Empleado eliminado"
+		context = {
+			'mensaje': mensaje,
+		}
+		return render_to_response('AdministradorTemplates/eliminarEmpleado.html', context)
+	except (KeyError, empleado.DoesNotExist):
+		#Aqui tiene que ir la pagina 404 correcta.
+		return render(request, '404.html', {
+		    	'error_message': "Empleado no eliminado",
+		})
+	else:
+		return redirect('/indexAdministrador')
 
 
 #Vistas vendedores.

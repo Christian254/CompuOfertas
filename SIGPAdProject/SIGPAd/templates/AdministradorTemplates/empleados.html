@@ -22,11 +22,16 @@
 		     
 		      <td>{{empleado.nombre}}</td>
 		      <td>{{empleado.apellido}}</td>
-		      <td>{{empleado.puesto_id}}</td>
-		      <td></td>
+		      <td>{{empleado.puesto.nombre}}</td>
+		      <td> <a href=""><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+		      	    /
+		       	<a href="{% url 'SIGPAd:EliminarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+		      </td>
 		      <td></td>
 		    </tr>
       	{% endfor %}
     </tbody>
   </table>
+
+  <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">Nuevo empleado</a>
 {% endblock Body %}
