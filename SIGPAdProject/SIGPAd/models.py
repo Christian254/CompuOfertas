@@ -25,13 +25,8 @@ class Empleado(models.Model):
 	estado = models.IntegerField(default=1)
 	sexo = models.CharField(max_length=10, blank=True)
 	email = models.EmailField(max_length=70)
-<<<<<<< HEAD
 	foto = models.ImageField(upload_to="fotos_empleados")
 	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False)
-=======
-	foto = models.ImageField(upload_to="fotos_empleados", null=True)
-	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False,null=True)
->>>>>>> db8c6fcbc604966408dfede41cb224c74529dfa3
 	dui = models.CharField(max_length=10)
 	nit = models.CharField(max_length=17)
 	afp=models.CharField(max_length=12)
