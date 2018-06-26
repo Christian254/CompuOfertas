@@ -210,10 +210,10 @@ def crearUsuario(request,pk):
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
 	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
-	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+	vendedores = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
 
 	context = {
-		'vendedoresSinUser':vendedoresSinUser,
+		'vendedores':vendedores,
 	}
 
 	return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
@@ -391,25 +391,29 @@ def index(request):
 
 
 def planilla(request,idplanilla):	
-	planilla = Planilla.objects.get(pk=idplanilla)
-	pagos = Pago.objects.filter(planilla = planilla)
-	anios = 0	
-	for pago in pagos:	    	    
-		empleado = Empleado.objects.get(pk=pago.empleado.id)		
-		pago.fecha_pago = planilla.fecha_pago_planilla
-		pago.nomPago = 'xx'
-		pago.salarioBase = empleado.puesto.salario
-		pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
-		pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
-		pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
-		#anios = i.fecha_trabajo.year - datatime.now().year
-		pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
-		pago.aguinaldo = 1
-		pago.costomensual = 3
-		pago.save() 
+	try:
+		planilla = Planilla.objects.get(pk=idplanilla)
+		pagos = Pago.objects.filter(planilla = planilla)
+		anios = 0	
+		for pago in pagos:	    	    
+			empleado = Empleado.objects.get(pk=pago.empleado.empleado)		
+			pago.fecha_pago = planilla.fecha_pago_planilla
+			pago.nomPago = 'xx'
+			pago.salarioBase = empleado.puesto.salario
+			pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
+			pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
+			pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
+			#anios = i.fecha_trabajo.year - datatime.now().year
+			pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
+			pago.aguinaldo = 1
+			pago.costomensual = 3
+			pago.save() 
 
-	pagos = Pago.objects.filter(planilla = planilla)
-	return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
+		pagos = Pago.objects.filter(planilla = planilla)
+
+		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
+	except Exception as e:
+		return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()

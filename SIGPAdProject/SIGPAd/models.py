@@ -62,13 +62,13 @@ class Pago(models.Model):
 	empleado=models.ForeignKey(Empleado, on_delete=models.CASCADE)
 	nomPago=models.CharField(max_length=30)
 	fecha_pago=models.DateField(auto_now=False, auto_now_add=False)
-	salarioBase=models.DecimalField(max_digits=8, decimal_places=2)
-	pagoafp=models.DecimalField(max_digits=8, decimal_places=2)
-	pagoisss=models.DecimalField(max_digits=8, decimal_places=2)
-	insaforp=models.DecimalField(max_digits=8, decimal_places=2)
-	vacaciones=models.DecimalField(max_digits=8, decimal_places=2)
-	aguinaldo=models.DecimalField(max_digits=8, decimal_places=2)
-	totalSalario=models.DecimalField(max_digits=8, decimal_places=2)
+	salarioBase=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	pagoafp=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	pagoisss=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	insaforp=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	vacaciones=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	aguinaldo=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalSalario=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 
 	def __str__(self):
 		return self.nomPago
