@@ -38,5 +38,6 @@ urlpatterns = [
 	url(r'ingresarPuesto$', ingresarPuesto, name="IngresarPuesto"),
 	url(r'sancionarEmpleado$', sancionarEmpleado, name="SancionarEmpleado"),
 	url(r'gestionarEmpleado$', gestionarEmpleado, name="GestionarEmpleado"),
+	url(r'gestionarPlanilla$', gestionarPlanilla, name="GestionarPlanilla"),
 
 ]

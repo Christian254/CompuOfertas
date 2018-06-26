@@ -318,6 +318,10 @@ def planilla(request,idplanilla):
 	pagos = Pago.objects.filter(planilla = planilla)
 	return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
 
+def gestionarPlanilla(request):
+	planilla = Planilla.objects.all()
+	return render(request,'AdministradorTemplates/gestionarPlanilla.html',{'planilla':planilla})
+
 
 def handler404(request):
     return render(request, '404.html')
