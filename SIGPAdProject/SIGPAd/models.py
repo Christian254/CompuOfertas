@@ -25,8 +25,13 @@ class Empleado(models.Model):
 	estado = models.IntegerField(default=1)
 	sexo = models.CharField(max_length=10, blank=True)
 	email = models.EmailField(max_length=70)
+<<<<<<< HEAD
 	foto = models.ImageField(upload_to="fotos_empleados")
 	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False)
+=======
+	foto = models.ImageField(upload_to="fotos_empleados", null=True)
+	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False,null=True)
+>>>>>>> db8c6fcbc604966408dfede41cb224c74529dfa3
 	dui = models.CharField(max_length=10)
 	nit = models.CharField(max_length=17)
 	afp=models.CharField(max_length=12)
@@ -47,13 +52,12 @@ class Empleado(models.Model):
 class Planilla(models.Model):
 	fecha_pago_planilla=models.DateField(auto_now=False, auto_now_add=False)
 	nomPlanilla=models.CharField(max_length=30)
-	totalSalario=models.DecimalField(max_digits=8, decimal_places=2)
 	totalAFP=models.DecimalField(max_digits=8, decimal_places=2)
 	totalISSS=models.DecimalField(max_digits=8, decimal_places=2)
 	totalVacaciones=models.DecimalField(max_digits=8, decimal_places=2)
 	totalInsaforp=models.DecimalField(max_digits=8, decimal_places=2)
 	totalSalarioBase=models.DecimalField(max_digits=8, decimal_places=2)
-
+	costomensual=models.DecimalField(max_digits=8, decimal_places=2)
 	def __str__(self):
 		return self.nomPlanilla
 
@@ -68,7 +72,7 @@ class Pago(models.Model):
 	insaforp=models.DecimalField(max_digits=8, decimal_places=2)
 	vacaciones=models.DecimalField(max_digits=8, decimal_places=2)
 	aguinaldo=models.DecimalField(max_digits=8, decimal_places=2)
-	costomensual=models.DecimalField(max_digits=8, decimal_places=2)
+	totalSalario=models.DecimalField(max_digits=8, decimal_places=2)
 
 	def __str__(self):
 		return self.nomPago

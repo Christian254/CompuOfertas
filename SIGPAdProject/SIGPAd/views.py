@@ -38,8 +38,31 @@ def  iniciar_sesion(request):
 
 #Vista administrador.
 
+def inicializarPuesto():
+	try:
+		puesto = Puesto.objects.all()
+		i = len(puesto)
+		if i==0:
+			puesto = Puesto()
+			puesto.nombre = "Gerente"
+			puesto.salario = 2000.00
+			puesto.save()
+		elif i==1:
+			puesto2 = Puesto()
+			puesto2.nombre = "Vendedor"
+			puesto2.salario = 600.00
+			puesto2.save()
+		elif i==2:
+			puesto3 = Puesto()
+			puesto3.nombre = "Contador"
+			puesto3.salario = 300.00
+			puesto3.save()
+	except Exception as e:
+		pass
+
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
+	inicializarPuesto()
 	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
@@ -100,8 +123,6 @@ def editarEmpleado(request, pk):
 	if empleado is not None:
 		#puestos = Puesto.objects.all()
 		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
-		data = Empleado.objects.exclude(sexo=empleado.sexo)[0]
-
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
 		if request.method == 'POST':
@@ -126,7 +147,6 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
-				'data':data,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
