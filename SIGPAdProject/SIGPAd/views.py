@@ -290,37 +290,35 @@ def index(request):
 			if i==0:
 				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
 				user.save()
-				puesto=Puesto(nombre='vendedor',salario=2)
-
-				planilla = Planilla(fecha_pago_planilla='2018-06-06',nomPlanilla='12345',totalAFP=0, totalISSS=0, totalVacaciones=0,totalInsaforp=0,totalSalarioBase=0,costomensual=0)
-				empleado=Empleado(usuario=user,puesto=puesto,nombre='walter',apellido='marroquin',telefono='22222222',fechaNac='2018-01-01',estado=1,sexo='F',email='e@h.com',
-					foto='PyDjango.jpg',fecha_trabajo='2018-02-02',dui='23134',nit='234343',afp='24245',isss='23434')
-				pago=Pago(planilla=planilla,empleado=empleado,nomPago='4542',fecha_pago='2018-03-03',salarioBase=5)
 		except Exception as e:
 			pass
 	return render(request,'index.html',{})
 
 
 def planilla(request,idplanilla):	
-	planilla = Planilla.objects.get(pk=idplanilla)
-	pagos = Pago.objects.filter(planilla = planilla)
-	anios = 0	
-	for pago in pagos:	    	    
-		empleado = Empleado.objects.get(pk=pago.empleado.empleado)		
-		pago.fecha_pago = planilla.fecha_pago_planilla
-		pago.nomPago = 'xx'
-		pago.salarioBase = empleado.puesto.salario
-		pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
-		pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
-		pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
-		#anios = i.fecha_trabajo.year - datatime.now().year
-		pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
-		pago.aguinaldo = 1
-		pago.costomensual = 3
-		pago.save() 
+	try:
+		planilla = Planilla.objects.get(pk=idplanilla)
+		pagos = Pago.objects.filter(planilla = planilla)
+		anios = 0	
+		for pago in pagos:	    	    
+			empleado = Empleado.objects.get(pk=pago.empleado.empleado)		
+			pago.fecha_pago = planilla.fecha_pago_planilla
+			pago.nomPago = 'xx'
+			pago.salarioBase = empleado.puesto.salario
+			pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
+			pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
+			pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
+			#anios = i.fecha_trabajo.year - datatime.now().year
+			pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
+			pago.aguinaldo = 1
+			pago.costomensual = 3
+			pago.save() 
 
-	pagos = Pago.objects.filter(planilla = planilla)
-	return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
+		pagos = Pago.objects.filter(planilla = planilla)
+
+		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
+	except Exception as e:
+		return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()
