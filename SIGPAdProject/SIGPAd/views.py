@@ -47,12 +47,10 @@ def inicializarPuesto():
 			puesto.nombre = "Gerente"
 			puesto.salario = 2000.00
 			puesto.save()
-		elif i==1:
 			puesto2 = Puesto()
 			puesto2.nombre = "Vendedor"
 			puesto2.salario = 600.00
 			puesto2.save()
-		elif i==2:
 			puesto3 = Puesto()
 			puesto3.nombre = "Contador"
 			puesto3.salario = 300.00
@@ -292,6 +290,12 @@ def index(request):
 			if i==0:
 				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
 				user.save()
+				puesto=Puesto(nombre='vendedor',salario=2)
+
+				planilla = Planilla(fecha_pago_planilla='2018-06-06',nomPlanilla='12345',totalAFP=0, totalISSS=0, totalVacaciones=0,totalInsaforp=0,totalSalarioBase=0,costomensual=0)
+				empleado=Empleado(usuario=user,puesto=puesto,nombre='walter',apellido='marroquin',telefono='22222222',fechaNac='2018-01-01',estado=1,sexo='F',email='e@h.com',
+					foto='PyDjango.jpg',fecha_trabajo='2018-02-02',dui='23134',nit='234343',afp='24245',isss='23434')
+				pago=Pago(planilla=planilla,empleado=empleado,nomPago='4542',fecha_pago='2018-03-03',salarioBase=5)
 		except Exception as e:
 			pass
 	return render(request,'index.html',{})
@@ -302,7 +306,7 @@ def planilla(request,idplanilla):
 	pagos = Pago.objects.filter(planilla = planilla)
 	anios = 0	
 	for pago in pagos:	    	    
-		empleado = Empleado.objects.get(pk=pago.empleado.id)		
+		empleado = Empleado.objects.get(pk=pago.empleado.empleado)		
 		pago.fecha_pago = planilla.fecha_pago_planilla
 		pago.nomPago = 'xx'
 		pago.salarioBase = empleado.puesto.salario
