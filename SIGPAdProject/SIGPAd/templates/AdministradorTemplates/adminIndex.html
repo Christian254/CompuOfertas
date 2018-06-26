@@ -1,10 +1,11 @@
 {% extends "baseInterior.html" %}
 {% load staticfiles %}
+  {% block usuario %}
+  	{{user.username}}
+  {% endblock usuario %}
 
 {% block Body %}
 	<p>Es un <b>Administrador <b></p>
-
-	<!--<a href="{% url 'SIGPAd:NuevoEmpleado' %}">Ingresar Empleado</a>-->
 	<br />
 	<a href="{% url 'SIGPAd:Empleados' %}">Gestionar Empleados</a>
 {% endblock Body %}
