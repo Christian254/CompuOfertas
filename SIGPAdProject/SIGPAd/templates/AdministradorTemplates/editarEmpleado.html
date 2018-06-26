@@ -9,104 +9,173 @@
 	<h3>EDITAR EMPLEADO</h3>
 
 	<!-- Formulario -->
-	<form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
-	{% csrf_token %}
-		<div>
-			<span class="label-input100">Puesto:</span>
-			<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
-				<option id="{{empleado.puesto.nombre}}" value="{{empleado.puesto.nombre}}" selected="selected">{{empleado.puesto.nombre}}</option>
-				{% for puesto in puestos %}
-					<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
-	            {% endfor %}
-			</select>
-		</div>	
+	<div class="row">
+        <div class="col-md-6">
+          <div class="block-web">
+            <div class="header">
+              <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+              <h3 class="content-header">Datos Empleado</h3>
+            </div>
+            <div class="porlets-content">
+              <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+					{% csrf_token %}
 
-		<div>
-			<span class="label-input100">Nombre:</span>
-			<input class="input100" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleado.nombre}}">
-		</div>
+              	  <div class="form-group">
+                  <label class="col-sm-3 control-label">Puesto</label>
+                  <div class="col-sm-9">
+						<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
+							<option id="{{empleado.puesto.nombre}}" value="{{empleado.puesto.nombre}}" selected="selected">{{empleado.puesto.nombre}}</option>
+							{% for puesto in puestos %}
+								<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
+				            {% endfor %}
+						</select>
+                   </div>
+                 </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Nombre</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleado.nombre}}">
+                  </div>
+                </div><!--/form-group--> 
 
-		<div>
-			<span class="label-input100">Apellido:</span>
-			<input class="input100" type="text" value="{{empleado.apellido}}" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
-		</div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Apellido</label>
+                  <div class="col-sm-9">
+                   <input class="form-control" type="text" value="{{empleado.apellido}}" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
+                  </div>
+                </div><!--/form-group--> 
 
-		<div>
-			<span class="label-input100">Telefóno:</span>
-			<input type="text" class="input100" id="telefono" name="telefono" value="{{empleado.telefono}}" pattern="[0-9]{8}" required="required">
-		</div>
-
-		<div>
-			<span class="label-input100">Fecha de nacimiento:</span>
-			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" value="{{empleado.fechaNac}}" required="required">
-		</div>
-
-		<div>
-			<span class="label-input100">Sexo:</span>
-			<select id="sexo" name="sexo" class="input100" value="{{empleado.sexo}}">
-				<option id="masculino" value="masculino">Masculino</option>
-	            <option id="femenino" value="femenino">Femenino</option>
-			</select>
-		</div>	
-
-		<div>
-			<span class="label-input100">Correo</span>
-			<input class="input100" type="email" id="email" name="email" required="required" value="{{empleado.email}}" >
-		</div>
-
-		<div>
-			{{empleado.foto}}
-			{{empleado.foto.url}}
-			<div class="col-sm-1 col-md-1">
-				{% if empleado.foto %}
-	            	<img src="{{empleado.foto.url}}" alt="" class="img-rounded img-responsive"  width="100" height="100" />
-	        	{% else %}
-	        		<!-- No existe foto -->
-	       		{% endif %}
-       		</div>
-       		{% if empleado.foto %}
-       			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
-				<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleado.foto.url}}" multiple>
-				<input type="image" src="{{empleado.foto.url}}" alt="Submit" width="48" height="48">
-       		{% else %}
-       			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
-				<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
-       		{% endif %}
-		</div>
-
-		<br />
-		<div>
-			<span class="label-input100">Fecha de Inicio de Trabajo:</span>
-			<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required" value="{{empleado.fecha_trabajo}}">
-		</div>
-
-		<div>
-			<span class="label-input100">DUI:</span>
-			<input class="input100" type="text" value="{{empleado.dui}}" id="dui" name="dui" >
-		</div>
-
-		<div>
-			<span class="label-input100">NIT:</span>
-			<input class="input100" type="text" value="{{empleado.nit}}" id="nit" name="nit">
-		</div>
-
-		<div>
-			<span class="label-input100">AFP:</span>
-			<input class="input100" type="text" value="{{empleado.afp}}" id="afp" name="afp" >
-		</div>
-
-		<div>
-			<span class="label-input100">ISSS:</span>
-			<input class="input100" type="text" value="{{empleado.isss}}" id="isss" name="isss">
-		</div>
+                <div class="form-group">
+                  	<label class="col-sm-3 control-label">Telefóno</label>
+                  	<div class="col-sm-9">
+					<input type="text" class="form-control" id="telefono" name="telefono" value="{{empleado.telefono}}" pattern="[0-9]{8}" required="required">
+                  </div>
+                </div><!--/form-group--> 
 
 
-		<div class="container-login100-form-btn">
-			<button class="btn btn-success" type="submit">
-				Editar Empleado
-			</button>
-		</div>
+                <div class="form-group">
+                  <label class="control-label col-md-3">Fecha de Nacimiento</label>
+                  <div class="col-md-6 col-xs-11">
+                    <div class="input-append date dpYears">
+                      <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{empleado.fechaNac}}" required="required">
+                      <span class="input-group-btn add-on">
+                      <button type="button" class="btn btn-danger"><i class="fa fa-calendar"></i></button>
+                      </span> </div>
+                    <span class="help-block">Selecciona fecha</span> </div>
+                </div><!--/form-group--> 
 
-	</form>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Sexo</label>
+                  <div class="col-sm-9">
+						<select id="sexo" name="sexo" class="input100">
+							<option id="{{empleado.sexo}}" value="{{empleado.sexo}}">{{empleado.sexo}}</option>
+							<option id="{{data.sexo}}" value="{{data.sexo}}">{{data.sexo}}</option>
+
+						</select>
+                   </div>
+                 </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Correo</label>
+                  <div class="col-sm-9">
+					<input class="form-control" type="email" id="email" name="email" required="required" value="{{empleado.email}}" >
+                  </div>
+                </div><!--/form-group--> 
+
+
+                <div class="form-group">
+                  <label class="control-label col-md-3">Fecha de Inicio de Trabajo</label>
+                  <div class="col-md-6 col-xs-11">
+                    <div class="input-append date dpYears">
+						<input type="date" class="form-control" id="fecha_trabajo" name="fecha_trabajo" required="required" value="{{empleado.fecha_trabajo}}">
+                      	<span class="input-group-btn add-on">
+                      	<button type="button" class="btn btn-danger"><i class="fa fa-calendar"></i></button>
+                     	</span> </div>
+                    	<span class="help-block">Selecciona fecha</span> </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">DUI</label>
+                  <div class="col-sm-9">
+                  	<input class="input100" type="text" value="{{empleado.dui}}" id="dui" name="dui" >
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">NIT</label>
+                  <div class="col-sm-9">
+                  	<input class="input100" type="text" value="{{empleado.nit}}" id="nit" name="nit">
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">AFP</label>
+                  <div class="col-sm-9">
+					<input class="input100" type="text" value="{{empleado.afp}}" id="afp" name="afp" >
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">ISSS</label>
+                  <div class="col-sm-9">
+                  	<input class="input100" type="text" value="{{empleado.isss}}" id="isss" name="isss">
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="bottom">
+                  <button type="submit" class="btn btn-danger">Editar</button>
+                </div><!--/form-group-->
+              </form>
+            </div><!--/porlets-content-->
+          </div><!--/block-web--> 
+        </div><!--/col-md-6-->
+        
+        <div class="col-md-6">
+          <div class="block-web">
+            <div class="header">
+              <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+              <h3 class="content-header"><i class="glyphicon glyphicon-user"></i> Foto</h3>
+            </div>
+            <div class="porlets-content">
+              <form class="form-inline" action="{% url 'SIGPAd:EditarFotoEmpleado' empleado.empleado %}" method="post" enctype="multipart/form-data" class="form-horizontal row-border" >
+			  	{% csrf_token %}
+	            <div class="form-group">
+	                {% if empleado.foto %}
+	                  	<label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+	                  	<label> {{empleado.foto.url}} </label>
+	                  	<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleado.foto.url}}" multiple>
+	                {% else %}
+	                	<label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+	                	<label> ¡Aún no ha subido imagen! </label>
+	                	<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+	       			{% endif %}
+	       			<div class="form-group">
+		                {% if empleado.foto %}
+		                    <label class="col-sm-3 control-label">Foto</label>
+	                  		<div class="col-sm-9">
+			            		<img src="{{empleado.foto.url}}" alt="" class="img-rounded img-responsive"  width="100" height="100" />
+			            	</div>
+			        	{% else %}
+			        		<!-- No existe foto -->
+			       		{% endif %}
+			       	</div>
+			       	<div class="bottom">
+                  		<input type="submit" class="btn btn-danger" id="guardar" name="submit" value="Guardar foto">
+                	</div><!--/form-group-->
+
+			      </form>
+                 </div>
+                </div>
+                </div><!--/form-group-->
+                 
+            </div><!--/porlets-content--> 
+          </div><!--/block-web--> 
+        </div><!--/col-md-6--> 
+
+      
+            </div><!--/porlets-content--> 
+          </div><!--/block-web--> 
+        </div><!--/col-md-12-->
+       </div><!--/row--> 
 
 {% endblock Body %}

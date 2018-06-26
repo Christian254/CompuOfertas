@@ -97,7 +97,10 @@ def editarEmpleado(request, pk):
 	except Empleado.DoesNotExist:
 		empleado = None
 	if empleado is not None:
-		puestos = Puesto.objects.all()
+		#puestos = Puesto.objects.all()
+		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
+		data = Empleado.objects.exclude(sexo=empleado.sexo)[0]
+
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
 		if request.method == 'POST':
@@ -122,6 +125,7 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
+				'data':data,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
@@ -133,6 +137,31 @@ def editarEmpleado(request, pk):
 			'mensaje':mensaje,
 		}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
+
+@permission_required('SIGPAd.view_superuser')
+def editarFotoEmpleado(request,pk):
+	try:
+		empleado = Empleado.objects.get(empleado=pk)
+	except Empleado.DoesNotExist:
+		empleado = None
+	if empleado is not None:
+		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
+		data = Empleado.objects.exclude(sexo=empleado.sexo)[0]
+		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
+		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		if request.method == 'POST':
+			empleado.foto = request.FILES.get('foto',None) 
+			empleado.save()
+			return redirect("/empleados")
+		else:
+			context = {
+				'puestos':puestos,
+				'empleado':empleado,
+				'mensaje':mensaje,
+				'data':data,
+			}
+		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
+
 
 
 @permission_required('SIGPAd.view_superuser')
