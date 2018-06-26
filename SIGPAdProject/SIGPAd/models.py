@@ -15,18 +15,23 @@ class Puesto(models.Model):
 	def __str__(self):
 		return self.nombre
 
-class Empleado(models.Model):
-	empleado = models.AutoField(primary_key=True)
+class Empleado(models.Model):	
 	usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE)
 	nombre = models.CharField(max_length=25)
-	apellido = models.CharField(max_length=25, null=True)
-	telefono = models.CharField(max_length=8, null=True)
-	fechaNac = models.DateField(auto_now=False, auto_now_add=False, null=True)
+	apellido = models.CharField(max_length=25)
+	telefono = models.CharField(max_length=8)
+	fechaNac = models.DateField(auto_now=False, auto_now_add=False)
+	estado = models.IntegerField(default=1)
 	sexo = models.CharField(max_length=10, blank=True)
 	email = models.EmailField(max_length=70)
+<<<<<<< HEAD
+	foto = models.ImageField(upload_to="fotos_empleados")
+	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False)
+=======
 	foto = models.ImageField(upload_to="fotos_empleados", null=True)
 	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False,null=True)
+>>>>>>> db8c6fcbc604966408dfede41cb224c74529dfa3
 	dui = models.CharField(max_length=10)
 	nit = models.CharField(max_length=17)
 	afp=models.CharField(max_length=12)
@@ -63,6 +68,7 @@ class Pago(models.Model):
 	fecha_pago=models.DateField(auto_now=False, auto_now_add=False)
 	salarioBase=models.DecimalField(max_digits=8, decimal_places=2)
 	pagoafp=models.DecimalField(max_digits=8, decimal_places=2)
+	pagoisss=models.DecimalField(max_digits=8, decimal_places=2)
 	insaforp=models.DecimalField(max_digits=8, decimal_places=2)
 	vacaciones=models.DecimalField(max_digits=8, decimal_places=2)
 	aguinaldo=models.DecimalField(max_digits=8, decimal_places=2)
