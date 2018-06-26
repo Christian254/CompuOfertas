@@ -22,17 +22,10 @@
     	{% for vendedor in vendedores %}
     		<tr>
 		      	<td>{{ forloop.counter }}</td>
-<<<<<<< HEAD
 		      	<td>{{vendedorSinUser.nombre}}</td>
 		      	<td>{{vendedorSinUser.apellido}}</td>
 		      	<td>{{vendedorSinUser.puesto.nombre}}</td>
 		      	<td><a href="{% url 'SIGPAd:NuevoUsuario' vendedorSinUser.empleado %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
-=======
-		      	<td>{{vendedor.nombre}}</td>
-		      	<td>{{vendedor.apellido}}</td>
-		      	<td>{{vendedor.puesto.nombre}}</td>
-		      	<td></td>
->>>>>>> ac6185e5d5c3b8714137f3c74690784de06d13dd
 		    </tr>
       	{% endfor %}
     </tbody>
