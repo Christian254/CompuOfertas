@@ -1,0 +1,34 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Listado de Empleados
+{% endblock Titulo %}
+
+{% block Body %}
+	{{vendedor}}
+
+	<table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Puesto</th>
+        <th>Crear</th>
+
+      </tr>
+    </thead>
+    <tbody>
+    	{% for vendedor in vendedores %}
+    		<tr>
+		      	<td>{{ forloop.counter }}</td>
+		      	<td>{{vendedor.nombre}}</td>
+		      	<td>{{vendedor.apellido}}</td>
+		      	<td>{{vendedor.puesto.nombre}}</td>
+		      	<td></td>
+		    </tr>
+      	{% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

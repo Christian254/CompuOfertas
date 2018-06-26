@@ -107,9 +107,23 @@ def  crearEmpleado(request):
 	}
 	return render(request, 'AdministradorTemplates/crearEmpleado.html', context)
 
+
+
 @permission_required('SIGPAd.view_superuser')
 def crearUsuario(request):
 	return render_to_response('AdministradorTemplates/crearUsuario.html')
+
+@permission_required('SIGPAd.view_superuser')
+def listadoDeUsuarios(request):
+	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
+	vendedores = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+
+	context = {
+		'vendedores':vendedores,
+	}
+
+	return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
+
 
 @permission_required('SIGPAd.view_superuser')
 def editarEmpleado(request, pk):
@@ -124,6 +138,7 @@ def editarEmpleado(request, pk):
 		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		empleados = Empleado.objects.exclude(sexo=empleado.sexo)
 		if request.method == 'POST':
 			cargo = Puesto.objects.get(nombre=request.POST.get('puestoEmpleado', None))
 			empleado.puesto = cargo
@@ -146,6 +161,7 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
+				'empleados':empleados,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
