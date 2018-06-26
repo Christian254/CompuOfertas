@@ -48,12 +48,12 @@ class Empleado(models.Model):
 class Planilla(models.Model):
 	fecha_pago_planilla=models.DateField(auto_now=False, auto_now_add=False)
 	nomPlanilla=models.CharField(max_length=30)
-	totalAFP=models.DecimalField(max_digits=8, decimal_places=2)
-	totalISSS=models.DecimalField(max_digits=8, decimal_places=2)
-	totalVacaciones=models.DecimalField(max_digits=8, decimal_places=2)
-	totalInsaforp=models.DecimalField(max_digits=8, decimal_places=2)
-	totalSalarioBase=models.DecimalField(max_digits=8, decimal_places=2)
-	costomensual=models.DecimalField(max_digits=8, decimal_places=2)
+	totalAFP=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalISSS=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalVacaciones=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalInsaforp=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalSalarioBase=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	costomensual=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	def __str__(self):
 		return self.nomPlanilla
 

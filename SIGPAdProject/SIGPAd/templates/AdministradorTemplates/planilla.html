@@ -3,6 +3,9 @@
 {% block Titulo %}
 	Planilla
 {% endblock Titulo %}
+{% block CSS%}
+<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
+{% endblock CSS%}
 {%block usuario %}
  {{user.username}}
 {%endblock usuario%}
@@ -24,12 +27,12 @@
     <tbody>
     	{%for i in pagos%}
     		<tr>
-		      	<td></td>
-		      	<td></td>
-		      	<td></td>
+            <td>{{i.id}}</td>
+		      	<td>{{i.empleado.nombre}}</td>
+		      	<td>{{i.empleado.apellido}}</td>
+		      	<td>{{i.pagoisss}}</td>
 		      	<td>{{i.pagoafp}}</td>
-		      	<td></td>
-		      	<td></td>	            	      	
+		      	<td>{{i.empleado.puesto.nombre}}</td>		      	            	      	
 		    </tr> 
       {%endfor%}   	
     </tbody>

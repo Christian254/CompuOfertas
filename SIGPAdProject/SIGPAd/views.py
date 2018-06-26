@@ -301,14 +301,11 @@ def planilla(request,idplanilla):
 		pagos = Pago.objects.filter(planilla = planilla)
 		anios = 0	
 		for pago in pagos:	    	    
-			empleado = Empleado.objects.get(pk=pago.empleado.empleado)		
-			pago.fecha_pago = planilla.fecha_pago_planilla
-			pago.nomPago = 'xx'
+			empleado = Empleado.objects.get(pk=pago.empleado.empleado)
 			pago.salarioBase = empleado.puesto.salario
 			pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
 			pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
 			pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
-			#anios = i.fecha_trabajo.year - datatime.now().year
 			pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
 			pago.aguinaldo = 1
 			pago.costomensual = 3
@@ -324,6 +321,18 @@ def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()
 	return render(request,'AdministradorTemplates/gestionarPlanilla.html',{'planilla':planilla})
 
+def crearPlanilla(request):
+	if request.method == 'POST':
+		planilla = Planilla()
+		planilla.nomPlanilla = request.POST.get('codigo',None)
+		planilla.fecha_pago_planilla = request.POST.get('fecha',None)
+		planilla.save()
+		empleados = Empleado.objects.filter(estado=1)
+		for i in empleados:
+			nompago = i.apellido[0] + i.nombre[0] + str(i.empleado) + str(planilla.id)
+			pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
+			pago.save()
+	return render(request,'AdministradorTemplates/crearPlanilla.html',{})
 
 def handler404(request):
     return render(request, '404.html')

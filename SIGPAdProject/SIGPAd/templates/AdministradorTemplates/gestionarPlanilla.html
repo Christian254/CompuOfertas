@@ -6,7 +6,7 @@
 	{% endblock Titulo %}
 
 	{% block CSS %}
-		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
 		<style type="text/css">
 		.label-input100 {
 		  font-family: Poppins-Regular;
@@ -44,13 +44,19 @@
 						<table>
 							<thead>
 								<tr>
-									<th>Numero</th><th>Fecha</th><th>
+									<th>Numero de Planilla</th>
+									<th>Fecha</th>
+									<th>Operaciones</th>
 								</tr>
 							</thead>
 							{%for pl in planilla%}
 							<tr>
-								<td>{{pl.id}}</td>
+								<td>{{pl.nomPlanilla}}</td>
 								<td>{{pl.fecha_pago_planilla}}</td>
+								<td>
+								<a href="{% url 'SIGPAd:planilla' pl.id %}">Gestionar</a>
+							</td>
+
 							</tr>
 							{%endfor%}							
 						</table>
