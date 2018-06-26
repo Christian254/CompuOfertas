@@ -37,8 +37,33 @@ def  iniciar_sesion(request):
 
 #Vista administrador.
 
+def inicializarPuesto():
+	try:
+		puesto = Puesto.objects.all()
+		i = len(puesto)
+		if i==0:
+			#user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
+			#user.save()
+			puesto = Puesto()
+			puesto.nombre = "Gerente"
+			puesto.salario = 2000.00
+			puesto.save()
+		elif i==1:
+			puesto2 = Puesto()
+			puesto2.nombre = "Vendedor"
+			puesto2.salario = 600.00
+			puesto2.save()
+		elif i==2:
+			puesto3 = Puesto()
+			puesto3.nombre = "Contador"
+			puesto3.salario = 300.00
+			puesto3.save()
+	except Exception as e:
+		pass
+
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
+	inicializarPuesto()
 	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
