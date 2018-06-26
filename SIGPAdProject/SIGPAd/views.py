@@ -42,8 +42,6 @@ def inicializarPuesto():
 		puesto = Puesto.objects.all()
 		i = len(puesto)
 		if i==0:
-			#user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
-			#user.save()
 			puesto = Puesto()
 			puesto.nombre = "Gerente"
 			puesto.salario = 2000.00
