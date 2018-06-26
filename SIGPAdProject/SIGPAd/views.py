@@ -12,6 +12,8 @@ from decimal import *
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
+from django.db import IntegrityError
+
 
 
 # Create your views here.
@@ -106,11 +108,104 @@ def  crearEmpleado(request):
 	}
 	return render(request, 'AdministradorTemplates/crearEmpleado.html', context)
 
+	"""
+	try:
+		empleado = Empleado.objects.get(empleado=pk)
+	except Empleado.DoesNotExist:
+		empleado = None
+	if empleado is not None:
+		if empleado.puesto.nombre == "Vendedor":
+			if request.method == 'POST':
+				username = request.POST.get('usr', None)
+				password = request.POST.get('pwd', None)
+				password2 = request.POST.get('pwd2', None)
+				user = authenticate(username=username, password=password, password2=password2)
+				validarUser = username
 
+				if user:
+					validar = "Registro de usuario, ya existe."
+					context = { 'validar':validar }
+					return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+				else:
+					if password == password2:
+						user = User.objects.create_user(username=username, password=password)
+						content_type = ContentType.objects.get_for_model(Empleado)
+						permission = Permission.objects.get(
+							codename='view_seller',
+							content_type=content_type,
+							)
+						user.user_permissions.add(permission)
+						user.save()
+						empleado.usuario = user
+						user.save()
+						empleado.save()
+						return redirect('/usuarios')
+					else:
 
+						validar = "Las contraseñas son diferentes"
+						context = { 
+						'validar':validar,  
+						'empleado':empleado,}
+						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+	context = { 'empleado':empleado,}
+	return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+	"""
+	"""empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+    	# code that produces error
+	except IntegrityError as e:
+    	return render_to_response("AdministradorTemplates/crearUsuario.html", {"message": e.message})"""
 @permission_required('SIGPAd.view_superuser')
-def crearUsuario(request):
-	return render_to_response('AdministradorTemplates/crearUsuario.html')
+def crearUsuario(request,pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+		if empleado is not None:
+			if empleado.puesto.nombre == "Vendedor":
+				if request.method == 'POST':
+					username = request.POST.get('usr', None)
+					password = request.POST.get('pwd', None)
+					password2 = request.POST.get('pwd2', None)
+					user = authenticate(username=username, password=password, password2=password2)
+					validarUser = username
+
+					if user:
+						validar = "Registro de usuario, ya existe."
+						context = { 'validar':validar }
+						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+					else:
+						if password == password2:
+							user = User.objects.create_user(username=username, password=password)
+							content_type = ContentType.objects.get_for_model(Empleado)
+							permission = Permission.objects.get(
+								codename='view_seller',
+								content_type=content_type,
+								)
+							user.user_permissions.add(permission)
+							user.save()
+							empleado.usuario = user
+							user.save()
+							empleado.save()
+							return redirect('/usuarios')
+						else:
+
+							validar = "Las contraseñas son diferentes"
+							context = { 
+							'validar':validar,  
+							'empleado':empleado,}
+							return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+	except (KeyError, IntegrityError):
+		#Aqui tiene que ir la pagina 404 correcta.
+		context = { 
+			'empleado':empleado,
+			'validar': "Empleado duplicado",
+			}
+		return render(request, 'AdministradorTemplates/crearUsuario.html',context)
+	except Empleado.DoesNotExist:
+		empleado = None
+	else:
+		context = { 'empleado':empleado,}
+		return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):

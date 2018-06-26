@@ -14,7 +14,7 @@
         <th>Nombre</th>
         <th>Apellido</th>
         <th>Puesto</th>
-        <th>Crear</th>
+        <th>Acciones</th>
 
       </tr>
     </thead>
@@ -25,7 +25,7 @@
 		      	<td>{{vendedorSinUser.nombre}}</td>
 		      	<td>{{vendedorSinUser.apellido}}</td>
 		      	<td>{{vendedorSinUser.puesto.nombre}}</td>
-		      	<td></td>
+		      	<td><a href="{% url 'SIGPAd:NuevoUsuario' vendedorSinUser.empleado %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
 		    </tr>
       	{% endfor %}
     </tbody>

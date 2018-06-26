@@ -26,7 +26,7 @@ urlpatterns = [
 	url(r'^planilla/(?P<idplanilla>\d+)$', login_required(planilla), name="planilla"),
 
 	url(r'usuarios$', login_required(listadoDeUsuarios), name="Usuarios"),
-	url(r'ingresarNuevoUsuario$', login_required(crearUsuario), name="NuevoUsuario"),
+	url(r'ingresarNuevoUsuario/(?P<pk>\d+)$', login_required(crearUsuario), name="NuevoUsuario"),
 
 	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
