@@ -1,0 +1,38 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Planilla
+{% endblock Titulo %}
+{%block usuario %}
+ {{user.username}}
+{%endblock usuario%}
+{% block Body %}
+
+<h3>EMPLEADOS</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>AFP</th>
+        <th>NIT</th>
+        <th>Puesto</th>        
+      </tr>
+    </thead>
+    <tbody>
+    	{%for i in pagos%}
+    		<tr>
+		      	<td></td>
+		      	<td></td>
+		      	<td></td>
+		      	<td>{{i.pagoafp}}</td>
+		      	<td></td>
+		      	<td></td>	            	      	
+		    </tr> 
+      {%endfor%}   	
+    </tbody>
+  </table>
+  
+{% endblock Body %}

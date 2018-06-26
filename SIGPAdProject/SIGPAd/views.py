@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
 from datetime import datetime
+from decimal import *
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
@@ -186,6 +187,12 @@ def eliminarEmpleado(request, pk):
 #Vistas vendedores.
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
+	user = request.user
+	if user.is_authenticated():
+		if user.is_superuser:
+			return render(request,'AdministradorTemplates/adminIndex.html',{})
+		else:
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -226,6 +233,12 @@ def registrarCliente(request):
 	return render(request, 'ClienteTemplates/registrarCliente.html', context)
 
 def indexCliente(request):
+	user = request.user
+	if user.is_authenticated():
+		if user.is_superuser:
+			return render(request,'AdministradorTemplates/adminIndex.html',{})
+		else:
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('ClienteTemplates/clienteIndex.html')
 
 #Foro
@@ -248,6 +261,26 @@ def index(request):
 	return render(request,'index.html',{})
 
 
+def planilla(request,idplanilla):	
+	planilla = Planilla.objects.get(pk=idplanilla)
+	pagos = Pago.objects.filter(planilla = planilla)
+	anios = 0	
+	for pago in pagos:	    	    
+		empleado = Empleado.objects.get(pk=pago.empleado.id)		
+		pago.fecha_pago = planilla.fecha_pago_planilla
+		pago.nomPago = 'xx'
+		pago.salarioBase = empleado.puesto.salario
+		pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
+		pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
+		pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
+		#anios = i.fecha_trabajo.year - datatime.now().year
+		pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
+		pago.aguinaldo = 1
+		pago.costomensual = 3
+		pago.save() 
+
+	pagos = Pago.objects.filter(planilla = planilla)
+	return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
 
 
 def handler404(request):
