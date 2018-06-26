@@ -1,10 +1,34 @@
 {% extends "baseInterior.html" %}
 {% load staticfiles %}
+  {% block usuario %}
+  	{{user.username}}
+  {% endblock usuario %}
 
 {% block Body %}
-	<p>Es un <b>Administrador <b></p>
-
-	<!--<a href="{% url 'SIGPAd:NuevoEmpleado' %}">Ingresar Empleado</a>-->
 	<br />
-	<a href="{% url 'SIGPAd:Empleados' %}">Gestionar Empleados</a>
+    <main class="servicios p-y-1">
+        <div class="container">
+            <div class="row">
+                <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
+	                <a href="{% url 'SIGPAd:Empleados' %}"><img src="{% static 'images/user.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="{% url 'SIGPAd:Empleados' %}" class="btn btn-secondary"> <STRONG>Gestionar empleado</STRONG> </a></h3>
+                    <p class="hidden-sm-down">En esta seccion puedes consultar tus empleados, asi como crear nuevos empleados.</p>
+
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+					<a href="{% url 'SIGPAd:Empleados' %}"><img src="{% static 'images/puestos.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Gestionar puestos</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes gestionar los puestos existentes asi como ingresar nuevos puestos.</p>
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+					<a href="{% url 'SIGPAd:Empleados' %}"><img src="{% static 'images/planilla.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Planilla de salarios</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes imprimir la planilla de salarios correspondiente.</p>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+
 {% endblock Body %}

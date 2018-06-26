@@ -39,7 +39,7 @@ def  iniciar_sesion(request):
 
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
-	return render_to_response('AdministradorTemplates/adminIndex.html')
+	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
 @permission_required('SIGPAd.view_superuser')
@@ -230,7 +230,24 @@ def indexCliente(request):
 
 #Foro
 def index(request):
-	return render_to_response('index.html')
+	user = request.user
+	if user.is_authenticated():
+		if user.is_superuser:
+			return render(request,'AdministradorTemplates/adminIndex.html',{})
+		else:
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})
+	else:
+		try:
+			user = User.objects.all()
+			i= len(user)
+			if i==0:
+				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
+				user.save()
+		except Exception as e:
+			pass
+	return render(request,'index.html',{})
+
+
 
 
 def handler404(request):
