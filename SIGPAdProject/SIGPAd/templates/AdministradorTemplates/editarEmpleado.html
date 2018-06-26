@@ -142,18 +142,22 @@
 	            <div class="form-group">
 	                {% if empleado.foto %}
 	                  	<label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
-	                  	<label> {{empleado.foto.url}} </label>
-	                  	<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleado.foto.url}}" multiple>
+	                  	<div class="col-sm-9">
+	                  		<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleado.foto.url}}" multiple>
+	                  	</div>
 	                {% else %}
 	                	<label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
 	                	<label> ¡Aún no ha subido imagen! </label>
-	                	<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+	                	<div class="col-sm-9">
+	                		<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+	                	</div>
 	       			{% endif %}
+	       		</div>
 	       			<div class="form-group">
 		                {% if empleado.foto %}
 		                    <label class="col-sm-3 control-label">Foto</label>
 	                  		<div class="col-sm-9">
-			            		<img src="{{empleado.foto.url}}" alt="" class="img-rounded img-responsive"  width="100" height="100" />
+			            		<img src="{{empleado.foto.url}}" alt="" class="img-rounded img-responsive"  width="200" height="200" />
 			            	</div>
 			        	{% else %}
 			        		<!-- No existe foto -->
