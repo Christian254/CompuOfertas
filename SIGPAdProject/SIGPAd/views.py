@@ -68,9 +68,13 @@ def  indexAdministrador(request):
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeEmpleados(request):
+	planilla=Planilla.objects.all()
+	ultima=0
+	for p in planilla:
+		ultima=p.id
 	empleados = Empleado.objects.all()
 	context = {
-		'empleados':empleados,
+		'empleados':empleados,'ultima':ultima
 	}
 	return render(request, 'AdministradorTemplates/empleados.html', context)
 
@@ -393,14 +397,26 @@ def planilla(request,idplanilla):
 	try:
 		planilla = Planilla.objects.get(pk=idplanilla)
 		pagos = Pago.objects.filter(planilla = planilla)
-		anios = 0	
+		
 		for pago in pagos:	    	    
 			empleado = Empleado.objects.get(pk=pago.empleado.empleado)
+			anio = empleado.fecha_trabajo.year
+			anioActual = datetime.now().year
+			anioTrabajado = anioActual - anio			
 			pago.salarioBase = empleado.puesto.salario
 			pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
 			pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
 			pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
-			pago.vacaciones = round(empleado.puesto.salario * Decimal('0.03'),2)
+			if (anioTrabajado < 5):
+				pago.vacaciones = round(empleado.puesto.salario * Decimal('0.01'),2)
+			elif (anioTrabajado >= 5 and anioTrabajado < 10):
+				pago.vacaciones = round(empleado.puesto.salario * Decimal('0.09'),2)
+			horaE=0
+			hora=HoraExtra.objects.filter(planilla=planilla, empleado=empleado)
+			for h in hora:
+				horaE=horaE+h.cantidad
+			horaEx=horaE*2
+			pago.totalHoraExtra=horaEx
 			pago.aguinaldo = 1
 			pago.costomensual = 3
 			pago.save() 
@@ -427,6 +443,17 @@ def crearPlanilla(request):
 			pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
 			pago.save()
 	return render(request,'AdministradorTemplates/crearPlanilla.html',{})
+
+def horasExtra(request, idempleado, idplanilla):
+	if request.method == 'POST':
+		horasExtra = HoraExtra()
+		horasExtra.cantidad = request.POST.get('cantidad',None)
+		horasExtra.fecha = request.POST.get('fecha',None)
+		horasExtra.empleado=Empleado.objects.get(pk=idempleado)
+		horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
+		horasExtra.save()
+	return render(request,'AdministradorTemplates/horasExtra.html',{})
+
 
 def handler404(request):
     return render(request, '404.html')

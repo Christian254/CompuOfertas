@@ -68,11 +68,20 @@ class Pago(models.Model):
 	insaforp=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	vacaciones=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	aguinaldo=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalHoraExtra=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalSalario=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 
 	def __str__(self):
 		return self.nomPago
 
+class HoraExtra(models.Model):
+	planilla=models.ForeignKey(Planilla, on_delete=models.CASCADE)
+	empleado=models.ForeignKey(Empleado, on_delete=models.CASCADE)
+	cantidad=models.IntegerField(default=0)
+	fecha=models.DateField(auto_now=False, auto_now_add=False)
+
+	def __str__(self):
+		return self.fecha
 
 class Cliente(models.Model):
 	usuario = models.ForeignKey(User, on_delete=models.CASCADE)

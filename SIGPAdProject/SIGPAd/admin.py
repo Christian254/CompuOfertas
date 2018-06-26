@@ -30,3 +30,7 @@ class PagoAdmin(admin.ModelAdmin):
 	pass
 admin.site.register(Pago, PagoAdmin)
 
+class HoraExtraAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(HoraExtra, HoraExtraAdmin)
+

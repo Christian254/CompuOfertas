@@ -19,20 +19,30 @@
         <th>#</th>
         <th>Nombre</th>
         <th>Apellido</th>
-        <th>AFP</th>
-        <th>NIT</th>
-        <th>Puesto</th>        
+        <th>Puesto</th>
+        <th>Salario Base</th>
+        <th>Hora EXtra</th>
+        <th>ISSS</th>
+        <th>AFP</th>        
+        <th>INSAFORP</th>
+        <th>VACACIONES</th>
+        <th>AGUINALDO</th>                         
       </tr>
     </thead>
-    <tbody>
+    <tbody>      
     	{%for i in pagos%}
     		<tr>
             <td>{{i.id}}</td>
 		      	<td>{{i.empleado.nombre}}</td>
 		      	<td>{{i.empleado.apellido}}</td>
+            <td>{{i.empleado.puesto.nombre}}</td>
+            <td>{{i.salarioBase}}</td>   
+            <td>{{i.totalHoraExtra}}</td>
 		      	<td>{{i.pagoisss}}</td>
 		      	<td>{{i.pagoafp}}</td>
-		      	<td>{{i.empleado.puesto.nombre}}</td>		      	            	      	
+            <td>{{i.insaforp}}</td>
+            <td>{{i.vacaciones}}</td>
+            <td>{{i.aguinaldo}}</td>  		      	      	            	      	
 		    </tr> 
       {%endfor%}   	
     </tbody>

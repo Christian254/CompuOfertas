@@ -24,6 +24,7 @@ urlpatterns = [
 	url(r'^editarEmpleado/(?P<pk>\d+)$', login_required(editarEmpleado), name="EditarEmpleado"),
 	url(r'^editarFotoEmpleado/(?P<pk>\d+)$', login_required(editarFotoEmpleado), name="EditarFotoEmpleado"),
 	url(r'^planilla/(?P<idplanilla>\d+)$', login_required(planilla), name="planilla"),
+	url(r'^horasExtra/(?P<idempleado>\d+)/(?P<idplanilla>\d+)$', login_required(horasExtra), name="horasExtra"),
 	url(r'^crearPlanilla$',login_required(crearPlanilla), name="crearPlanilla"),
 
 	url(r'usuarios$', login_required(listadoDeUsuarios), name="Usuarios"),
