@@ -10,88 +10,97 @@
 	<b>{{exito}}</b><br />
 
 	<!-- Formulario -->
-	<form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
-	{% csrf_token %}
-		<div>
-			<span class="label-input100">Puesto:</span>
-			<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
-				{% for puesto in puestos %}
-					<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
-	            {% endfor %}
-			</select>
-		</div>	
+	<main class="p-y-1">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
+					{% csrf_token %}
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Puesto:</span>
+							<select id="puestoEmpleado" name="puestoEmpleado" class="superbox-list">
+								{% for puesto in puestos %}
+									<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
+					            {% endfor %}
+							</select>
+						</div>
 
-		<div>
-			<span class="label-input100">Nombre:</span>
-			<input class="input100" type="text" placeholder="Ingresa Nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required">
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label" >Nombre:</span>
+							<input class="input100"  type="text" placeholder="Ingresa Nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="Ingrese su nombre completo">
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Apellido:</span>
+							<input class="input100" type="text" placeholder="Ingresa Apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Telefóno:</span>
+							<input type="text" class="input100" id="telefono" name="telefono" placeholder="00000000" pattern="[0-9]{8}" required="required">
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Fecha de nacimiento:</span>
+							<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" required="required">
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Sexo:</span>
+							<select id="sexo" name="sexo" class="input100">
+								<option id="masculino" value="masculino">Masculino</option>
+					            <option id="femenino" value="femenino">Femenino</option>
+							</select>
+						</div>	
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Correo</span>
+							<input class="email-subject" type="email" placeholder="Ingresa Correo" id="email" name="email" required="required">
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-4 col-form-label" for="foto">Foto: (PNG, JPG, JPEG)</label>
+							<input class="photo" type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">Fecha de Inicio de Trabajo:</span>
+							<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required">
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">DUI:</span>
+							<input class="input100" type="text" placeholder="DUI" id="dui" name="dui" >
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">NIT:</span>
+							<input class="input100" type="text" placeholder="NIT" id="nit" name="nit">
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">AFP:</span>
+							<input class="input100" type="text" placeholder="AFP" id="afp" name="afp" >
+						</div>
+
+						<div class="form-group row">
+							<span class="col-md-4 col-form-label">ISSS:</span>
+							<input class="input100" type="text" placeholder="ISSS" id="isss" name="isss">
+						</div>
+
+
+
+						<div class="col-md-4 col-form-label container-login100-form-btn">
+							<button class="btn btn-success" type="submit">
+												Registrarse
+							</button>
+						</div>
+
+					</form>
+				</div>
+				
+			</div>
 		</div>
-
-		<div>
-			<span class="label-input100">Apellido:</span>
-			<input class="input100" type="text" placeholder="Ingresa Apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
-		</div>
-
-		<div>
-			<span class="label-input100">Telefóno:</span>
-			<input type="text" class="input100" id="telefono" name="telefono" placeholder="00000000" pattern="[0-9]{8}" required="required">
-		</div>
-
-		<div>
-			<span class="label-input100">Fecha de nacimiento:</span>
-			<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" required="required">
-		</div>
-
-		<div>
-			<span class="label-input100">Sexo:</span>
-			<select id="sexo" name="sexo" class="input100">
-				<option id="masculino" value="masculino">Masculino</option>
-	            <option id="femenino" value="femenino">Femenino</option>
-			</select>
-		</div>	
-
-		<div>
-			<span class="label-input100">Correo</span>
-			<input class="input100" type="email" placeholder="Ingresa Correo" id="email" name="email" required="required">
-		</div>
-
-		<div>
-			<label for="foto">Foto: (PNG, JPG, JPEG)</label>
-			<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
-		</div>
-
-		<div>
-			<span class="label-input100">Fecha de Inicio de Trabajo:</span>
-			<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required">
-		</div>
-
-		<div>
-			<span class="label-input100">DUI:</span>
-			<input class="input100" type="text" placeholder="DUI" id="dui" name="dui" >
-		</div>
-
-		<div>
-			<span class="label-input100">NIT:</span>
-			<input class="input100" type="text" placeholder="NIT" id="nit" name="nit">
-		</div>
-
-		<div>
-			<span class="label-input100">AFP:</span>
-			<input class="input100" type="text" placeholder="AFP" id="afp" name="afp" >
-		</div>
-
-		<div>
-			<span class="label-input100">ISSS:</span>
-			<input class="input100" type="text" placeholder="ISSS" id="isss" name="isss">
-		</div>
-
-
-
-		<div class="container-login100-form-btn">
-			<button class="btn btn-success" type="submit">
-								Registrarse
-			</button>
-		</div>
-
-	</form>
+	</main>
 
 {% endblock Body %}
