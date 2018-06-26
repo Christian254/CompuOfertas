@@ -39,7 +39,7 @@ def  iniciar_sesion(request):
 
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
-	return render_to_response('AdministradorTemplates/adminIndex.html')
+	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
 @permission_required('SIGPAd.view_superuser')
