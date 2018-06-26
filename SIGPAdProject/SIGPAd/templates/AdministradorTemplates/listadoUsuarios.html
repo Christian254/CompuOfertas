@@ -19,12 +19,12 @@
       </tr>
     </thead>
     <tbody>
-    	{% for vendedor in vendedores %}
+    	{% for vendedorSinUser in vendedoresSinUser %}
     		<tr>
 		      	<td>{{ forloop.counter }}</td>
-		      	<td>{{vendedor.nombre}}</td>
-		      	<td>{{vendedor.apellido}}</td>
-		      	<td>{{vendedor.puesto.nombre}}</td>
+		      	<td>{{vendedorSinUser.nombre}}</td>
+		      	<td>{{vendedorSinUser.apellido}}</td>
+		      	<td>{{vendedorSinUser.puesto.nombre}}</td>
 		      	<td></td>
 		    </tr>
       	{% endfor %}

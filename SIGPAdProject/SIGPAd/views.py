@@ -47,12 +47,10 @@ def inicializarPuesto():
 			puesto.nombre = "Gerente"
 			puesto.salario = 2000.00
 			puesto.save()
-		elif i==1:
 			puesto2 = Puesto()
 			puesto2.nombre = "Vendedor"
 			puesto2.salario = 600.00
 			puesto2.save()
-		elif i==2:
 			puesto3 = Puesto()
 			puesto3.nombre = "Contador"
 			puesto3.salario = 300.00
@@ -117,10 +115,10 @@ def crearUsuario(request):
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
 	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
-	vendedores = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
 
 	context = {
-		'vendedores':vendedores,
+		'vendedoresSinUser':vendedoresSinUser,
 	}
 
 	return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
