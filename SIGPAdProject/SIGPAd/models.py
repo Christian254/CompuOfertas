@@ -15,7 +15,8 @@ class Puesto(models.Model):
 	def __str__(self):
 		return self.nombre
 
-class Empleado(models.Model):	
+class Empleado(models.Model):
+	empleado = models.AutoField(primary_key=True)	
 	usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE)
 	nombre = models.CharField(max_length=25)
