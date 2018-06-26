@@ -124,7 +124,7 @@ def editarEmpleado(request, pk):
 	if empleado is not None:
 		#puestos = Puesto.objects.all()
 		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
-		data = Empleado.objects.exclude(sexo=empleado.sexo)[0]
+		#data = Empleado.objects.exclude(sexo=empleado.sexo)[1]
 
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
@@ -150,7 +150,7 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
-				'data':data,
+				#'data':data,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
