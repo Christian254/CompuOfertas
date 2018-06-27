@@ -273,6 +273,11 @@ def crearUsuario(request,pk):
 		context = { 'empleado':empleado,}
 		return render(request, 'AdministradorTemplates/crearUsuario.html', context)
 
+@permission_required('SIGPAd.view_superuser')
+def editarUsuario(request, pk):
+	context = {
+	}
+	return render(request, 'AdministradorTemplates/editarUsuario.html',context)
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):

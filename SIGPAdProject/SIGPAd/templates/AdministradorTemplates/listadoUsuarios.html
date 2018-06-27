@@ -1,7 +1,7 @@
 {% extends 'baseInterior.html' %}
 {% load staticfiles %}
 {% block Titulo %}
-	Listado de Empleados
+	Listado de Usuarios
 {% endblock Titulo %}
 
   {% block usuario %}
@@ -87,7 +87,7 @@
                     <td>{{gerente.nombre}}</td>
                     <td>{{gerente.apellido}}</td>
                     <td>{{gerente.puesto.nombre}}</td>
-                    <td></td>
+                    <td><a href="{% url 'SIGPAd:EditarUsuario' gerente.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></td>
                 </tr>
               {% endfor %}
               {% for vendedor in vendedores %}
@@ -96,7 +96,7 @@
                     <td>{{vendedor.nombre}}</td>
                     <td>{{vendedor.apellido}}</td>
                     <td>{{vendedor.puesto.nombre}}</td>
-                    <td></td>
+                    <td><a href="{% url 'SIGPAd:EditarUsuario' vendedor.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></td>
                 </tr>
               {% endfor %}
               {% for contador in contadores %}
@@ -105,7 +105,7 @@
                     <td>{{contador.nombre}}</td>
                     <td>{{contador.apellido}}</td>
                     <td>{{contador.puesto.nombre}}</td>
-                    <td></td>
+                    <td><a href="{% url 'SIGPAd:EditarUsuario' contador.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></td>
                 </tr>
               {% endfor %}
             </tbody>
