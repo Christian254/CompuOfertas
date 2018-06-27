@@ -5,7 +5,6 @@
 	<!-- META -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
 	{% block META %}
 		
 	{% endblock META %}
@@ -16,6 +15,7 @@
 		{% endblock Titulo %}
 	</title>
 
+
 	<script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>  
@@ -23,8 +23,10 @@
 
 	<!-- Archivos CSS -->
 
-	<!--===============================================================================================-->	
-		<link rel="icon" type="image/png" href="{% static "exterior/images/icons/favicon.ico" %}">
+	<!--===============================================================================================-->
+		<link rel="shortcut icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<link rel="icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		
 	<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/bootstrap/css/bootstrap.min.css" %}">
 	<!--===============================================================================================-->
