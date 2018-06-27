@@ -570,6 +570,7 @@ def planilla(request,idplanilla):
 		planilla.totalSalarioBase =0
 		planilla.totalAguinaldo = 0
 		planilla.costomensual= 0
+		planilla.totalHoras = 0
 		planilla.save()
 		horaestrasss = 0
 		for pago in pagos:	    	    
@@ -619,7 +620,7 @@ def planilla(request,idplanilla):
 			planilla.totalInsaforp= round(Decimal(planilla.totalInsaforp)+Decimal(pago.insaforp),2)
 			planilla.totalSalarioBase = round(Decimal(planilla.totalSalarioBase) + Decimal(pago.salarioBase),2)
 			planilla.totalAguinaldo = round(Decimal(planilla.totalAguinaldo) + Decimal(pago.aguinaldo),2)
-			
+			planilla.totalHoras = horaEx
 			planilla.save()
 			planilla.costomensual=round( Decimal(planilla.totalSalarioBase) + Decimal(planilla.totalAguinaldo) + Decimal(planilla.totalInsaforp) + Decimal(planilla.totalVacaciones) + Decimal(planilla.totalISSS) + Decimal(planilla.totalAFP) ,2)
 			planilla.save() 

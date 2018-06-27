@@ -116,7 +116,7 @@ def generar_reporte(request, planilla):
 	c.drawString(30,high,'Total Vacaciones: '+str(planilla.totalVacaciones))
 
 	high = high - 30
-	c.setFont('Helvetica',25)
+	c.setFont('Helvetica',15)
 	c.drawString(30,high,'TOTAL A PAGAR: '+ str(planilla.costomensual))
 
 	c.showPage() #Guardar pagina
