@@ -35,3 +35,9 @@ $(document).ready(function(){
     
 })
 
+$(document).ready(function(){
+  $("#crearPlanilla").click(function(event){
+    swal("Se Creo una nueva Planilla");
+  })
+})
+
