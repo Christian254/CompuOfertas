@@ -12,7 +12,7 @@
 {% block Body %}
 
 <h3>EMPLEADOS</h3>
-
+<div id="pdf">
 <table class="table">
     <thead>
       <tr>
@@ -47,5 +47,7 @@
       {%endfor%}   	
     </tbody>
   </table>
+  </div>
+  <input type="button" name="crear" id="alerta" value="Descargar PDF" class="btn btn-primary">
   
 {% endblock Body %}

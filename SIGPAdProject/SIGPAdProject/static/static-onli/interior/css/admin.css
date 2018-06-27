@@ -3044,3 +3044,9 @@ select, input[type="file"] { height: 34px !important;line-height: 30px;}
 }
 .legend{ color:#6e778c !important;}
 #light_theme{ color:#333333;}
+
+
+input .input100{
+	margin-top: 10px;
+	border-radius: 5px;
+}

@@ -18,3 +18,14 @@ $(document).ready(function(){
   });
 });
 
+
+$(document).ready(function(){
+  $("#alerta").click(function(event) {
+    var pdf = new jsPDF('p', 'pt', 'letter');
+    html = $("#pdf").html();
+    specialElementHandlers = {};
+    margins = {top: 15,bottom: 15,left: 15,width: 170};    
+    pdf.fromHTML(html, 15,15, {'width': 170},function (dispose) {pdf.save('prueba.pdf');}, margins);
+  });
+})
+
