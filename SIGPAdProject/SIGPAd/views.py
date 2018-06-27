@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
 from datetime import datetime
 from decimal import *
+from SIGPAd.reporte import *
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
@@ -557,7 +558,8 @@ def index(request):
 	return render(request,'index.html',{})
 
 
-def planilla(request,idplanilla):	
+def planilla(request,idplanilla):
+
 	try:		
 		planilla = Planilla.objects.get(pk=idplanilla)
 		pagos = Pago.objects.filter(planilla = planilla)
@@ -606,6 +608,7 @@ def planilla(request,idplanilla):
 			for h in hora:
 				horaE=horaE+h.cantidad
 			horaEx=horaE*2
+
 			pago.totalHoraExtra=horaEx
 			horaestrasss = horaestrasss + horaEx
 			pago.costomensual = 3
@@ -616,6 +619,7 @@ def planilla(request,idplanilla):
 			planilla.totalInsaforp= round(Decimal(planilla.totalInsaforp)+Decimal(pago.insaforp),2)
 			planilla.totalSalarioBase = round(Decimal(planilla.totalSalarioBase) + Decimal(pago.salarioBase),2)
 			planilla.totalAguinaldo = round(Decimal(planilla.totalAguinaldo) + Decimal(pago.aguinaldo),2)
+			
 			planilla.save()
 			planilla.costomensual=round( Decimal(planilla.totalSalarioBase) + Decimal(planilla.totalAguinaldo) + Decimal(planilla.totalInsaforp) + Decimal(planilla.totalVacaciones) + Decimal(planilla.totalISSS) + Decimal(planilla.totalAFP) ,2)
 			planilla.save() 
@@ -624,6 +628,11 @@ def planilla(request,idplanilla):
 	except Exception as e:
 		raise e
 		return render(request,'AdministradorTemplates/adminIndex.html',{})
+
+def reporte(request,pk):
+	planilla = Planilla.objects.get(pk=pk)
+
+	return generar_reporte(request, planilla)
 
 def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()

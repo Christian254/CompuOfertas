@@ -31,7 +31,7 @@ urlpatterns = [
 	url(r'ingresarNuevoUsuario/(?P<pk>\d+)$', login_required(crearUsuario), name="NuevoUsuario"),
 	url(r'editarUsuario/(?P<pk>\d+)$', login_required(editarUsuario), name="EditarUsuario"),
 	url(r'eliminarUsuario/(?P<pk>\d+)$', login_required(eliminarUsuario), name="EliminarUsuario"),
-
+	url(r'^reporte/(?P<pk>\d+)$', login_required(reporte), name="reporte"),
 	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 
