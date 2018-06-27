@@ -14,7 +14,7 @@ admin.autodiscover()
 urlpatterns = [
 	url(r'^$', index, name='Index'),
 
-	url(r'^login$', iniciar_sesion, name="LogIn"),
+	url(r'^login/$', iniciar_sesion, name="LogIn"),
 	url(r'^logout/$',auth_views.logout, {'next_page':'/login'}, name='logout'),
 	#URL Administrador.
 	url(r'indexAdministrador$', login_required(indexAdministrador), name="AdminIndex"),
