@@ -4,6 +4,12 @@
 	Listado de Empleados
 {% endblock Titulo %}
 
+
+  {% block usuario %}
+      {{user.username}}
+    {% endblock usuario %}
+    
+
 {% block Body %}
 
 <h3>EMPLEADOS</h3>
@@ -33,7 +39,8 @@
 		      	    /
 		      	    <a href=""><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
 		      	    /
-		       		<a href="{% url 'SIGPAd:EliminarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+		       		<a href="{% url 'SIGPAd:EliminarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
 		      </td>
 		    </tr>
       	{% endfor %}

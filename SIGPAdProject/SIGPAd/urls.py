@@ -20,10 +20,15 @@ urlpatterns = [
 	url(r'indexAdministrador$', login_required(indexAdministrador), name="AdminIndex"),
 	url(r'empleados$', login_required(listadoDeEmpleados), name="Empleados"),
 	url(r'ingresarNuevoEmpleado$', login_required(crearEmpleado), name="NuevoEmpleado"),
-	url(r'ingresarNuevoUsuario$', login_required(crearUsuario), name="NuevoUsuario"),
 	url(r'^eliminarEmpleado/(?P<pk>\d+)$', login_required(eliminarEmpleado), name="EliminarEmpleado"),
 	url(r'^editarEmpleado/(?P<pk>\d+)$', login_required(editarEmpleado), name="EditarEmpleado"),
 	url(r'^editarFotoEmpleado/(?P<pk>\d+)$', login_required(editarFotoEmpleado), name="EditarFotoEmpleado"),
+	url(r'^planilla/(?P<idplanilla>\d+)$', login_required(planilla), name="planilla"),
+	url(r'^horasExtra/(?P<idempleado>\d+)/(?P<idplanilla>\d+)$', login_required(horasExtra), name="horasExtra"),
+	url(r'^crearPlanilla$',login_required(crearPlanilla), name="crearPlanilla"),
+
+	url(r'usuarios$', login_required(listadoDeUsuarios), name="Usuarios"),
+	url(r'ingresarNuevoUsuario/(?P<pk>\d+)$', login_required(crearUsuario), name="NuevoUsuario"),
 
 	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
@@ -35,5 +40,6 @@ urlpatterns = [
 	url(r'ingresarPuesto$', ingresarPuesto, name="IngresarPuesto"),
 	url(r'sancionarEmpleado$', sancionarEmpleado, name="SancionarEmpleado"),
 	url(r'gestionarEmpleado$', gestionarEmpleado, name="GestionarEmpleado"),
+	url(r'gestionarPlanilla$', gestionarPlanilla, name="GestionarPlanilla"),
 
 ]

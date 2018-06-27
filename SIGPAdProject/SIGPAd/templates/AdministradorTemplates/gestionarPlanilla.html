@@ -1,12 +1,12 @@
-{% extends "baseExterior.html" %}
+{% extends "baseInterior.html" %}
 {% load staticfiles %}
 
 	{% block Titulo %}
-		Sancionar Empleados
+		Gestionar Planilla
 	{% endblock Titulo %}
 
 	{% block CSS %}
-		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
 		<style type="text/css">
 		.label-input100 {
 		  font-family: Poppins-Regular;
@@ -37,39 +37,36 @@
 
 		</style>
 	{% endblock CSS %}
+
 	
 	{% block usuario %}
   		{{user.username}}
   	{% endblock usuario %}
   	
-
+  
 	{% block Body %}
-	    <div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-					<div class="login100-form-title">
-						<span class="login100-form-title-1">
-							<h2>GESTIONAR EMPLEADOS</h2>
-						</span>
-					</div>
+	    
 					<div>
 						<table>
 							<thead>
 								<tr>
-									<th>Empleado</th><th>DUI</th><th>NIT</th><th>Puesto</th><th>Operaciones</th>
+									<th>Numero de Planilla</th>
+									<th>Fecha</th>
+									<th>Operaciones</th>
 								</tr>
 							</thead>
+							{%for pl in planilla%}
 							<tr>
-								<td>Jose</td><td>12334-7</td><td>45234683</td><td>Vendedor</td><td>actualizar</td>
+								<td>{{pl.nomPlanilla}}</td>
+								<td>{{pl.fecha_pago_planilla}}</td>
+								<td>
+								<a href="{% url 'SIGPAd:planilla' pl.id %}">Gestionar</a>
+							</td>
+
 							</tr>
-							<tr>
-								<td>Jose2</td><td>4234642-7</td><td>234345</td><td>Vendedor</td><td>eliminar</td>
-							</tr>
+							{%endfor%}							
 						</table>
 					</div>
 					
-		    </div>
-	    </div>
-	    </div>
 	    
 	{% endblock Body %}

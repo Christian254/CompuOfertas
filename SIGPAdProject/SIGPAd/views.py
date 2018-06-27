@@ -8,9 +8,12 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
 from datetime import datetime
+from decimal import *
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
+from django.db import IntegrityError
+
 
 
 # Create your views here.
@@ -37,16 +40,41 @@ def  iniciar_sesion(request):
 
 #Vista administrador.
 
+def inicializarPuesto():
+	try:
+		puesto = Puesto.objects.all()
+		i = len(puesto)
+		if i==0:
+			puesto = Puesto()
+			puesto.nombre = "Gerente"
+			puesto.salario = 2000.00
+			puesto.save()
+			puesto2 = Puesto()
+			puesto2.nombre = "Vendedor"
+			puesto2.salario = 600.00
+			puesto2.save()
+			puesto3 = Puesto()
+			puesto3.nombre = "Contador"
+			puesto3.salario = 300.00
+			puesto3.save()
+	except Exception as e:
+		pass
+
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
+	inicializarPuesto()
 	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeEmpleados(request):
+	planilla=Planilla.objects.all()
+	ultima=0
+	for p in planilla:
+		ultima=p.id
 	empleados = Empleado.objects.all()
 	context = {
-		'empleados':empleados,
+		'empleados':empleados,'ultima':ultima
 	}
 	return render(request, 'AdministradorTemplates/empleados.html', context)
 
@@ -84,9 +112,115 @@ def  crearEmpleado(request):
 	}
 	return render(request, 'AdministradorTemplates/crearEmpleado.html', context)
 
+	"""
+	try:
+		empleado = Empleado.objects.get(empleado=pk)
+	except Empleado.DoesNotExist:
+		empleado = None
+	if empleado is not None:
+		if empleado.puesto.nombre == "Vendedor":
+			if request.method == 'POST':
+				username = request.POST.get('usr', None)
+				password = request.POST.get('pwd', None)
+				password2 = request.POST.get('pwd2', None)
+				user = authenticate(username=username, password=password, password2=password2)
+				validarUser = username
+
+				if user:
+					validar = "Registro de usuario, ya existe."
+					context = { 'validar':validar }
+					return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+				else:
+					if password == password2:
+						user = User.objects.create_user(username=username, password=password)
+						content_type = ContentType.objects.get_for_model(Empleado)
+						permission = Permission.objects.get(
+							codename='view_seller',
+							content_type=content_type,
+							)
+						user.user_permissions.add(permission)
+						user.save()
+						empleado.usuario = user
+						user.save()
+						empleado.save()
+						return redirect('/usuarios')
+					else:
+
+						validar = "Las contraseñas son diferentes"
+						context = { 
+						'validar':validar,  
+						'empleado':empleado,}
+						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+	context = { 'empleado':empleado,}
+	return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+	"""
+	"""empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+    	# code that produces error
+	except IntegrityError as e:
+    	return render_to_response("AdministradorTemplates/crearUsuario.html", {"message": e.message})"""
 @permission_required('SIGPAd.view_superuser')
-def crearUsuario(request):
-	return render_to_response('AdministradorTemplates/crearUsuario.html')
+def crearUsuario(request,pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+		if empleado is not None:
+			if empleado.puesto.nombre == "Vendedor":
+				if request.method == 'POST':
+					username = request.POST.get('usr', None)
+					password = request.POST.get('pwd', None)
+					password2 = request.POST.get('pwd2', None)
+					user = authenticate(username=username, password=password, password2=password2)
+					validarUser = username
+
+					if user:
+						validar = "Registro de usuario, ya existe."
+						context = { 'validar':validar }
+						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+					else:
+						if password == password2:
+							user = User.objects.create_user(username=username, password=password)
+							content_type = ContentType.objects.get_for_model(Empleado)
+							permission = Permission.objects.get(
+								codename='view_seller',
+								content_type=content_type,
+								)
+							user.user_permissions.add(permission)
+							user.save()
+							empleado.usuario = user
+							user.save()
+							empleado.save()
+							return redirect('/usuarios')
+						else:
+
+							validar = "Las contraseñas son diferentes"
+							context = { 
+							'validar':validar,  
+							'empleado':empleado,}
+							return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+	except (KeyError, IntegrityError):
+		#Aqui tiene que ir la pagina 404 correcta.
+		context = { 
+			'empleado':empleado,
+			'validar': "Empleado duplicado",
+			}
+		return render(request, 'AdministradorTemplates/crearUsuario.html',context)
+	except Empleado.DoesNotExist:
+		empleado = None
+	else:
+		context = { 'empleado':empleado,}
+		return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+
+
+@permission_required('SIGPAd.view_superuser')
+def listadoDeUsuarios(request):
+	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
+	vendedorSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+
+	context = {
+		'vendedorSinUser':vendedorSinUser,
+	}
+	return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
+
 
 @permission_required('SIGPAd.view_superuser')
 def editarEmpleado(request, pk):
@@ -99,10 +233,9 @@ def editarEmpleado(request, pk):
 	if empleado is not None:
 		#puestos = Puesto.objects.all()
 		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
-		data = Empleado.objects.exclude(sexo=empleado.sexo)[0]
-
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		empleados = Empleado.objects.exclude(sexo=empleado.sexo)
 		if request.method == 'POST':
 			cargo = Puesto.objects.get(nombre=request.POST.get('puestoEmpleado', None))
 			empleado.puesto = cargo
@@ -125,7 +258,7 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
-				'data':data,
+				'empleados':empleados,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
@@ -186,6 +319,12 @@ def eliminarEmpleado(request, pk):
 #Vistas vendedores.
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
+	user = request.user
+	if user.is_authenticated():
+		if user.is_superuser:
+			return render(request,'AdministradorTemplates/adminIndex.html',{})
+		else:
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -226,6 +365,12 @@ def registrarCliente(request):
 	return render(request, 'ClienteTemplates/registrarCliente.html', context)
 
 def indexCliente(request):
+	user = request.user
+	if user.is_authenticated():
+		if user.is_superuser:
+			return render(request,'AdministradorTemplates/adminIndex.html',{})
+		else:
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('ClienteTemplates/clienteIndex.html')
 
 #Foro
@@ -248,6 +393,66 @@ def index(request):
 	return render(request,'index.html',{})
 
 
+def planilla(request,idplanilla):	
+	try:
+		planilla = Planilla.objects.get(pk=idplanilla)
+		pagos = Pago.objects.filter(planilla = planilla)
+		
+		for pago in pagos:	    	    
+			empleado = Empleado.objects.get(pk=pago.empleado.empleado)
+			anio = empleado.fecha_trabajo.year
+			anioActual = datetime.now().year
+			anioTrabajado = anioActual - anio			
+			pago.salarioBase = empleado.puesto.salario
+			pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
+			pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
+			pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
+			if (anioTrabajado < 5):
+				pago.vacaciones = round(empleado.puesto.salario * Decimal('0.01'),2)
+			elif (anioTrabajado >= 5 and anioTrabajado < 10):
+				pago.vacaciones = round(empleado.puesto.salario * Decimal('0.09'),2)
+			horaE=0
+			hora=HoraExtra.objects.filter(planilla=planilla, empleado=empleado)
+			for h in hora:
+				horaE=horaE+h.cantidad
+			horaEx=horaE*2
+			pago.totalHoraExtra=horaEx
+			pago.aguinaldo = 1
+			pago.costomensual = 3
+			pago.save() 
+
+		pagos = Pago.objects.filter(planilla = planilla)
+
+		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
+	except Exception as e:
+		return render(request,'AdministradorTemplates/adminIndex.html',{})
+
+def gestionarPlanilla(request):
+	planilla = Planilla.objects.all()
+	return render(request,'AdministradorTemplates/gestionarPlanilla.html',{'planilla':planilla})
+
+def crearPlanilla(request):
+	if request.method == 'POST':
+		planilla = Planilla()
+		planilla.nomPlanilla = request.POST.get('codigo',None)
+		planilla.fecha_pago_planilla = request.POST.get('fecha',None)
+		planilla.save()
+		empleados = Empleado.objects.filter(estado=1)
+		for i in empleados:
+			nompago = i.apellido[0] + i.nombre[0] + str(i.empleado) + str(planilla.id)
+			pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
+			pago.save()
+	return render(request,'AdministradorTemplates/crearPlanilla.html',{})
+
+def horasExtra(request, idempleado, idplanilla):
+	if request.method == 'POST':
+		horasExtra = HoraExtra()
+		horasExtra.cantidad = request.POST.get('cantidad',None)
+		horasExtra.fecha = request.POST.get('fecha',None)
+		horasExtra.empleado=Empleado.objects.get(pk=idempleado)
+		horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
+		horasExtra.save()
+	return render(request,'AdministradorTemplates/horasExtra.html',{})
 
 
 def handler404(request):

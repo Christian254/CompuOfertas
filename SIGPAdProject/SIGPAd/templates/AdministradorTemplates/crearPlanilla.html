@@ -4,10 +4,9 @@
 	{% block Titulo %}
 		Ingresar Puestos
 	{% endblock Titulo %}
-
-	{% block CSS %}
-	
-	{% endblock CSS %}
+	{% block usuario %}
+  	{{user.username}}
+    {% endblock usuario %}
 
 	{% block Body %}
     <div class="limiter">
@@ -15,7 +14,7 @@
 			<div class="wrap-login100">
 					<div class="login100-form-title">
 						<span class="login100-form-title-1">
-							<h2>NUEVO PUESTO</h2>
+							<h2>NUEVA PLANILLA</h2>
 						</span>
 					</div>
 				<!-- Formulario -->
@@ -25,20 +24,20 @@
 	            {% csrf_token %}
 
 	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
-					<span class="label-input100">Nombre del Puesto </span>
-					<input class="input100" type="text" placeholder="Ingresar Puesto" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}">
+					<span class="label-input100">Codigo Planilla </span>
+					<input class="input100" type="text" placeholder="Ingresar Codigo" id="codigo" name="codigo" pattern="[a-zA-Z]{1-15}" required="true">
 					<span class="focus-input100"></span>
 				</div>
 
 	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
-					<span class="label-input100">Salario Base </span>
-					<input class="input100" type="number" placeholder="Ingresar Salario Base" id="salario" name="salario" min="0" step=".01">
+					<span class="label-input100">Fecha de Pago </span>
+					<input class="input100" type="date" placeholder="Ingresar Fecha de Pago" id="fecha" name="fecha" required="true">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="container-login100-form-btn">
 					<button class="login100-form-btn" type="submit">
-								Ingresar
+								Crear
 					</button>
 				</div>
 
