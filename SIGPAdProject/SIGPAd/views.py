@@ -493,7 +493,15 @@ def planilla(request,idplanilla):
 	try:		
 		planilla = Planilla.objects.get(pk=idplanilla)
 		pagos = Pago.objects.filter(planilla = planilla)
-		
+		planilla.totalAFP = 0
+		planilla.totalISSS = 0
+		planilla.totalVacaciones=0
+		planilla.totalInsaforp=0
+		planilla.totalSalarioBase =0
+		planilla.totalAguinaldo = 0
+		planilla.costomensual= 0
+		planilla.save()
+		horaestrasss = 0
 		for pago in pagos:	    	    
 			empleado = Empleado.objects.get(pk=pago.empleado.empleado)
 			anio = empleado.fecha_trabajo.year
@@ -531,13 +539,22 @@ def planilla(request,idplanilla):
 				horaE=horaE+h.cantidad
 			horaEx=horaE*2
 			pago.totalHoraExtra=horaEx
+			horaestrasss = horaestrasss + horaEx
 			pago.costomensual = 3
-			pago.save() 
-
+			pago.save()
+			planilla.totalAFP = round(Decimal(planilla.totalAFP) + Decimal(pago.pagoafp),2)
+			planilla.totalISSS = round(Decimal(planilla.totalISSS) + Decimal(pago.pagoisss),2)
+			planilla.totalVacaciones= round(Decimal(planilla.totalVacaciones)+Decimal(pago.vacaciones),2)
+			planilla.totalInsaforp= round(Decimal(planilla.totalInsaforp)+Decimal(pago.insaforp),2)
+			planilla.totalSalarioBase = round(Decimal(planilla.totalSalarioBase) + Decimal(pago.salarioBase),2)
+			planilla.totalAguinaldo = round(Decimal(planilla.totalAguinaldo) + Decimal(pago.aguinaldo),2)
+			planilla.save()
+			planilla.costomensual=round( Decimal(planilla.totalSalarioBase) + Decimal(planilla.totalAguinaldo) + Decimal(planilla.totalInsaforp) + Decimal(planilla.totalVacaciones) + Decimal(planilla.totalISSS) + Decimal(planilla.totalAFP) ,2)
+			planilla.save() 
 		pagos = Pago.objects.filter(planilla = planilla)
-
-		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
+		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos,'planilla':planilla, 'hora':horaestrasss})
 	except Exception as e:
+		raise e
 		return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 def gestionarPlanilla(request):
