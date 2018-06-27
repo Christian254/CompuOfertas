@@ -27,7 +27,7 @@
               	  <div class="form-group">
                   <label class="col-sm-3 control-label">Puesto</label>
                   <div class="col-sm-9">
-						<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
+						<select id="puestoEmpleado" name="puestoEmpleado" class="input100" required="">
 							<option id="{{empleado.puesto.nombre}}" value="{{empleado.puesto.nombre}}" selected="selected">{{empleado.puesto.nombre}}</option>
 							{% for puesto in puestos %}
 								<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>

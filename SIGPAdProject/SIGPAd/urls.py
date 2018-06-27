@@ -41,8 +41,9 @@ urlpatterns = [
 
 	url(r'ingresarPuesto$', ingresarPuesto, name="IngresarPuesto"),
 	url(r'gestionarPuesto$', gestionarPuesto, name="GestionarPuesto"),
-	url(r'sancionarEmpleado$', sancionarEmpleado, name="SancionarEmpleado"),
+	url(r'sancionarEmpleado/(?P<pk>\d+)$', sancionarEmpleado, name="SancionarEmpleado"),
 	url(r'gestionarEmpleado$', gestionarEmpleado, name="GestionarEmpleado"),
 	url(r'gestionarPlanilla$', gestionarPlanilla, name="GestionarPlanilla"),
-	#url(r'^editarPuesto/(?P<pk>\d+)$', login_required(editarPuesto), name="EditarPuesto"),
+	url(r'^editarPuesto/(?P<pk>\d+)$', login_required(editarPuesto), name="EditarPuesto"),
+	url(r'^eliminarPuesto/(?P<pk>\d+)$', login_required(eliminarPuesto), name="EliminarPuesto"),
 ]
