@@ -21,7 +21,12 @@
               <h3 class="content-header">Crear Usuario</h3>
             </div>
             <div class="porlets-content">
-            	<b>{{validar}}</b>
+              {% if validar %}
+                <div class="alert alert-danger">
+                  <strong>{{validar}}<strong>
+                </div>
+                <br />
+              {% endif %}
               <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
 					{% csrf_token %}
 
