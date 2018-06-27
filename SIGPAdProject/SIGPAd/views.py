@@ -394,7 +394,7 @@ def index(request):
 
 
 def planilla(request,idplanilla):	
-	try:
+	try:		
 		planilla = Planilla.objects.get(pk=idplanilla)
 		pagos = Pago.objects.filter(planilla = planilla)
 		
