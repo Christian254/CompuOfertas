@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.models import User,Permission
+from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
@@ -278,7 +279,7 @@ def crearUsuario(request,pk):
 		#Aqui tiene que ir la pagina 404 correcta.
 		context = { 
 			'empleado':empleado,
-			'validar': "Empleado duplicado",
+			'validar': "Usuario duplicado",
 			}
 		return render(request, 'AdministradorTemplates/crearUsuario.html',context)
 	except Empleado.DoesNotExist:
@@ -287,11 +288,54 @@ def crearUsuario(request,pk):
 		context = { 'empleado':empleado,}
 		return render(request, 'AdministradorTemplates/crearUsuario.html', context)
 
+
 @permission_required('SIGPAd.view_superuser')
 def editarUsuario(request, pk):
-	context = {
-	}
-	return render(request, 'AdministradorTemplates/editarUsuario.html',context)
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+		if empleado is not None:
+			usuario = get_object_or_404(User, id=empleado.usuario.id)
+			try:
+				if request.method == 'POST':
+					pwdAntigua = request.POST.get('pwdAntigua', None)
+					verificacionPassword = check_password(pwdAntigua,usuario.password)
+					if verificacionPassword:
+						usr = request.POST.get('usr',None)
+						pwdNueva = request.POST.get('pwdNueva', None)
+						usuario.username = usr
+						usuario.set_password(pwdNueva)
+						usuario.save()
+						context = { 
+							'empleado':empleado,
+							'usuario':usuario,
+							'exito': "Usuario editado con éxito",
+						}
+						return render(request, 'AdministradorTemplates/editarUsuario.html',context)
+					else:
+						context = {
+							'empleado':empleado,
+							'validar':"Error, contraseña antigua incorrecta",
+						}
+						return 	render(request, 'AdministradorTemplates/editarUsuario.html',context)
+			except (KeyError, IntegrityError):
+				#Aqui tiene que ir la pagina 404 correcta.
+				context = { 
+					'empleado':empleado,
+					'validar': "Usuario duplicado",
+					}
+				return render(request, 'AdministradorTemplates/crearUsuario.html',context)
+			except(KeyError, usuario.DoesNotExist):
+				context = { 
+					'empleado':empleado,
+					'validar': "Usuario no existe",
+				}
+				return render(request, 'AdministradorTemplates/editarUsuario.html',context)
+	except Empleado.DoesNotExist:
+		empleado = None
+	else:
+		context = { 'empleado':empleado,}
+		return render(request, 'AdministradorTemplates/editarUsuario.html', context)
+
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
