@@ -680,6 +680,7 @@ def sancionarEmpleado(request):
 def gestionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')
 
+"""
 @permission_required('SIGPAd.view_superuser')
 def editarPuesto(request, pk):
 	mensaje = None
@@ -716,3 +717,4 @@ def editarPuesto(request, pk):
 			'mensaje':mensaje,
 		}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context)
+"""
