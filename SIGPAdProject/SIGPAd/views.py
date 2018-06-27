@@ -170,7 +170,6 @@ def crearUsuario(request,pk):
 					password = request.POST.get('pwd', None)
 					password2 = request.POST.get('pwd2', None)
 					user = authenticate(username=username, password=password, password2=password2)
-					validarUser = username
 
 					if user:
 						validar = "Registro de usuario, ya existe."
@@ -197,6 +196,70 @@ def crearUsuario(request,pk):
 							'validar':validar,  
 							'empleado':empleado,}
 							return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+			elif empleado.puesto.nombre == "Gerente":
+				if request.method == 'POST':
+					username = request.POST.get('usr', None)
+					password = request.POST.get('pwd', None)
+					password2 = request.POST.get('pwd2', None)
+					user = authenticate(username=username, password=password, password2=password2)
+
+					if user:
+						validar = "Registro de usuario, ya existe."
+						context = { 'validar':validar }
+						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+					else:
+						if password == password2:
+							user = User.objects.create_user(username=username, password=password)
+							content_type = ContentType.objects.get_for_model(Empleado)
+							permission = Permission.objects.get(
+								codename='view_superuser',
+								content_type=content_type,
+								)
+							user.user_permissions.add(permission)
+							user.save()
+							empleado.usuario = user
+							user.save()
+							empleado.save()
+							return redirect('/usuarios')
+						else:
+
+							validar = "Las contraseñas son diferentes"
+							context = { 
+							'validar':validar,  
+							'empleado':empleado,}
+							return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+			elif empleado.puesto.nombre == "Contador":
+				if request.method == 'POST':
+					username = request.POST.get('usr', None)
+					password = request.POST.get('pwd', None)
+					password2 = request.POST.get('pwd2', None)
+					user = authenticate(username=username, password=password, password2=password2)
+
+					if user:
+						validar = "Registro de usuario, ya existe."
+						context = { 'validar':validar }
+						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
+					else:
+						if password == password2:
+							user = User.objects.create_user(username=username, password=password)
+							content_type = ContentType.objects.get_for_model(Empleado)
+							permission = Permission.objects.get(
+								codename='view_accounter',
+								content_type=content_type,
+								)
+							user.user_permissions.add(permission)
+							user.save()
+							empleado.usuario = user
+							user.save()
+							empleado.save()
+							return redirect('/usuarios')
+						else:
+
+							validar = "Las contraseñas son diferentes"
+							context = { 
+							'validar':validar,  
+							'empleado':empleado,}
+							return render(request, 'AdministradorTemplates/crearUsuario.html', context)				
 	except (KeyError, IntegrityError):
 		#Aqui tiene que ir la pagina 404 correcta.
 		context = { 
@@ -210,14 +273,33 @@ def crearUsuario(request,pk):
 		context = { 'empleado':empleado,}
 		return render(request, 'AdministradorTemplates/crearUsuario.html', context)
 
+@permission_required('SIGPAd.view_superuser')
+def editarUsuario(request, pk):
+	context = {
+	}
+	return render(request, 'AdministradorTemplates/editarUsuario.html',context)
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
+	puestoGerente = Puesto.objects.filter(nombre__contains="Gerente")
+	gerentesSinUser = Empleado.objects.filter(puesto=puestoGerente,usuario__id=None)
+	gerentes = Empleado.objects.filter(puesto=puestoGerente).exclude(usuario__id=None)
+
 	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
-	vendedorSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+	vendedores = Empleado.objects.filter(puesto=puestoVendedor).exclude(usuario__id=None)
+
+	puestoContador = Puesto.objects.filter(nombre__contains="Contador")
+	contadoresSinUser = Empleado.objects.filter(puesto=puestoContador,usuario__id=None)
+	contadores = Empleado.objects.filter(puesto=puestoContador).exclude(usuario__id=None)
 
 	context = {
-		'vendedorSinUser':vendedorSinUser,
+		'gerentesSinUser':gerentesSinUser,
+		'gerentes':gerentes,
+		'vendedoresSinUser':vendedoresSinUser,
+		'vendedores':vendedores,
+		'contadoresSinUser':contadoresSinUser,
+		'contadores':contadores,
 	}
 	return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
 
@@ -394,7 +476,7 @@ def index(request):
 
 
 def planilla(request,idplanilla):	
-	try:
+	try:		
 		planilla = Planilla.objects.get(pk=idplanilla)
 		pagos = Pago.objects.filter(planilla = planilla)
 		
