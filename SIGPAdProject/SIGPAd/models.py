@@ -17,7 +17,7 @@ class Puesto(models.Model):
 
 class Empleado(models.Model):
 	empleado = models.AutoField(primary_key=True)	
-	usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+	usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE)
 	nombre = models.CharField(max_length=25)
 	apellido = models.CharField(max_length=25)
