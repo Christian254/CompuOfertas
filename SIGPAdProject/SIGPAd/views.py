@@ -348,7 +348,7 @@ def eliminarUsuario(request, pk):
 				context = {
 					'mensaje':"Usuario eliminado",
 				}
-				return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
+				return redirect('/usuarios')
 			except (KeyError, usuario.DoesNotExist):
 				return render(request, 'AdministradorTemplates/listadoUsuarios.html', {
 				    	'error_message': "No selecciono un usuario valido a eliminar.",
