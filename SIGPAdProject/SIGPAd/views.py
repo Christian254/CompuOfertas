@@ -407,17 +407,34 @@ def planilla(request,idplanilla):
 			pago.pagoafp = round(empleado.puesto.salario * Decimal('0.0675'),2)
 			pago.pagoisss = round(empleado.puesto.salario * Decimal('0.075'),2)
 			pago.insaforp =  round(empleado.puesto.salario * Decimal('0.01'),2)
-			if (anioTrabajado < 5):
-				pago.vacaciones = round(empleado.puesto.salario * Decimal('0.01'),2)
-			elif (anioTrabajado >= 5 and anioTrabajado < 10):
-				pago.vacaciones = round(empleado.puesto.salario * Decimal('0.09'),2)
+			var=((empleado.puesto.salario/30)*15*Decimal('1.3'))
+			var2=(((empleado.puesto.salario/30)*15)*Decimal('0.1425'))
+			pago.vacaciones=round((var+var2)/12,2)
+			
+
+			if anioTrabajado < 1:
+				dias=0
+				pago.aguinaldo=round((((empleado.puesto.salario/30)*0)/12),2)
+				
+			elif anioTrabajado >= 1 and anioTrabajado < 3:
+				dias=10
+				pago.aguinaldo=round((((empleado.puesto.salario/30)*10)/12),2)
+			
+			if (anioTrabajado >= 3 and anioTrabajado < 10):
+				dias=15
+				pago.aguinaldo=round((((empleado.puesto.salario/30)*dias)/12),2)
+			elif (anioTrabajado >= 10):
+				dias=18
+				pago.aguinaldo=round((((empleado.puesto.salario/30)*dias)/12),2)
+				
+
+				
 			horaE=0
 			hora=HoraExtra.objects.filter(planilla=planilla, empleado=empleado)
 			for h in hora:
 				horaE=horaE+h.cantidad
 			horaEx=horaE*2
 			pago.totalHoraExtra=horaEx
-			pago.aguinaldo = 1
 			pago.costomensual = 3
 			pago.save() 
 
@@ -470,6 +487,11 @@ def ingresarPuesto(request):
 		context = {}
 		return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
 	return render_to_response('PuestoTemplates/ingresarPuesto.html')
+
+def gestionarPuesto(request):
+	puesto=Puesto.objects.all()
+	context={'puesto':puesto}
+	return render(request,'PuestoTemplates/gestionarPuesto.html',context)
 
 def sancionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/sancionarEmpleado.html')

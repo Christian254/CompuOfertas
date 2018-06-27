@@ -54,6 +54,7 @@ class Planilla(models.Model):
 	totalInsaforp=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalSalarioBase=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	costomensual=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalAguinaldo=models.DecimalField(max_digits=8, decimal_places=2, default=0)
 	def __str__(self):
 		return self.nomPlanilla
 

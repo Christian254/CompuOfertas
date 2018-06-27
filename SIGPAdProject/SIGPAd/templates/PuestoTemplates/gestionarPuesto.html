@@ -1,0 +1,39 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Listado de Puestos
+{% endblock Titulo %}
+
+{% block CSS %}
+	<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
+{% endblock CSS %}
+
+{% block Body %}
+
+<h3>PUESTOS</h3>
+<div class="limiter">
+		
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Puesto</th><th>Salario Base</th><th>Operaciones</th>
+				</tr>
+			</thead>
+				{% for puesto in puesto %}
+				<tr>
+					<td>{{ puesto.nombre}}</td><td>{{ puesto.salario }}</td><td><button type="submit">
+								Actualizar
+					</button>
+				    <button type="submit">
+								Eliminar
+					</button></td>
+				</tr>
+				{% endfor %}
+		</table>
+		<div class="container-login100-form-btn">
+				<a href="{% url 'SIGPAd:IngresarPuesto' %}" class="btn btn-success">NUEVO PUESTO</a>
+		</div>
+	</div>
+				   
+{% endblock Body %}
