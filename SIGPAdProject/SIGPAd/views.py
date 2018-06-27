@@ -97,9 +97,23 @@ def  crearEmpleado(request):
 		empleado.afp = request.POST.get('afp',None)
 		empleado.isss = request.POST.get('isss',None)
 		empleado.save()
-
 		puestos = Puesto.objects.all()
 		exito = "Empleado guardado con éxito."
+
+		#muy importante no eliminar por favor
+		try:
+			planilla=Planilla.objects.all()
+			ultima=0
+			for p in planilla:
+				ultima=p.id
+			pl = Planilla.objects.get(pk=ultima)
+			nompago = empleado.apellido[0] + empleado.nombre[0] + str(empleado.empleado) + str(pl.id)
+			pago = Pago(planilla = pl, empleado = empleado, nomPago = nompago, fecha_pago=pl.fecha_pago_planilla)
+			pago.save()
+		except Exception as e:
+			exito=exito+" \n El empleado no pudo ser agregado a la planilla"
+
+
 		context = {
 			'cargo':cargo,
 			'puestos':puestos,
