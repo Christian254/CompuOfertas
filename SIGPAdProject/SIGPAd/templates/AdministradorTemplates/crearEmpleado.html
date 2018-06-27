@@ -11,7 +11,7 @@
 {% block Body %}
 
 	<h3>NUEVO EMPLEADO</h3>
-	<b>{{exito}}</b><br />
+
 
 	<!-- Formulario -->
       <div class="row">
@@ -20,115 +20,123 @@
             <div class="header">
               <div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a> <a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>
               <h3 class="content-header">Datos Empleado</h3>
-            </div>
+            </div>         
               <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
             <div class="porlets-content">
+              {% if exito %}
+                <div class="alert alert-success">
+                  <strong>{{exito}}<strong>
+                </div>
+
+              {% endif %}
+
               <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
-					{% csrf_token %}
+                    
+      					{% csrf_token %}
 
-				<div class="form-group">
-                  <label class="col-sm-3 control-label">Puesto</label>
-                  <div class="col-sm-6">
-                  	<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
-						{% for puesto in puestos %}
-							<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
-					    {% endfor %}
-					</select>  	
-                  </div>
-                </div><!--/form-group--> 
+      				<div class="form-group">
+                        <label class="col-sm-3 control-label">Puesto</label>
+                        <div class="col-sm-6">
+                        	<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
+      						{% for puesto in puestos %}
+      							<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
+      					    {% endfor %}
+      					</select>  	
+                        </div>
+                      </div><!--/form-group--> 
 
-				<div class="form-group">
-                  <label class="col-sm-3 control-label">Nombre</label>
-                  <div class="col-sm-6">
-                    <input class="form-control"  type="text" placeholder="Ingresa Nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="Ingrese su nombre completo">
-                  </div>
-                </div><!--/form-group--> 
+      				<div class="form-group">
+                        <label class="col-sm-3 control-label">Nombre</label>
+                        <div class="col-sm-6">
+                          <input class="form-control"  type="text" placeholder="Ingresa Nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="Ingrese su nombre completo">
+                        </div>
+                      </div><!--/form-group--> 
 
-				<div class="form-group">
-                  <label class="col-sm-3 control-label">Apellido</label>
-                  <div class="col-sm-6">
-                    <input class="form-control" type="text" placeholder="Ingresa Apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
-                  </div>
-                </div><!--/form-group--> 
+      				<div class="form-group">
+                        <label class="col-sm-3 control-label">Apellido</label>
+                        <div class="col-sm-6">
+                          <input class="form-control" type="text" placeholder="Ingresa Apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required">
+                        </div>
+                      </div><!--/form-group--> 
 
-				<div class="form-group">
-                  <label class="col-sm-3 control-label">Telefóno</label>
-                  <div class="col-sm-6">
-                  	<input type="text" class="form-control" id="telefono" name="telefono" placeholder="00000000" pattern="[0-9]{8}" required="required">
-                  </div>
-                </div><!--/form-group--> 
+      				<div class="form-group">
+                        <label class="col-sm-3 control-label">Telefóno</label>
+                        <div class="col-sm-6">
+                        	<input type="text" class="form-control" id="telefono" name="telefono" placeholder="00000000" pattern="[0-9]{8}" required="required">
+                        </div>
+                      </div><!--/form-group--> 
 
 
-				<div class="form-group">
-                  <label class="col-sm-3 control-label">Fecha de Nacimiento</label>
-                  <div class="col-sm-6">
-                  	<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" required="required">
-                  </div>
-                </div><!--/form-group--> 
+      				<div class="form-group">
+                        <label class="col-sm-3 control-label">Fecha de Nacimiento</label>
+                        <div class="col-sm-6">
+                        	<input type="date" class="input100" id="fecha_nacimiento" name="fecha_nacimiento" required="required">
+                        </div>
+                      </div><!--/form-group--> 
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Sexo</label>
-                  <div class="col-sm-9">
-                  		<select id="sexo" name="sexo" class="input100">
-								<option id="masculino" value="masculino">Masculino</option>
-					            <option id="femenino" value="femenino">Femenino</option>
-						</select>
-                   </div>
-                 </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Sexo</label>
+                        <div class="col-sm-9">
+                        		<select id="sexo" name="sexo" class="input100">
+      								<option id="masculino" value="masculino">Masculino</option>
+      					            <option id="femenino" value="femenino">Femenino</option>
+      						</select>
+                         </div>
+                       </div>
 
-                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Correo</label>
-                  <div class="col-sm-6">
-                  		<input type="email" placeholder="Ingresa Correo" id="email" name="email" required="required" class="form-control">
-                   </div>
-                 </div>                
+                       <div class="form-group">
+                        <label class="col-sm-3 control-label">Correo</label>
+                        <div class="col-sm-6">
+                        		<input type="email" placeholder="Ingresa Correo" id="email" name="email" required="required" class="form-control">
+                         </div>
+                       </div>                
 
-                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Fecha de Inicio de Trabajo</label>
-                  <div class="col-sm-6">
-                  		<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required">
-                   </div>
-                 </div>     
+                       <div class="form-group">
+                        <label class="col-sm-3 control-label">Fecha de Inicio de Trabajo</label>
+                        <div class="col-sm-6">
+                        		<input type="date" class="input100" id="fecha_trabajo" name="fecha_trabajo" required="required">
+                         </div>
+                       </div>     
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">DUI</label>
-                  <div class="col-sm-9">
-                  	<input class="input100" type="text" id="dui" name="dui" required="required">
-                  </div>
-                </div><!--/form-group--> 
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">DUI</label>
+                        <div class="col-sm-9">
+                        	<input class="input100" type="text" id="dui" name="dui" required="required">
+                        </div>
+                      </div><!--/form-group--> 
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">NIT</label>
-                  <div class="col-sm-9">
-                  	<input class="input100" type="text" id="nit" name="nit" required="required">
-                  </div>
-                </div><!--/form-group--> 
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">NIT</label>
+                        <div class="col-sm-9">
+                        	<input class="input100" type="text" id="nit" name="nit" required="required">
+                        </div>
+                      </div><!--/form-group--> 
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">AFP</label>
-                  <div class="col-sm-9">
-					<input class="input100" type="text" id="afp" name="afp" required="required" >
-                  </div>
-                </div><!--/form-group--> 
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">AFP</label>
+                        <div class="col-sm-9">
+      					<input class="input100" type="text" id="afp" name="afp" required="required" >
+                        </div>
+                      </div><!--/form-group--> 
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">ISSS</label>
-                  <div class="col-sm-9">
-                  	<input class="input100" type="text"  id="isss" name="isss" required="required">
-                  </div>+
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">ISSS</label>
+                        <div class="col-sm-9">
+                        	<input class="input100" type="text"  id="isss" name="isss" required="required">
+                        </div>+
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
-                  <div class="col-sm-6">
-                  	<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
-                  </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+                        <div class="col-sm-6">
+                        	<input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+                        </div>
 
-                <div class="col-md-4 col-form-label container-login100-form-btn">
-							<button class="btn btn-success" type="submit">
-								Nuevo Empleado
-							</button>
-					</div>
-                </div><!--/form-group--> 
+                      <div class="col-md-4 col-form-label container-login100-form-btn">
+      							<button class="btn btn-success" type="submit">
+      								Nuevo Empleado
+      							</button>
+      					</div>
+                      </div><!--/form-group--> 
 
               </form>
             </div><!--/porlets-content-->

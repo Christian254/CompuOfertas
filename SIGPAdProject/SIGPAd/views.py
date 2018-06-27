@@ -214,10 +214,10 @@ def crearUsuario(request,pk):
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
 	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
-	vendedorSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
 
 	context = {
-		'vendedorSinUser':vendedorSinUser,
+		'vendedoresSinUser':vendedoresSinUser,
 	}
 	return render(request, 'AdministradorTemplates/listadoUsuarios.html', context)
 
