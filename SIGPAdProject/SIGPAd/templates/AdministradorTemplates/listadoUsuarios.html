@@ -4,6 +4,11 @@
 	Listado de Empleados
 {% endblock Titulo %}
 
+  {% block usuario %}
+      {{user.username}}
+    {% endblock usuario %}
+    
+
 {% block Body %}
 	{{vendedor}}
 
