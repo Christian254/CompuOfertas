@@ -65,6 +65,8 @@
     </tbody>
   </table>
   </div>
-  <input type="button" name="crear" id="alerta" value="Descargar PDF" class="btn btn-primary">
+  <a href="{% url 'SIGPAd:reporte' planilla.id %}" class="btn btn-primary">Generar PDF</a>
+  
+  
   
 {% endblock Body %}
