@@ -6,12 +6,8 @@
 	{% endblock Titulo %}
 
 	{% block CSS %}
-<<<<<<< HEAD
-		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">	
 
-=======
-	
->>>>>>> 5cd6a7f803be0b63dca53ec880b0dd6fb4da9f84
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">	
 	{% endblock CSS %}
 
 	{% block Body %}
@@ -25,30 +21,28 @@
 					</div>
 				<!-- Formulario -->
 			<b><center>{{validar}}</center></b>
-
 			<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
 	            {% csrf_token %}
 
 	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
 					<span class="label-input100">Nombre del Puesto </span>
-					<input class="input100" type="text" placeholder="Ingresar Puesto" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}">
+					<input class="input100" type="text" placeholder="Ingresar Puesto" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="">
 					<span class="focus-input100"></span>
 				</div>
 
 	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
 					<span class="label-input100">Salario Base </span>
-					<input class="input100" type="number" placeholder="Ingresar Salario Base" id="salario" name="salario" min="0" step=".01">
+					<input class="input100" type="number" placeholder="Ingresar Salario Base" id="salario" name="salario" min="0" step=".01" required="">
 					<span class="focus-input100"></span>
 				</div>
 
-				<div class="container-login100-form-btn">
+				<div class="container-login100-form-btn btn-ingresar" >
 					<button class="login100-form-btn" type="submit">
 								Ingresar
 					</button>
 				</div>
 
 	        </form>
-	        
 		</div>
 	</div>
 	</div>

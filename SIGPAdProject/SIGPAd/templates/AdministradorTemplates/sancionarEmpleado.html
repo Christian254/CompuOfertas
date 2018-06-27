@@ -1,4 +1,4 @@
-{% extends "baseExterior.html" %}
+{% extends "baseInterior.html" %}
 {% load staticfiles %}
 
 	{% block Titulo %}
@@ -6,36 +6,7 @@
 	{% endblock Titulo %}
 
 	{% block CSS %}
-		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">
-		<style type="text/css">
-		.label-input100 {
-		  font-family: Poppins-Regular;
-		  font-size: 12px;
-		  color: #808080;
-		  line-height: 1;
-		  text-align: right;
-
-		  position: absolute;
-		  top: 14px;
-		  left: -105px;
-		  width: 80px;
-
-		}
-
-		.input100 {
-  font-family: Poppins-Regular;
-  font-size: 12px;
-  color: #555555;
-  line-height: 0.5;
-
-  display: block;
-  width: 100%;
-  background: transparent;
-  padding: 0 0px;
-}
-
-
-		</style>
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">
 	{% endblock CSS %}
 	
 	{% block usuario %}
@@ -52,7 +23,6 @@
 							<h2>SANCIONAR EMPLEADO</h2>
 						</span>
 					</div>
-					<h1>Hola</h1>
 					
 					<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
 	            {% csrf_token %}
@@ -69,12 +39,7 @@
 					<span class="focus-input100"></span>
 				</div>
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Descuento es un campo requerido.">
-					<span class="label-input100">Salario Base </span>
-					<input class="input100" type="number" placeholder="Ingresar Descuento" id="descuento" name="descuento" min="0" step=".01">
-					<span class="focus-input100"></span>
-				</div>
-				<div class="container-login100-form-btn">						<button class="login100-form-btn" type="submit">
+				<div class="container-login100-form-btn btn-ingresar">						<button class="login100-form-btn" type="submit">
 								Ingresar
 					</button>
 					

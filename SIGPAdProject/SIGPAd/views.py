@@ -396,7 +396,10 @@ def editarEmpleado(request, pk):
 		empleado = None
 	if empleado is not None:
 		#puestos = Puesto.objects.all()
-		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
+		try:
+			puestos = Puesto.objects.exclude(id=empleado.puesto.id)
+		except:
+			puestos=Puesto.objects.all()
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
 		empleados = Empleado.objects.exclude(sexo=empleado.sexo)
@@ -643,14 +646,21 @@ def crearPlanilla(request):
 	return render(request,'AdministradorTemplates/crearPlanilla.html',{})
 
 def horasExtra(request, idempleado, idplanilla):
+	alerta=False
 	if request.method == 'POST':
 		horasExtra = HoraExtra()
 		horasExtra.cantidad = request.POST.get('cantidad',None)
 		horasExtra.fecha = request.POST.get('fecha',None)
 		horasExtra.empleado=Empleado.objects.get(pk=idempleado)
-		horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
-		horasExtra.save()
-	return render(request,'AdministradorTemplates/horasExtra.html',{})
+		try:
+			horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
+			horasExtra.save()
+		except Exception as e:
+			alerta='No existe una planilla'
+	context={
+		'alerta':alerta
+	}
+	return render(request,'AdministradorTemplates/horasExtra.html',context)
 
 
 def handler404(request):
@@ -674,29 +684,33 @@ def gestionarPuesto(request):
 	context={'puesto':puesto}
 	return render(request,'PuestoTemplates/gestionarPuesto.html',context)
 
-def sancionarEmpleado(request):
+def sancionarEmpleado(request,pk):
+	
 	return render_to_response('AdministradorTemplates/sancionarEmpleado.html')
 
 def gestionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')
 
-"""
+
 @permission_required('SIGPAd.view_superuser')
 def editarPuesto(request, pk):
 	mensaje = None
 	existe = None
 	try:
-		puesto = Puesto.objects.get(puesto=pk)
+		puesto = Puesto.objects.get(pk=pk)
 	except Puesto.DoesNotExist:
 		puesto = None
-		
+
 	if puesto is not None:
-	'''
+		print ("dentroif")	
+		'''
 		#puestos = Puesto.objects.all()
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
-		puesto = Puesto.objects.exclude(sexo=empleado.sexo)'''
+		puesto = Puesto.objects.exclude(sexo=empleado.sexo)
+		'''
 		if request.method == 'POST':
+			print ("dentro")
 			puesto.nombre = request.POST.get('nombre',None)
 			puesto.salario = request.POST.get('salario',None)
 			puesto.save()
@@ -707,7 +721,7 @@ def editarPuesto(request, pk):
 				'mensaje':mensaje,
 
 			}
-		return render(request,"AdministradorTemplates/editarPuesto.html", context) 
+		return render(request,"PuestoTemplates/editarPuesto.html", context) 
 
 	else:
 		existe = "El puesto no existe"
@@ -716,5 +730,28 @@ def editarPuesto(request, pk):
 			'existe':existe,
 			'mensaje':mensaje,
 		}
-		return render(request,"AdministradorTemplates/editarEmpleado.html", context)
-"""
+		return render(request,"PuestoTemplates/editarPuesto.html", context)
+
+@permission_required('SIGPAd.view_superuser')
+def eliminarPuesto(request, pk):
+	puesto = get_object_or_404(Puesto, pk=pk)
+	try:
+		empleados=Empleado.objects.filter(puesto=puesto)
+		for e in empleados:
+			e.puesto=None
+			e.save()
+		puesto.delete()
+		mensaje = "Puesto eliminado"
+		context = {
+			'mensaje': mensaje,
+		}
+		return render_to_response('PuestoTemplates/eliminarPuesto.html', context)
+	except (KeyError, puesto.DoesNotExist):
+		#Aqui tiene que ir la pagina 404 correcta.
+		return render(request, '404.html', {
+		    	'error_message': "Puesto no eliminado",
+		})
+	else:
+		return redirect('/gestionarPuesto')
+
+
