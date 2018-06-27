@@ -74,7 +74,7 @@ def listadoDeEmpleados(request):
 	ultima=0
 	for p in planilla:
 		ultima=p.id
-	empleados = Empleado.objects.all()
+	empleados = Empleado.objects.filter(estado=1)
 	context = {
 		'empleados':empleados,'ultima':ultima
 	}
@@ -678,12 +678,16 @@ def handler404(request):
 
 def ingresarPuesto(request):
 	if request.method == 'POST':
-		puesto = Puesto()
-		puesto.nombre = request.POST.get('nombre', None)
-		puesto.salario = request.POST.get('salario', None)
-		content_type = ContentType.objects.get_for_model(Puesto)
-		puesto.save()
-		return redirect('/ingresarPuesto')
+		try:
+			puesto = Puesto()
+			puesto.nombre = request.POST.get('nombre', None)
+			puesto.salario = request.POST.get('salario', None)
+			content_type = ContentType.objects.get_for_model(Puesto)
+			puesto.save()
+			return redirect('/ingresarPuesto')
+		except Exception as e:
+			context = {'error':'Error, puesto inválido'}
+			return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
 	else:
 		context = {}
 		return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
@@ -695,8 +699,19 @@ def gestionarPuesto(request):
 	return render(request,'PuestoTemplates/gestionarPuesto.html',context)
 
 def sancionarEmpleado(request,pk):
+	if request.method == 'POST':
+		sancion = Sancion()
+		sancion.sancion = request.POST.get('sancion', None)
+		sancion.descripcion = request.POST.get('descripcion', None)
+		sancion.fecha_sancion = datetime.now()
+		try:
+			empleado = Empleado.objects.get(empleado=pk)
+			sancion.empleado = empleado
+			sancion.save()
+		except Exception as e:
+			return render(request,'AdministradorTemplates/sancionarEmpleado.html',{'error':'Empleado no existe'})		
 	
-	return render_to_response('AdministradorTemplates/sancionarEmpleado.html')
+	return render(request,'AdministradorTemplates/sancionarEmpleado.html',{})
 
 def gestionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')
@@ -764,4 +779,21 @@ def eliminarPuesto(request, pk):
 	else:
 		return redirect('/gestionarPuesto')
 
+def gestionarSancion(request):
+	sancion=Sancion.objects.all()
+	context={'sancion':sancion}
+	return render(request,'AdministradorTemplates/gestionarSancion.html',context)
 
+@permission_required('SIGPAd.view_superuser')
+def despedir(request, pk):
+	try:
+		empleado=Empleado.objects.get(empleado=pk)
+		empleado.estado=0
+		empleado.save()
+		sancion=Sancion.objects.all()
+		context={'sancion':sancion}
+		return render(request,'AdministradorTemplates/gestionarSancion.html',context)
+	except Exception as e:
+		sancion=Sancion.objects.all()
+		context={'sancion':sancion}
+		return render(request,'AdministradorTemplates/gestionarSancion.html',context)

@@ -11,6 +11,9 @@
 	{% endblock CSS %}
 
 	{% block Body %}
+	{%if error %}
+ 		<p class="alert alert-danger text-center"><b>{{error}}</b></p>
+ 	{%endif%}
     <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">

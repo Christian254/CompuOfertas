@@ -32,6 +32,7 @@ urlpatterns = [
 	url(r'editarUsuario/(?P<pk>\d+)$', login_required(editarUsuario), name="EditarUsuario"),
 	url(r'eliminarUsuario/(?P<pk>\d+)$', login_required(eliminarUsuario), name="EliminarUsuario"),
 	url(r'^reporte/(?P<pk>\d+)$', login_required(reporte), name="reporte"),
+	url(r'^despedir/(?P<pk>\d+)$', login_required(despedir), name="despedir"),
 	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 
@@ -46,4 +47,5 @@ urlpatterns = [
 	url(r'gestionarPlanilla$', gestionarPlanilla, name="GestionarPlanilla"),
 	url(r'^editarPuesto/(?P<pk>\d+)$', login_required(editarPuesto), name="EditarPuesto"),
 	url(r'^eliminarPuesto/(?P<pk>\d+)$', login_required(eliminarPuesto), name="EliminarPuesto"),
+	url(r'gestionarSancion$', login_required(gestionarSancion), name="GestionarSancion"),
 ]
