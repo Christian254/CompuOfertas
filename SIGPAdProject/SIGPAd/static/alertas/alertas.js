@@ -20,12 +20,18 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
+  var doc = new jsPDF('l','pt','a4');
+  var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
   $("#alerta").click(function(event) {
-    var pdf = new jsPDF('p', 'pt', 'letter');
-    html = $("#pdf").html();
-    specialElementHandlers = {};
-    margins = {top: 15,bottom: 15,left: 15,width: 170};    
-    pdf.fromHTML(html, 15,15, {'width': 170},function (dispose) {pdf.save('prueba.pdf');}, margins);
-  });
+    doc.text(20,20,'Planilla de Pago');
+    doc.fromHTML($('#pdf').tableExport,15,15,{ 
+      'width':170,
+      'elementHandlers': specialElementHandlers});    
+    doc.save('prueba2.pdf')})
+    
 })
 
