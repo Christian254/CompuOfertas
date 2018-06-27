@@ -655,3 +655,40 @@ def sancionarEmpleado(request):
 
 def gestionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')
+
+@permission_required('SIGPAd.view_superuser')
+def editarPuesto(request, pk):
+	mensaje = None
+	existe = None
+	try:
+		puesto = Puesto.objects.get(puesto=pk)
+	except Puesto.DoesNotExist:
+		puesto = None
+		
+	if puesto is not None:
+	'''
+		#puestos = Puesto.objects.all()
+		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
+		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		puesto = Puesto.objects.exclude(sexo=empleado.sexo)'''
+		if request.method == 'POST':
+			puesto.nombre = request.POST.get('nombre',None)
+			puesto.salario = request.POST.get('salario',None)
+			puesto.save()
+			return redirect("/gestionarPuesto")
+		else:
+			context = {
+				'puesto':puesto,
+				'mensaje':mensaje,
+
+			}
+		return render(request,"AdministradorTemplates/editarPuesto.html", context) 
+
+	else:
+		existe = "El puesto no existe"
+		context = {
+			'puesto':puesto,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"AdministradorTemplates/editarEmpleado.html", context)
