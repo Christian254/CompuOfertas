@@ -59,5 +59,10 @@ $(document).ready(function(){
     swal($("#errorPuesto").html(),' ','error');
 })
 
+$(document).ready(function(){
+  if($("#crearEmpleado").length > 0)
+    swal($("#crearEmpleado").html(), '', 'success');
+})
+
 
 
