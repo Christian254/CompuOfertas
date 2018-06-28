@@ -406,6 +406,10 @@ def editarEmpleado(request, pk):
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
 		empleados = Empleado.objects.exclude(sexo=empleado.sexo)
+		if empleado.sexo == "Femenino":
+			otro = "Masculino"
+		else:
+			otro = "Femenino"
 		if request.method == 'POST':
 			cargo = Puesto.objects.get(nombre=request.POST.get('puestoEmpleado', None))
 			empleado.puesto = cargo
@@ -428,16 +432,17 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
-				'empleados':empleados,
+				'otro':otro,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
 	else:
-		existe = "El empledo no existe"
+		existe = "El empleado no existe"
 		context = {
 			'empleado':empleado,
 			'existe':existe,
 			'mensaje':mensaje,
+			'otro':otro,
 		}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
@@ -816,3 +821,20 @@ def listadoDespedidos(request):
 		'empleados':empleados,
 	}
 	return render(request, 'AdministradorTemplates/despidos.html', context)
+
+@permission_required('SIGPAd.view_superuser')
+def eliminarDespedido(request, pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	try:
+		if empleado is not None:
+			empleado.delete()
+			context = {
+					'mensaje':"Empleado eliminado",
+			}
+			return render(request, 'AdministradorTemplates/despidos.html', context)
+	except (KeyError, empleado.DoesNotExist):
+		return render(request, 'AdministradorTemplates/despidos.html', {
+		    	'error_message': "No selecciono un empleado valido a eliminar.",
+		})
+	else:
+		return redirect('/despedidos')

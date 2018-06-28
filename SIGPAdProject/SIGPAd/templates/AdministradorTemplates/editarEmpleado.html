@@ -74,12 +74,8 @@
 						        <select id="sexo" name="sexo" class="input100">
 							         <option id="{{empleado.sexo}}" value="{{empleado.sexo}}">{{empleado.sexo}}</option>
 
-                    {% if empleados %}
-                       {% for e in empleados %}
-                        <option id="{{e.sexo}}" value="{{e.sexo}}">{{e.sexo}}</option>
-                       {% endfor %}
-                    {% else %}
-
+                    {% if otro %}
+                        <option id="{{otro}}" value="{{otro}}">{{otro}}</option>
                     {% endif %}
 						        </select>
                    </div>
