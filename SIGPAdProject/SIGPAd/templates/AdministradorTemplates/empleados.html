@@ -9,6 +9,42 @@
       {{user.username}}
     {% endblock usuario %}
     
+    {% block Script %}
+    <script type="text/javascript">
+        var modal;
+
+        /* function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog(
+            {
+                title: titulo,
+                modal: true,
+                width: 500,
+                resizable: false
+            }).dialog('open').load(url)
+        }
+
+        function cerrar_modal()
+        {
+            modal.dialog("close");
+        }*/
+
+        function abrir_modal(url)
+{
+        $('#popup').load(url, function()
+        {
+                $(this).modal('show');
+        });
+        return false;
+}
+
+function cerrar_modal()
+{
+        $('#popup').modal('hide');
+        return false;
+}
+    </script>
+    {% endblock Script %}
 
 {% block Body %}
 
@@ -39,13 +75,21 @@
 		      	    /
 		      	    <a href="{% url 'SIGPAd:SancionarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
 		      	    /
-		       		<a href="{% url 'SIGPAd:despedir' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+		       		<a href="{% url 'SIGPAd:despedir' empleado.empleado %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                /
+              <a onclick="return abrir_modal('{% url 'SIGPAd:ConfirmarDespido' empleado.empleado %}')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </a>
+                /
               <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="" aria-hidden="">horas extras</span></a>
 		      </td>
 		    </tr>
       	{% endfor %}
     </tbody>
   </table>
+
+        <div id="popup" class="modal fade" role="dialog">
+
+        </div>
 
   <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">NUEVO EMPLEADO</a>
 {% endblock Body %}

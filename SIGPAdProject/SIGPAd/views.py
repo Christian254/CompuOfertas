@@ -15,6 +15,8 @@ from SIGPAd.reporte import *
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
 from django.db import IntegrityError
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic.edit import UpdateView, CreateView
 
 
 
@@ -797,3 +799,11 @@ def despedir(request, pk):
 		sancion=Sancion.objects.all()
 		context={'sancion':sancion}
 		return render(request,'AdministradorTemplates/gestionarSancion.html',context)
+
+@permission_required('SIGPAd.view_superuser')
+def confirmarDespido(request, pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	context = {
+		'empleado': empleado,
+	}
+	return render(request, 'AdministradorTemplates/confirmarDespido.html', context)

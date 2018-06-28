@@ -24,7 +24,8 @@
   <script type="text/javascript" src="{% static "interior/js/jspdf.debug.js" %}"> </script> 
   <script type="text/javascript" src="{% static "alertas/alertas.js" %}"></script>
 
-
+    
+    
 	<!-- Archivos CSS -->
   <link rel="shortcut icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
   <link rel="icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
@@ -33,6 +34,8 @@
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/animate.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/admin.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "interior/css/estilos.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "interior/css/jquery-ui.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "interior/css/jquery.dataTables.min.css"  %}"/>
   
   {% block Script %}
 
@@ -345,12 +348,16 @@
 
 
 <!-- Archivos JavaScript -->
+    
+    
 	<script src="{% static "interior/js/jquery-2.1.0.js" %}"></script>
 	<script src="{% static "interior/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "interior/js/common-script.js" %}"></script>
 	<script src="{% static "interior/js/jquery.slimscroll.min.js" %}"></script>
 	<script src="{% static "interior/js/jPushMenu.js" %}"></script>
 	<script src="{% static "interior/js/side-chats.js" %}"></script>
+  <script type="text/javascript" src="{% static "interior/js/jquery-ui.js" %}"></script>
+  <script type="text/javascript" src="{% static "interior/js/jquery.dataTables.min.js" %}"></script>
 
 	{% block JavaScript %}
 
