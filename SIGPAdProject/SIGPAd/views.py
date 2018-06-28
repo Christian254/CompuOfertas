@@ -11,6 +11,7 @@ from django.views.defaults import page_not_found
 from datetime import datetime
 from decimal import *
 from SIGPAd.reporte import *
+from SIGPAd.reporteDespido import *
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
@@ -644,6 +645,11 @@ def reporte(request,pk):
 	planilla = Planilla.objects.get(pk=pk)
 
 	return generar_reporte(request, planilla)
+
+def reporteDespido(request):
+	empleado = Empleado.objects.filter(estado=0)
+
+	return generar_reporte_despido(request, empleado)
 
 def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()

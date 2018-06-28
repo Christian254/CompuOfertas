@@ -36,6 +36,7 @@ urlpatterns = [
 	url(r'^confirmarDespido/(?P<pk>\d+)$', login_required(confirmarDespido), name="ConfirmarDespido"),
 	url(r'despedidos$', login_required(listadoDespedidos), name="Despedidos"),
 	url(r'eliminarDespedido/(?P<pk>\d+)$', login_required(eliminarDespedido), name="EliminarDespedido"),
+	url(r'^reporteDespido/$', login_required(reporteDespido), name="ReporteDeDespido"),
 
 	
 	#URL Vendedor.
