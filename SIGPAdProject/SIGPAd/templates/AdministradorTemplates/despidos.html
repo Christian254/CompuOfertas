@@ -10,7 +10,9 @@
   {% endblock usuario %}
 
 {% block Body %}
-<h3>EMPLEADOS A DESPEDIR</h3>
+<section class="panel default blue_title h2">
+              <div class="panel-heading">DESPEDIR <span class="semi-bold">EMPLEADOS</span> </div>
+</section>
     <div class="row">
         <div class="col-md-12">
           <div class="block-web">
@@ -43,7 +45,7 @@
       		      	<td>{{empleado.dui}}</td>
       		      	<td>{{empleado.nit}}</td>
       		      	<td>{{empleado.puesto.nombre}}</td>
-      		      	<td><a href="{% url 'SIGPAd:EliminarDespedido' empleado.empleado %}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a></td>
+      		      	<td><a href="{% url 'SIGPAd:EliminarDespedido' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
       		    </tr>
             	{% endfor %}
           </tbody>

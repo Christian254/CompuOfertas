@@ -367,16 +367,16 @@ def eliminarUsuario(request, pk):
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
 	puestoGerente = Puesto.objects.filter(nombre__contains="Gerente")
-	gerentesSinUser = Empleado.objects.filter(puesto=puestoGerente,usuario__id=None)
-	gerentes = Empleado.objects.filter(puesto=puestoGerente).exclude(usuario__id=None)
+	gerentesSinUser = Empleado.objects.filter(puesto=puestoGerente,usuario__id=None,estado=1)
+	gerentes = Empleado.objects.filter(puesto=puestoGerente,estado=1).exclude(usuario__id=None)
 
 	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
-	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
-	vendedores = Empleado.objects.filter(puesto=puestoVendedor).exclude(usuario__id=None)
+	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None,estado=1)
+	vendedores = Empleado.objects.filter(puesto=puestoVendedor,estado=1).exclude(usuario__id=None)
 
 	puestoContador = Puesto.objects.filter(nombre__contains="Contador")
-	contadoresSinUser = Empleado.objects.filter(puesto=puestoContador,usuario__id=None)
-	contadores = Empleado.objects.filter(puesto=puestoContador).exclude(usuario__id=None)
+	contadoresSinUser = Empleado.objects.filter(puesto=puestoContador,usuario__id=None,estado=1)
+	contadores = Empleado.objects.filter(puesto=puestoContador,estado=1).exclude(usuario__id=None)
 
 	context = {
 		'gerentesSinUser':gerentesSinUser,
