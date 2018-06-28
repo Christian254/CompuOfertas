@@ -770,7 +770,7 @@ def eliminarPuesto(request, pk):
 		context = {
 			'mensaje': mensaje,
 		}
-		return render_to_response('PuestoTemplates/eliminarPuesto.html', context)
+		return redirect('/gestionarPuesto')
 	except (KeyError, puesto.DoesNotExist):
 		#Aqui tiene que ir la pagina 404 correcta.
 		return render(request, '404.html', {
