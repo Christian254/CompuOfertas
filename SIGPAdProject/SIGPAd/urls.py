@@ -34,6 +34,7 @@ urlpatterns = [
 	url(r'^reporte/(?P<pk>\d+)$', login_required(reporte), name="reporte"),
 	url(r'^despedir/(?P<pk>\d+)$', login_required(despedir), name="despedir"),
 	url(r'^confirmarDespido/(?P<pk>\d+)$', login_required(confirmarDespido), name="ConfirmarDespido"),
+	url(r'despedidos$', login_required(listadoDespedidos), name="Despedidos"),
 	
 	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),

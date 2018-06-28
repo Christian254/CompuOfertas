@@ -792,13 +792,9 @@ def despedir(request, pk):
 		empleado=Empleado.objects.get(empleado=pk)
 		empleado.estado=0
 		empleado.save()
-		sancion=Sancion.objects.all()
-		context={'sancion':sancion}
-		return render(request,'AdministradorTemplates/gestionarSancion.html',context)
+		return redirect("/empleados")
 	except Exception as e:
-		sancion=Sancion.objects.all()
-		context={'sancion':sancion}
-		return render(request,'AdministradorTemplates/gestionarSancion.html',context)
+		return render(request,'AdministradorTemplates/empleados.html',context)
 
 @permission_required('SIGPAd.view_superuser')
 def confirmarDespido(request, pk):
@@ -807,3 +803,11 @@ def confirmarDespido(request, pk):
 		'empleado': empleado,
 	}
 	return render(request, 'AdministradorTemplates/confirmarDespido.html', context)
+
+@permission_required('SIGPAd.view_superuser')
+def listadoDespedidos(request):
+	empleados = Empleado.objects.filter(estado=0)
+	context = {
+		'empleados':empleados,
+	}
+	return render(request, 'AdministradorTemplates/despidos.html', context)
