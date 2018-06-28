@@ -60,9 +60,12 @@ def generar_reporte(request, planilla):
 
 	p = [
 		{'#':i+1, 'nombre': ut.empleado.nombre, 'apellido': ut.empleado.apellido, 'puesto':ut.empleado.puesto.nombre, 'salarioBase':ut.salarioBase,'horasExtras':ut.totalHoraExtra,'isss':ut.pagoisss,'afp':ut.pagoafp,'insaforp':ut.insaforp,'vacaciones':ut.vacaciones,'aguinaldo':ut.aguinaldo}
-		for i, ut in enumerate(planilla.pago_set.all())
+		for i, ut in enumerate(planilla.pago_set.all())		
 	]
-
+	p.append({'#':' ', 'nombre': ' ', 'apellido': '', 'puesto':' ', 'salarioBase':' ','horasExtras':' ','isss':' ','afp':' ','insaforp':' ' ,'vacaciones':' ','aguinaldo':' '})
+	p.append({'#':' ', 'nombre': 'planilla:', 'apellido': planilla.nomPlanilla, 'puesto':'Totales', 'salarioBase':planilla.totalSalarioBase,'horasExtras':planilla.totalHoras,'isss':planilla.totalISSS,'afp':planilla.totalAFP,'insaforp':planilla.totalInsaforp,'vacaciones':planilla.totalVacaciones,'aguinaldo':planilla.totalAguinaldo})
+	p.append({'#':' ', 'nombre': ' ', 'apellido': '', 'puesto':' ', 'salarioBase':' ','horasExtras':' ','isss':' ','afp':' ','insaforp':' ' ,'vacaciones':' ','aguinaldo':' '})
+	p.append({'#':' ', 'nombre': 'planilla:', 'apellido': planilla.nomPlanilla, 'puesto':'Total', 'salarioBase':' ','horasExtras':' ','isss':' ','afp':' ','insaforp':' ','vacaciones':' ','aguinaldo':planilla.costomensual})
 	
 
 	#Table
@@ -77,7 +80,6 @@ def generar_reporte(request, planilla):
 		high = high - 18
 
 
-
 	#Table size
 	width, height = A4
 	table = Table(data, colWidths=[0.5 * cm, 1.75 * cm, 1.75 * cm, 1.75 * cm, 1.75 * cm, 1.75 * cm,1.75 * cm,1.75 * cm,1.75 * cm,1.75 * cm,1.75 * cm])
@@ -90,34 +92,7 @@ def generar_reporte(request, planilla):
 	table.drawOn(c, 30,high)
 	#++++)
 
-	high = high - 25
-	c.setFont('Helvetica',10)
-	c.drawString(30,high,'Numero de planilla: '+planilla.nomPlanilla)
 
-
-	high = high - 12
-	c.setFont('Helvetica',10)
-	c.drawString(30,high,'Salarios: '+str(planilla.totalSalarioBase))
-
-	high = high - 12
-	c.setFont('Helvetica',10)
-	c.drawString(30,high,'Total AFP: '+str(planilla.totalAFP))
-
-	high = high - 12
-	c.setFont('Helvetica',10)
-	c.drawString(30,high,'Total ISSS: '+str(planilla.totalISSS))
-
-	high = high - 12
-	c.setFont('Helvetica',10)
-	c.drawString(30,high,'Total INSAFORP: '+str(planilla.totalInsaforp))
-
-	high = high - 12
-	c.setFont('Helvetica',10)
-	c.drawString(30,high,'Total Vacaciones: '+str(planilla.totalVacaciones))
-
-	high = high - 30
-	c.setFont('Helvetica',15)
-	c.drawString(30,high,'TOTAL A PAGAR: '+ str(planilla.costomensual))
 
 	c.showPage() #Guardar pagina
 
