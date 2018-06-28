@@ -1,0 +1,14 @@
+{% extends "baseInterior.html" %}
+{% load staticfiles %}
+{% block Titulo %}
+	Ingresar Nuevo Empleado
+{% endblock Titulo %}
+
+	{% block usuario %}
+  		{{user.username}}
+  	{% endblock usuario %}
+  	
+
+{% block Body %}
+	{{mensaje}}
+{% endblock Body %}

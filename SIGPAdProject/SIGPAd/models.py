@@ -17,8 +17,8 @@ class Puesto(models.Model):
 
 class Empleado(models.Model):
 	empleado = models.AutoField(primary_key=True)	
-	usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-	puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE)
+	usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+	puesto = models.ForeignKey(Puesto, models.SET_NULL, null=True, blank=True)
 	nombre = models.CharField(max_length=25)
 	apellido = models.CharField(max_length=25)
 	telefono = models.CharField(max_length=8)
@@ -47,12 +47,13 @@ class Empleado(models.Model):
 
 class Planilla(models.Model):
 	fecha_pago_planilla=models.DateField(auto_now=False, auto_now_add=False)
-	nomPlanilla=models.CharField(max_length=30)
+	nomPlanilla=models.CharField(max_length=30, unique=True)
 	totalAFP=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalISSS=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalVacaciones=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalInsaforp=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalSalarioBase=models.DecimalField(max_digits=8, decimal_places=2,default=0)
+	totalHoras = models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	costomensual=models.DecimalField(max_digits=8, decimal_places=2,default=0)
 	totalAguinaldo=models.DecimalField(max_digits=8, decimal_places=2, default=0)
 	def __str__(self):
@@ -103,7 +104,6 @@ class Sancion(models.Model):
 	empleado=models.ForeignKey(Empleado, on_delete=models.CASCADE)
 	sancion=models.CharField(max_length=30)
 	descripcion=models.CharField(max_length=150)
-	descuento=models.DecimalField(max_digits=8, decimal_places=2)
 	fecha_sancion=models.DateField(auto_now=False, auto_now_add=False)
 
 	def __str__(self):

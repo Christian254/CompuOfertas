@@ -4,7 +4,7 @@
 	Planilla
 {% endblock Titulo %}
 {% block CSS%}
-<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
+<!--<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">-->
 {% endblock CSS%}
 {%block usuario %}
  {{user.username}}
@@ -13,7 +13,7 @@
 
 <h3>EMPLEADOS</h3>
 <div id="pdf">
-<table class="table">
+<table class="table" id="tpdf" border="2">
     <thead>
       <tr>
         <th>#</th>
@@ -44,10 +44,29 @@
             <td>{{i.vacaciones}}</td>
             <td>{{i.aguinaldo}}</td>  		      	      	            	      	
 		    </tr> 
-      {%endfor%}   	
+      {%endfor%}  
+          <tr>
+            <td>codigo de planilla</td>
+            <td>{{planilla.nomPlanilla}}</td>
+            <td colspan="2">Totales</td>
+            <td>{{planilla.totalSalarioBase}}</td>   
+            <td>{{hora}} </td>
+            <td>{{planilla.totalISSS}} </td>
+            <td>{{planilla.totalAFP}} </td>
+            <td>{{planilla.totalInsaforp}} </td>
+            <td>{{planilla.totalVacaciones}} </td>
+            <td>{{planilla.totalAguinaldo}} </td>                                                
+            </tr>
+
+          <tr>
+            <td colspan="8">Total a pagar en planilla</td>
+            <td colspan="3" align="center" style="background:#34b077; "><STRONG>{{planilla.costomensual}}</STRONG> </td>                                                
+            </tr>     	
     </tbody>
   </table>
   </div>
-  <input type="button" name="crear" id="alerta" value="Descargar PDF" class="btn btn-primary">
+  <a href="{% url 'SIGPAd:reporte' planilla.id %}" class="btn btn-primary">Generar PDF</a>
+  
+  
   
 {% endblock Body %}

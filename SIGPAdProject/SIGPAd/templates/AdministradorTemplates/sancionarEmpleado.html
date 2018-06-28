@@ -1,86 +1,52 @@
-{% extends "baseExterior.html" %}
+{% extends "baseInterior.html" %}
 {% load staticfiles %}
 
 	{% block Titulo %}
-		Sancionar Empleados
+		Ingresar Sancion
 	{% endblock Titulo %}
 
 	{% block CSS %}
-		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">
-		<style type="text/css">
-		.label-input100 {
-		  font-family: Poppins-Regular;
-		  font-size: 12px;
-		  color: #808080;
-		  line-height: 1;
-		  text-align: right;
 
-		  position: absolute;
-		  top: 14px;
-		  left: -105px;
-		  width: 80px;
-
-		}
-
-		.input100 {
-  font-family: Poppins-Regular;
-  font-size: 12px;
-  color: #555555;
-  line-height: 0.5;
-
-  display: block;
-  width: 100%;
-  background: transparent;
-  padding: 0 0px;
-}
-
-
-		</style>
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">	
 	{% endblock CSS %}
-	
-	{% block usuario %}
-  		{{user.username}}
-  	{% endblock usuario %}
-  	
 
 	{% block Body %}
-	    <div class="limiter">
+	{%if error %}
+ 		<p class="alert alert-danger text-center"><b>{{error}}</b></p>
+ 	{%endif%}
+    <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
 					<div class="login100-form-title">
 						<span class="login100-form-title-1">
-							<h2>SANCIONAR EMPLEADO</h2>
+							<h2>NUEVA SANCION</h2>
 						</span>
 					</div>
-					<h1>Hola</h1>
-					
-					<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
+				<!-- Formulario -->
+			<b><center>{{validar}}</center></b>
+			<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
 	            {% csrf_token %}
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Sancion es un campo requerido.">
-					<span class="label-input100">Sancion </span>
-					<input class="input100" type="text" placeholder="Ingresar Sancion" id="sancion" name="sancion" pattern="[a-zA-Z]{1-15}">
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
+					<span class="label-input100">Nombre de la sancion </span>
+					<input class="input100" type="text" placeholder="Ingresar Sancion" id="sancion" name="sancion" pattern="[a-zA-Z]{1-15}" required="">
 					<span class="focus-input100"></span>
 				</div>
 
-				<div class="wrap-input100 validate-input m-b-26" data-validate="Descripcion es un campo requerido.">
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
 					<span class="label-input100">Descripcion</span>
-					<input class="input100" type="textarea" placeholder="Ingresar Descripcion" id="descripcion" name="descripcion" pattern="[a-zA-Z]{1-150}">
+					<input class="input100" type="text" placeholder="Ingresar descripcion" id="descripcion" name="descripcion" required="">
 					<span class="focus-input100"></span>
 				</div>
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Descuento es un campo requerido.">
-					<span class="label-input100">Salario Base </span>
-					<input class="input100" type="number" placeholder="Ingresar Descuento" id="descuento" name="descuento" min="0" step=".01">
-					<span class="focus-input100"></span>
-				</div>
-				<div class="container-login100-form-btn">						<button class="login100-form-btn" type="submit">
+				<div class="container-login100-form-btn btn-ingresar" >
+					<button class="login100-form-btn" type="submit">
 								Ingresar
 					</button>
-					
 				</div>
-		    </div>
-	    </div>
-	    </div>
-	    
+
+	        </form>
+		</div>
+	</div>
+	</div>
 	{% endblock Body %}

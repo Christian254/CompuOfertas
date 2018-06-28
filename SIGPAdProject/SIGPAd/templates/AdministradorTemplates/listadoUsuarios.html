@@ -11,6 +11,11 @@
 
 {% block Body %}
 <div class="container clear_both padding_fix">
+        {% if  error_message %}
+          <div class="alert alert-warning">
+            <strong>{{error_message}}</strong>
+          </div>
+        {% endif %}
         <!--\\\\\\\ container  start \\\\\\-->
         <div class="row">
           <div class="col-lg-6">
@@ -87,7 +92,11 @@
                     <td>{{gerente.nombre}}</td>
                     <td>{{gerente.apellido}}</td>
                     <td>{{gerente.puesto.nombre}}</td>
-                    <td><a href="{% url 'SIGPAd:EditarUsuario' gerente.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></td>
+                    <td>
+                      <a href="{% url 'SIGPAd:EditarUsuario' gerente.empleado %}"><span class="glyphicon glyphicon-cog"   aria-hidden="true"></span></a> 
+                      /
+                      <a href="{% url 'SIGPAd:EliminarUsuario' gerente.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
                 </tr>
               {% endfor %}
               {% for vendedor in vendedores %}
@@ -96,7 +105,11 @@
                     <td>{{vendedor.nombre}}</td>
                     <td>{{vendedor.apellido}}</td>
                     <td>{{vendedor.puesto.nombre}}</td>
-                    <td><a href="{% url 'SIGPAd:EditarUsuario' vendedor.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></td>
+                    <td>
+                      <a href="{% url 'SIGPAd:EditarUsuario' vendedor.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      /
+                      <a href="{% url 'SIGPAd:EliminarUsuario' vendedor.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
                 </tr>
               {% endfor %}
               {% for contador in contadores %}
@@ -105,7 +118,9 @@
                     <td>{{contador.nombre}}</td>
                     <td>{{contador.apellido}}</td>
                     <td>{{contador.puesto.nombre}}</td>
-                    <td><a href="{% url 'SIGPAd:EditarUsuario' contador.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></td>
+                    <td><a href="{% url 'SIGPAd:EditarUsuario' contador.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      /
+                      <a href="{% url 'SIGPAd:EliminarUsuario' contador.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
                 </tr>
               {% endfor %}
             </tbody>

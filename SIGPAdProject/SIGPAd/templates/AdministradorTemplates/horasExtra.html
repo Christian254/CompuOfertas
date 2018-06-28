@@ -14,7 +14,10 @@
   	{% endblock usuario %}
   	
 	{% block Body %}
- 
+ 	
+ 	{%if alerta %}
+ 		<p class="alert alert-danger text-center"><b>{{alerta}}</b></p>
+ 	{%endif%}
 				<!-- Formulario -->
 			<b><center>{{validar}}</center></b>
 
