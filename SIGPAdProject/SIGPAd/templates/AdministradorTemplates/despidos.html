@@ -11,31 +11,38 @@
 
 {% block Body %}
 <h3>EMPLEADOS A DESPEDIR</h3>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="block-web">
+      <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>DUI</th>
+              <th>NIT</th>
+              <th>Puesto</th>
+              <th>Despedir</th>
+            </tr>
+          </thead>
+          <tbody>
+          	{% for empleado in empleados %}
+          		<tr>
+      		      	<td>{{ forloop.counter }}</td>
+      		      	<td>{{empleado.nombre}}</td>
+      		      	<td>{{empleado.apellido}}</td>
+      		      	<td>{{empleado.dui}}</td>
+      		      	<td>{{empleado.nit}}</td>
+      		      	<td>{{empleado.puesto.nombre}}</td>
+      		      	<td><a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
+      		    </tr>
+            	{% endfor %}
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
 
-<table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DUI</th>
-        <th>NIT</th>
-        <th>Puesto</th>
-        <th>Despedir</th>
-      </tr>
-    </thead>
-    <tbody>
-    	{% for empleado in empleados %}
-    		<tr>
-		      	<td>{{ forloop.counter }}</td>
-		      	<td>{{empleado.nombre}}</td>
-		      	<td>{{empleado.apellido}}</td>
-		      	<td>{{empleado.dui}}</td>
-		      	<td>{{empleado.nit}}</td>
-		      	<td>{{empleado.puesto.nombre}}</td>
-		      	<td><a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></td>
-		    </tr>
-      	{% endfor %}
-    </tbody>
-  </table>
+
 {% endblock Body %}
