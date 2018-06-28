@@ -1,0 +1,75 @@
+{% extends "baseExterior.html" %}
+{% load staticfiles %}
+
+	{% block Titulo %}
+		Sancionar Empleados
+	{% endblock Titulo %}
+
+	{% block CSS %}
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">
+		<style type="text/css">
+		.label-input100 {
+		  font-family: Poppins-Regular;
+		  font-size: 12px;
+		  color: #808080;
+		  line-height: 1;
+		  text-align: right;
+
+		  position: absolute;
+		  top: 14px;
+		  left: -105px;
+		  width: 80px;
+
+		}
+
+		.input100 {
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: #555555;
+  line-height: 0.5;
+
+  display: block;
+  width: 100%;
+  background: transparent;
+  padding: 0 0px;
+}
+
+
+		</style>
+	{% endblock CSS %}
+	
+	{% block usuario %}
+  		{{user.username}}
+  	{% endblock usuario %}
+  	
+
+	{% block Body %}
+	    <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+					<div class="login100-form-title">
+						<span class="login100-form-title-1">
+							<h2>GESTIONAR EMPLEADOS</h2>
+						</span>
+					</div>
+					<div>
+						<table>
+							<thead>
+								<tr>
+									<th>Empleado</th><th>DUI</th><th>NIT</th><th>Puesto</th><th>Operaciones</th>
+								</tr>
+							</thead>
+							<tr>
+								<td>Jose</td><td>12334-7</td><td>45234683</td><td>Vendedor</td><td>actualizar</td>
+							</tr>
+							<tr>
+								<td>Jose2</td><td>4234642-7</td><td>234345</td><td>Vendedor</td><td>eliminar</td>
+							</tr>
+						</table>
+					</div>
+					
+		    </div>
+	    </div>
+	    </div>
+	    
+	{% endblock Body %}
