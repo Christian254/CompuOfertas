@@ -15,6 +15,8 @@ from SIGPAd.reporte import *
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
 from django.db import IntegrityError
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic.edit import UpdateView, CreateView
 
 
 
@@ -775,7 +777,7 @@ def eliminarPuesto(request, pk):
 		context = {
 			'mensaje': mensaje,
 		}
-		return render_to_response('PuestoTemplates/eliminarPuesto.html', context)
+		return redirect('/gestionarPuesto')
 	except (KeyError, puesto.DoesNotExist):
 		#Aqui tiene que ir la pagina 404 correcta.
 		return render(request, '404.html', {
@@ -795,10 +797,22 @@ def despedir(request, pk):
 		empleado=Empleado.objects.get(empleado=pk)
 		empleado.estado=0
 		empleado.save()
-		sancion=Sancion.objects.all()
-		context={'sancion':sancion}
-		return render(request,'AdministradorTemplates/gestionarSancion.html',context)
+		return redirect("/empleados")
 	except Exception as e:
-		sancion=Sancion.objects.all()
-		context={'sancion':sancion}
-		return render(request,'AdministradorTemplates/gestionarSancion.html',context)
+		return render(request,'AdministradorTemplates/empleados.html',context)
+
+@permission_required('SIGPAd.view_superuser')
+def confirmarDespido(request, pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	context = {
+		'empleado': empleado,
+	}
+	return render(request, 'AdministradorTemplates/confirmarDespido.html', context)
+
+@permission_required('SIGPAd.view_superuser')
+def listadoDespedidos(request):
+	empleados = Empleado.objects.filter(estado=0)
+	context = {
+		'empleados':empleados,
+	}
+	return render(request, 'AdministradorTemplates/despidos.html', context)

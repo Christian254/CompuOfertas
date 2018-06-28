@@ -7,8 +7,29 @@
 
   {% block usuario %}
       {{user.username}}
-    {% endblock usuario %}
+  {% endblock usuario %}
     
+    {% block Script %}
+    <script type="text/javascript">
+
+        var modal;
+        function abrir_modal(url)
+        {
+                $('#popup').load(url, function()
+                {
+                        $(this).modal('show');
+                });
+                return false;
+        }
+
+        function cerrar_modal()
+        {
+                $('#popup').modal('hide');
+                return false;
+        }
+      </script>
+
+    {% endblock Script %}
 
 {% block Body %}
 
@@ -38,8 +59,10 @@
 		      	<td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 		      	    /
 		      	    <a href="{% url 'SIGPAd:SancionarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
-		      	    /
-		       		<a href="{% url 'SIGPAd:despedir' empleado.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                /
+              <a onclick="return abrir_modal('{% url 'SIGPAd:ConfirmarDespido' empleado.empleado %}')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </a>
+                /
               <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="" aria-hidden="">horas extras</span></a>
 		      </td>
 		    </tr>
@@ -47,5 +70,10 @@
     </tbody>
   </table>
 
+    <!-- Importante para el modal NO BORRAR -->
+        <div id="popup" class="modal fade" role="dialog">
+        </div>
+
   <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">NUEVO EMPLEADO</a>
+  <a href="{% url 'SIGPAd:Despedidos' %}" class="btn btn-danger">DESPIDOS</a>
 {% endblock Body %}
