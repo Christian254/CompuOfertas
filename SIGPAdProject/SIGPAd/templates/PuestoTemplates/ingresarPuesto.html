@@ -11,8 +11,11 @@
 	{% endblock CSS %}
 
 	{% block Body %}
+	{%if alerta %}
+ 		<p class="alert alert-success text-center" id="crearPuesto"><b>{{alerta}}</b></p>
+ 	{%endif%}
 	{%if error %}
- 		<p class="alert alert-danger text-center"><b>{{error}}</b></p>
+ 		<p class="alert alert-danger text-center" id="errorPuesto"><b>{{error}}</b></p>
  	{%endif%}
     <div class="limiter">
 		<div class="container-login100">

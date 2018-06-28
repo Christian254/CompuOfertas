@@ -35,9 +35,29 @@ $(document).ready(function(){
     
 })
 
-$(document).ready(function(){
-  $("#crearPlanilla").click(function(event){
-    swal("Se Creo una nueva Planilla");
-  })
+$(document).ready(function(){  
+  if($("#creacion").length > 0)
+    { 
+      var texto = $("#creacion").html()     
+      swal(texto,' ','success');
+    }
+  
 })
+
+$(document).ready(function(){
+  if($("#crearError".length >0 ))
+    swal($("#crearError").html(),' ', 'error');
+})
+
+$(document).ready(function(){
+  if($("#crearPuesto").length > 0)
+    swal($("#crearPuesto").html(),' ','success');
+})
+
+$(document).ready(function(){
+  if($("#errorPuesto".length >0))    
+    swal($("#errorPuesto").html(),' ','error');
+})
+
+
 

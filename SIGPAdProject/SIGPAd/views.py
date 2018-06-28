@@ -644,16 +644,21 @@ def gestionarPlanilla(request):
 
 def crearPlanilla(request):
 	if request.method == 'POST':
-		planilla = Planilla()
-		planilla.nomPlanilla = request.POST.get('codigo',None)
-		planilla.fecha_pago_planilla = request.POST.get('fecha',None)
-		planilla.save()
-		empleados = Empleado.objects.filter(estado=1)
-		for i in empleados:
-			nompago = i.apellido[0] + i.nombre[0] + str(i.empleado) + str(planilla.id)
-			pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
-			pago.save()
-	return render(request,'AdministradorTemplates/crearPlanilla.html',{})
+		try:		
+			planilla = Planilla()
+			planilla.nomPlanilla = request.POST.get('codigo',None)
+			planilla.fecha_pago_planilla = request.POST.get('fecha',None)
+			planilla.save()
+			empleados = Empleado.objects.filter(estado=1)
+			for i in empleados:
+				nompago = i.apellido[0] + i.nombre[0] + str(i.empleado) + str(planilla.id)
+				pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
+				pago.save()
+			return render(request,'AdministradorTemplates/crearPlanilla.html',{'alerta': 'Se creó la planilla: '+planilla.nomPlanilla})
+		except Exception as e:
+			return render(request,'AdministradorTemplates/crearPlanilla.html',{'error':'Error al crear planilla'})
+	else:
+		return render(request,'AdministradorTemplates/crearPlanilla.html',{})
 
 def horasExtra(request, idempleado, idplanilla):
 	alerta=False
@@ -683,8 +688,8 @@ def ingresarPuesto(request):
 			puesto.nombre = request.POST.get('nombre', None)
 			puesto.salario = request.POST.get('salario', None)
 			content_type = ContentType.objects.get_for_model(Puesto)
-			puesto.save()
-			return redirect('/ingresarPuesto')
+			puesto.save()			
+			return render(request, 'PuestoTemplates/ingresarPuesto.html', {'alerta':'Se creó el puesto: '+puesto.nombre})
 		except Exception as e:
 			context = {'error':'Error, puesto inválido'}
 			return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
