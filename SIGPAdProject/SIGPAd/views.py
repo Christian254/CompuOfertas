@@ -837,7 +837,7 @@ def eliminarDespedido(request, pk):
 			context = {
 					'mensaje':"Empleado eliminado",
 			}
-			return render(request, 'AdministradorTemplates/despidos.html', context)
+			return redirect('/despedidos')
 	except (KeyError, empleado.DoesNotExist):
 		return render(request, 'AdministradorTemplates/despidos.html', {
 		    	'error_message': "No selecciono un empleado valido a eliminar.",
