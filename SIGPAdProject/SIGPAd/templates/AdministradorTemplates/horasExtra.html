@@ -6,42 +6,50 @@
 	{% endblock Titulo %}
 
 	{% block CSS %}
-	<link rel="stylesheet" type="text/css" href="{% static "exterior/css/ingresarPuesto.css" %}">
+
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">	
 	{% endblock CSS %}
 
-	{% block usuario %}
-  		{{user.username}}
-  	{% endblock usuario %}
-  	
 	{% block Body %}
- 	
- 	{%if alerta %}
- 		<p class="alert alert-danger text-center"><b>{{alerta}}</b></p>
+	{%if alerta %}
+ 		<p class="alert alert-success text-center" id="crearPuesto"><b>{{alerta}}</b></p>
  	{%endif%}
+	{%if error %}
+ 		<p class="alert alert-danger text-center" id="errorPuesto"><b>{{error}}</b></p>
+ 	{%endif%}
+    <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+					<div class="login100-form-title-2">
+						<span class="login100-form-title-1">
+							<h2>HORAS EXTRA</h2>
+						</span>
+					</div>
 				<!-- Formulario -->
 			<b><center>{{validar}}</center></b>
-
 			<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
 	            {% csrf_token %}
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Cantidad es un campo requerido.">
 					<span class="label-input100">Cantidad de horas extra </span>
-					<input class="input100" type="number" placeholder="Ingresar Horas Extra" id="cantidad" name="cantidad">
+					<input class="input100" type="number" placeholder="Ingresar Cantidad de horas extra" id="cantidad" name="cantidad"required="">
 					<span class="focus-input100"></span>
 				</div>
 
-	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Fecha es un campo requerido.">
 					<span class="label-input100">Fecha </span>
-					<input class="input100" type="date" placeholder="Ingresar Fecha" id="fecha" name="fecha">
+					<input class="input100" type="date" placeholder="Ingresar Fecha" id="fecha" name="fecha" required="">
 					<span class="focus-input100"></span>
 				</div>
 
-				<div class="container-login100-form-btn">
+				<div class="container-login100-form-btn btn-ingresar" >
 					<button class="login100-form-btn" type="submit">
 								Ingresar
 					</button>
 				</div>
 
 	        </form>
-
+		</div>
+	</div>
+	</div>
 	{% endblock Body %}

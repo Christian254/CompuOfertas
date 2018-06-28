@@ -8,6 +8,9 @@
   {% block usuario %}
       {{user.username}}
   {% endblock usuario %}
+{% block CSS %}
+  <link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
+{% endblock CSS %}
 
 {% block Body %}
 <section class="panel default blue_title h2">
