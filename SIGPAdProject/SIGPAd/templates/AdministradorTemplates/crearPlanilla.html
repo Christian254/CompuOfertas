@@ -5,7 +5,7 @@
 		Crear Planilla
 	{% endblock Titulo %}
 	{% block CSS %}
-	{% endblock CSS %}
+	{% endblock CSS%}
 
 	{% block usuario %}
   	{{user.username}}
@@ -13,12 +13,6 @@
 
 
 	{% block Body %}
-	{%if alerta %}
- 		<div class="alert alert-success text-center" id="creacion"><b>{{alerta}}</b></div>
- 	{%endif%}
- 	{%if error %}
- 		<div class="alert alert-danger text-center" id="crearError"><b>{{error}}</b></div>
- 	{%endif%}
     <div class="row">
         <div class="col-md-12">
           <div class="block-web">
@@ -43,9 +37,9 @@
 				</div>
 
 				<div class="container-login100-form-btn">
-					<button class="btn btn-primary" type="submit" id="crearPlanilla">
+					<button class="btn btn-primary" type="submit">
 								Crear
-					</button>					
+					</button>
 				</div>
 
 	        </form>

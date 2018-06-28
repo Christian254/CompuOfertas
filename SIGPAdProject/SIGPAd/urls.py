@@ -14,7 +14,7 @@ admin.autodiscover()
 urlpatterns = [
 	url(r'^$', index, name='Index'),
 
-	url(r'^login/$', iniciar_sesion, name="LogIn"),
+	url(r'^login$', iniciar_sesion, name="LogIn"),
 	url(r'^logout/$',auth_views.logout, {'next_page':'/login'}, name='logout'),
 	#URL Administrador.
 	url(r'indexAdministrador$', login_required(indexAdministrador), name="AdminIndex"),
@@ -30,15 +30,7 @@ urlpatterns = [
 	url(r'usuarios$', login_required(listadoDeUsuarios), name="Usuarios"),
 	url(r'ingresarNuevoUsuario/(?P<pk>\d+)$', login_required(crearUsuario), name="NuevoUsuario"),
 	url(r'editarUsuario/(?P<pk>\d+)$', login_required(editarUsuario), name="EditarUsuario"),
-	url(r'eliminarUsuario/(?P<pk>\d+)$', login_required(eliminarUsuario), name="EliminarUsuario"),
-	url(r'^reporte/(?P<pk>\d+)$', login_required(reporte), name="reporte"),
-	url(r'^despedir/(?P<pk>\d+)$', login_required(despedir), name="despedir"),
-	url(r'^confirmarDespido/(?P<pk>\d+)$', login_required(confirmarDespido), name="ConfirmarDespido"),
-	url(r'despedidos$', login_required(listadoDespedidos), name="Despedidos"),
-	url(r'eliminarDespedido/(?P<pk>\d+)$', login_required(eliminarDespedido), name="EliminarDespedido"),
-	url(r'^reporteDespido/$', login_required(reporteDespido), name="ReporteDeDespido"),
 
-	
 	#URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 
@@ -48,11 +40,8 @@ urlpatterns = [
 
 	url(r'ingresarPuesto$', ingresarPuesto, name="IngresarPuesto"),
 	url(r'gestionarPuesto$', gestionarPuesto, name="GestionarPuesto"),
-	url(r'sancionarEmpleado/(?P<pk>\d+)$', sancionarEmpleado, name="SancionarEmpleado"),
+	url(r'sancionarEmpleado$', sancionarEmpleado, name="SancionarEmpleado"),
 	url(r'gestionarEmpleado$', gestionarEmpleado, name="GestionarEmpleado"),
 	url(r'gestionarPlanilla$', gestionarPlanilla, name="GestionarPlanilla"),
-	url(r'^editarPuesto/(?P<pk>\d+)$', login_required(editarPuesto), name="EditarPuesto"),
-	url(r'^eliminarPuesto/(?P<pk>\d+)$', login_required(eliminarPuesto), name="EliminarPuesto"),
-	url(r'gestionarSancion$', login_required(gestionarSancion), name="GestionarSancion"),
 
 ]

@@ -4,20 +4,15 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.models import User,Permission
-from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
 from datetime import datetime
 from decimal import *
-from SIGPAd.reporte import *
-from SIGPAd.reporteDespido import *
 
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
 from django.db import IntegrityError
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import UpdateView, CreateView
 
 
 
@@ -77,7 +72,7 @@ def listadoDeEmpleados(request):
 	ultima=0
 	for p in planilla:
 		ultima=p.id
-	empleados = Empleado.objects.filter(estado=1)
+	empleados = Empleado.objects.all()
 	context = {
 		'empleados':empleados,'ultima':ultima
 	}
@@ -102,23 +97,9 @@ def  crearEmpleado(request):
 		empleado.afp = request.POST.get('afp',None)
 		empleado.isss = request.POST.get('isss',None)
 		empleado.save()
+
 		puestos = Puesto.objects.all()
 		exito = "Empleado guardado con éxito."
-
-		#muy importante no eliminar por favor
-		try:
-			planilla=Planilla.objects.all()
-			ultima=0
-			for p in planilla:
-				ultima=p.id
-			pl = Planilla.objects.get(pk=ultima)
-			nompago = empleado.apellido[0] + empleado.nombre[0] + str(empleado.empleado) + str(pl.id)
-			pago = Pago(planilla = pl, empleado = empleado, nomPago = nompago, fecha_pago=pl.fecha_pago_planilla)
-			pago.save()
-		except Exception as e:
-			exito=exito+" \n El empleado no pudo ser agregado a la planilla"
-
-
 		context = {
 			'cargo':cargo,
 			'puestos':puestos,
@@ -283,7 +264,7 @@ def crearUsuario(request,pk):
 		#Aqui tiene que ir la pagina 404 correcta.
 		context = { 
 			'empleado':empleado,
-			'validar': "Usuario duplicado",
+			'validar': "Empleado duplicado",
 			}
 		return render(request, 'AdministradorTemplates/crearUsuario.html',context)
 	except Empleado.DoesNotExist:
@@ -292,92 +273,25 @@ def crearUsuario(request,pk):
 		context = { 'empleado':empleado,}
 		return render(request, 'AdministradorTemplates/crearUsuario.html', context)
 
-
 @permission_required('SIGPAd.view_superuser')
 def editarUsuario(request, pk):
-	empleado = get_object_or_404(Empleado, empleado=pk)
-	try:
-		if empleado is not None:
-			usuario = get_object_or_404(User, id=empleado.usuario.id)
-			try:
-				if request.method == 'POST':
-					pwdAntigua = request.POST.get('pwdAntigua', None)
-					verificacionPassword = check_password(pwdAntigua,usuario.password)
-					if verificacionPassword:
-						usr = request.POST.get('usr',None)
-						pwdNueva = request.POST.get('pwdNueva', None)
-						usuario.username = usr
-						usuario.set_password(pwdNueva)
-						usuario.save()
-						context = { 
-							'empleado':empleado,
-							'usuario':usuario,
-							'exito': "Usuario editado con éxito",
-						}
-						return render(request, 'AdministradorTemplates/editarUsuario.html',context)
-					else:
-						context = {
-							'empleado':empleado,
-							'validar':"Error, contraseña antigua incorrecta",
-						}
-						return 	render(request, 'AdministradorTemplates/editarUsuario.html',context)
-			except (KeyError, IntegrityError):
-				#Aqui tiene que ir la pagina 404 correcta.
-				context = { 
-					'empleado':empleado,
-					'validar': "Usuario duplicado",
-					}
-				return render(request, 'AdministradorTemplates/crearUsuario.html',context)
-			except(KeyError, usuario.DoesNotExist):
-				context = { 
-					'empleado':empleado,
-					'validar': "Usuario no existe",
-				}
-				return render(request, 'AdministradorTemplates/editarUsuario.html',context)
-	except Empleado.DoesNotExist:
-		empleado = None
-	else:
-		context = { 'empleado':empleado,}
-		return render(request, 'AdministradorTemplates/editarUsuario.html', context)
-
-@permission_required('SIGPAd.view_superuser')
-def eliminarUsuario(request, pk):
-	empleado = get_object_or_404(Empleado, empleado=pk)
-	try:
-		if empleado is not None:
-			usuario = get_object_or_404(User, id=empleado.usuario.id)
-			try:
-				empleado.usuario = None
-				usuario.delete()
-				context = {
-					'mensaje':"Usuario eliminado",
-				}
-				return redirect('/usuarios')
-			except (KeyError, usuario.DoesNotExist):
-				return render(request, 'AdministradorTemplates/listadoUsuarios.html', {
-				    	'error_message': "No selecciono un usuario valido a eliminar.",
-				})			
-	except (KeyError, empleado.DoesNotExist):
-		return render(request, 'AdministradorTemplates/listadoUsuarios.html', {
-		    	'error_message': "No selecciono un empleado valido a eliminar.",
-		})
-	else:
-		return redirect('/usuarios')	
-
+	context = {
+	}
+	return render(request, 'AdministradorTemplates/editarUsuario.html',context)
 
 @permission_required('SIGPAd.view_superuser')
 def listadoDeUsuarios(request):
 	puestoGerente = Puesto.objects.filter(nombre__contains="Gerente")
-	gerentesSinUser = Empleado.objects.filter(puesto=puestoGerente,usuario__id=None,estado=1)
-	gerentes = Empleado.objects.filter(puesto=puestoGerente,estado=1).exclude(usuario__id=None)
+	gerentesSinUser = Empleado.objects.filter(puesto=puestoGerente,usuario__id=None)
+	gerentes = Empleado.objects.filter(puesto=puestoGerente).exclude(usuario__id=None)
 
 	puestoVendedor = Puesto.objects.filter(nombre__contains="Vendedor")
-	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None,estado=1)
-	vendedores = Empleado.objects.filter(puesto=puestoVendedor,estado=1).exclude(usuario__id=None)
+	vendedoresSinUser = Empleado.objects.filter(puesto=puestoVendedor,usuario__id=None)
+	vendedores = Empleado.objects.filter(puesto=puestoVendedor).exclude(usuario__id=None)
 
 	puestoContador = Puesto.objects.filter(nombre__contains="Contador")
-	contadoresSinUser = Empleado.objects.filter(puesto=puestoContador,usuario__id=None,estado=1)
-	contadores = Empleado.objects.filter(puesto=puestoContador,estado=1).exclude(usuario__id=None)
+	contadoresSinUser = Empleado.objects.filter(puesto=puestoContador,usuario__id=None)
+	contadores = Empleado.objects.filter(puesto=puestoContador).exclude(usuario__id=None)
 
 	context = {
 		'gerentesSinUser':gerentesSinUser,
@@ -400,17 +314,10 @@ def editarEmpleado(request, pk):
 		empleado = None
 	if empleado is not None:
 		#puestos = Puesto.objects.all()
-		try:
-			puestos = Puesto.objects.exclude(id=empleado.puesto.id)
-		except:
-			puestos=Puesto.objects.all()
+		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
 		empleados = Empleado.objects.exclude(sexo=empleado.sexo)
-		if empleado.sexo == "Femenino":
-			otro = "Masculino"
-		else:
-			otro = "Femenino"
 		if request.method == 'POST':
 			cargo = Puesto.objects.get(nombre=request.POST.get('puestoEmpleado', None))
 			empleado.puesto = cargo
@@ -433,17 +340,16 @@ def editarEmpleado(request, pk):
 				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
-				'otro':otro,
+				'empleados':empleados,
 			}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
 	else:
-		existe = "El empleado no existe"
+		existe = "El empledo no existe"
 		context = {
 			'empleado':empleado,
 			'existe':existe,
 			'mensaje':mensaje,
-			'otro':otro,
 		}
 		return render(request,"AdministradorTemplates/editarEmpleado.html", context) 
 
@@ -569,21 +475,11 @@ def index(request):
 	return render(request,'index.html',{})
 
 
-def planilla(request,idplanilla):
-
+def planilla(request,idplanilla):	
 	try:		
 		planilla = Planilla.objects.get(pk=idplanilla)
 		pagos = Pago.objects.filter(planilla = planilla)
-		planilla.totalAFP = 0
-		planilla.totalISSS = 0
-		planilla.totalVacaciones=0
-		planilla.totalInsaforp=0
-		planilla.totalSalarioBase =0
-		planilla.totalAguinaldo = 0
-		planilla.costomensual= 0
-		planilla.totalHoras = 0
-		planilla.save()
-		horaestrasss = 0
+		
 		for pago in pagos:	    	    
 			empleado = Empleado.objects.get(pk=pago.empleado.empleado)
 			anio = empleado.fecha_trabajo.year
@@ -620,36 +516,15 @@ def planilla(request,idplanilla):
 			for h in hora:
 				horaE=horaE+h.cantidad
 			horaEx=horaE*2
-
 			pago.totalHoraExtra=horaEx
-			horaestrasss = horaestrasss + horaEx
 			pago.costomensual = 3
-			pago.save()
-			planilla.totalAFP = round(Decimal(planilla.totalAFP) + Decimal(pago.pagoafp),2)
-			planilla.totalISSS = round(Decimal(planilla.totalISSS) + Decimal(pago.pagoisss),2)
-			planilla.totalVacaciones= round(Decimal(planilla.totalVacaciones)+Decimal(pago.vacaciones),2)
-			planilla.totalInsaforp= round(Decimal(planilla.totalInsaforp)+Decimal(pago.insaforp),2)
-			planilla.totalSalarioBase = round(Decimal(planilla.totalSalarioBase) + Decimal(pago.salarioBase),2)
-			planilla.totalAguinaldo = round(Decimal(planilla.totalAguinaldo) + Decimal(pago.aguinaldo),2)
-			planilla.totalHoras = horaEx
-			planilla.save()
-			planilla.costomensual=round( Decimal(planilla.totalSalarioBase) + Decimal(planilla.totalAguinaldo) + Decimal(planilla.totalInsaforp) + Decimal(planilla.totalVacaciones) + Decimal(planilla.totalISSS) + Decimal(planilla.totalAFP) ,2)
-			planilla.save() 
+			pago.save() 
+
 		pagos = Pago.objects.filter(planilla = planilla)
-		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos,'planilla':planilla, 'hora':horaestrasss})
+
+		return render(request,'AdministradorTemplates/planilla.html',{'pagos':pagos})
 	except Exception as e:
-		raise e
 		return render(request,'AdministradorTemplates/adminIndex.html',{})
-
-def reporte(request,pk):
-	planilla = Planilla.objects.get(pk=pk)
-
-	return generar_reporte(request, planilla)
-
-def reporteDespido(request):
-	empleado = Empleado.objects.filter(estado=0)
-
-	return generar_reporte_despido(request, empleado)
 
 def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()
@@ -657,38 +532,26 @@ def gestionarPlanilla(request):
 
 def crearPlanilla(request):
 	if request.method == 'POST':
-		try:		
-			planilla = Planilla()
-			planilla.nomPlanilla = request.POST.get('codigo',None)
-			planilla.fecha_pago_planilla = request.POST.get('fecha',None)
-			planilla.save()
-			empleados = Empleado.objects.filter(estado=1)
-			for i in empleados:
-				nompago = i.apellido[0] + i.nombre[0] + str(i.empleado) + str(planilla.id)
-				pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
-				pago.save()
-			return render(request,'AdministradorTemplates/crearPlanilla.html',{'alerta': 'Se creó la planilla: '+planilla.nomPlanilla})
-		except Exception as e:
-			return render(request,'AdministradorTemplates/crearPlanilla.html',{'error':'Error al crear planilla'})
-	else:
-		return render(request,'AdministradorTemplates/crearPlanilla.html',{})
+		planilla = Planilla()
+		planilla.nomPlanilla = request.POST.get('codigo',None)
+		planilla.fecha_pago_planilla = request.POST.get('fecha',None)
+		planilla.save()
+		empleados = Empleado.objects.filter(estado=1)
+		for i in empleados:
+			nompago = i.apellido[0] + i.nombre[0] + str(i.empleado) + str(planilla.id)
+			pago = Pago(planilla = planilla, empleado = i, nomPago = nompago, fecha_pago=planilla.fecha_pago_planilla)
+			pago.save()
+	return render(request,'AdministradorTemplates/crearPlanilla.html',{})
 
 def horasExtra(request, idempleado, idplanilla):
-	alerta=False
 	if request.method == 'POST':
 		horasExtra = HoraExtra()
 		horasExtra.cantidad = request.POST.get('cantidad',None)
 		horasExtra.fecha = request.POST.get('fecha',None)
 		horasExtra.empleado=Empleado.objects.get(pk=idempleado)
-		try:
-			horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
-			horasExtra.save()
-		except Exception as e:
-			alerta='No existe una planilla'
-	context={
-		'alerta':alerta
-	}
-	return render(request,'AdministradorTemplates/horasExtra.html',context)
+		horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
+		horasExtra.save()
+	return render(request,'AdministradorTemplates/horasExtra.html',{})
 
 
 def handler404(request):
@@ -696,16 +559,12 @@ def handler404(request):
 
 def ingresarPuesto(request):
 	if request.method == 'POST':
-		try:
-			puesto = Puesto()
-			puesto.nombre = request.POST.get('nombre', None)
-			puesto.salario = request.POST.get('salario', None)
-			content_type = ContentType.objects.get_for_model(Puesto)
-			puesto.save()			
-			return render(request, 'PuestoTemplates/ingresarPuesto.html', {'alerta':'Se creó el puesto: '+puesto.nombre})
-		except Exception as e:
-			context = {'error':'Error, puesto inválido'}
-			return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
+		puesto = Puesto()
+		puesto.nombre = request.POST.get('nombre', None)
+		puesto.salario = request.POST.get('salario', None)
+		content_type = ContentType.objects.get_for_model(Puesto)
+		puesto.save()
+		return redirect('/ingresarPuesto')
 	else:
 		context = {}
 		return render(request, 'PuestoTemplates/ingresarPuesto.html', context)
@@ -716,131 +575,8 @@ def gestionarPuesto(request):
 	context={'puesto':puesto}
 	return render(request,'PuestoTemplates/gestionarPuesto.html',context)
 
-def sancionarEmpleado(request,pk):
-	if request.method == 'POST':
-		sancion = Sancion()
-		sancion.sancion = request.POST.get('sancion', None)
-		sancion.descripcion = request.POST.get('descripcion', None)
-		sancion.fecha_sancion = datetime.now()
-		try:
-			empleado = Empleado.objects.get(empleado=pk)
-			sancion.empleado = empleado
-			sancion.save()
-		except Exception as e:
-			return render(request,'AdministradorTemplates/sancionarEmpleado.html',{'error':'Empleado no existe'})		
-	
-	return render(request,'AdministradorTemplates/sancionarEmpleado.html',{})
+def sancionarEmpleado(request):
+	return render_to_response('AdministradorTemplates/sancionarEmpleado.html')
 
 def gestionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')
-
-
-@permission_required('SIGPAd.view_superuser')
-def editarPuesto(request, pk):
-	mensaje = None
-	existe = None
-	try:
-		puesto = Puesto.objects.get(pk=pk)
-	except Puesto.DoesNotExist:
-		puesto = None
-
-	if puesto is not None:
-		print ("dentroif")	
-		'''
-		#puestos = Puesto.objects.all()
-		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
-		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
-		puesto = Puesto.objects.exclude(sexo=empleado.sexo)
-		'''
-		if request.method == 'POST':
-			print ("dentro")
-			puesto.nombre = request.POST.get('nombre',None)
-			puesto.salario = request.POST.get('salario',None)
-			puesto.save()
-			return redirect("/gestionarPuesto")
-		else:
-			context = {
-				'puesto':puesto,
-				'mensaje':mensaje,
-
-			}
-		return render(request,"PuestoTemplates/editarPuesto.html", context) 
-
-	else:
-		existe = "El puesto no existe"
-		context = {
-			'puesto':puesto,
-			'existe':existe,
-			'mensaje':mensaje,
-		}
-		return render(request,"PuestoTemplates/editarPuesto.html", context)
-
-@permission_required('SIGPAd.view_superuser')
-def eliminarPuesto(request, pk):
-	puesto = get_object_or_404(Puesto, pk=pk)
-	try:
-		empleados=Empleado.objects.filter(puesto=puesto)
-		for e in empleados:
-			e.puesto=None
-			e.save()
-		puesto.delete()
-		mensaje = "Puesto eliminado"
-		context = {
-			'mensaje': mensaje,
-		}
-		return redirect('/gestionarPuesto')
-	except (KeyError, puesto.DoesNotExist):
-		#Aqui tiene que ir la pagina 404 correcta.
-		return render(request, '404.html', {
-		    	'error_message': "Puesto no eliminado",
-		})
-	else:
-		return redirect('/gestionarPuesto')
-
-def gestionarSancion(request):
-	sancion=Sancion.objects.all()
-	context={'sancion':sancion}
-	return render(request,'AdministradorTemplates/gestionarSancion.html',context)
-
-@permission_required('SIGPAd.view_superuser')
-def despedir(request, pk):
-	try:
-		empleado=Empleado.objects.get(empleado=pk)
-		empleado.estado=0
-		empleado.save()
-		return redirect("/empleados")
-	except Exception as e:
-		return render(request,'AdministradorTemplates/empleados.html',context)
-
-@permission_required('SIGPAd.view_superuser')
-def confirmarDespido(request, pk):
-	empleado = get_object_or_404(Empleado, empleado=pk)
-	context = {
-		'empleado': empleado,
-	}
-	return render(request, 'AdministradorTemplates/confirmarDespido.html', context)
-
-@permission_required('SIGPAd.view_superuser')
-def listadoDespedidos(request):
-	empleados = Empleado.objects.filter(estado=0)
-	context = {
-		'empleados':empleados,
-	}
-	return render(request, 'AdministradorTemplates/despidos.html', context)
-
-@permission_required('SIGPAd.view_superuser')
-def eliminarDespedido(request, pk):
-	empleado = get_object_or_404(Empleado, empleado=pk)
-	try:
-		if empleado is not None:
-			empleado.delete()
-			context = {
-					'mensaje':"Empleado eliminado",
-			}
-			return redirect('/despedidos')
-	except (KeyError, empleado.DoesNotExist):
-		return render(request, 'AdministradorTemplates/despidos.html', {
-		    	'error_message': "No selecciono un empleado valido a eliminar.",
-		})
-	else:
-		return redirect('/despedidos')

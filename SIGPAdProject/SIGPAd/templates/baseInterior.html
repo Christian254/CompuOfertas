@@ -18,16 +18,12 @@
 	</title>
 
   <!-- Script -->
-  <!-- <script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script> -->
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>-->
-  <script type="text/javascript" src="{% static "interior/js/jspdf.debug.js" %}"> </script>
-  <script type="text/javascript" src="{% static "interior/js/jquery.min.js" %}"> </script> 
-  <script type="text/javascript" src="{% static "interior/js/sweetalert2.all.js" %}"> </script>  
+  <script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>  
   <script type="text/javascript" src="{% static "alertas/alertas.js" %}"></script>
 
-    
-    
+
 	<!-- Archivos CSS -->
   <link rel="shortcut icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
   <link rel="icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
@@ -36,8 +32,6 @@
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/animate.css" %}">
 	<link rel="stylesheet" type="text/css" href="{% static "interior/css/admin.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "interior/css/estilos.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "interior/css/jquery-ui.css" %}">
-  <link rel="stylesheet" type="text/css" href="{% static "interior/css/jquery.dataTables.min.css"  %}"/>
   
   {% block Script %}
 
@@ -163,14 +157,14 @@
       </div>
       <div class="left_nav_slidebar">
         <ul>
-          <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Inicio <span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
+          <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> inicio <span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
             <ul style="display:block">
-              <li> <a href="/indexAdministrador" class="left_nav_sub_active"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Inicio</b> </a> </li>
-              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Perfil</b> </a> </li>
-              <li> <a href="{% url 'SIGPAd:Empleados' %}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Empleados</b> </a> </li>
+              <li> <a href="/indexAdministrador" class="left_nav_sub_active"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>inicio</b> </a> </li>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>perfil</b> </a> </li>
+              <li> <a href="{% url 'SIGPAd:Empleados' %}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>gestionar empleado</b> </a> </li>
               <li> <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Usuarios</b> </a> </li>
-              <li> <a href="/gestionarPuesto"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Puesto</b> </a> </li>
-              <li> <a href="/crearPlanilla"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Planilla</b> </a> </li>
+              <li> <a href="/gestionarPuesto"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>gestionar puesto</b> </a> </li>
+              <li> <a href="/crearPlanilla"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>planilla</b> </a> </li>
             </ul>
           </li>
           <li hidden="true"> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> UI KIT <span class="plus"><i class="fa fa-plus"></i></span></a>
@@ -197,13 +191,13 @@
               <li> <a href="other-forms.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Others</b> </a> </li>
             </ul>
           </li>
-          <li> <a href="javascript:void(0);"> <i class="fa fa-users icon"></i> Empleados <span class="plus"><i class="fa fa-plus"></i></span> </a>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-users icon"></i> empleados <span class="plus"><i class="fa fa-plus"></i></span> </a>
             <ul>
-              <li> <a href="/empleados"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Empleados</b> </a> </li>
-              <li> <a href="/ingresarNuevoEmpleado"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Ingresar Empleado</b> </a> </li>
-              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Sancionar Empleado</b> </a> </li>
-              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Despedir Empleado</b> </a> </li>
-              <li> <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Usuarios</b> </a> </li>
+              <li> <a href="/empleados"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>gestionar empleado</b> </a> </li>
+              <li> <a href="/ingresarNuevoEmpleado"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>ingresar empleado</b> </a> </li>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>sancionar empleado</b> </a> </li>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>despedir empleado</b> </a> </li>
+              <li> <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Crear usuarios</b> </a> </li>
             </ul>
           </li>
           <li> <a href="javascript:void(0);"> <i class="fa fa-envelope"></i> Mensajes <span class="plus"><i class="fa fa-plus"></i></span> </a>
@@ -350,16 +344,12 @@
 
 
 <!-- Archivos JavaScript -->
-    
-    
 	<script src="{% static "interior/js/jquery-2.1.0.js" %}"></script>
 	<script src="{% static "interior/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "interior/js/common-script.js" %}"></script>
 	<script src="{% static "interior/js/jquery.slimscroll.min.js" %}"></script>
 	<script src="{% static "interior/js/jPushMenu.js" %}"></script>
 	<script src="{% static "interior/js/side-chats.js" %}"></script>
-  <script type="text/javascript" src="{% static "interior/js/jquery-ui.js" %}"></script>
-  <script type="text/javascript" src="{% static "interior/js/jquery.dataTables.min.js" %}"></script>
 
 	{% block JavaScript %}
 
