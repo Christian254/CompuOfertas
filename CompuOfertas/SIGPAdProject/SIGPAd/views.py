@@ -525,7 +525,7 @@ def registrarCliente(request):
 			user = User.objects.create_user(username=username, password=password)
 			content_type = ContentType.objects.get_for_model(Cliente)
 			permission = Permission.objects.get(
-				codename='view_client',
+				codename='es_cliente',
 				content_type=content_type,
 				)
 			user.user_permissions.add(permission)
@@ -546,7 +546,7 @@ def indexCliente(request):
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
+			return render(request,'ClienteTemplates/clienteIndex.html',{})			
 	return render_to_response('ClienteTemplates/clienteIndex.html')
 
 #Foro
