@@ -4,32 +4,51 @@
 	Listado de Puestos
 {% endblock Titulo %}
 
-{% block CSS %}
-	<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
-{% endblock CSS %}
 
 {% block Body %}
 
-<h3>PUESTOS</h3>
-<div class="limiter">
-		
-	<div>
-		<table>
-			<thead>
-				<tr>
-					<th>Puesto</th><th>Salario Base</th><th>Operaciones</th>
-				</tr>
-			</thead>
-				{% for p in puesto %}
-				<tr>
-					<td>{{ p.nombre}}</td><td>{{ p.salario }}</td><td><a href="{% url 'SIGPAd:EditarPuesto' p.id %}" class="btn btn-success">ACTUALIZAR PUESTO</a>
-				    <a href="{% url 'SIGPAd:EliminarPuesto' p.id %}" class="btn btn-success">ELIMINAR PUESTO</a></td>
-				</tr>
-				{% endfor %}
-		</table>
-		<div class="container-login100-form-btn">
-				<a href="{% url 'SIGPAd:IngresarPuesto' %}" class="btn btn-success">NUEVO PUESTO</a>
-		</div>
-	</div>
+<div class="container clear_both padding_fix">
+        {% if  error_message %}
+          <div class="alert alert-warning">
+            <strong>{{error_message}}</strong>
+          </div>
+        {% endif %}
+        <!--\\\\\\\ container  start \\\\\\-->
+        <div class="row">
+          <div class="col-lg-6">
+            <section class="panel default blue_title h2">
+              <div class="panel-heading"><span class="semi-bold">PUESTOS</span> </div>
+              <div class="panel-body">
+              
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Puesto</th>
+						<th>Salario Base</th>
+						<th>Operaciones</th>
+					</tr>
+				</thead>
+					{% for p in puesto %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>{{ p.nombre}}</td><td>{{ p.salario }}</td>
+						<td><a href="{% url 'SIGPAd:EditarPuesto' p.id %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+							/
+					    <a href="{% url 'SIGPAd:EliminarPuesto' p.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+					</tr>
+					{% endfor %}
+			</table>
+			<div class="container-login100-form-btn">
+					<a href="{% url 'SIGPAd:IngresarPuesto' %}" class="btn btn-success">NUEVO PUESTO</a>
+			</div>
+              </div>
+              <div></div>
+            </section>
+          </div>
+        </div>
+    </div>
+
+
 				   
 {% endblock Body %}

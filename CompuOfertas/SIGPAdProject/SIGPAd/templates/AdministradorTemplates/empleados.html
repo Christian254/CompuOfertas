@@ -37,45 +37,51 @@
    <div class="panel-heading"><span class="semi-bold">EMPLEADOS</span> </div>
 </section>
 
-<table class="table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>DUI</th>
-        <th>NIT</th>
-        <th>Puesto</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-    	{% for empleado in empleados %}
-    		<tr>
-		      	<td>{{ forloop.counter }}</td>
-		      	<td>{{empleado.nombre}}</td>
-		      	<td>{{empleado.apellido}}</td>
-		      	<td>{{empleado.dui}}</td>
-		      	<td>{{empleado.nit}}</td>
-		      	<td>{{empleado.puesto.nombre}}</td>
-		      	<td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-		      	    /
-		      	    <a href="{% url 'SIGPAd:SancionarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
-                /
-              <a onclick="return abrir_modal('{% url 'SIGPAd:ConfirmarDespido' empleado.empleado %}')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              </a>
-                /
-              <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="" aria-hidden="">horas extras</span></a>
-		      </td>
-		    </tr>
-      	{% endfor %}
-    </tbody>
-  </table>
+<div class="row">
+    <div class="col-md-12">
+      <div class="block-web">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>DUI</th>
+                  <th>NIT</th>
+                  <th>Puesto</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+              	{% for empleado in empleados %}
+              		<tr>
+          		      	<td>{{ forloop.counter }}</td>
+          		      	<td>{{empleado.nombre}}</td>
+          		      	<td>{{empleado.apellido}}</td>
+          		      	<td>{{empleado.dui}}</td>
+          		      	<td>{{empleado.nit}}</td>
+          		      	<td>{{empleado.puesto.nombre}}</td>
+          		      	<td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+          		      	    /
+          		      	    <a href="{% url 'SIGPAd:SancionarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
+                          /
+                        <a onclick="return abrir_modal('{% url 'SIGPAd:ConfirmarDespido' empleado.empleado %}')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                          /
+                        <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="" aria-hidden="">horas extras</span></a>
+          		      </td>
+          		    </tr>
+                	{% endfor %}
+              </tbody>
+            </table>
 
-    <!-- Importante para el modal NO BORRAR -->
-        <div id="popup" class="modal fade" role="dialog">
-        </div>
+              <!-- Importante para el modal NO BORRAR -->
+                  <div id="popup" class="modal fade" role="dialog">
+                  </div>
 
-  <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">NUEVO EMPLEADO</a>
-  <a href="{% url 'SIGPAd:Despedidos' %}" class="btn btn-danger">DESPIDOS</a>
+            <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">NUEVO EMPLEADO</a>
+            <a href="{% url 'SIGPAd:Despedidos' %}" class="btn btn-danger">DESPIDOS</a>
+    </div>
+  </div>
+</div>
 {% endblock Body %}
