@@ -1,60 +1,57 @@
 {% extends "baseInterior.html" %}
 {% load staticfiles %}
-{% block Titulo %}
-	Editar Empleado
-{% endblock Titulo %}
 
-  {% block usuario %}
-      {{user.username}}
-    {% endblock usuario %}
-    
-{% block Body %}
+  {% block Titulo %}
+    Ingresar Puestos
+  {% endblock Titulo %}
+  {% block CSS %}
+    <link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">
 
-	<h3>EDITAR PUESTO</h3>
+  {% endblock CSS %}
 
-	<!-- Formulario -->
-	<div class="row">
-        <div class="col-md-6">
-          <div class="block-web">
-            <div class="header">
-              <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
-              <h3 class="content-header">Datos Puesto</h3>
-            </div>
-            <div class="porlets-content">
-              <form action="{% url 'SIGPAd:EditarPuesto' puesto.id%}" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
-					{% csrf_token %}
+  {% block Body %}
+  {%if alerta %}
+    <p class="alert alert-success text-center" id="crearPuesto"><b>{{alerta}}</b></p>
+  {%endif%}
+  {%if error %}
+    <p class="alert alert-danger text-center" id="errorPuesto"><b>{{error}}</b></p>
+  {%endif%}
 
-              	  <!--<div class="form-group">
-                  <label class="col-sm-3 control-label">Puesto</label>
-                  <div class="col-sm-9">
-						<select id="puestoEmpleado" name="puestoEmpleado" class="input100">
-							<option id="{{empleado.puesto.nombre}}" value="{{empleado.puesto.nombre}}" selected="selected">{{empleado.puesto.nombre}}</option>
-							{% for puesto in puestos %}
-								<option id="{{puesto.nombre}}" value="{{puesto.nombre}}">{{puesto.nombre}}</option>
-				            {% endfor %}
-						</select>
-                   </div>
-                 </div>-->
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Nombre</label>
-                  <div class="col-sm-9">
-                    <input class="form-control" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{puesto.nombre}}">
-                  </div>
-                </div><!--/form-group--> 
-
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Salario</label>
-                  <div class="col-sm-9">
-                   <input class="form-control" type="number" value="{{puesto.salario}}" id="salario" name="salario"  required="required">
-                  </div>
-                </div><!--/form-group--> 
-                <input type="submit" class="btn btn-success">
-              </form>
-            </div>
+    <div class="limiter">
+    <div class="container-login100">
+      <div class="wrap-login100">
+          <div class="login100-form-title">
+            <span class="login100-form-title-1">
+              <h2>ACTUALIZAR PUESTO</h2>
+            </span>
           </div>
+        <!-- Formulario -->
+      <b><center>{{validar}}</center></b>
+
+      <form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
+              {% csrf_token %}
+
+              <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
+          <span class="label-input100">Puesto </span>
+          <input class="input100" type="text" placeholder="Ingresa Nombre del puesto" id="nombre" name="nombre" value="{{puesto.nombre}}" pattern="[a-zA-Z]{1-15}">
+          <span class="focus-input100"></span>
         </div>
-      </div>
 
+              <div class="wrap-input100 validate-input m-b-26" data-validate="Salario Base es un campo requerido.">
+          <span class="label-input100">Salario Base </span>
+          <input class="input100" type="number" placeholder="Ingresa Salario Base" id="salario" name="salario" value="{{puesto.salario}}"required="required" min="0">
+          <span class="focus-input100"></span>
+        </div>
 
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" type="submit">
+                Actualizar
+          </button>
+        </div>
 
-{% endblock Body %}
+          </form>
+          
+    </div>
+  </div>
+  </div>
+  {% endblock Body %}

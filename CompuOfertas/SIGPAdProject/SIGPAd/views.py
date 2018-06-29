@@ -683,12 +683,11 @@ def horasExtra(request, idempleado, idplanilla):
 		try:
 			horasExtra.planilla=Planilla.objects.get(pk=idplanilla)
 			horasExtra.save()
+			return render(request,'AdministradorTemplates/horasExtra.html',{'alerta': 'Se ingresaron horas extras:'})
 		except Exception as e:
-			alerta='No existe una planilla'
-	context={
-		'alerta':alerta
-	}
-	return render(request,'AdministradorTemplates/horasExtra.html',context)
+			return render(request,'AdministradorTemplates/horasExtra.html',{'error':'Error al ingresar horas extras'})
+
+	return render(request,'AdministradorTemplates/horasExtra.html',{})
 
 
 def handler404(request):

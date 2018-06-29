@@ -4,6 +4,10 @@
 	{% block Titulo %}
 		Ingresar Puestos
 	{% endblock Titulo %}
+	{% block CSS %}
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">
+
+	{% endblock CSS %}
 
 	{% block Body %}
 	{%if alerta %}
@@ -13,41 +17,41 @@
  		<p class="alert alert-danger text-center" id="errorPuesto"><b>{{error}}</b></p>
  	{%endif%}
 
-	<!-- Formulario -->
-	<div class="row">
-        <div class="col-md-6">
-          <div class="block-web">
-            <div class="header">
-              <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
-              <h3 class="content-header"><strong>CREAR PUESTO</strong></h3>
-            </div>
+    <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+					<div class="login100-form-title">
+						<span class="login100-form-title-1">
+							<h2>NUEVO PUESTO</h2>
+						</span>
+					</div>
+				<!-- Formulario -->
 			<b><center>{{validar}}</center></b>
-			<div class="porlets-content">
-				<form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
-		            {% csrf_token %}
-				<div class="form-group">
-                  <label class="col-sm-3 control-label">Nombre Puesto</label>
-                  <div class="col-sm-9">
-						<input class="form-control" type="text" placeholder="Ingresar Puesto" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="requirede">
-                  </div>
-                </div><!--/form-group--> 
 
+			<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
+	            {% csrf_token %}
 
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Salario Base</label>
-                  <div class="col-sm-9">
-                  	<input class="form-control" type="number" placeholder="Ingresar Salario Base" id="salario" name="salario" min="0" step=".01" required="">
-                  </div>
-                </div><!--/form-group--> 
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
+					<span class="label-input100">Puesto </span>
+					<input class="input100" type="text" placeholder="Ingresa Nombre del puesto" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}">
+					<span class="focus-input100"></span>
+				</div>
 
-                <div class="bottom">
-                  <button type="submit" class="btn btn-success">Crear Puesto</button>
-                </div><!--/form-group-->
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario Base es un campo requerido.">
+					<span class="label-input100">Salario Base </span>
+					<input class="input100" type="number" placeholder="Ingresa Salario Base" id="salario" name="salario" required="required" min="0">
+					<span class="focus-input100"></span>
+				</div>
 
-		        </form>
-	    	</div>
+				<div class="container-login100-form-btn">
+					<button class="login100-form-btn" type="submit">
+								Ingresar
+					</button>
+				</div>
+
+	        </form>
+	        
 		</div>
 	</div>
-</div>
-
+	</div>
 	{% endblock Body %}
