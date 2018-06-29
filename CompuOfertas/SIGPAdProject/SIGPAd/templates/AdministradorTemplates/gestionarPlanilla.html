@@ -5,39 +5,24 @@
 		Gestionar Planilla
 	{% endblock Titulo %}
 
+
 	{% block CSS %}
-		<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
-		<style type="text/css">
-		.label-input100 {
-		  font-family: Poppins-Regular;
-		  font-size: 12px;
-		  color: #808080;
-		  line-height: 1;
-		  text-align: right;
-
-		  position: absolute;
-		  top: 14px;
-		  left: -105px;
-		  width: 80px;
-
+	<style type="text/css">
+		table{
+			background-color: white;
+			text-align: left;
+			width: 100%;
 		}
-
-		.input100 {
-  font-family: Poppins-Regular;
-  font-size: 12px;
-  color: #555555;
-  line-height: 0.5;
-
-  display: block;
-  width: 100%;
-  background: transparent;
-  padding: 0 0px;
-}
-
-
-		</style>
+		th, td{
+			border: solid 1px black;
+		}
+		thead{
+			background-color: #34b077;
+			border-bottom: solid 5px black;
+			color: white; 
+		}
+	</style>
 	{% endblock CSS %}
-
 	
 	{% block usuario %}
   		{{user.username}}
@@ -45,18 +30,25 @@
   	
   
 	{% block Body %}
-	    
-					<div>
-						<table>
+<section class="panel default blue_title h2">
+   <div class="panel-heading"><span class="semi-bold">PLANILLAS</span> </div>
+</section>
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="block-web">	    
+						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>Numero de Planilla</th>
+									<th>#</th>
+									<th>Codigo de Planilla</th>
 									<th>Fecha</th>
 									<th>Operaciones</th>
 								</tr>
 							</thead>
 							{%for pl in planilla%}
 							<tr>
+								<td>{{forloop.counter}}</td>
 								<td>{{pl.nomPlanilla}}</td>
 								<td>{{pl.fecha_pago_planilla}}</td>
 								<td>
@@ -66,9 +58,11 @@
 							</tr>
 							{%endfor%}							
 						</table>
-					</div>
 					<br>
-					<a href="/crearPlanilla" class="btn btn-primary" >Nueva Planilla</a>
+					<a href="/crearPlanilla" class="btn btn-success" >Nueva Planilla</a>
+				</div>
+			</div>
+		</div>
 					
 	    
 	{% endblock Body %}
