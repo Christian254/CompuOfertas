@@ -1,0 +1,45 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Listado de Empleados con falta
+{% endblock Titulo %}
+
+
+  {% block usuario %}
+      {{user.username}}
+    {% endblock usuario %}
+    
+
+{% block Body %}
+
+<h3>EMPLEADOS CON FALTA</h3>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Sanción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    	{% for s in sancion %}
+    		<tr>
+		      	<td>{{ s.empleado.nombre}}</td>
+		      	<td>{{s.empleado.apellido}}</td>
+		      	<td>{{s.sancion}}</td>
+		      	<td>    
+              {%if s.empleado.estado%}
+              <a href="{% url 'SIGPAd:despedir' s.empleado.empleado %}"><span class="" aria-hidden="">Despedir</span></a>
+                
+              {%else%}
+              Despedido
+                {%endif%}
+		      </td>
+		    </tr>
+      	{% endfor %}
+    </tbody>
+  </table>
+
+{% endblock Body %}

@@ -1,0 +1,72 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Planilla
+{% endblock Titulo %}
+{% block CSS%}
+<!--<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">-->
+{% endblock CSS%}
+{%block usuario %}
+ {{user.username}}
+{%endblock usuario%}
+{% block Body %}
+
+<h3>EMPLEADOS</h3>
+<div id="pdf">
+<table class="table" id="tpdf" border="2">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Puesto</th>
+        <th>Salario Base</th>
+        <th>Horas Extra</th>
+        <th>ISSS</th>
+        <th>AFP</th>        
+        <th>INSAFORP</th>
+        <th>VACACIONES</th>
+        <th>AGUINALDO</th>                         
+      </tr>
+    </thead>
+    <tbody>      
+    	{%for i in pagos%}
+    		<tr>
+            <td>{{i.id}}</td>
+		      	<td>{{i.empleado.nombre}}</td>
+		      	<td>{{i.empleado.apellido}}</td>
+            <td>{{i.empleado.puesto.nombre}}</td>
+            <td>{{i.salarioBase}}</td>   
+            <td>{{i.totalHoraExtra}}</td>
+		      	<td>{{i.pagoisss}}</td>
+		      	<td>{{i.pagoafp}}</td>
+            <td>{{i.insaforp}}</td>
+            <td>{{i.vacaciones}}</td>
+            <td>{{i.aguinaldo}}</td>  		      	      	            	      	
+		    </tr> 
+      {%endfor%}  
+          <tr>
+            <td>codigo de planilla</td>
+            <td>{{planilla.nomPlanilla}}</td>
+            <td colspan="2">Totales</td>
+            <td>{{planilla.totalSalarioBase}}</td>   
+            <td>{{hora}} </td>
+            <td>{{planilla.totalISSS}} </td>
+            <td>{{planilla.totalAFP}} </td>
+            <td>{{planilla.totalInsaforp}} </td>
+            <td>{{planilla.totalVacaciones}} </td>
+            <td>{{planilla.totalAguinaldo}} </td>                                                
+            </tr>
+
+          <tr>
+            <td colspan="8">Total a pagar en planilla</td>
+            <td colspan="3" align="center" style="background:#34b077; "><STRONG>{{planilla.costomensual}}</STRONG> </td>                                                
+            </tr>     	
+    </tbody>
+  </table>
+  </div>
+  <a href="{% url 'SIGPAd:reporte' planilla.id %}" class="btn btn-primary">Generar PDF</a>
+  
+  
+  
+{% endblock Body %}

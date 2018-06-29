@@ -1,0 +1,110 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block META %}
+		
+	{% endblock META %}
+
+	<title>
+		{% block Titulo %}
+			SIGPAd
+		{% endblock Titulo %}
+	</title>
+
+
+	<script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js" integrity="sha384-u/bQvRA/1bobcXlcEYpsEdFVK/vJs3+T+nXLsBYJthmdBuavHvAW6UsmqO2Gd/F9" crossorigin="anonymous"></script>  
+    <script type="text/javascript" src="{% static "alertas/alertas.js" %}"></script>
+
+	<!-- Archivos CSS -->
+
+	<!--===============================================================================================-->
+		<link rel="shortcut icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<link rel="icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/bootstrap/css/bootstrap.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/animate/animate.css" %}">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/css-hamburgers/hamburgers.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/animsition/css/animsition.min.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/select2/select2.min.css" %}">
+	<!--===============================================================================================-->	
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/vendor/daterangepicker/daterangepicker.css" %}">
+	<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/util.css" %}">
+		<link rel="stylesheet" type="text/css" href="{% static "exterior/css/main.css" %}">
+	<!--===============================================================================================-->
+
+	{% block CSS %}
+
+	{% endblock CSS %}
+
+</head>
+<body>	
+	<!--Menú de navegación-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<ul class="nav navbar-nav pull-xs-left">
+    		<img src="{% static 'images/logo.jpg' %}" width="50" height="50" alt="s-logo" />
+    		<a class="navbar-brand">SIGPAd</a>
+    	</ul>
+    	<ul class="nav navbar-nav pull-xs-right">
+		    		<li class="nav-item">
+		        		<a class="nav-link" href="{% url 'SIGPAd:Index' %}">Foro</a>
+		    		</li>
+		    <li class="nav-item">
+		        <a class="nav-link" href="{% url 'SIGPAd:LogIn' %}">LogIn</a>
+		    </li>
+		    <li class="nav-item">
+		        <a class="nav-link" href="{% url 'SIGPAd:RegistrarCliente' %}">Registrarse (Clientes)</a>
+		    </li>
+		    <!--<li class="nav-item">
+		        <a class="nav-link" href="{% url 'SIGPAd:IngresarPuesto' %}">Ingresar Puesto</a>
+		    </li>
+		    <li class="nav-item">
+		        <a class="nav-link" href="{% url 'SIGPAd:GestionarEmpleado' %}">Gestionar Empleados</a>
+		    </li>-->
+		</ul>
+  	</nav>
+
+  	{% block Body %}
+
+  	{% endblock Body%}
+</body>
+
+	<!-- Archivos JavaScript, JQuery, etc -->
+
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/jquery/jquery-3.2.1.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/animsition/js/animsition.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/bootstrap/js/popper.js" %}"></script>
+		<script src="{% static "exterior/vendor/bootstrap/js/bootstrap.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/select2/select2.min.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/daterangepicker/moment.min.js" %}"></script>
+		<script src="{% static "exterior/vendor/daterangepicker/daterangepicker.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/vendor/countdowntime/countdowntime.js" %}"></script>
+	<!--===============================================================================================-->
+		<script src="{% static "exterior/js/main.js" %}"></script>
+
+	{% block JavaScript %}
+
+	{% endblock JavaScript %}
+
+</html>

@@ -1,0 +1,136 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Listado de Usuarios
+{% endblock Titulo %}
+
+  {% block usuario %}
+      {{user.username}}
+    {% endblock usuario %}
+    
+
+{% block Body %}
+<div class="container clear_both padding_fix">
+        {% if  error_message %}
+          <div class="alert alert-warning">
+            <strong>{{error_message}}</strong>
+          </div>
+        {% endif %}
+        <!--\\\\\\\ container  start \\\\\\-->
+        <div class="row">
+          <div class="col-lg-6">
+            <section class="panel default blue_title h2">
+              <div class="panel-heading"> CREAR <span class="semi-bold">USUARIOS</span> </div>
+              <div class="panel-body">
+              
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Puestos</th>
+                      <th>Crear</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for gerenteSinUser in gerentesSinUser %}
+                      <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{gerenteSinUser.nombre}}</td>
+                          <td>{{gerenteSinUser.apellido}}</td>
+                          <td>{{gerenteSinUser.puesto.nombre}}</td>
+                          <td><a href="{% url 'SIGPAd:NuevoUsuario' gerenteSinUser.empleado %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for vendedorSinUser in vendedoresSinUser %}
+                      <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{vendedorSinUser.nombre}}</td>
+                          <td>{{vendedorSinUser.apellido}}</td>
+                          <td>{{vendedorSinUser.puesto.nombre}}</td>
+                          <td><a href="{% url 'SIGPAd:NuevoUsuario' vendedorSinUser.empleado %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
+                      </tr>
+                    {% endfor %}
+                    {% for contadorSinUser in contadoresSinUser %}
+                      <tr>
+                          <td>{{ forloop.counter }}</td>
+                          <td>{{contadorSinUser.nombre}}</td>
+                          <td>{{contadorSinUser.apellido}}</td>
+                          <td>{{contadorSinUser.puesto.nombre}}</td>
+                          <td><a href="{% url 'SIGPAd:NuevoUsuario' contadorSinUser.empleado %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div></div>
+            </section>
+          </div>
+
+          <div class="col-lg-6"> 
+          <section class="panel default blue_title h2">
+          <div class="panel-heading">
+           Editar <span class="semi-bold">Usuarios</span> 
+          </div>
+          <div class="panel-body">
+         
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Puesto</th>
+                <th>Editar/Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for gerente in gerentes %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{gerente.nombre}}</td>
+                    <td>{{gerente.apellido}}</td>
+                    <td>{{gerente.puesto.nombre}}</td>
+                    <td>
+                      <a href="{% url 'SIGPAd:EditarUsuario' gerente.empleado %}"><span class="glyphicon glyphicon-cog"   aria-hidden="true"></span></a> 
+                      /
+                      <a href="{% url 'SIGPAd:EliminarUsuario' gerente.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
+                </tr>
+              {% endfor %}
+              {% for vendedor in vendedores %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{vendedor.nombre}}</td>
+                    <td>{{vendedor.apellido}}</td>
+                    <td>{{vendedor.puesto.nombre}}</td>
+                    <td>
+                      <a href="{% url 'SIGPAd:EditarUsuario' vendedor.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      /
+                      <a href="{% url 'SIGPAd:EliminarUsuario' vendedor.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </td>
+                </tr>
+              {% endfor %}
+              {% for contador in contadores %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{contador.nombre}}</td>
+                    <td>{{contador.apellido}}</td>
+                    <td>{{contador.puesto.nombre}}</td>
+                    <td><a href="{% url 'SIGPAd:EditarUsuario' contador.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      /
+                      <a href="{% url 'SIGPAd:EliminarUsuario' contador.empleado %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        
+                </div>
+                </section>
+                </div>
+              </div>
+</div>
+
+
+{% endblock %}

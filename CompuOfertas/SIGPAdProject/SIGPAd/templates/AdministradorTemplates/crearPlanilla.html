@@ -1,0 +1,56 @@
+{% extends "baseInterior.html" %}
+{% load staticfiles %}
+
+	{% block Titulo %}
+		Crear Planilla
+	{% endblock Titulo %}
+	{% block CSS %}
+	{% endblock CSS %}
+
+	{% block usuario %}
+  	{{user.username}}
+    {% endblock usuario %}
+
+
+	{% block Body %}
+	{%if alerta %}
+ 		<div class="alert alert-success text-center" id="creacion"><b>{{alerta}}</b></div>
+ 	{%endif%}
+ 	{%if error %}
+ 		<div class="alert alert-danger text-center" id="crearError"><b>{{error}}</b></div>
+ 	{%endif%}
+    <div class="row">
+        <div class="col-md-12">
+          <div class="block-web">
+            <div class="header">              
+              <h3 class="content-header" align="center">Nueva Planilla</h3>
+            </div>
+              <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+            <div class="porlets-content">
+              <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+					{% csrf_token %}
+
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
+					<span class="label-input100">Codigo Planilla </span>
+					<input class="input100" type="text" placeholder="Ingresar Codigo" id="codigo" name="codigo" pattern="[a-zA-Z]{1-15}" required="true">
+					<span class="focus-input100"></span>
+				</div>
+				<br>
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
+					<span class="label-input100">Fecha de Pago </span>
+					<input class="input100" type="date" placeholder="Ingresar Fecha de Pago" id="fecha" name="fecha" required="true">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-login100-form-btn">
+					<button class="btn btn-primary" type="submit" id="crearPlanilla">
+								Crear
+					</button>					
+				</div>
+
+	        </form>
+	        
+		</div>
+	</div>
+	</div>
+	{% endblock Body %}

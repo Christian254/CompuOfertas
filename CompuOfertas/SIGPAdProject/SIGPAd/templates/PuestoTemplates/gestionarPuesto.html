@@ -1,0 +1,35 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Listado de Puestos
+{% endblock Titulo %}
+
+{% block CSS %}
+	<link rel="stylesheet" type="text/css" href="{% static "interior/css/table.css" %}">
+{% endblock CSS %}
+
+{% block Body %}
+
+<h3>PUESTOS</h3>
+<div class="limiter">
+		
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Puesto</th><th>Salario Base</th><th>Operaciones</th>
+				</tr>
+			</thead>
+				{% for p in puesto %}
+				<tr>
+					<td>{{ p.nombre}}</td><td>{{ p.salario }}</td><td><a href="{% url 'SIGPAd:EditarPuesto' p.id %}" class="btn btn-success">ACTUALIZAR PUESTO</a>
+				    <a href="{% url 'SIGPAd:EliminarPuesto' p.id %}" class="btn btn-success">ELIMINAR PUESTO</a></td>
+				</tr>
+				{% endfor %}
+		</table>
+		<div class="container-login100-form-btn">
+				<a href="{% url 'SIGPAd:IngresarPuesto' %}" class="btn btn-success">NUEVO PUESTO</a>
+		</div>
+	</div>
+				   
+{% endblock Body %}

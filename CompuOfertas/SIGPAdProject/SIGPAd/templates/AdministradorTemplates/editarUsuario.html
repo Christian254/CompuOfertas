@@ -1,0 +1,80 @@
+{% extends 'baseInterior.html' %}
+{% load staticfiles %}
+{% block Titulo %}
+	Editar Usuario
+{% endblock Titulo %}
+
+  {% block usuario %}
+      {{user.username}}
+    {% endblock usuario %}
+    
+
+{% block Body %}
+
+
+	<div class="row">
+        <div class="col-md-6">
+          <div class="block-web">
+            <div class="header">
+              <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+              <h3 class="content-header">Editar Usuario</h3>
+            </div>
+            <div class="porlets-content">
+              {% if validar %}
+                <div class="alert alert-danger">
+                  <strong>{{validar}}<strong>
+                </div>
+                <br />
+              {% endif %}
+              {% if exito %}
+                <div class="alert alert-success">
+                  <strong>{{exito}}<strong>
+                </div>
+                <br />
+              {% endif %}              
+              <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+					{% csrf_token %}
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Nombre Empleado</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleado.nombre}}" disabled="true">
+                  </div>
+                </div><!--/form-group--> 
+
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Usuario</label>
+                  <div class="col-sm-9">
+                    {% if usuario %}
+                    <input class="form-control" type="text" id="usr" name="usr" pattern="[a-zA-Z]{1-15}"required="required" value="{{usuario.username}}">
+                    {% else %}
+                    <input class="form-control" type="text" id="usr" name="usr" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleado.usuario.username}}">
+                    {% endif %}
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Contraseña Anterior</label>
+                  <div class="col-sm-9">
+                  	<input class="form-control" type="password" id="pwdAntigua" name="pwdAntigua" required="required">
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Nueva Contraseña: </label>
+                  <div class="col-sm-9">
+                  	<input class="form-control" type="password" id="pwdNueva" name="pwdNueva" required="required">
+                  </div>
+                </div><!--/form-group--> 
+
+                <div class="bottom">
+                  <button type="submit" class="btn btn-primary">Editar Usuario</button>
+                </div><!--/form-group-->
+              </form>
+            </div><!--/porlets-content-->
+          </div><!--/block-web--> 
+        </div><!--/col-md-6-->
+
+
+{% endblock Body %}

@@ -1,0 +1,52 @@
+{% extends "baseInterior.html" %}
+{% load staticfiles %}
+
+	{% block Titulo %}
+		Ingresar Sancion
+	{% endblock Titulo %}
+
+	{% block CSS %}
+
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">	
+	{% endblock CSS %}
+
+	{% block Body %}
+	{%if error %}
+ 		<p class="alert alert-danger text-center"><b>{{error}}</b></p>
+ 	{%endif%}
+    <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+					<div class="login100-form-title">
+						<span class="login100-form-title-1">
+							<h2>NUEVA SANCION</h2>
+						</span>
+					</div>
+				<!-- Formulario -->
+			<b><center>{{validar}}</center></b>
+			<form class="login100-form validate-form" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8">
+	            {% csrf_token %}
+
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Puesto es un campo requerido.">
+					<span class="label-input100">Nombre de la sancion </span>
+					<input class="input100" type="text" placeholder="Ingresar Sancion" id="sancion" name="sancion" pattern="[a-zA-Z]{1-15}" required="">
+					<span class="focus-input100"></span>
+				</div>
+
+	            <div class="wrap-input100 validate-input m-b-26" data-validate="Salario es un campo requerido.">
+					<span class="label-input100">Descripcion</span>
+					<input class="input100" type="text" placeholder="Ingresar descripcion" id="descripcion" name="descripcion" required="">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-login100-form-btn btn-ingresar" >
+					<button class="login100-form-btn" type="submit">
+								Ingresar
+					</button>
+				</div>
+
+	        </form>
+		</div>
+	</div>
+	</div>
+	{% endblock Body %}

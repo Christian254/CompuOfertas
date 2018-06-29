@@ -1,0 +1,53 @@
+{% extends "baseInterior.html" %}
+{% load staticfiles %}
+  {% block usuario %}
+  	{{user.username}}
+  {% endblock usuario %}
+
+{% block Body %}
+	<br />
+    <main class="servicios p-y-1">
+        <div class="container">
+            <div class="row">
+                <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
+	                <a href="{% url 'SIGPAd:Empleados' %}"><img src="{% static 'images/user.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="{% url 'SIGPAd:Empleados' %}" class="btn btn-secondary"> <STRONG>Gestionar empleado</STRONG> </a></h3>
+                    <p class="hidden-sm-down">En esta seccion puedes consultar tus empleados, asi como crear nuevos empleados.</p>
+
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+					<a href="{% url 'SIGPAd:GestionarPuesto' %}"><img src="{% static 'images/puestos.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="{% url 'SIGPAd:GestionarPuesto' %}">Gestionar puestos</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes gestionar los puestos existentes asi como ingresar nuevos puestos.</p>
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+					<a href="/gestionarPlanilla"><img src="{% static 'images/planilla.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/gestionarPlanilla">Planilla de salarios</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes imprimir la planilla de salarios correspondiente.</p>
+                </article>
+            </div>
+            <div class="row">
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a  href="/usuarios"><img src="{% static 'images/adduser.png' %}" width="150px" height="150px"></a>
+                    <h3 ><a href="/usuarios">Nuevos usuarios</a></h3>
+                    <p  class="hidden-sm-down">Puede ver y darles credenciales de usuarios a sus empleados.</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="{% url 'SIGPAd:GestionarSancion' %}"><img src="{% static 'images/falta.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="{% url 'SIGPAd:GestionarSancion' %}">Gestionar Faltas</a></h3>
+                    <p class="hidden-sm-down">Sus empleados hacen cosas que no deben, pues debe registrarlos.</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/usuarios"><img src="{% static 'images/despido.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/usuarios">Despedir empleados</a></h3>
+                    <p class="hidden-sm-down">Sabemos que muchas veces los empleados hacen cosas que no deben o simplemente se necesita hacer recortes de personal, es dificil tomar esta desicion pero alguien debe hacerlo.</p>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+
+{% endblock Body %}
