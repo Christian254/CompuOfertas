@@ -12,34 +12,43 @@
 
 {% block Body %}
 
-<h3>EMPLEADOS CON FALTA</h3>
-
-<table class="table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Sanción</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-    	{% for s in sancion %}
-    		<tr>
-		      	<td>{{ s.empleado.nombre}}</td>
-		      	<td>{{s.empleado.apellido}}</td>
-		      	<td>{{s.sancion}}</td>
-		      	<td>    
-              {%if s.empleado.estado%}
-              <a href="{% url 'SIGPAd:despedir' s.empleado.empleado %}"><span class="" aria-hidden="">Despedir</span></a>
-                
-              {%else%}
-              Despedido
-                {%endif%}
-		      </td>
-		    </tr>
-      	{% endfor %}
-    </tbody>
-  </table>
+<section class="panel default blue_title h2">
+    <div class="panel-heading">EMPLEADOS <span class="semi-bold">CON FALTA</span> </div>
+</section>
+ <div class="row">
+        <div class="col-md-12">
+          <div class="block-web">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Sanción</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                	{% for s in sancion %}
+                		<tr>
+                        <td>{{forloop.counter}}</td>
+            		      	<td>{{s.empleado.nombre}}</td>
+            		      	<td>{{s.empleado.apellido}}</td>
+            		      	<td>{{s.sancion}}</td>
+            		      	<td>    
+                          {%if s.empleado.estado%}
+                          <a href="{% url 'SIGPAd:despedir' s.empleado.empleado %}" class="btn btn-danger"><span class="" aria-hidden="">Despedir</span></a>
+                            
+                          {%else%}
+                          Despedido
+                            {%endif%}
+            		      </td>
+            		    </tr>
+                  	{% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
 {% endblock Body %}

@@ -717,19 +717,21 @@ def gestionarPuesto(request):
 	return render(request,'PuestoTemplates/gestionarPuesto.html',context)
 
 def sancionarEmpleado(request,pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
 	if request.method == 'POST':
 		sancion = Sancion()
 		sancion.sancion = request.POST.get('sancion', None)
 		sancion.descripcion = request.POST.get('descripcion', None)
 		sancion.fecha_sancion = datetime.now()
 		try:
-			empleado = Empleado.objects.get(empleado=pk)
 			sancion.empleado = empleado
 			sancion.save()
 		except Exception as e:
 			return render(request,'AdministradorTemplates/sancionarEmpleado.html',{'error':'Empleado no existe'})		
-	
-	return render(request,'AdministradorTemplates/sancionarEmpleado.html',{})
+	context = {
+		'empleado':empleado,
+	}
+	return render(request,'AdministradorTemplates/sancionarEmpleado.html',context)
 
 def gestionarEmpleado(request):
 	return render_to_response('AdministradorTemplates/gestionarEmpleado.html')
