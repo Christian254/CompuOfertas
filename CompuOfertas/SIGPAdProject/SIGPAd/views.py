@@ -14,6 +14,7 @@ from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
 from django.db import IntegrityError
@@ -75,14 +76,22 @@ def  indexAdministrador(request):
 @permission_required('SIGPAd.view_superuser')
 def listadoDeEmpleados(request):
 	planilla=Planilla.objects.all()
-	ultima=0
+	ultima=0	
 	for p in planilla:
 		ultima=p.id
-	empleados_list = Empleado.objects.filter(estado=1)
-	consulta = request.GET.get('consulta','')
+	empleados_list = Empleado.objects.filter(estado=1)	
+	consulta = request.GET.get('consulta')
 	if consulta:
-		empleados_list = empleados_list.filter(nombre__icontains = consulta)
+		empleados_list = empleados_list.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)|
+			Q(puesto__nombre__icontains = consulta)
+			).distinct()
 	paginator = Paginator(empleados_list, 1) #Cambiar al numero que deseen que se muestre
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
 	page = request.GET.get('page')
 	try:
 		empleados = paginator.page(page)
@@ -91,7 +100,7 @@ def listadoDeEmpleados(request):
 	except EmptyPage:
 		empleados = paginator.page(paginator.num_pages)    
 	context = {
-		'empleados':empleados,'ultima':ultima
+		'empleados':empleados,'ultima':ultima, 'parametros':parametros
 	}	
 	return render(request, 'AdministradorTemplates/empleados.html', context)
 

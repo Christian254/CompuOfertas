@@ -17,17 +17,19 @@
 
 {% endblock Script %} {% block Body %}
 
-<section class="panel default blue_title h2">
+<section class="panel default blue_title h2 text-center">
     <div class="panel-heading"><span class="semi-bold">EMPLEADOS</span> </div>
 </section>
 
 <div class="row">
-    <nav class="navbar text-right">
-        <form class="form-inline" method="get">
-            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
-            <input type="submit" value="Buscar" class="btn btn-success">
-        </form>
-    </nav>
+    <div class="col-12">
+        <nav class="navbar text-right">
+            <form class="form-inline" method="GET" action="">
+                <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
+                <input type="submit" value="Buscar" class="btn btn-success">
+            </form>
+        </nav>
+    </div>
     <div class="col-md-12">
         <div class="block-web">
             <table class="table">
@@ -74,16 +76,16 @@
 
                         <ul class="pagination">
                             {% if empleados.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ empleados.previous_page_number }}">Anterior</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ empleados.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
                             {%else%}
                             <li class="disabled"><span>Anterior</span></li>
                             {% endif %} {% for i in empleados.paginator.page_range %} {% if empleados.number == i %}
                             <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                             </li>
                             {% else %}
-                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
                             {% endif %} {% endfor %} {% if empleados.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ empleados.next_page_number }}">Siguiente</a></li>
+                            <li class="page-item"><a class="page-link" href="?page={{ empleados.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
                             {%else%}
                             <li class="disabled"><span>Siguiente</li>
 										{% endif %}
