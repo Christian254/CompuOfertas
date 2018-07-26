@@ -13,6 +13,7 @@ from decimal import *
 from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.contenttypes.models import ContentType
 from SIGPAd.models import *
 from django.db import IntegrityError
@@ -77,10 +78,21 @@ def listadoDeEmpleados(request):
 	ultima=0
 	for p in planilla:
 		ultima=p.id
-	empleados = Empleado.objects.filter(estado=1)
+	empleados_list = Empleado.objects.filter(estado=1)
+	consulta = request.GET.get('consulta','')
+	if consulta:
+		empleados_list = empleados_list.filter(nombre__icontains = consulta)
+	paginator = Paginator(empleados_list, 1) #Cambiar al numero que deseen que se muestre
+	page = request.GET.get('page')
+	try:
+		empleados = paginator.page(page)
+	except PageNotAnInteger:
+		empleados = paginator.page(1)
+	except EmptyPage:
+		empleados = paginator.page(paginator.num_pages)    
 	context = {
 		'empleados':empleados,'ultima':ultima
-	}
+	}	
 	return render(request, 'AdministradorTemplates/empleados.html', context)
 
 @permission_required('SIGPAd.view_superuser')
@@ -653,6 +665,15 @@ def reporteDespido(request):
 
 def gestionarPlanilla(request):
 	planilla = Planilla.objects.all()
+	paginator = Paginator(planilla, 5)
+	page = request.GET.get('page')
+	try:
+		planilla = paginator.page(page)
+	except PageNotAnInteger:
+		planilla = paginator.page(1)
+	except EmptyPage:
+		planilla = paginator.page(paginator.num_pages) 
+
 	return render(request,'AdministradorTemplates/gestionarPlanilla.html',{'planilla':planilla})
 
 def crearPlanilla(request):

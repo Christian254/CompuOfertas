@@ -1,88 +1,99 @@
-{% extends 'baseInterior.html' %}
-{% load staticfiles %}
-{% block Titulo %}
-	Listado de Empleados
-{% endblock Titulo %}
+{% extends 'baseInterior.html' %} {% load staticfiles %} {% block Titulo %} Listado de Empleados {% endblock Titulo %} {% block usuario %} {{user.username}} {% endblock usuario %} {% block Script %}
+<script type="text/javascript">
+    var modal;
 
+    function abrir_modal(url) {
+        $('#popup').load(url, function() {
+            $(this).modal('show');
+        });
+        return false;
+    }
 
-  {% block usuario %}
-      {{user.username}}
-  {% endblock usuario %}
-    
-    {% block Script %}
-    <script type="text/javascript">
+    function cerrar_modal() {
+        $('#popup').modal('hide');
+        return false;
+    }
+</script>
 
-        var modal;
-        function abrir_modal(url)
-        {
-                $('#popup').load(url, function()
-                {
-                        $(this).modal('show');
-                });
-                return false;
-        }
-
-        function cerrar_modal()
-        {
-                $('#popup').modal('hide');
-                return false;
-        }
-      </script>
-
-    {% endblock Script %}
-
-{% block Body %}
+{% endblock Script %} {% block Body %}
 
 <section class="panel default blue_title h2">
-   <div class="panel-heading"><span class="semi-bold">EMPLEADOS</span> </div>
+    <div class="panel-heading"><span class="semi-bold">EMPLEADOS</span> </div>
 </section>
 
 <div class="row">
+    <nav class="navbar text-right">
+        <form class="form-inline" method="get">
+            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
+            <input type="submit" value="Buscar" class="btn btn-success">
+        </form>
+    </nav>
     <div class="col-md-12">
-      <div class="block-web">
-          <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>DUI</th>
-                  <th>NIT</th>
-                  <th>Puesto</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-              	{% for empleado in empleados %}
-              		<tr>
-          		      	<td>{{ forloop.counter }}</td>
-          		      	<td>{{empleado.nombre}}</td>
-          		      	<td>{{empleado.apellido}}</td>
-          		      	<td>{{empleado.dui}}</td>
-          		      	<td>{{empleado.nit}}</td>
-          		      	<td>{{empleado.puesto.nombre}}</td>
-          		      	<td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-          		      	    /
-          		      	    <a href="{% url 'SIGPAd:SancionarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> 
-                          /
-                        <a onclick="return abrir_modal('{% url 'SIGPAd:ConfirmarDespido' empleado.empleado %}')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </a>
-                          /
-                        <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="" aria-hidden="">horas extras</span></a>
-          		      </td>
-          		    </tr>
-                	{% endfor %}
-              </tbody>
+        <div class="block-web">
+            <table class="table">
+                <thead class="bg-primary">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>DUI</th>
+                        <th>NIT</th>
+                        <th>Puesto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empleado in empleados %}
+                    <tr>
+                        <td>{{empleado.nombre}}</td>
+                        <td>{{empleado.apellido}}</td>
+                        <td>{{empleado.dui}}</td>
+                        <td>{{empleado.nit}}</td>
+                        <td>{{empleado.puesto.nombre}}</td>
+                        <td> <a href="{% url 'SIGPAd:EditarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> /
+                            <a href="{% url 'SIGPAd:SancionarEmpleado' empleado.empleado %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a> /
+                            <a onclick="return abrir_modal('{% url 'SIGPAd:ConfirmarDespido' empleado.empleado %}')"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a> /
+                            <a href="{% url 'SIGPAd:horasExtra' empleado.empleado ultima %}"><span class="" aria-hidden="">horas extras</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
 
-              <!-- Importante para el modal NO BORRAR -->
-                  <div id="popup" class="modal fade" role="dialog">
-                  </div>
+            <!-- Importante para el modal NO BORRAR -->
+            <div id="popup" class="modal fade" role="dialog">
+            </div>
 
             <a href="{% url 'SIGPAd:NuevoEmpleado' %}" class="btn btn-success">NUEVO EMPLEADO</a>
             <a href="{% url 'SIGPAd:GestionarSancion' %}" class="btn btn-warning">SANCIONES</a>
             <a href="{% url 'SIGPAd:Despedidos' %}" class="btn btn-danger">DESPIDOS</a>
+            <div class="row text-center">
+                <div class="col">
+
+                    <nav aria-label="Page navigation example">
+
+                        <ul class="pagination">
+                            {% if empleados.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ empleados.previous_page_number }}">Anterior</a></li>
+                            {%else%}
+                            <li class="disabled"><span>Anterior</span></li>
+                            {% endif %} {% for i in empleados.paginator.page_range %} {% if empleados.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                            </li>
+                            {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %} {% endfor %} {% if empleados.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ empleados.next_page_number }}">Siguiente</a></li>
+                            {%else%}
+                            <li class="disabled"><span>Siguiente</li>
+										{% endif %}
+									</ul>                        
+								</nav>
+							</div>
+						</div>
+				</div>
+			</div>
+        </div>
     </div>
-  </div>
 </div>
 {% endblock Body %}

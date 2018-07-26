@@ -1,65 +1,77 @@
-{% extends "baseInterior.html" %}
-{% load staticfiles %}
-
-	{% block Titulo %}
-		Gestionar Planilla
-	{% endblock Titulo %}
-
-
-	{% block CSS %}
-	<style type="text/css">
-		table{
-			background-color: white;
-			text-align: left;
-			width: 100%;
-		}
-		th, td{
-			border: solid 1px black;
-		}
-		thead{
-			background-color: #34b077;
-			border-bottom: solid 5px black;
-			color: white; 
-		}
-	</style>
-	{% endblock CSS %}
-	
-	{% block usuario %}
-  		{{user.username}}
-  	{% endblock usuario %}
-  	
-  
-	{% block Body %}
+{% extends "baseInterior.html" %} {% load staticfiles %} {% block Titulo %} Gestionar Planilla {% endblock Titulo %} {% block CSS %}
+<style type="text/css">
+    table {
+        background-color: white;
+        text-align: left;
+        width: 100%;
+    }
+    
+    th,
+    td {
+        border: solid 1px black;
+    }
+    
+    thead {
+        background-color: #34b077;
+        border-bottom: solid 5px black;
+        color: white;
+    }
+</style>
+{% endblock CSS %} {% block usuario %} {{user.username}} {% endblock usuario %} {% block Body %}
 <section class="panel default blue_title h2">
-   <div class="panel-heading"><span class="semi-bold">PLANILLAS</span> </div>
+    <div class="panel-heading"><span class="semi-bold">PLANILLAS</span> </div>
 </section>
 
 <div class="row">
     <div class="col-md-12">
-      <div class="block-web">	    
-						<table class="table table-hover" border="2">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Codigo de Planilla</th>
-									<th>Fecha</th>
-									<th>Operaciones</th>
-								</tr>
-							</thead>
-							{%for pl in planilla%}
-							<tr>
-								<td>{{forloop.counter}}</td>
-								<td>{{pl.nomPlanilla}}</td>
-								<td>{{pl.fecha_pago_planilla}}</td>
-								<td>
-								<a href="{% url 'SIGPAd:planilla' pl.id %}">Gestionar</a>
-							</td>
+        <div class="block-web">
+            <table class="table table-hover" border="2">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Codigo de Planilla</th>
+                        <th>Fecha</th>
+                        <th>Operaciones</th>
+                    </tr>
+                </thead>
+                {%for pl in planilla%}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{pl.nomPlanilla}}</td>
+                    <td>{{pl.fecha_pago_planilla}}</td>
+                    <td>
+                        <a href="{% url 'SIGPAd:planilla' pl.id %}">Gestionar</a>
+                    </td>
 
-							</tr>
-							{%endfor%}							
-						</table>
-					<br>
-					<a href="/crearPlanilla" class="btn btn-success" >Nueva Planilla</a>
+                </tr>
+                {%endfor%}
+            </table>
+            <br>
+            <a href="/crearPlanilla" class="btn btn-success">Nueva Planilla</a>
+            <div class="row text-center">
+                <div class="col">
+
+                    <nav aria-label="Page navigation example">
+
+                        <ul class="pagination">
+                            {% if planilla.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ planilla.previous_page_number }}">Anterior</a></li>
+                            {%else%}
+                            <li class="disabled"><span>Anterior</span></li>
+                            {% endif %} {% for i in planilla.paginator.page_range %} {% if planilla.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                            </li>
+                            {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %} {% endfor %} {% if planilla.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ planilla.next_page_number }}">Siguiente</a></li>
+                            {%else%}
+                            <li class="disabled"><span>Siguiente</li>
+										{% endif %}
+									</ul>                        
+								</nav>
+							</div>
+						</div>
 				</div>
 			</div>
 		</div>
