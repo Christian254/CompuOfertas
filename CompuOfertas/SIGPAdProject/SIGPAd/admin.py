@@ -34,3 +34,19 @@ class HoraExtraAdmin(admin.ModelAdmin):
 	pass
 admin.site.register(HoraExtra, HoraExtraAdmin)
 
+class CategoriaAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Categoria, CategoriaAdmin)
+
+class DetalleCompraAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(DetalleCompra, DetalleCompraAdmin)
+
+class ProductoAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Producto, ProductoAdmin)
+
+class CompraAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Compra, CompraAdmin)
+

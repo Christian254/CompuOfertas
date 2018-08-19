@@ -1,6 +1,56 @@
-{% extends "baseInterior.html" %}
+{% extends "baseUser.html" %}
 {% load staticfiles %}
 
+
 {% block Body %}
-	<p>Es un <b>Vendedor<b></p>
+{% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+	<br />
+    <main class="servicios p-y-1">
+        <div class="container">
+            <div class="row">
+                <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
+	                <a href="/"><img src="{% static 'images/vender.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/" class="btn btn-secondary"> <STRONG>Registrar Ventas</STRONG> </a></h3>
+                    <p class="hidden-sm-down">Aqui debes registrar todas las ventas realizadas o servicios proporcionados.</p>
+
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+					<a href="/"><img src="{% static 'images/comprar.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Registrar compras</a></h3>
+                    <p class="hidden-sm-down">Aqui debes registrar todas las compras realizadas por la compañia.</p>
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+					<a href="/"><img src="{% static 'images/misventas.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Mis Ventas</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes ver tus ventas realizadas en el mes y anteriores.</p>
+                </article>
+            </div>
+            <div class="row">
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a  href="/"><img src="{% static 'images/perfil.png' %}" width="150px" height="150px"></a>
+                    <h3 ><a href="/">Editar mi usuario</a></h3>
+                    <p  class="hidden-sm-down">Aqui puede cambiar su nombre de usuario y contraseña.</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/"><img src="{% static 'images/falta.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Mis faltas</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes ver las faltas que has cometido.</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/registrarCategoria"><img src="{% static 'images/categoria.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/registrarCategoria">Registrar nueva categoria</a></h3>
+                    <p class="hidden-sm-down">Puedes ingresar una sola categoria nueva, o subir un archivo excel estandarizado con las categorias existentes para ahorrar tiempo, tambien puedes descar un ejemplo del archivo excel donde iran las categorias</p>
+                </article>
+            </div>
+        </div>
+    </main>
+
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
 {% endblock Body %}

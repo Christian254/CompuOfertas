@@ -1,0 +1,121 @@
+{% extends "baseUser.html" %}
+{% load staticfiles %}
+
+
+{% block Body %}
+{% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+<style type="text/css">
+    details {
+        padding: 15px;
+        background-color: #f6f7f8;
+        margin-bottom: 20px;
+    }
+    summary {
+        cursor: pointer;
+    }
+    summary::-webkit-details-marker {
+        display: none;
+    }
+    summary:before {
+        content: "\2714"; 
+        color: #696f7c;
+        margin-right: 5px;
+    }
+    .archivo{
+        padding:20px;
+        margin-left:60px;
+        margin-top: 40px;
+    }
+    .descarga{
+        padding:5px;
+        margin-left:60px;
+        margin-top: 40px;
+    }
+
+    .formulario{
+        margin-left:60px;
+        border-radius: 15px;
+        font-size: 15px;
+        min-height: 30px;
+        max-height: 40px;
+        min-width: 300px;
+        max-width: 600px;
+    }    
+    .formularioD{
+        margin-left:60px;
+        border-radius: 15px;
+        font-size: 15px;
+        min-height: 70px;
+        max-height: 100px;
+        min-width: 400px;
+        max-width: 600px;
+    }    
+
+    .aceptar{
+        margin-top: 20px;
+        border-radius: 15px;
+        min-width: 100px;
+    }    
+
+    .formularioL{
+        margin-left:60px;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+        <div class="excel">
+            <details class="container">
+                <summary><h3 class="btn btn-info" style="padding:20px;margin-left:60px;">Seleccione un archivo excel</h3></summary>
+                <a href="{% static 'documents/exampleCategoria.xlsx' %}" download="exampleCategoria.xlsx" class="btn btn-info descarga">descargar ejemplo</a>
+                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                {% csrf_token %}
+                    <input type="text" name="action" id="action" value="excel" hidden="true">
+                    <input type="file" value="cargar" class="archivo" id="arch" name="arch" required="" accept=".xlsx">
+                    <input type="submit" class="btn btn-success" value="enviar" style="margin-left:100px;margin-top:40px;">
+                </form>
+            </details>
+        </div>
+        <div class="col-xs-8 archivo">
+            <h1 class="center"> Ingrese sus categorias </h1>
+            <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border">
+                {% csrf_token %}
+                <input type="text" name="action" id="action" value="insert" hidden="true">
+                <p>
+                    <label class="formularioL">codigo:</label>
+                    <input type="text" name="codigo" id="codigo" required="" class="formulario">
+                </p>
+                <p>
+                    <label class="formularioL">nombre:</label>
+                    <input type="text" name="nombre" id="nombre" required="" class="formulario">
+                </p>
+                <p>
+                    <label class="formularioL">descripcion:</label>
+                    <TEXTAREA name="descripcion" id="descripcion" required="" class="formularioD"></TEXTAREA>
+                </p>
+                <p>
+                    <label class="formularioL">codicion:</label>
+                    <input type="textarea" name="condicion" id="condicion" required="" class="formulario">
+                </p>
+                <p class="center">
+                    <input type="submit" name="aceptar" id="aceptar" class="btn btn-success aceptar" value="Ingresar">
+                </p>
+
+            </form>
+        </div>
+    </div>
+</div> 
+
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
+{% endblock Body %}

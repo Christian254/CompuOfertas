@@ -109,5 +109,64 @@ class Sancion(models.Model):
 	def __str__(self):
 		return self.sancion
 
+##modelos agragados para el Sprint 2
+
+class Categoria(models.Model):
+	codigo = models.CharField(max_length=10,unique=True)
+	nombre = models.CharField(max_length=70,unique=True)
+	descripcion = models.CharField(max_length=200)
+	condicion = models.CharField(max_length=100) 
+	cantidad = models.IntegerField(default=0)
+
+	def __str__(self):
+		return self.nombre
+
+class Producto(models.Model):
+	categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
+	codigo = models.CharField(max_length=10,unique=True) ##lo dejare asi para que el id siga siendo el que proporciona django
+	nombre = models.CharField(max_length=70, unique=True)
+	marca = models.CharField(max_length=30)
+	descripcion = models.CharField(max_length=100)
+	existencia = models.IntegerField(default=0)
+	precioCompra = models.DecimalField(max_digits=6, decimal_places=2,default=0)
+	precioVenta = models.DecimalField(max_digits=8, decimal_places=2,default=0)
+
+	def __str__(self):
+		return self.nombre
+
+class Compra(models.Model):
+	totalCompra= models.DecimalField(max_digits=10,decimal_places=2)
+	ivaCompra = models.DecimalField(max_digits=4,decimal_places=2)
+	descuento = models.DecimalField(max_digits=4,decimal_places=2)
+	descripcion = models.CharField(max_length=100)
+	fecha = models.DateField()
+	tipoPago = models.CharField(max_length=2)
+
+
+class DetalleCompra(models.Model):
+	producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+	compra = models.ForeignKey(Compra, on_delete=models.CASCADE) 
+	cantidad = models.IntegerField(default=0)
+	precioUnitario = models.DecimalField(max_digits=6,decimal_places=2)
+	precioTotal = models.DecimalField(max_digits=6,decimal_places=2)
+
+
 
 		
+
+
+
+
+
+
+
+
+
+
+
+##aqui terminan los modelos agregados para el Sprint 2
+
+
+
+
+
