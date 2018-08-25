@@ -148,7 +148,7 @@ def ingresarProducto(request):
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
-	paginator = Paginator(categorias, 7)
+	paginator = Paginator(categorias, 2)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']

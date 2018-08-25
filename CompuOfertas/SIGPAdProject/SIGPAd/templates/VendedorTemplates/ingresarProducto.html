@@ -1,9 +1,4 @@
-{% extends "baseUser.html" %}
-{% load staticfiles %}
-
-
-{% block Body %}
-{% if user.is_superuser %}
+{% extends "baseUser.html" %} {% load staticfiles %} {% block Body %} {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 <style type="text/css">
@@ -12,44 +7,152 @@
         background-color: #f6f7f8;
         margin-bottom: 20px;
     }
+    
     summary {
         cursor: pointer;
     }
+    
     summary::-webkit-details-marker {
         display: none;
     }
+    
     summary:before {
-        content: "\2714"; 
+        content: "\2714";
         color: #696f7c;
         margin-right: 5px;
     }
-    .archivo{
-        padding:20px;
-        margin-left:60px;
+    
+    .archivo {
+        padding: 20px;
+        margin-left: 60px;
         margin-top: 40px;
     }
-    .descarga{
-        padding:5px;
-        margin-left:60px;
+    
+    .descarga {
+        padding: 5px;
+        margin-left: 60px;
         margin-top: 40px;
     }
-
-
 </style>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        var pagMax = $('.numPag').length;
+        var actual = $('.numPag').attr('val');
+        $('#anterior-pag').prop('disabled', true);
+        let remover = () => {
+            $('.numPag').each(function() {
+                $(this).removeClass('active');
+            });
+        }
+        $('#siguiente-pag').click(function(e) {
+            let param = $('#siguiente-pag').attr('href');
+            console.log(param);
+            actual++;
+            e.preventDefault();
+            if (actual == pagMax) {
+                $('#siguiente-pag').removeAttr('href');
+                $('#siguiente-pag').prop('disabled', true);
+            } else {
+                $('#siguiente-pag').prop('disabled', false);
+            }
+            $.ajax({
+                url: param,
+                type: 'GET',
+                dataType: "html",
+                success: function(data) {
+                    remover();
+                    console.log(actual);
+                    $('.numPag').eq(actual - 1).addClass('active')
+                    console.log($(data).find('.table').html());
+                    $('.table').html($(data).find('.table').html());
+                    $('#siguiente-pag').attr('href', $(data).find('#siguiente-pag').attr('href'));
+                    $('#anterior-pag').attr('href', $(data).find('#anterior-pag').attr('href'));
+                    $('#anterior-pag').prop('disabled', false);
+                },
+            })
+        });
+        $('#anterior-pag').click(function(e) {
+            let param = $('#anterior-pag').attr('href');
+            actual--;
+            if (actual < pagMax) {
+                $('#siguiente-pag').prop('disabled', false);
+            }
+            if (actual == 1) {
+                $('#anterior-pag').prop('disabled', true);
+            }
+            e.preventDefault();
+            $.ajax({
+                url: param,
+                type: 'GET',
+                success: function(data) {
+                    remover();
+                    $('.numPag').eq(actual - 1).addClass('active');
+                    $('#anterior-pag').removeAttr('href');
+                    $('.table').html($(data).find('.table').html());
+                    $('#siguiente-pag').attr('href', $(data).find('#siguiente-pag').attr('href'));
+                    $('#anterior-pag').attr('href', $(data).find('#anterior-pag').attr('href'));
+                },
+            })
+        });
+        $('.numPag').click(function(e) {
+            numSig = Number($('a', this).text()) + 1;
+            actual = numSig - 1;
+            if (numSig >= pagMax) {
+                numSig = pagMax;
+            }
+            console.log(actual);
+            if (actual == 1) {
+                $('#anterior-pag').prop('disabled', true);
+            }
+            if (actual >= 2) {
+                $('#anterior-pag').prop('disabled', false);
+            }
+            if (actual == pagMax) {
+                $('#siguiente-pag').prop('disabled', true);
+            }
+            if (actual < pagMax) {
+                $('#siguiente-pag').prop('disabled', false);
+            }
+            console.log(actual);
+            remover();
+            e.preventDefault();
+            $(this).addClass("active");
+            url = $('a', this).attr('href');
+            posicion = url.split('=')
+            if (posicion[1] == pagMax) {
+                $('#siguiente-pag').removeAttr('href');
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    $('.table').html($(data).find('.table').html());
+                    $('#siguiente-pag').attr('href', $(data).find('#siguiente-pag').attr('href'));
+                    $('#anterior-pag').attr('href', $(data).find('#anterior-pag').attr('href'));
+                    if (actual == 1) {
+                        $('#anterior-pag').prop('disabled', true);
+                        $('#anterior-pag').attr('href', $(data).find('#anterior-pag').removeAttr('href'))
+                    }
+                }
+            })
+        });
+    })
+</script>
 <div class="row">
     <div class="col-xs-12">
         {% if error %}
-            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
         {% elif exito %}
-            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
         <div class="excel">
             <details class="container">
-                <summary><h3 class="btn btn-info" style="padding:20px;margin-left:60px;">Seleccione un archivo excel</h3></summary>
+                <summary>
+                    <h3 class="btn btn-info" style="padding:20px;margin-left:60px;">Seleccione un archivo excel</h3>
+                </summary>
                 <a href="{% static 'documents/exampleProducto.xlsx' %}" download="exampleProducto.xlsx" class="btn btn-info descarga">descargar ejemplo</a>
-                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
-                {% csrf_token %}
+                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border">
+                    {% csrf_token %}
                     <input type="text" name="action" id="action" value="excel" hidden="true">
                     <input type="file" value="cargar" class="archivo" id="arch" name="arch" required="" accept=".xlsx">
                     <input type="submit" class="btn btn-success" value="enviar" style="margin-left:100px;margin-top:40px;">
@@ -83,7 +186,7 @@
                                     <th>Accion</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="#cuerpo-tabla">
                                 {% for categoria in categorias %}
                                 <tr>
                                     <td>{{categoria.codigo}}</td>
@@ -91,9 +194,8 @@
                                     <td>{{categoria.descripcion}}</td>
                                     <td>{{categoria.condicion}}</td>
                                     <td>{{categoria.cantidad}}</td>
-                                    <td> <a href="{% url 'SIGPAd:registrarProducto' categoria.id %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                                    /
-                                     <a href="{% url 'SIGPAd:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> 
+                                    <td> <a href="{% url 'SIGPAd:registrarProducto' categoria.id %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> /
+                                        <a href="{% url 'SIGPAd:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -102,36 +204,38 @@
                     </div>
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="col">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            {% if categorias.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
-                            {%else%}
-                            <li class="disabled"><span>Anterior</span></li>
-                            {% endif %} {% for i in categorias.paginator.page_range %} {% if categorias.number == i %}
-                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
-                            </li>
-                            {% else %}
-                            <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
-                            {% endif %} {% endfor %} {% if categorias.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
-                            {%else%}
-                            <li class="disabled"><span>Siguiente</li>
-                                        {% endif %}
-                                    </ul>                        
-                                </nav>
-                            </div>
-                        </div>
-                </div>
+            <div class="row  text-center mt-3">
+
+                <nav aria-label="Page navigation example">
+
+                    <ul class="pagination">
+                        {% if categorias.has_previous%}
+
+                        <button class="btn page-link" id="anterior-pag" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</button> {% else %}
+
+                        <button class="btn page-link" id="anterior-pag">Anterior</button> {%endif%} {% for i in categorias.paginator.page_range %} {% if categorias.number == i %}
+                        <li class="page-item active numPag " val="{{i}}">
+                            <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item numPag">
+                            <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
+                        </li>
+                        {%endif%} {%endfor%} {% if categorias.has_next %}
+
+                        <button class="btn page-link" id="siguiente-pag" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ categorias.next_page_number }}">Siguiente</button> {%else%}
+
+                        <a class="page-link ">Siguiente</a> {%endif%}
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
-</div> 
+</div>
+</div>
 
 
 
 {%else%}
 <h1>usuario anonimo</h1>
-{% endif %}
-{% endblock Body %}
+{% endif %} {% endblock Body %}
