@@ -96,7 +96,26 @@ def registrarCategoria(request):
 						error='Lo el nombre se repite, intente nuevamente'
 					if 'column codigo is not unique' in e.message:
 						error='El codigo que esta insertando ya esta ocupado'
-	context = {'error':error,'exito':exito}
+	categorias = Categoria.objects.all()
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = categorias.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+	paginator = Paginator(categorias, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		categoria = paginator.page(page)
+	except PageNotAnInteger:
+		categoria = paginator.page(1)
+	except EmptyPage:
+		categoria = paginator.page(paginator.num_pages)
+	context = {'error':error,'exito':exito,'categorias':categoria}
 	return render(request, 'VendedorTemplates/registrarCategoria.html', context)
 
 
@@ -165,7 +184,7 @@ def ingresarProducto(request):
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
-	paginator = Paginator(categorias, 2)
+	paginator = Paginator(categorias, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
