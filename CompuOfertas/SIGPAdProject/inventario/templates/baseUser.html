@@ -15,8 +15,9 @@
     </script>
     <script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}">
     </script>
-    <script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}">
+    <script type="text/javascript" src="{% static 'sweet/sweetalert.js' %}">
     </script>
+    <script type="text/javascript" src="{% static "js/alertas.js" %}"></script>
 
     <!-- Archivos CSS -->
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
@@ -27,7 +28,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}" /> {% block Script %} {% endblock Script %} {% block CSS %} {% endblock CSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}" /> 
+    <link rel="stylesheet" type="text/css" href="{% static 'sweet/sweetalert.min.css'  %}" /> 
+
+    {% block Script %} {% endblock Script %}
+    {% block CSS %} {% endblock CSS %}
 
 </head>
 
