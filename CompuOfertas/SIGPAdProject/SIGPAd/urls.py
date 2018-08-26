@@ -38,14 +38,6 @@ urlpatterns = [
 	url(r'eliminarDespedido/(?P<pk>\d+)$', login_required(eliminarDespedido), name="EliminarDespedido"),
 	url(r'^reporteDespido/$', login_required(reporteDespido), name="ReporteDeDespido"),
 
-	
-	#URL Vendedor.
-	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
-	url(r'registrarCategoria$', login_required(registrarCategoria), name="registrarCategoria"),
-	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
-	url(r'registrarProducto/(?P<pk>\d+)$', login_required(registrarProducto), name="registrarProducto"),
-	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),
-
 
 	#URL Cliente.
 	url(r'registrarCliente$', registrarCliente, name="RegistrarCliente"),

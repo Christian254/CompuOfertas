@@ -7,5 +7,10 @@ from inventario.views import *
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 urlpatterns = [
-    
+    #URL Vendedor.
+	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
+	url(r'registrarCategoria$', login_required(registrarCategoria), name="registrarCategoria"),
+	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
+	url(r'registrarProducto/(?P<pk>\d+)$', login_required(registrarProducto), name="registrarProducto"),
+	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),
 ]

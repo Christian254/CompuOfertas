@@ -194,8 +194,8 @@
                                     <td>{{categoria.descripcion}}</td>
                                     <td>{{categoria.condicion}}</td>
                                     <td>{{categoria.cantidad}}</td>
-                                    <td> <a href="{% url 'SIGPAd:registrarProducto' categoria.id %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> /
-                                        <a href="{% url 'SIGPAd:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <td> <a href="{% url 'inventario:registrarProducto' categoria.id %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> /
+                                        <a href="{% url 'inventario:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     </td>
                                 </tr>
                                 {% endfor %}

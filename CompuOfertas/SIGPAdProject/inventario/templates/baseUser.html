@@ -3,45 +3,31 @@
 <html lang="en">
 
 <head>
-    <!-- META -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"> {% block META %} {% endblock META %}
-
     <title>
-        {% block Titulo %} SIGPAd:Index {% endblock Titulo %}
+        {% block Titulo %} CompuOfertas {% endblock Titulo %}
     </title>
-
-    <!-- Script -->
-    <!-- <script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>-->
-    <script type="text/javascript" src="{% static 'interior/js/jspdf.debug.js' %}">
+    <script type="text/javascript" src="{% static 'js/jspdf.debug.js' %}">
     </script>
-    <script type="text/javascript" src="{% static 'interior/js/jquery.min.js' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}">
     </script>
-    <script type="text/javascript" src="{% static 'interior/js/sweetalert2.all.js' %}">
+    <script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}">
     </script>
-    <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
-    <script type="text/javascript" src="{% static 'interior/js/angular.js' %}"></script>
-    <script type="text/javascript" src="{% static 'interior/js/angular-locale_es-es.js' %}"></script>
-    <script type="text/javascript" src="{% static 'interior/js/filtro.js' %}"></script>
-    <script type="text/javascript" src="{% static 'interior/js/vue.js' %}"></script>
-
-
-
-
+    <script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}">
+    </script>
 
     <!-- Archivos CSS -->
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/font-awesome.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/animate.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/admin.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/estilos.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/jquery-ui.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/jquery.dataTables.min.css'  %}" /> {% block Script %} {% endblock Script %} {% block CSS %} {% endblock CSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css'  %}" /> {% block Script %} {% endblock Script %} {% block CSS %} {% endblock CSS %}
 
 </head>
 
@@ -82,7 +68,7 @@
                         </div>
                     </div>
                     <div class="user_admin dropdown">
-                        <a href="javascript:void(0);" data-toggle="dropdown"><img width="25px" height="25px" src="{% static " images/user.png " %}"/><span class="user_adminname" id="nombre">
+                        <a href="javascript:void(0);" data-toggle="dropdown"><img width="25px" height="25px" src="{% static "images/user.png" %}"/><span class="user_adminname" id="nombre">
             {% block usuario %}
                 {{user.username}}
             {% endblock usuario %}
@@ -313,14 +299,14 @@
     <!-- Archivos JavaScript -->
 
 
-    <script src="{% static " interior/js/jquery-2.1.0.js " %}"></script>
-    <script src="{% static " interior/js/bootstrap.min.js " %}"></script>
-    <script src="{% static " interior/js/common-script.js " %}"></script>
-    <script src="{% static " interior/js/jquery.slimscroll.min.js " %}"></script>
-    <script src="{% static " interior/js/jPushMenu.js " %}"></script>
-    <script src="{% static " interior/js/side-chats.js " %}"></script>
-    <script type="text/javascript" src="{% static " interior/js/jquery-ui.js " %}"></script>
-    <script type="text/javascript" src="{% static " interior/js/jquery.dataTables.min.js " %}"></script>
+    <script src="{% static "js/jquery-2.1.0.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/common-script.js" %}"></script>
+    <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
+    <script src="{% static "js/jPushMenu.js" %}"></script>
+    <script src="{% static "js/side-chats.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.dataTables.min.js" %}"></script>
 
     {% block JavaScript %} {% endblock JavaScript %}
 
