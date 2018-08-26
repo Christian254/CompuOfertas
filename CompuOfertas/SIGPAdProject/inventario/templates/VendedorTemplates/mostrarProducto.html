@@ -44,18 +44,6 @@
         {% elif exito %}
             <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
-        <div class="excel">
-            <details class="container">
-                <summary><h3 class="btn btn-info" style="padding:20px;margin-left:60px;">Seleccione un archivo excel</h3></summary>
-                <a href="{% static 'documents/exampleProducto.xlsx' %}" download="exampleProducto.xlsx" class="btn btn-info descarga">descargar ejemplo</a>
-                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
-                {% csrf_token %}
-                    <input type="text" name="action" id="action" value="excel" hidden="true">
-                    <input type="file" value="cargar" class="archivo" id="arch" name="arch" required="" accept=".xlsx">
-                    <input type="submit" class="btn btn-success" value="enviar" style="margin-left:100px;margin-top:40px;">
-                </form>
-            </details>
-        </div>
         <div class="col-xs-8 archivo">
             <section class="panel default blue_title h2 text-center">
                 <div class="panel-heading">Seleccione su <span class="semi-bold">producto</span> </div>

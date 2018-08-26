@@ -75,7 +75,11 @@
         <div class="excel">
             <details class="container">
                 <summary><h3 class="btn btn-info" style="padding:20px;margin-left:60px;">Seleccione un archivo excel</h3></summary>
+                <section class="panel default blue_title h2 text-center">
+                    <div class="panel-heading">Seleccione su <span class="semi-bold">lista de categorias en excel</span> </div>
+                </section>
                 <a href="{% static 'documents/exampleCategoria.xlsx' %}" download="exampleCategoria.xlsx" class="btn btn-info descarga">descargar ejemplo</a>
+
                 <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
                 {% csrf_token %}
                     <input type="text" name="action" id="action" value="excel" hidden="true">

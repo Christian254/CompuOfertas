@@ -244,7 +244,28 @@ def registrarProducto(request,pk):
 		cat = categoria.nombre
 	except Exception as e:
 		error = 'Esa categoria no existe'
-	context = {'error':error,'exito':exito,'categoria':cat}
+
+	productos = Producto.objects.filter(categoria_id=pk)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = productos.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+	paginator = Paginator(productos, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		producto = paginator.page(page)
+	except PageNotAnInteger:
+		producto = paginator.page(1)
+	except EmptyPage:
+		producto = paginator.page(paginator.num_pages)
+
+	context = {'error':error,'exito':exito,'categoria':cat,'productos':producto}
 	return render(request, 'VendedorTemplates/registrarProducto.html', context)
 
 
