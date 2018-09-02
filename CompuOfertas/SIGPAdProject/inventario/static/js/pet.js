@@ -99,4 +99,25 @@
                 }
             })
         });
+        $('#buscar').click(function(e) {
+            e.preventDefault();
+            url= `ingresarProducto?consulta=${$('#consulta').val()}`;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'html',                      
+            })
+            .done(function(resp) {
+                $('.table').html($(resp).find('.table').html());
+                $('.pagination').html($(resp).find('.pagination').html());
+                
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+            
+        });
     })

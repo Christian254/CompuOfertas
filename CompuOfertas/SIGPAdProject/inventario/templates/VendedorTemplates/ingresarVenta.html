@@ -1,0 +1,24 @@
+{% extends "baseUser.html" %} {% load staticfiles %} {% block Script %}
+<script type="text/javascript" src="{% static 'ajax/venta.js' %}"></script>
+{% endblock Script %} {% block Body %}
+<h2>Registrar Venta</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
+		<table class="table table-hover" >
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Marca</th>
+					<th>Existencia</th>
+					<th>Añadir</th>
+				</tr>
+			</thead>
+			<tbody id='productoDisponible'>												
+			</tbody>
+		</table>
+        </div>
+    </div>
+</div>
+
+{% endblock Body %}

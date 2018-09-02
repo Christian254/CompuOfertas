@@ -67,9 +67,9 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar text-right">
-                        <form class="form-inline" method="GET" action="">
-                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
-                            <input type="submit" value="Buscar" class="btn btn-success">
+                        <form class="form-inline" method="GET" action="" id="busqueda">
+                            <input name="consulta" id='consulta' type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
+                            <input type="submit" value="Buscar" id="buscar" class="btn btn-success">
                         </form>
                     </nav>
                 </div>

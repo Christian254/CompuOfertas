@@ -8,9 +8,7 @@
     <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"> {% block META %} {% endblock META %}
     <title>
         {% block Titulo %} CompuOfertas {% endblock Titulo %}
-    </title>
-    <script type="text/javascript" src="{% static 'js/jspdf.debug.js' %}">
-    </script>
+    </title>    
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}">
     </script>
     <script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}">
@@ -19,7 +17,9 @@
     </script>
     <script type="text/javascript" src="{% static 'sweet/sweetalert.js' %}">
     </script>
-    <script type="text/javascript" src="{% static "js/alertas.js" %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}">
+    </script>
+    <script type="text/javascript" src="{% static 'js/alertas.js' %}"></script>
 
     <!-- Archivos CSS -->
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">

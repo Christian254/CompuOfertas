@@ -13,6 +13,7 @@ from decimal import *
 from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
 import openpyxl
+from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
@@ -184,7 +185,7 @@ def ingresarProducto(request):
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
-	paginator = Paginator(categorias, 7)
+	paginator = Paginator(categorias, 1)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
@@ -301,3 +302,11 @@ def mostrarProducto(request,pk):
 		'parametros':parametros,
 	}
 	return render(request, 'VendedorTemplates/mostrarProducto.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def registrarVenta(request):	
+	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
+
+def productoDisponible(request):
+	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia'))
+	return HttpResponse(producto, content_type='application/json')
