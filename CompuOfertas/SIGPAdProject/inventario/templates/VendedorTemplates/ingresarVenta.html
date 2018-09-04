@@ -1,24 +1,55 @@
-{% extends "baseUser.html" %} {% load staticfiles %} {% block Script %}
+{% extends "baseUser.html" %} {% load staticfiles %} 
+{% block Script %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 <script type="text/javascript" src="{% static 'ajax/venta.js' %}"></script>
+<script type="text/javascript" src="{% static 'ajax/funciones.js' %}"></script>
 {% endblock Script %} {% block Body %}
-<h2>Registrar Venta</h2>
+<h2 class="text-center">Registrar Venta</h2>
+<br>
+<br>
+<h4 class="text-info text-center">Productos Disponibles</h4>
 <div class="container">
     <div class="row">
         <div class="col">
-		<table class="table table-hover" >
+		<table class="table table-striped table-bordered" id="tablaProducto"style="width:100%">
 			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>Marca</th>
-					<th>Existencia</th>
-					<th>Añadir</th>
+					<th style="width:75px;">Existencia</th>
+					<th style="width:50px;">Añadir</th>
 				</tr>
 			</thead>
-			<tbody id='productoDisponible'>												
+			<tbody id="productoDisponible">												
 			</tbody>
 		</table>
         </div>
     </div>
 </div>
-
+<h4 class="text-info text-center">Productos a Vender</h4>
+<div class="container">
+    <div class="row">
+        <div class="col"> 
+        <form method="POST">
+        {% csrf_token %}      
+		<table class="table table-striped table-bordered" id="tablaVenta" style="width:100%">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Marca</th>
+					<th style="width:75px;">Existencia</th>
+					<th style="width:75px;">Cantidad</th>
+					<th style="width:50px;">Quitar</th>
+				</tr>
+			</thead>
+			<tbody id='productoVenta'>												
+			</tbody>
+		</table>
+		<input type="button" class="btn btn-success" value="Vender">
+		</form> 
+		</div>		
+        </div>
+    </div>
+</div>
 {% endblock Body %}
