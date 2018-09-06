@@ -1,9 +1,9 @@
 {% extends "baseUser.html" %} {% load staticfiles %} 
 {% block Script %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
-<script type="text/javascript" src="{% static 'ajax/venta.js' %}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script> <!--ultima version de DataTables -->
 <script type="text/javascript" src="{% static 'ajax/funciones.js' %}"></script>
+<script type="text/javascript" src="{% static 'ajax/venta.js' %}"></script>
 {% endblock Script %} {% block Body %}
 <h2 class="text-center">Registrar Venta</h2>
 <br>
@@ -39,14 +39,14 @@
 					<th>Nombre</th>
 					<th>Marca</th>
 					<th style="width:75px;">Existencia</th>
-					<th style="width:75px;">Cantidad</th>
+					<th style="width:50px;">Cantidad</th>
 					<th style="width:50px;">Quitar</th>
 				</tr>
 			</thead>
 			<tbody id='productoVenta'>												
 			</tbody>
 		</table>
-		<input type="button" class="btn btn-success" value="Vender">
+		<input type="submit" id="botonVender" class="btn btn-success" value="Vender">
 		</form> 
 		</div>		
         </div>

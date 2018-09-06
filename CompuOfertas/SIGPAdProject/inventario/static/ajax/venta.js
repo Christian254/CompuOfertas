@@ -1,10 +1,11 @@
 $(document).ready(function() {
 	$.ajax({
-		url: 'productoDisponible/',
+		url: 'productoDisponible/', //Servicio con los productos con existencia > 0
 		type: 'GET',
 		dataType: 'json',
 	})
 	.done( function(resp) {
+		/*Iterando el JSON y agregando la fila a la tabla*/
 		for(let i=0;i<resp.length;i++){
 			var elemento = resp[i].fields;
 			var producto = `<tr id="fila${i}">`			
@@ -15,17 +16,17 @@ $(document).ready(function() {
 			producto +=	'</tr>'
 			$('#productoDisponible').append(producto)
 		}
-		var tablaVenta = $('#tablaVenta').DataTable({
+		var tablaVenta = $('#tablaVenta').DataTable({ //Usando el plugin DataTable
 			 lengthMenu: [[2,5,7,-1],["2","5","7","Todos"]],
     			language: {
         			"decimal": "",
         			"emptyTable": "Seleccione los productos a vender",
         			"info": "",
-        			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-        			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        			"infoEmpty": "",
+        			"infoFiltered": "(Filtrado de _MAX_ total productos)",
         			"infoPostFix": "",
         			"thousands": ",",
-        			"lengthMenu": "Mostrar _MENU_ Entradas",
+        			"lengthMenu": "Mostrar _MENU_ Productos",
         			"loadingRecords": "Cargando...",
         			"processing": "Procesando...",
         			"search": "Buscar:",
@@ -44,11 +45,11 @@ $(document).ready(function() {
         			"decimal": "",
         			"emptyTable": "No hay productos para vender",
         			"info": "",
-        			"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-        			"infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        			"infoEmpty": "",
+        			"infoFiltered": "(Filtrado de _MAX_ total Productos)",
         			"infoPostFix": "",
         			"thousands": ",",
-        			"lengthMenu": "Mostrar _MENU_ Entradas",
+        			"lengthMenu": "Mostrar _MENU_ Productos",
         			"loadingRecords": "Cargando...",
         			"processing": "Procesando...",
         			"search": "Buscar:",
@@ -61,26 +62,9 @@ $(document).ready(function() {
         			}
     			},    
 		});
-		$('#tablaProducto tbody').on( 'click', '.agregar', function () {
-    	let fila = tabla.row( $(this).parents('tr') );
-    	let productoDatos = tabla.row( $(this).parents('tr') ).data();
-    	console.log(productoDatos);
-        fila.remove();
-        tabla.draw();
-        tablaVenta.row.add(
-        	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],'<input type="text">','<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
-		});
-		$('#tablaVenta tbody').on( 'click', '.quitar', function () {
-    	let fila = tablaVenta.row( $(this).parents('tr') );
-    	let productoDatos = tablaVenta.row( $(this).parents('tr') ).data();
-    	console.log(productoDatos);
-        fila.remove();
-        tablaVenta.draw();
-        tabla.row.add(
-        	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],'<button type="button" class="agregar btn btn-primary">Añadir</button>']).draw();			
-		});
+		agregarProducto(tabla,tablaVenta); //Funcion Para agregar producto a la tablaVenta
+		quitarProducto(tablaVenta,tabla); //Funcion Para quitar el producto de la tablaVenta
+		validarCantidad(tablaVenta); //Funcion para validar que la cantidad a vender sea menor o igual a la existencia
 		})
 	.fail(function() {
 		console.log("error");
