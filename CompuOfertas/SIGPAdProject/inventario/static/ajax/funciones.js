@@ -27,16 +27,27 @@ function validarCantidad(tablaVenta){
 	$('#tablaVenta tbody').on('keyup','input', function () {    	
     	let productoDatos = tablaVenta.row( $(this).parents('tr') ).data();
     	let existencia = parseInt(productoDatos[2]);
-    	let cantidad = $(this).val();     	 	
+    	let cantidad = $(this).val(); 
+    	let error;     	   	 	
     	if( cantidad > existencia || cantidad < 1){
     		console.log('invalido');
-    		$(this).attr('style', 'border: 2px solid red; width:75px');
-    		$('#botonVender').prop('disabled', 'true');
+    		$(this).attr('class', 'invalido');
+    		$(this).attr('style', 'border: 2px solid red; width:75px');    		
+    		$('#botonVender').prop('disabled', 'true');  		
     	}   
     	else{    		
     		console.log('valido');
     		$(this).attr('style', 'width:75px');
-    		$('#botonVender').removeAttr('disabled');
-    	} 	  	      			
+    		$(this).removeAttr('class');
+    		$('#botonVender').removeAttr('disabled');    		
+    	} 
+    	error = $('input').filter($('.invalido')).length;    	
+    	if(error>0){
+    		$('#botonVender').prop('disabled', 'true');
+    	}
+    	else{
+    		$('#botonVender').removeAttr('disabled'); 
+    	}	   	 	      			
 		});
+	 
 }
