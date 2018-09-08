@@ -6,18 +6,25 @@ $(document).ready(function() {
 	})
 	.done( function(resp) {
 		/*Iterando el JSON y agregando la fila a la tabla*/
+        $('form').append(`<input name="cantidad" type="text" value="${resp.length}" hidden>`)        
 		for(let i=0;i<resp.length;i++){
 			var elemento = resp[i].fields;
-			var producto = `<tr id="fila${i}">`			
+			var producto = `<tr">`
+            producto += `<td><input type="text" name="codigo-${i+1}" value="${elemento.codigo}" hidden>${elemento.codigo}</td>`			
 			producto +=	`<td>${elemento.nombre}</td>`
 			producto +=	`<td>${elemento.marca}</td>`
+            producto += `<td>${elemento.precioVenta}</td>`
 			producto +=	`<td>${elemento.existencia}</td>`
 			producto +=	`<td><button name="${resp[i].pk}" class="agregar btn btn-primary">Añadir</button></td>`
 			producto +=	'</tr>'
 			$('#productoDisponible').append(producto)
 		}
 		var tablaVenta = $('#tablaVenta').DataTable({ //Usando el plugin DataTable
-			 lengthMenu: [[2,5,7,-1],["2","5","7","Todos"]],
+			 "scrollY": 150,
+             "scrollX": true,
+             "scrollCollapse": true,
+             "paging":         false,
+             lengthMenu: [[-1],["Todos"]],
     			language: {
         			"decimal": "",
         			"emptyTable": "Seleccione los productos a vender",
@@ -30,14 +37,8 @@ $(document).ready(function() {
         			"loadingRecords": "Cargando...",
         			"processing": "Procesando...",
         			"search": "Buscar:",
-        			"zeroRecords": "Sin resultados encontrados",
-        			"paginate": {
-            			"first": "Primero",
-            			"last": "Ultimo",
-            			"next": "Siguiente",
-            			"previous": "Anterior"
-        			}
-    			},    
+        			"zeroRecords": "Sin resultados encontrados",        			
+    			},                 
 		});	
 		var tabla = $('#tablaProducto').DataTable({
 			 lengthMenu: [[2,5,7,-1],["2","5","7","Todos"]],

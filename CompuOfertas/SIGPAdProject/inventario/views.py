@@ -304,9 +304,22 @@ def mostrarProducto(request,pk):
 	return render(request, 'VendedorTemplates/mostrarProducto.html', context)
 
 @permission_required('SIGPAd.view_seller')
-def registrarVenta(request):	
+def registrarVenta(request):
+	if request.method == 'POST':
+		elementos = int(request.POST.get('cantidad'))		
+		for x in range(1,elementos+1):
+			codigo = request.POST.get('codigo-{}'.format(x),None)	
+			if codigo!=None:
+				cantidad = request.POST.get('cantidad-{}'.format(x),None)
+				p = Producto.objects.get(codigo=codigo)
+				p.existencia = p.existencia - int(cantidad)
+				p.save()							
+				print (p.nombre)		
+		return render(request,'VendedorTemplates/ingresarVenta.html',{})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
 
+@permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
-	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia'))
+	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia', 'codigo', 'precioVenta'))
 	return HttpResponse(producto, content_type='application/json')
+
