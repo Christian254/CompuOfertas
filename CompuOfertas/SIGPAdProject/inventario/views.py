@@ -231,9 +231,19 @@ def productoDisponible(request):
 #Vista de Compra.
 @permission_required('SIGPAd.view_seller')
 def listado_de_compras(request):
-	compras = Compra.objects.all()
+	compras_listado = Compra.objects.all()
+	paginator = Paginator(compras_listado, 2)
+	page = request.GET.get('page')
+
+	try:
+		compras = paginator.page(page)
+	except PageNotAnInteger:
+		compras = paginator.page(1)
+	except EmptyPage:
+		compras = paginator.page(paginator.num_pages)
+
 	context = {
-		'compras':compras
+		'compras':compras,
 	}
 	return render(request, 'VendedorTemplates/listadoCompras.html', context)
 
