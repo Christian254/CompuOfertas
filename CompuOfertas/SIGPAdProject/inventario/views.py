@@ -32,7 +32,8 @@ def  indexVendedor(request):
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
+			empleado = user.empleado_set.all().latest('nombre')
+			return render(request,'VendedorTemplates/vendedorIndex.html',{'empleado':empleado})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -40,6 +41,7 @@ def  indexVendedor(request):
 def registrarCategoria(request):
 	error = ''
 	exito = ''
+	empleado = user.empleado_set.all().latest('nombre')
 	if request.method=='POST':
 		action = request.POST.get('action')
 		if action=='insert':
@@ -79,7 +81,8 @@ def registrarCategoria(request):
 		categoria = paginator.page(1)
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
-	context = {'error':error,'exito':exito,'categorias':categoria}
+
+	context = {'error':error,'exito':exito,'categorias':categoria,'empleado':empleado}
 	return render(request, 'VendedorTemplates/registrarCategoria.html', context)
 
 
@@ -90,6 +93,7 @@ def ingresarProducto(request):
 	exito = ''
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
+	empleado = user.empleado_set.all().latest('nombre')
 	if consulta:
 		categorias = categorias.filter(
 			Q(nombre__icontains = consulta)|
@@ -108,7 +112,7 @@ def ingresarProducto(request):
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros}
+	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros,'empleado':empleado}
 	return render(request, 'VendedorTemplates/ingresarProducto.html', context)
 
 
@@ -182,6 +186,7 @@ def mostrarProducto(request,pk):
 	exito = ''
 	productos = Producto.objects.filter(categoria_id=pk)
 	consulta = request.GET.get('consulta')
+	empleado = request.user.empleado_set.all().latest('nombre')
 	if consulta:
 		categorias = productos.filter(
 			Q(nombre__icontains = consulta)|
@@ -205,6 +210,7 @@ def mostrarProducto(request,pk):
 		'exito':exito,
 		'productos':producto,
 		'parametros':parametros,
+		'empleado':empleado
 	}
 	return render(request, 'VendedorTemplates/mostrarProducto.html', context)
 
@@ -335,3 +341,12 @@ def subirExcel(request):
 
 	context = {'empleado':empleado}
 	return render(request, 'VendedorTemplates/subirExcel.html', context)
+
+def mostrarInventario(request):
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
+	inventario = Inventario.objects.filter(sucursal=empleado.sucursal)
+	producto = Producto.objects.all()
+	context={'empleado':empleado,'inventario':inventario,'producto':producto}
+	return render(request,'VendedorTemplates/inventario.html',context)
+
+
