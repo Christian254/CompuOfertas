@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from SIGPAd.models import *
+from datetime import datetime
 
 # Create your models here.
 
@@ -59,7 +60,10 @@ class Compra(models.Model):
     total_compra= models.DecimalField(max_digits=10,decimal_places=2)
     iva_compra = models.DecimalField(max_digits=4,decimal_places=2)
     descripcion = models.CharField(max_length=100)
-    fecha_hora = models.DateTimeField()
+    fecha_hora = models.DateTimeField(default=datetime.now)
+
+    def _strftime():
+        return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)

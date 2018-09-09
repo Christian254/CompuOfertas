@@ -5,9 +5,18 @@
 	Listado de Compras
 {% endblock Titulo %}
 
-    {% block usuario %}
+{% block CSS %}
+    <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
+    <style>
+        td.highlight {
+            background-color: whitesmoke !important;
+        }
+    </style>
+{% endblock CSS %}
+
+{% block usuario %}
       {{user.username}}
-    {% endblock usuario %}
+{% endblock usuario %}
     
 {% block Body %}
 <section class="panel default blue_title h2 text-center">
@@ -19,7 +28,7 @@
             <div class="block-web">
                 {% if compras %}
 
-                    <table class="table">
+                    <table class="table" id="tabla">
                         <thead class="bg-primary">
                             <tr>
                                 <th>#</th>
@@ -43,7 +52,8 @@
                             {% endfor %}
                         </tbody>
                     </table>
-
+        
+                    <!--
                     <span class="step-links">
                             <ul class="pager">
                             {% if compras.has_previous %}
@@ -54,7 +64,7 @@
                                 Page {{ compras.number }} of {{ compras.paginator.num_pages }}.
                             </span>-->
 
-                            {% for i in compras.paginator.page_range %} 
+                <!--            {% for i in compras.paginator.page_range %} 
                             {% if compras.number == i %}
                                 <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                             {% else %}
@@ -66,7 +76,7 @@
                                 <li><a href="?page={{ compras.next_page_number }}">Siguiente</a></li>
                             {% endif %}
                             </ul>
-                    </span>
+                    </span>-->
 
                 {% else %}
                     <center><p>¡Ninguna compra realizada!</p></center>
@@ -78,3 +88,29 @@
     </div>
 </div>
 {% endblock Body %}
+
+{% block Script %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+
+    <script>
+        $(document).ready(function()
+        {
+            var table = $('#tabla').DataTable( {
+                "info": false,
+                "pagingType": "full_numbers",
+                "language": {
+                    url: "/static/json/es_ES.json"
+                }
+            });
+
+            $('#tabla tbody')
+                .on( 'mouseenter', 'td', function () {
+                    var colIdx = table.cell(this).index().column;
+ 
+                    $( table.cells().nodes() ).removeClass( 'highlight' );
+                    $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            });
+        });
+    </script>
+{% endblock Script %}

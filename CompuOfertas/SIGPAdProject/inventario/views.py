@@ -231,8 +231,8 @@ def productoDisponible(request):
 #Vista de Compra.
 @permission_required('SIGPAd.view_seller')
 def listado_de_compras(request):
-	compras_listado = Compra.objects.all()
-	paginator = Paginator(compras_listado, 2)
+	compras = Compra.objects.all()
+	"""paginator = Paginator(compras_listado, 2)
 	page = request.GET.get('page')
 
 	try:
@@ -240,7 +240,7 @@ def listado_de_compras(request):
 	except PageNotAnInteger:
 		compras = paginator.page(1)
 	except EmptyPage:
-		compras = paginator.page(paginator.num_pages)
+		compras = paginator.page(paginator.num_pages)"""
 
 	context = {
 		'compras':compras,
