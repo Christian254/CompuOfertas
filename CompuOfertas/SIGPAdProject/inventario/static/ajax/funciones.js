@@ -4,9 +4,11 @@ function agregarProducto(tabla,tablaVenta){
     	let productoDatos = tabla.row( $(this).parents('tr') ).data();    	
         fila.remove();
         tabla.draw();
+        dato=productoDatos[0].split('-')[1].split('"')[0]; //para asignar el name
+        console.log(dato);
         tablaVenta.row.add(
         	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],`<input class="cantidad" value="1" type="number" step="1" style="width:75px;" min="1" max="${productoDatos[2]}">`,'<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
+        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input name="cantidad-${dato}" class="cantidad" value="1" type="number" step="1" style="width:75px;" min="1" max="${productoDatos[2]}">`,'<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
 		});
 }
 
@@ -18,7 +20,7 @@ function quitarProducto(tablaVenta,tabla){
         tablaVenta.draw();
         tabla.row.add(
         	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],'<button type="button" class="agregar btn btn-primary">Añadir</button>']).draw();			
+        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],'<button type="button" class="agregar btn btn-primary">Añadir</button>']).draw();			
 		deshabilitarVenta();
 		});
 	
@@ -26,7 +28,7 @@ function quitarProducto(tablaVenta,tabla){
 function validarCantidad(tablaVenta){
 	$('#tablaVenta tbody').on('keyup','input', function () {    	
     	let productoDatos = tablaVenta.row( $(this).parents('tr') ).data();
-    	let existencia = parseInt(productoDatos[2]);
+    	let existencia = parseInt(productoDatos[4]);
     	let cantidad = $(this).val();     	  	   	 	
     	if( cantidad > existencia || cantidad < 1){
     		$(this).attr('class', 'invalido');
