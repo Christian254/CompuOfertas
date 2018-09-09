@@ -1,0 +1,55 @@
+{% extends 'baseUser.html' %}
+{% load staticfiles %}
+
+{% block Titulo %}
+	Listado de Compras
+{% endblock Titulo %}
+
+    {% block usuario %}
+      {{user.username}}
+    {% endblock usuario %}
+    
+{% block Body %}
+<section class="panel default blue_title h2 text-center">
+    <div class="panel-heading">LISTADO DE <span class="semi-bold">COMPRAS</span> </div>
+</section>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-web">
+                {% if compras %}
+                    <table class="table">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Descripción</th>
+                                <th>Realizada por</th>
+                                <th>Proveedor</th>
+                                <th>Fecha y Hora</th>
+                                <th>Generar PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for compra in compras %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{compra.descripcion}}</td>
+                                <td>{{compra.empleado.nombre}}</td>
+                                <td>{{compra.proveedor.razon_social}}</td>
+                                <td>{{compra.fecha_hora}}</td>
+                                <td><a href="" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i> Generar PDF</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <center><p>¡Ninguna compra realizada!</p></center>
+                {% endif %}
+    
+                <a href="" class="btn btn-success">NUEVA COMPRA</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock Body %}

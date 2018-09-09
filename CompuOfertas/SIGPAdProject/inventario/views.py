@@ -311,3 +311,11 @@ def productoDisponible(request):
 	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia', 'codigo', 'precioVenta'))
 	return HttpResponse(producto, content_type='application/json')
 
+#Vista de Compra.
+@permission_required('SIGPAd.view_seller')
+def listado_de_compras(request):
+	compras = Compra.objects.all()
+	context = {
+		'compras':compras
+	}
+	return render(request, 'VendedorTemplates/listadoCompras.html', context)

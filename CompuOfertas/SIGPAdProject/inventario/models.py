@@ -34,6 +34,10 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=70, unique=True)
     marca = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=100)
+    img = models.ImageField(upload_to="img_producto", blank=True, null=True)
+
+    def imagen(self):
+        return format_html( "<image src='{}' style='height:100px' />".format(self.img.url) )
 
     def __str__(self):
         return self.nombre

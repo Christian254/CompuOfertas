@@ -86,7 +86,7 @@ def listadoDeEmpleados(request):
 			Q(apellido__icontains = consulta)|
 			Q(puesto__nombre__icontains = consulta)
 			).distinct()
-	paginator = Paginator(empleados_list, 1) #Cambiar al numero que deseen que se muestre
+	paginator = Paginator(empleados_list, 10) #Cambiar al numero que deseen que se muestre
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
