@@ -34,6 +34,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=70, unique=True)
     marca = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=100)
+    estado = models.IntegerField(default=1)
     img = models.ImageField(upload_to="img_producto", blank=True, null=True)
 
     def imagen(self):

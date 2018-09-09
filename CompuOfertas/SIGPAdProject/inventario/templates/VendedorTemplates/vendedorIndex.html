@@ -22,28 +22,41 @@
                     <p class="hidden-sm-down">Aqui debes registrar todas las compras realizadas por la compañia.</p>
                 </article>
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-					<a href="/"><img src="{% static 'images/misventas.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/">Mis Ventas</a></h3>
-                    <p class="hidden-sm-down">Aqui puedes ver tus ventas realizadas en el mes y anteriores.</p>
+					<a href="/"><img src="{% static 'images/inventario.png' %}" width="200px" height="150px"></a>
+                    <h3><a href="/">Inventario</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes ver los productos en inventario, la cantidad en existencia y otros detalles, asi como el kardex (entrada y salida) de cada producto a precio de compra.</p>
                 </article>
             </div>
             <div class="row">
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a  href="/"><img src="{% static 'images/perfil.png' %}" width="150px" height="150px"></a>
-                    <h3 ><a href="/">Editar mi usuario</a></h3>
-                    <p  class="hidden-sm-down">Aqui puede cambiar su nombre de usuario y contraseña.</p>
+                    <a  href="/ingresarProducto"><img src="{% static 'images/almacen.png' %}" width="150px" height="140px"></a>
+                    <h3 ><a href="/ingresarProducto">Almacen</a></h3>
+                    <p  class="hidden-sm-down">Puedes agregegar nuevos productos y categorias</p>
                 </article>
 
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a href="/"><img src="{% static 'images/falta.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/">Mis faltas</a></h3>
-                    <p class="hidden-sm-down">Aqui puedes ver las faltas que has cometido.</p>
+                    <a href="/"><img src="{% static 'images/grafico.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Graficos</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes ver los graficos de venta y compra asi como productos mas vendidos.</p>
                 </article>
 
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a href="/registrarCategoria"><img src="{% static 'images/categoria.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/registrarCategoria">Registrar nueva categoria</a></h3>
-                    <p class="hidden-sm-down">Puedes ingresar una sola categoria nueva, o subir un archivo excel estandarizado con las categorias existentes para ahorrar tiempo, tambien puedes descar un ejemplo del archivo excel donde iran las categorias</p>
+                    <a href="/subirExcel"><img src="{% static 'images/excel.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/subirExcel">Subir categorias y productos en excel</a></h3>
+                    <p class="hidden-sm-down">Puedes subir un archivo excel estandarizado con las categorias y productos existentes para ahorrar tiempo</p>
+                </article>
+            </div>
+            <div class="row">
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a  href="/"><img src="{% static 'images/proveedores.png' %}" width="150px" height="140px"></a>
+                    <h3 ><a href="/">Proveedores</a></h3>
+                    <p  class="hidden-sm-down">Puedes gestionar tus proveedores</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/"><img src="{% static 'images/cliente.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Clientes</a></h3>
+                    <p class="hidden-sm-down">Puedes gestionar a tus clientes</p>
                 </article>
             </div>
         </div>
