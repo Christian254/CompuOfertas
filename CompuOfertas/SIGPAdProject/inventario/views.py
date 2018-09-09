@@ -156,7 +156,12 @@ def registrarProducto(request,pk):
 	except Exception as e:
 		error = 'Esa categoria no existe'
 
-	productos = categoria.producto_set.all()
+	inventario = empleado.sucursal.inventario_set.all()
+	p = []
+	for x in inventario:
+		p.append(x)
+
+	productos = categoria.producto_set.all().filter(inventario__in=p)
 	
 	consulta = request.GET.get('consulta')
 	if consulta:
@@ -393,13 +398,16 @@ def agregarPS(request,pk):
 	try:
 		producto = Producto.objects.get(pk=pk)
 		sucursalActual = Sucursal.objects.get(pk=empleado.sucursal.id)
-		insertar = False
+		print(sucursalActual)
+		insertar = True
 		for i in sucursalActual.inventario_set.all():
 			for p in i.producto_set.all():
-				if p.codigo not in producto.codigo:
-					insertar = True
+				if producto.codigo in p.codigo :
+					insertar = False
 					error = 'lo siento ese producto ya esta en tu inventario'
-		if insertart == True:
+			print('no esta')
+
+		if insertar == True:
 			inventario = Inventario()
 			inventario.sucursal=empleado.sucursal
 			inventario.save()
@@ -411,6 +419,7 @@ def agregarPS(request,pk):
 			p.marca = producto.marca
 			p.descripcion = producto.descripcion
 			p.save()
+			print('esta')
 			exito='Nuevo producto en su sucursal listo para usar'
 	except Exception as e:
 		print(e.message)

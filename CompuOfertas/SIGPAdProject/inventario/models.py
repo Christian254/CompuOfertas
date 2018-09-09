@@ -32,7 +32,7 @@ class Producto(models.Model):
     categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
     inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE)
     codigo = models.CharField(max_length=10,unique=True) ##lo dejare asi para que el id siga siendo el que proporciona django
-    nombre = models.CharField(max_length=70, unique=True)
+    nombre = models.CharField(max_length=70)
     marca = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=100)
     estado = models.IntegerField(default=1)
