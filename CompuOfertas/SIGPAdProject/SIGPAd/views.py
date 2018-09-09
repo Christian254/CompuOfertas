@@ -580,7 +580,18 @@ def index(request):
 				puesto.salario = 600.00
 				puesto.save()
 				empleado=Empleado(sucursal=sucursal,puesto=puesto,nombre='walter',apellido='marroquin',telefono='7777777',sexo='Masculino',email='walter@hotmail.com',dui='123',nit='1234',afp='34556',isss='1234')
+				vendedor = User.objects.create_user(username='vendedor', password='root')
+				content_type = ContentType.objects.get_for_model(Empleado)
+				permission = Permission.objects.get(
+					codename='view_seller',
+					content_type=content_type,
+					)
+				vendedor.user_permissions.add(permission)
+				vendedor.save()
+				empleado.usuario = vendedor
+				vendedor.save()
 				empleado.save()
+
 		except Exception as e:
 			pass
 	return render(request,'index.html',{})
