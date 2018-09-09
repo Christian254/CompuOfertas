@@ -41,7 +41,7 @@ def  indexVendedor(request):
 def registrarCategoria(request):
 	error = ''
 	exito = ''
-	empleado = user.empleado_set.all().latest('nombre')
+	empleado = request.user.empleado_set.all().latest('nombre')
 	if request.method=='POST':
 		action = request.POST.get('action')
 		if action=='insert':
@@ -93,7 +93,7 @@ def ingresarProducto(request):
 	exito = ''
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
-	empleado = user.empleado_set.all().latest('nombre')
+	empleado = request.user.empleado_set.all().latest('nombre')
 	if consulta:
 		categorias = categorias.filter(
 			Q(nombre__icontains = consulta)|

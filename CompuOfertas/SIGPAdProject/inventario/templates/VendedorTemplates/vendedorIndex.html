@@ -13,41 +13,48 @@
             <div class="row">
                 <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
 	                <a href="/registrarVenta"><img src="{% static 'images/vender.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/" class="btn btn-secondary"> <STRONG>Registrar Ventas</STRONG> </a></h3>
-                    <p class="hidden-sm-down">Aqui debes registrar todas las ventas realizadas o servicios proporcionados.</p>
+                    <h3><a href="/registrarVenta" class="btn btn-secondary"> <STRONG>Registrar Ventas</STRONG> </a></h3>
+                    <p class="hidden-sm-down">Aquí debes registrar todas las ventas realizadas o servicios proporcionados.</p>
 
                 </article>
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
 					<a href="/"><img src="{% static 'images/comprar.png' %}" width="150px" height="150px"></a>
                     <h3><a href="/">Registrar compras</a></h3>
-                    <p class="hidden-sm-down">Aqui debes registrar todas las compras realizadas por la compañia.</p>
+                    <p class="hidden-sm-down">Aquí debes registrar todas las compras realizadas por la compañía.</p>
                 </article>
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
 					<a href="/"><img src="{% static 'images/inventario.png' %}" width="200px" height="150px"></a>
                     <h3><a href="/">Inventario</a></h3>
-                    <p class="hidden-sm-down">Aqui puedes ver los productos en inventario, la cantidad en existencia y otros detalles, asi como el kardex (entrada y salida) de cada producto a precio de compra.</p>
+                    <p class="hidden-sm-down">Aquí puedes ver los productos en inventario, la cantidad en existencia y otros detalles, asi como el kardex (entrada y salida) de cada producto a precio de compra.</p>
                 </article>
             </div>
             <div class="row">
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a  href="/registrarCategoria"><img src="{% static 'images/categoria2.png' %}" width="150px" height="140px"></a>
+                    <h3 ><a href="/registrarCategoria">Categoría</a></h3>
+                    <p  class="hidden-sm-down">Agregar una nueva categoría</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
                     <a  href="/ingresarProducto"><img src="{% static 'images/almacen.png' %}" width="150px" height="140px"></a>
-                    <h3 ><a href="/ingresarProducto">Almacen</a></h3>
-                    <p  class="hidden-sm-down">Puedes agregegar nuevos productos y categorias</p>
+                    <h3 ><a href="/ingresarProducto">Producto</a></h3>
+                    <p  class="hidden-sm-down">Agregar un nuevo producto</p>
                 </article>
 
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
                     <a href="/"><img src="{% static 'images/grafico.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/">Graficos</a></h3>
-                    <p class="hidden-sm-down">Aqui puedes ver los graficos de venta y compra asi como productos mas vendidos.</p>
+                    <h3><a href="/">Gráficos</a></h3>
+                    <p class="hidden-sm-down">Aquí puedes ver los gráficos de venta y compra asi como los productos más vendidos.</p>
                 </article>
 
-                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a href="/subirExcel"><img src="{% static 'images/excel.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/subirExcel">Subir categorias y productos en excel</a></h3>
-                    <p class="hidden-sm-down">Puedes subir un archivo excel estandarizado con las categorias y productos existentes para ahorrar tiempo</p>
-                </article>
             </div>
             <div class="row">
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/subirExcel"><img src="{% static 'images/excel.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/subirExcel">Subir categorías y productos en excel</a></h3>
+                    <p class="hidden-sm-down">Puedes subir un archivo excel estandarizado con las categorías y productos existentes para ahorrar tiempo</p>
+                </article>
+
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
                     <a  href="/"><img src="{% static 'images/proveedores.png' %}" width="150px" height="140px"></a>
                     <h3 ><a href="/">Proveedores</a></h3>
