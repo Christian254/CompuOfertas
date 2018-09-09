@@ -42,40 +42,7 @@ def registrarCategoria(request):
 	exito = ''
 	if request.method=='POST':
 		action = request.POST.get('action')
-		if action=='excel':
-			exito = 'Operacion realizada con exito'
-			archivo = request.FILES.get('arch',None)
-			doc=openpyxl.load_workbook(archivo)
-			try:
-				hoja1 = doc.get_sheet_by_name('Hoja1')
-				for filas in hoja1.rows:
-					try: 
-						categoria = Categoria()
-						i = 0
-						for columna in filas:
-							i +=1
-							if i==1:
-								categoria.codigo=columna.value
-							elif i==2:
-								categoria.nombre=columna.value
-							elif i ==3:
-								categoria.descripcion=columna.value
-						categoria.save()
-						print(categoria)
-					except Exception as e:
-						print (e)
-						error = 'Algunas categorias tenian claves unicas'
-						exito=''
-						categoria.delete()
-			except Exception as e:
-				print(e.message)
-				if 'column codigo is not unique' in e.message:
-					error = 'El codigo no es unico, revise el excel y elimine las claves unicas '
-					exito=''
-				elif 'Worksheet Hoja does not exist.' in e.message:
-					error = 'El nombre de la hoja tiene que ser: \"Hoja1\"'
-					exito=''
-		elif action=='insert':
+		if action=='insert':
 			codigo = request.POST.get('codigo',None)
 			nombre = request.POST.get('nombre',None)
 			descripcion = request.POST.get('descripcion',None)
@@ -121,56 +88,6 @@ def registrarCategoria(request):
 def ingresarProducto(request):
 	error = ''
 	exito = ''
-	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
-	if request.method=='POST':
-		action = request.POST.get('action')
-		if action=='excel':
-			exito = 'Operacion realizada con exito'
-			archivo = request.FILES.get('arch',None)
-			doc=openpyxl.load_workbook(archivo)
-			try:
-				hoja1 = doc.get_sheet_by_name('Hoja1')
-				for filas in hoja1.rows:
-					try:
-						producto = Producto() 
-						i = 0
-						for columna in filas:
-							i +=1
-							if i==1:
-								cat = Categoria.objects.get(codigo=columna.value)
-								producto.categoria=cat
-							elif i==2:
-								producto.codigo=columna.value
-							elif i==3:
-								producto.nombre=columna.value
-							elif i==4:
-								producto.marca=columna.value
-							elif i==5:
-								producto.descripcion=columna.value
-						inventario = Inventario()
-						inventario.sucursal=empleado.sucursal
-						inventario.save()
-						producto.inventario=inventario
-						producto.save()
-						print(producto)
-					except Exception as e:
-						print('Error:'+e.message)
-						error = 'Error desconocido, contacte al administrador'
-						if 'Categoria matching query does not exist.' in e.message:
-							error = 'Algunos productos no poseen categoria asignada'
-						if 'column codigo is not unique' in e.message:
-							error = 'Algunos productos tenian claves unicas'
-						if 'column nombre is not unique' in e.message:
-							error='Los nombres no eran unicos, ya estan esa lista de productos'
-						exito=''
-			except Exception as e:
-				print(e.message)
-				if 'column codigo is not unique' in e.message:
-					error = 'El codigo no es unico, revise el excel y elimine las claves unicas '
-					exito=''
-				elif 'Worksheet Hoja does not exist.' in e.message:
-					error = 'El nombre de la hoja tiene que ser: \"Hoja1\"'
-					exito=''
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
 	if consulta:
@@ -178,7 +95,7 @@ def ingresarProducto(request):
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
-	paginator = Paginator(categorias, 1)
+	paginator = Paginator(categorias, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
@@ -191,7 +108,7 @@ def ingresarProducto(request):
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros,'empleado':empleado}
+	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros}
 	return render(request, 'VendedorTemplates/ingresarProducto.html', context)
 
 
@@ -311,3 +228,92 @@ def productoDisponible(request):
 	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia', 'codigo', 'precioVenta'))
 	return HttpResponse(producto, content_type='application/json')
 
+
+@permission_required('SIGPAd.view_seller')
+def subirExcel(request):
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
+	if request.method=='POST':
+		action = request.POST.get('action')
+		if action=='excelProducto':
+			exito = 'Operacion realizada con exito'
+			archivo = request.FILES.get('arch',None)
+			doc=openpyxl.load_workbook(archivo)
+			try:
+				hoja1 = doc.get_sheet_by_name('Hoja1')
+				for filas in hoja1.rows:
+					try:
+						producto = Producto() 
+						i = 0
+						for columna in filas:
+							i +=1
+							if i==1:
+								cat = Categoria.objects.get(codigo=columna.value)
+								producto.categoria=cat
+							elif i==2:
+								producto.codigo=columna.value
+							elif i==3:
+								producto.nombre=columna.value
+							elif i==4:
+								producto.marca=columna.value
+							elif i==5:
+								producto.descripcion=columna.value
+						inventario = Inventario()
+						inventario.sucursal=empleado.sucursal
+						inventario.save()
+						producto.inventario=inventario
+						producto.save()
+						print(producto)
+					except Exception as e:
+						print('Error:'+e.message)
+						error = 'Error desconocido, contacte al administrador'
+						if 'Categoria matching query does not exist.' in e.message:
+							error = 'Algunos productos no poseen categoria asignada'
+						if 'column codigo is not unique' in e.message:
+							error = 'Algunos productos tenian claves unicas'
+						if 'column nombre is not unique' in e.message:
+							error='Los nombres no eran unicos, ya estan esa lista de productos'
+						exito=''
+			except Exception as e:
+				print(e.message)
+				if 'column codigo is not unique' in e.message:
+					error = 'El codigo no es unico, revise el excel y elimine las claves unicas '
+					exito=''
+				elif 'Worksheet Hoja does not exist.' in e.message:
+					error = 'El nombre de la hoja tiene que ser: \"Hoja1\"'
+					exito=''
+		elif action=='excelCategoria':
+			exito = 'Operacion realizada con exito'
+			archivo = request.FILES.get('arch',None)
+			doc=openpyxl.load_workbook(archivo)
+			try:
+				hoja1 = doc.get_sheet_by_name('Hoja1')
+				for filas in hoja1.rows:
+					try: 
+						categoria = Categoria()
+						i = 0
+						for columna in filas:
+							i +=1
+							if i==1:
+								categoria.codigo=columna.value
+							elif i==2:
+								categoria.nombre=columna.value
+							elif i ==3:
+								categoria.descripcion=columna.value
+						categoria.save()
+						print(categoria)
+					except Exception as e:
+						print (e)
+						error = 'Algunas categorias tenian claves unicas'
+						exito=''
+						categoria.delete()
+			except Exception as e:
+				print(e.message)
+				if 'column codigo is not unique' in e.message:
+					error = 'El codigo no es unico, revise el excel y elimine las claves unicas '
+					exito=''
+				elif 'Worksheet Hoja does not exist.' in e.message:
+					error = 'El nombre de la hoja tiene que ser: \"Hoja1\"'
+					exito=''
+
+	context = {'empleado':empleado}
+	return render(request, 'VendedorTemplates/subirExcel.html', context)
