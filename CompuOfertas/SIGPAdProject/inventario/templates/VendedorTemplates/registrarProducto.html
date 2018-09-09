@@ -7,6 +7,7 @@
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 
+{% if empleado.sucursal %}
 <div class="row">
     <div class="col-xs-8">
         <section class="panel default blue_title h2 text-center">
@@ -136,6 +137,22 @@
     </div>
 </div> 
 
+{% else %}
+    <div class="row">
+    <div class="col-xs-20">
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+        <div class="col-xs-10 archivo">
+            <section class="panel default blue_title h2 text-center">
+                <div class="panel-heading"><span class="semi-bold"> {{empleado.nombre}} </span> usted NO posee una sucursal asignada comuniquese con el administrador</div>
+            </section>
+        </div>
+    </div>
+    </div>
+{% endif %}
 
 
 

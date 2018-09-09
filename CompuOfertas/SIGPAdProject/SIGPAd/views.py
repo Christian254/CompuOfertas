@@ -198,7 +198,47 @@ def  crearEmpleado(request):
     	# code that produces error
 	except IntegrityError as e:
     	return render_to_response("AdministradorTemplates/crearUsuario.html", {"message": e.message})"""
+
+
+
 @permission_required('SIGPAd.view_superuser')
+def empleadoSucursal(request,pk):
+	empleado = get_object_or_404(Empleado, empleado=pk)
+	sucursal = Sucursal.objects.all()
+	try:
+		pass
+	except Exception as e:
+		print(e.message)	
+	context = {'empleado':empleado,'sucursal':sucursal}
+	return render(request, 'AdministradorTemplates/empleado_sucursal.html', context)
+
+
+@permission_required('SIGPAd.view_superuser')
+def quitarSucursal(request, pk):
+	try:
+		empleado=Empleado.objects.get(empleado=pk)
+		empleado.sucursal = None
+		empleado.save()
+	except Exception as e:
+		print(e.message)
+	sucursal = Sucursal.objects.all()
+	context = {'empleado':empleado,'sucursal':sucursal}
+	return render(request, 'AdministradorTemplates/empleado_sucursal.html', context)
+@permission_required('SIGPAd.view_superuser')
+
+def agregarSucursal(request, pk, sucursal):
+	try:
+		empleado=Empleado.objects.get(empleado=pk)
+		sucursal = Sucursal.objects.get(pk=sucursal)
+		empleado.sucursal = sucursal
+		empleado.save()
+	except Exception as e:
+		print(e.message)
+	sucursales = Sucursal.objects.all()
+	context = {'empleado':empleado,'sucursal':sucursales}
+	return render(request, 'AdministradorTemplates/empleado_sucursal.html', context)
+
+@permission_required('SIGPAd.view_superuser') 
 def crearUsuario(request,pk):
 	empleado = get_object_or_404(Empleado, empleado=pk)
 	try:
@@ -565,7 +605,8 @@ def index(request):
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})
+			empleado = request.user.empleado_set.all().latest('nombre')
+			return render(request,'VendedorTemplates/vendedorIndex.html',{'empleado':empleado})
 	else:
 		try:
 			user = User.objects.all()
