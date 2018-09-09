@@ -38,6 +38,8 @@ urlpatterns = [
 	url(r'eliminarDespedido/(?P<pk>\d+)$', login_required(eliminarDespedido), name="EliminarDespedido"),
 	url(r'^reporteDespido/$', login_required(reporteDespido), name="ReporteDeDespido"),
 	url(r'empleadoSucursal/(?P<pk>\d+)$', login_required(empleadoSucursal), name="empleadoSucursal"),
+	url(r'^inventarioGral/$',login_required(inventarioGral),name="inventarioGral"),
+
 
 
 	#URL Cliente.

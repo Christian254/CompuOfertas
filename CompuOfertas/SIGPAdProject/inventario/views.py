@@ -352,6 +352,7 @@ def subirExcel(request):
 	context = {'empleado':empleado,'exito':exito,'error':error}
 	return render(request, 'VendedorTemplates/subirExcel.html', context)
 
+@permission_required('SIGPAd.view_seller')
 def mostrarInventario(request):
 	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	inventario = Inventario.objects.filter(sucursal=empleado.sucursal)
@@ -360,13 +361,15 @@ def mostrarInventario(request):
 		p.append(x)
 	print(p)
 	consulta = request.GET.get('consulta')
-	productos = Producto.objects.all().filter(inventario__in=p)
+
+	producto = Producto.objects.filter(inventario__in=p)
+	print(producto)
 	if consulta:
-		categorias = productos.filter(
+		producto = producto.filter(
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
-	paginator = Paginator(productos, 7)
+	paginator = Paginator(producto, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
@@ -383,13 +386,14 @@ def mostrarInventario(request):
 	return render(request,'VendedorTemplates/inventario.html',context)
 
 
-
+@permission_required('SIGPAd.view_seller')
 def agregarProductoSucursal(request):
 	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	sucursal = Sucursal.objects.all().exclude(pk=empleado.sucursal.id)
 	context={'empleado':empleado,'sucursal':sucursal}
 	return render(request,'VendedorTemplates/agregarProductoSucursal.html',context)
 
+@permission_required('SIGPAd.view_seller')
 def agregarPS(request,pk):
 	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	sucursal = Sucursal.objects.all().exclude(pk=empleado.sucursal.id)

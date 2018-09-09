@@ -99,9 +99,9 @@
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <td> <a href="/"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     /
-                                     <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+                                     <a href="/"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
                                     </td>
                                 </tr>
                                 {% endfor %}

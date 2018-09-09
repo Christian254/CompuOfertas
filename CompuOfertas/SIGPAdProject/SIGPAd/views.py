@@ -50,6 +50,33 @@ def  iniciar_sesion(request):
 
 #Vista administrador.
 
+
+@permission_required('SIGPAd.view_superuser')
+def inventarioGral(request):
+	sucursales = Sucursal.objects.all()
+	consulta = request.GET.get('consulta')
+	if consulta:
+		sucursal = sucursales.filter(
+			Q(nombre_sucursal__icontains = consulta)|
+			Q(ubicacion__icontains = consulta)
+			).distinct()
+
+	paginator = Paginator(sucursales, 1)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		sucursal = paginator.page(page)
+	except PageNotAnInteger:
+		sucursal = paginator.page(1)
+	except EmptyPage:
+		sucursal = paginator.page(paginator.num_pages)
+
+	context={'sucursal':sucursal}
+	return render(request,'AdministradorTemplates/inventarioGral.html',context)
+
 def inicializarPuesto():
 	try:
 		puesto = Puesto.objects.all()
