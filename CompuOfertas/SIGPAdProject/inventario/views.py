@@ -228,7 +228,6 @@ def productoDisponible(request):
 	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia', 'codigo', 'precioVenta'))
 	return HttpResponse(producto, content_type='application/json')
 
-<<<<<<< HEAD
 #Vista de Compra.
 @permission_required('SIGPAd.view_seller')
 def listado_de_compras(request):
@@ -237,7 +236,6 @@ def listado_de_compras(request):
 		'compras':compras
 	}
 	return render(request, 'VendedorTemplates/listadoCompras.html', context)
-=======
 
 @permission_required('SIGPAd.view_seller')
 def subirExcel(request):
@@ -327,4 +325,3 @@ def subirExcel(request):
 
 	context = {'empleado':empleado}
 	return render(request, 'VendedorTemplates/subirExcel.html', context)
->>>>>>> eb3d7f12cee604e0b4b16dc673971581844c13a7
