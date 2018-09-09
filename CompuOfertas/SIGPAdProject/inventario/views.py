@@ -49,8 +49,8 @@ def registrarCategoria(request):
 			try:
 				hoja1 = doc.get_sheet_by_name('Hoja1')
 				for filas in hoja1.rows:
-					categoria = Categoria()
 					try: 
+						categoria = Categoria()
 						i = 0
 						for columna in filas:
 							i +=1
@@ -60,10 +60,8 @@ def registrarCategoria(request):
 								categoria.nombre=columna.value
 							elif i ==3:
 								categoria.descripcion=columna.value
-							elif i==4:
-								categoria.condicion=columna.value
-							categoria.save()
-							print(categoria)
+						categoria.save()
+						print(categoria)
 					except Exception as e:
 						print (e)
 						error = 'Algunas categorias tenian claves unicas'
@@ -81,14 +79,12 @@ def registrarCategoria(request):
 			codigo = request.POST.get('codigo',None)
 			nombre = request.POST.get('nombre',None)
 			descripcion = request.POST.get('descripcion',None)
-			condicion = request.POST.get('condicion',None)
-			if codigo!=None and nombre !=None and descripcion !=None and condicion!=None:
+			if codigo!=None and nombre !=None and descripcion !=None :
 				try:
 					categoria = Categoria()
 					categoria.codigo=codigo
 					categoria.nombre=nombre
 					categoria.descripcion=descripcion
-					categoria.condicion=condicion
 					categoria.save()
 					exito = 'Guardada con exito'
 				except Exception as e:
@@ -125,6 +121,7 @@ def registrarCategoria(request):
 def ingresarProducto(request):
 	error = ''
 	exito = ''
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	if request.method=='POST':
 		action = request.POST.get('action')
 		if action=='excel':
@@ -142,8 +139,6 @@ def ingresarProducto(request):
 							if i==1:
 								cat = Categoria.objects.get(codigo=columna.value)
 								producto.categoria=cat
-								cat.cantidad = cat.cantidad + 1
-								cat.save()
 							elif i==2:
 								producto.codigo=columna.value
 							elif i==3:
@@ -152,16 +147,14 @@ def ingresarProducto(request):
 								producto.marca=columna.value
 							elif i==5:
 								producto.descripcion=columna.value
-							elif i==6:
-								producto.existencia=columna.value
-							elif i==7:
-								producto.precioCompra=columna.value
-							elif i==8:
-								producto.precioVenta=columna.value
-							producto.save()
-							print(producto)
+						inventario = Inventario()
+						inventario.sucursal=empleado.sucursal
+						inventario.save()
+						producto.inventario=inventario
+						producto.save()
+						print(producto)
 					except Exception as e:
-						print(e.message)
+						print('Error:'+e.message)
 						error = 'Error desconocido, contacte al administrador'
 						if 'Categoria matching query does not exist.' in e.message:
 							error = 'Algunos productos no poseen categoria asignada'
@@ -198,7 +191,7 @@ def ingresarProducto(request):
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros}
+	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros,'empleado':empleado}
 	return render(request, 'VendedorTemplates/ingresarProducto.html', context)
 
 
@@ -208,30 +201,25 @@ def registrarProducto(request,pk):
 	error = ''
 	exito = ''
 	cat = 'No selecciono una categoria'
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	if request.method=='POST':
 		codigo = request.POST.get('codigo',None)
 		nombre = request.POST.get('nombre',None)
 		descripcion = request.POST.get('descripcion',None)
 		marca = request.POST.get('marca',None)
-		existencia = request.POST.get('existencia',None)
-		precioCompra = request.POST.get('precioCompra',None)
-		precioVenta = request.POST.get('precioVenta',None)
-		if codigo!=None and nombre!=None and descripcion!=None and marca!=None and existencia!=None and precioVenta!=None and precioCompra!=None:
+		if codigo!=None and nombre!=None and descripcion!=None and marca!=None:
 			try:
-				exis = int(existencia)
+				inventario = Inventario()
+				inventario.sucursal=empleado.sucursal
+				inventario.save()
 				producto = Producto()
 				producto.categoria_id = pk
+				producto.inventario_id=inventario.id
 				producto.codigo=codigo
 				producto.nombre=nombre
 				producto.marca=marca
 				producto.descripcion=descripcion
-				producto.existencia=exis
-				producto.precioCompra=precioCompra
-				producto.precioVenta=precioVenta
 				producto.save()
-				catego = Categoria.objects.get(pk=pk)
-				catego.cantidad = catego.cantidad + 1
-				catego.save()
 				exito='Producto guardado con exito'
 			except Exception as e:
 				print(e.message)
@@ -266,7 +254,7 @@ def registrarProducto(request,pk):
 	except EmptyPage:
 		producto = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categoria':cat,'productos':producto}
+	context = {'error':error,'exito':exito,'categoria':cat,'productos':producto,'empleado':empleado}
 	return render(request, 'VendedorTemplates/registrarProducto.html', context)
 
 

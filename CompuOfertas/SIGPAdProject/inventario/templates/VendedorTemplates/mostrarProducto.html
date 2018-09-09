@@ -67,8 +67,6 @@
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
                                     <th>marca</th>
-                                    <th>existencia</th>
-                                    <th>precio venta</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -79,8 +77,6 @@
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td>{{producto.existencia}}</td>
-                                    <td>{{producto.precioVenta}}</td>
                                     <td> <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     /
                                      <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 

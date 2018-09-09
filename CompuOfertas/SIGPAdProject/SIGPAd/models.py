@@ -24,16 +24,17 @@ class Empleado(models.Model):
 	nombre = models.CharField(max_length=25)
 	apellido = models.CharField(max_length=25)
 	telefono = models.CharField(max_length=8)
-	fechaNac = models.DateField(auto_now=False, auto_now_add=False)
+	fechaNac = models.DateField(auto_now=True, auto_now_add=False)
 	estado = models.IntegerField(default=1)
 	sexo = models.CharField(max_length=10, blank=True)
 	email = models.EmailField(max_length=70)
 	foto = models.ImageField(upload_to="fotos_empleados")
-	fecha_trabajo = models.DateField(auto_now=False, auto_now_add=False)
+	fecha_trabajo = models.DateField(auto_now=True, auto_now_add=False)
 	dui = models.CharField(max_length=10)
 	nit = models.CharField(max_length=17)
 	afp=models.CharField(max_length=12)
 	isss = models.CharField(max_length=9)
+
 	def __str__(self):
 		return self.nombre
 

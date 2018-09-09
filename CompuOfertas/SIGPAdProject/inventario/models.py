@@ -10,36 +10,33 @@ from SIGPAd.models import *
 class Sucursal(models.Model):
     nombre_sucursal = models.CharField(max_length=20)
     ubicacion = models.CharField(max_length=100)
+    
 
 class Inventario(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
-    precio_venta_producto = models.DecimalField(max_digits=6,decimal_places=2)
-    precio_promedio_compra = models.DecimalField(max_digits=6,decimal_places=2)
-    existencia = models.IntegerField()
+    precio_venta_producto = models.DecimalField(max_digits=6,decimal_places=2,default=0)
+    precio_promedio_compra = models.DecimalField(max_digits=6,decimal_places=2,default=0)
+    existencia = models.IntegerField(default=0)
 
 class Categoria(models.Model):
-	codigo = models.CharField(max_length=10,unique=True)
-	nombre = models.CharField(max_length=70,unique=True)
-	descripcion = models.CharField(max_length=200)
-	condicion = models.CharField(max_length=100) 
-	cantidad = models.IntegerField(default=0)
+    codigo = models.CharField(max_length=10,unique=True)
+    nombre = models.CharField(max_length=70,unique=True)
+    descripcion = models.CharField(max_length=200)
+    estado = models.BooleanField(default=True)
 
-	def __str__(self):
-		return self.nombre
+    def __str__(self):
+        return self.nombre
 
 class Producto(models.Model):
-	categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
-    #inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE)
-	codigo = models.CharField(max_length=10,unique=True) ##lo dejare asi para que el id siga siendo el que proporciona django
-	nombre = models.CharField(max_length=70, unique=True)
-	marca = models.CharField(max_length=30)
-	descripcion = models.CharField(max_length=100)
-	existencia = models.IntegerField(default=0)
-	precioCompra = models.DecimalField(max_digits=6, decimal_places=2,default=0)
-	precioVenta = models.DecimalField(max_digits=8, decimal_places=2,default=0)
+    categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
+    inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE)
+    codigo = models.CharField(max_length=10,unique=True) ##lo dejare asi para que el id siga siendo el que proporciona django
+    nombre = models.CharField(max_length=70, unique=True)
+    marca = models.CharField(max_length=30)
+    descripcion = models.CharField(max_length=100)
 
-	def __str__(self):
-		return self.nombre
+    def __str__(self):
+        return self.nombre
 
 class Proveedor(models.Model):
     razon_social = models.CharField(max_length=256)

@@ -48,24 +48,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">existencia</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="number" placeholder="cantidad en existencia" id="existencia" name="existencia" min="0" pattern="^[0-9]+" required="required" data-toggle="tooltip" data-placement="top" title="existencia de productos">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">precio de compra</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="number" placeholder="Ingrese el precio de compra" id="precioCompra" name="precioCompra" step="0.01" required="required" title="precio de compra del producto">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">precio de venta</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="number" placeholder="Ingrese el precio de venta" id="precioVenta" name="precioVenta" step="0.01" required="required" title="precio de venta del producto">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="center">
                             <input type="submit" class="btn btn-success" value="Aceptar">
                         </div>
@@ -106,8 +88,6 @@
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
                                     <th>marca</th>
-                                    <th>existencia</th>
-                                    <th>precio venta</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -118,8 +98,6 @@
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td>{{producto.existencia}}</td>
-                                    <td>{{producto.precioVenta}}</td>
                                     <td> <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     /
                                      <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 

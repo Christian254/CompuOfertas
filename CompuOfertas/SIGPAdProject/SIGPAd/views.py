@@ -59,10 +59,6 @@ def inicializarPuesto():
 			puesto.nombre = "Gerente"
 			puesto.salario = 2000.00
 			puesto.save()
-			puesto2 = Puesto()
-			puesto2.nombre = "Vendedor"
-			puesto2.salario = 600.00
-			puesto2.save()
 			puesto3 = Puesto()
 			puesto3.nombre = "Contador"
 			puesto3.salario = 300.00
@@ -577,6 +573,14 @@ def index(request):
 			if i==0:
 				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
 				user.save()
+				sucursal = Sucursal(nombre_sucursal='CompuOferta SS',ubicacion='SS')
+				sucursal.save()
+				puesto = Puesto()
+				puesto.nombre = "Vendedor"
+				puesto.salario = 600.00
+				puesto.save()
+				empleado=Empleado(sucursal=sucursal,puesto=puesto,nombre='walter',apellido='marroquin',telefono='7777777',sexo='Masculino',email='walter@hotmail.com',dui='123',nit='1234',afp='34556',isss='1234')
+				empleado.save()
 		except Exception as e:
 			pass
 	return render(request,'index.html',{})
