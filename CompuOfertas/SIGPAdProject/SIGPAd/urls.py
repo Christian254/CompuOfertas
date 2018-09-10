@@ -37,7 +37,6 @@ urlpatterns = [
 	url(r'despedidos$', login_required(listadoDespedidos), name="Despedidos"),
 	url(r'eliminarDespedido/(?P<pk>\d+)$', login_required(eliminarDespedido), name="EliminarDespedido"),
 	url(r'^reporteDespido/$', login_required(reporteDespido), name="ReporteDeDespido"),
-	url(r'empleadoSucursal/(?P<pk>\d+)$', login_required(empleadoSucursal), name="empleadoSucursal"),
 	url(r'^inventarioGral/$',login_required(inventarioGral),name="inventarioGral"),
 
 
@@ -54,6 +53,4 @@ urlpatterns = [
 	url(r'^editarPuesto/(?P<pk>\d+)$', login_required(editarPuesto), name="EditarPuesto"),
 	url(r'^eliminarPuesto/(?P<pk>\d+)$', login_required(eliminarPuesto), name="EliminarPuesto"),
 	url(r'gestionarSancion$', login_required(gestionarSancion), name="GestionarSancion"),
-	url(r'^quitarSucursal/(?P<pk>\d+)$', login_required(quitarSucursal), name="quitarSucursal"),
-	url(r'^agregarSucursal/(?P<pk>\d+)/(?P<sucursal>\d+)$', login_required(agregarSucursal), name="agregarSucursal"),
 ]
