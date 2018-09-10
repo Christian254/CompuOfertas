@@ -8,7 +8,7 @@ function agregarProducto(tabla,tablaVenta){
         console.log(dato);
         tablaVenta.row.add(
         	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input name="cantidad-${dato}" class="cantidad" value="1" type="number" step="1" style="width:75px;" min="1" max="${productoDatos[2]}">`,'<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
+        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input name="cantidad-${dato}" class="cantidad" value="1" type="number" step="1" style="width:75px;" min="1" max="${productoDatos[4]}">`,'<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
 		});
 }
 
@@ -26,7 +26,7 @@ function quitarProducto(tablaVenta,tabla){
 	
 }
 function validarCantidad(tablaVenta){
-	$('#tablaVenta tbody').on('keyup','input', function () {    	
+	$('#tablaVenta tbody').on('click keyup','input', function () {    	
     	let productoDatos = tablaVenta.row( $(this).parents('tr') ).data();
     	let existencia = parseInt(productoDatos[4]);
     	let cantidad = $(this).val();     	  	   	 	
