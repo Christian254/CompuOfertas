@@ -32,7 +32,8 @@ def  indexVendedor(request):
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
+			empleado = user.empleado_set.all().latest('nombre')
+			return render(request,'VendedorTemplates/vendedorIndex.html',{'empleado':empleado})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -40,6 +41,7 @@ def  indexVendedor(request):
 def registrarCategoria(request):
 	error = ''
 	exito = ''
+	empleado = request.user.empleado_set.all().latest('nombre')
 	if request.method=='POST':
 		action = request.POST.get('action')
 		if action=='insert':
@@ -79,7 +81,8 @@ def registrarCategoria(request):
 		categoria = paginator.page(1)
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
-	context = {'error':error,'exito':exito,'categorias':categoria}
+
+	context = {'error':error,'exito':exito,'categorias':categoria,'empleado':empleado}
 	return render(request, 'VendedorTemplates/registrarCategoria.html', context)
 
 
@@ -90,6 +93,8 @@ def ingresarProducto(request):
 	exito = ''
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
+	empleado = request.user.empleado_set.all().latest('nombre')
+
 	if consulta:
 		categorias = categorias.filter(
 			Q(nombre__icontains = consulta)|
@@ -108,7 +113,7 @@ def ingresarProducto(request):
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros}
+	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros,'empleado':empleado}
 	return render(request, 'VendedorTemplates/ingresarProducto.html', context)
 
 
@@ -151,13 +156,20 @@ def registrarProducto(request,pk):
 	except Exception as e:
 		error = 'Esa categoria no existe'
 
-	productos = Producto.objects.filter(categoria_id=pk)
+	inventario = empleado.sucursal.inventario_set.all()
+	p = []
+	for x in inventario:
+		p.append(x)
+
+	productos = categoria.producto_set.all().filter(inventario__in=p)
+	
 	consulta = request.GET.get('consulta')
 	if consulta:
 		categorias = productos.filter(
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
+		productos=categorias
 	paginator = Paginator(productos, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
@@ -171,7 +183,7 @@ def registrarProducto(request,pk):
 	except EmptyPage:
 		producto = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categoria':cat,'productos':producto,'empleado':empleado}
+	context = {'error':error,'exito':exito,'categoria':cat,'productos':producto,'categorias':categoria,'empleado':empleado}
 	return render(request, 'VendedorTemplates/registrarProducto.html', context)
 
 
@@ -182,6 +194,7 @@ def mostrarProducto(request,pk):
 	exito = ''
 	productos = Producto.objects.filter(categoria_id=pk)
 	consulta = request.GET.get('consulta')
+	empleado = request.user.empleado_set.all().latest('nombre')
 	if consulta:
 		categorias = productos.filter(
 			Q(nombre__icontains = consulta)|
@@ -205,6 +218,7 @@ def mostrarProducto(request,pk):
 		'exito':exito,
 		'productos':producto,
 		'parametros':parametros,
+		'empleado':empleado
 	}
 	return render(request, 'VendedorTemplates/mostrarProducto.html', context)
 
@@ -227,13 +241,36 @@ def productoDisponible(request):
 	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1),use_natural_foreign_keys=True)
 	return HttpResponse(producto, content_type='application/json')
 
+<<<<<<< HEAD
 @permission_required('SIGPAd.view_seller')
 def clienteRegistrado(request):
 	cliente = serializers.serialize("json", Cliente.objects.all(),use_natural_foreign_keys=True,fields=('usuario'))
 	return HttpResponse(cliente, content_type='application/json')
+=======
+#Vista de Compra.
+@permission_required('SIGPAd.view_seller')
+def listado_de_compras(request):
+	compras = Compra.objects.all()
+	"""paginator = Paginator(compras_listado, 2)
+	page = request.GET.get('page')
+
+	try:
+		compras = paginator.page(page)
+	except PageNotAnInteger:
+		compras = paginator.page(1)
+	except EmptyPage:
+		compras = paginator.page(paginator.num_pages)"""
+
+	context = {
+		'compras':compras,
+	}
+	return render(request, 'VendedorTemplates/listadoCompras.html', context)
+>>>>>>> a63c1a481aac7c269ff7fb7069eb510068c2c5e2
 
 @permission_required('SIGPAd.view_seller')
 def subirExcel(request):
+	exito=''
+	error=''
 	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	if request.method=='POST':
 		action = request.POST.get('action')
@@ -318,5 +355,89 @@ def subirExcel(request):
 					error = 'El nombre de la hoja tiene que ser: \"Hoja1\"'
 					exito=''
 
-	context = {'empleado':empleado}
+	context = {'empleado':empleado,'exito':exito,'error':error}
 	return render(request, 'VendedorTemplates/subirExcel.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def mostrarInventario(request):
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
+	inventario = Inventario.objects.filter(sucursal=empleado.sucursal)
+	p = []
+	for x in inventario:
+		p.append(x)
+	print(p)
+	consulta = request.GET.get('consulta')
+
+	producto = Producto.objects.filter(inventario__in=p)
+	print(producto)
+	if consulta:
+		producto = producto.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+	paginator = Paginator(producto, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		producto = paginator.page(page)
+	except PageNotAnInteger:
+		producto = paginator.page(1)
+	except EmptyPage:
+		producto = paginator.page(paginator.num_pages)
+
+	context={'empleado':empleado,'inventario':inventario,'producto':producto}
+	return render(request,'VendedorTemplates/inventario.html',context)
+
+
+@permission_required('SIGPAd.view_seller')
+def agregarProductoSucursal(request):
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
+	sucursal = Sucursal.objects.all().exclude(pk=empleado.sucursal.id)
+	context={'empleado':empleado,'sucursal':sucursal}
+	return render(request,'VendedorTemplates/agregarProductoSucursal.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def agregarPS(request,pk):
+	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
+	sucursal = Sucursal.objects.all().exclude(pk=empleado.sucursal.id)
+	exito=''
+	error=''
+	try:
+		producto = Producto.objects.get(pk=pk)
+		sucursalActual = Sucursal.objects.get(pk=empleado.sucursal.id)
+		print(sucursalActual)
+		insertar = True
+		for i in sucursalActual.inventario_set.all():
+			for p in i.producto_set.all():
+				if producto.codigo in p.codigo :
+					insertar = False
+					error = 'lo siento ese producto ya esta en tu inventario'
+			print('no esta')
+
+		if insertar == True:
+			inventario = Inventario()
+			inventario.sucursal=empleado.sucursal
+			inventario.save()
+			p = Producto()
+			p.categoria=producto.categoria
+			p.inventario = inventario
+			p.codigo = producto.codigo + str(empleado.sucursal.id)
+			p.nombre = producto.nombre
+			p.marca = producto.marca
+			p.descripcion = producto.descripcion
+			p.save()
+			print('esta')
+			exito='Nuevo producto en su sucursal listo para usar'
+	except Exception as e:
+		print(e.message)
+		error='Lo siento ese producto ya esta en su sucursal'
+	context={'empleado':empleado,'sucursal':sucursal,'error':error,'exito':exito}
+	return render(request,'VendedorTemplates/agregarProductoSucursal.html',context)
+
+
+
+
+

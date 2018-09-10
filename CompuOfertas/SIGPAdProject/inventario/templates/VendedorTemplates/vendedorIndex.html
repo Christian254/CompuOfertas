@@ -6,48 +6,91 @@
 {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
+    {% if empleado.sucursal %}
 	<br />
     <main class="servicios p-y-1">
         <div class="container">
             <div class="row">
                 <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
 	                <a href="/registrarVenta"><img src="{% static 'images/vender.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/" class="btn btn-secondary"> <STRONG>Registrar Ventas</STRONG> </a></h3>
-                    <p class="hidden-sm-down">Aqui debes registrar todas las ventas realizadas o servicios proporcionados.</p>
-
+                    <h3><a href="/registrarVenta" class="btn btn-secondary"> <STRONG>Registrar Ventas</STRONG> </a></h3>
+                    <p class="hidden-sm-down">Aquí debes registrar todas las ventas realizadas o servicios proporcionados.</p>
                 </article>
+
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-					<a href="/"><img src="{% static 'images/comprar.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/">Registrar compras</a></h3>
+					<a href="/listadoCompras"><img src="{% static 'images/comprar.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/listadoCompras">Registrar compras</a></h3>
                     <p class="hidden-sm-down">Aqui debes registrar todas las compras realizadas por la compañia.</p>
                 </article>
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-					<a href="/"><img src="{% static 'images/misventas.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/">Mis Ventas</a></h3>
-                    <p class="hidden-sm-down">Aqui puedes ver tus ventas realizadas en el mes y anteriores.</p>
+					<a href="/mostrarInventario"><img src="{% static 'images/inventario.png' %}" width="200px" height="150px"></a>
+                    <h3><a href="/mostrarInventario">Inventario</a></h3>
+                    <p class="hidden-sm-down">Aqui puedes ver los productos en inventario, la cantidad en existencia y otros detalles, asi como el kardex (entrada y salida) de cada producto a precio de compra.</p>
+
                 </article>
             </div>
             <div class="row">
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a  href="/"><img src="{% static 'images/perfil.png' %}" width="150px" height="150px"></a>
-                    <h3 ><a href="/">Editar mi usuario</a></h3>
-                    <p  class="hidden-sm-down">Aqui puede cambiar su nombre de usuario y contraseña.</p>
+                    <a  href="/registrarCategoria"><img src="{% static 'images/categoria2.png' %}" width="150px" height="140px"></a>
+                    <h3 ><a href="/registrarCategoria">Categoría</a></h3>
+                    <p  class="hidden-sm-down">Agregar una nueva categoría</p>
                 </article>
 
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a href="/"><img src="{% static 'images/falta.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/">Mis faltas</a></h3>
-                    <p class="hidden-sm-down">Aqui puedes ver las faltas que has cometido.</p>
+                    <a  href="/ingresarProducto"><img src="{% static 'images/almacen.png' %}" width="150px" height="140px"></a>
+                    <h3 ><a href="/ingresarProducto">Producto</a></h3>
+                    <p  class="hidden-sm-down">Agregar un nuevo producto</p>
                 </article>
 
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a href="/registrarCategoria"><img src="{% static 'images/categoria.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/registrarCategoria">Registrar nueva categoria</a></h3>
-                    <p class="hidden-sm-down">Puedes ingresar una sola categoria nueva, o subir un archivo excel estandarizado con las categorias existentes para ahorrar tiempo, tambien puedes descar un ejemplo del archivo excel donde iran las categorias</p>
+                    <a href="/"><img src="{% static 'images/grafico.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Gráficos</a></h3>
+                    <p class="hidden-sm-down">Aquí puedes ver los gráficos de venta y compra asi como los productos más vendidos.</p>
+                </article>
+
+            </div>
+            <div class="row">
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/subirExcel"><img src="{% static 'images/excel.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/subirExcel">Subir categorías y productos en excel</a></h3>
+                    <p class="hidden-sm-down">Puedes subir un archivo excel estandarizado con las categorías y productos existentes para ahorrar tiempo</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a  href="/"><img src="{% static 'images/proveedores.png' %}" width="150px" height="140px"></a>
+                    <h3 ><a href="/">Proveedores</a></h3>
+                    <p  class="hidden-sm-down">Puedes gestionar tus proveedores</p>
+                </article>
+
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/"><img src="{% static 'images/cliente.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/">Clientes</a></h3>
+                    <p class="hidden-sm-down">Puedes gestionar a tus clientes</p>
+                </article>
+                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
+                    <a href="/agregarProductoSucursal"><img src="{% static 'images/addSucursal.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/agregarProductoSucursal">Agregar productos a mis inventarios</a></h3>
+                    <p class="hidden-sm-down">Puedes agregar productos existentes en otras sucursales</p>
                 </article>
             </div>
         </div>
     </main>
+    {% else %}
+    <div class="row">
+    <div class="col-xs-20">
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+        <div class="col-xs-10 archivo">
+            <section class="panel default blue_title h2 text-center">
+                <div class="panel-heading"><span class="semi-bold"> {{empleado.nombre}} </span> usted NO posee una sucursal asignada comuniquese con el administrador</div>
+            </section>
+        </div>
+    </div>
+    </div>
+    {% endif %}
 
 
 {%else%}

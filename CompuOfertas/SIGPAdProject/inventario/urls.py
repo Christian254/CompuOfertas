@@ -11,10 +11,16 @@ urlpatterns = [
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 	url(r'registrarCategoria$', login_required(registrarCategoria), name="registrarCategoria"),
 	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
-	url(r'registrarProducto/(?P<pk>\d+)$', login_required(registrarProducto), name="registrarProducto"),
+	url(r'registrarProducto/(?P<pk>\d+)/$', login_required(registrarProducto), name="registrarProducto"),
 	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),
 	url(r'registrarVenta/$', login_required(registrarVenta), name="registrarVenta"),
 	url(r'productoDisponible/$', login_required(productoDisponible), name="productoDisponible"),
 	url(r'clienteRegistrado/$', login_required(clienteRegistrado), name="clienteRegistrado"),
 	url(r'subirExcel/$', login_required(subirExcel), name="subirExcel"),
+	#Compras
+	url(r'listadoCompras/$',login_required(listado_de_compras), name="ListadoDeCompras"),
+	#inventario
+	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
+	url(r'agregarProductoSucursal/$',login_required(agregarProductoSucursal),name="agregarProductoSucursal"),
+	url(r'agregarPS/(?P<pk>\d+)$', login_required(agregarPS), name="agregarPS"),
 ]

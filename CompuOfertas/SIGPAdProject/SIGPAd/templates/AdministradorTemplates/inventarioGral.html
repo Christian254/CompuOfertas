@@ -1,14 +1,7 @@
 {% extends "baseUser.html" %}
 {% load staticfiles %}
-
-
 {% block Body %}
 {% if user.is_superuser %}
-<h1>superusuario</h1>
-{%elif user.is_authenticated%}
-
-{% if empleado.sucursal %}
-
 <style type="text/css">
     details {
         padding: 15px;
@@ -49,13 +42,14 @@
         {% endif %}
         <div class="col-xs-8 archivo">
             <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading">Seleccione su <span class="semi-bold">producto</span> </div>
+                <div class="panel-heading">Inventario por <span class="semi-bold"> sucursales </span> </div>
             </section>
 
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="">
+                            <input type="text" id="accion" name="accion" value="buscar" hidden="">
                             <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
                             <input type="submit" value="Buscar" class="btn btn-success">
                         </form>
@@ -66,46 +60,48 @@
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Codigo</th>
+                                    <th>Sucursal</th>
+                                    <th>Direccion</th>
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
-                                    <th>marca</th>
-                                    <th>Accion</th>
+                                    <th>existencia</th>
+                                    <th>precio</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for producto in productos %}
-                                <tr>
-                                    <td>{{producto.codigo}}</td>
-                                    <td>{{producto.nombre}}</td>
-                                    <td>{{producto.descripcion}}</td>
-                                    <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                    /
-                                     <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
-                                    </td>
-                                </tr>
+                                {% for s in sucursal %}
+                                    {% for i in s.inventario_set.all %}
+                                        {% for p in i.producto_set.all %}
+                                        <tr>
+                                            <td>{{s.nombre_sucursal}}</td>
+                                            <td>{{s.ubicacion}}</td>
+                                            <td>{{p.nombre}}</td>
+                                            <td>{{p.descripcion}}</td>
+                                            <td> {{p.inventario.existencia}}</td>
+                                            <td> {{p.inventario.precio_venta_producto}} </td>
+                                        </tr>
+                                        {% endfor %}
+                                    {%endfor%}
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="row text-center">
+                <div class="row text-center">
                 <div class="col">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            {% if categorias.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+                            {% if sucursal.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ sucursal.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
                             {%else%}
                             <li class="disabled"><span>Anterior</span></li>
-                            {% endif %} {% for i in categorias.paginator.page_range %} {% if categorias.number == i %}
+                            {% endif %} {% for i in sucursal.paginator.page_range %} {% if sucursal.number == i %}
                             <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                             </li>
                             {% else %}
                             <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
-                            {% endif %} {% endfor %} {% if categorias.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+                            {% endif %} {% endfor %} {% if sucursal.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ sucursal.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
                             {%else%}
                             <li class="disabled"><span>Siguiente</li>
                                         {% endif %}
@@ -114,28 +110,11 @@
                             </div>
                         </div>
                 </div>
+            </div>
         </div>
     </div>
 </div> 
-{% else %}
-    <div class="row">
-    <div class="col-xs-20">
-        {% if error %}
-            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
-        {% elif exito %}
-            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
-        {% endif %}
-        <div class="col-xs-10 archivo">
-            <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading"><span class="semi-bold"> {{empleado.nombre}} </span> usted NO posee una sucursal asignada comuniquese con el administrador</div>
-            </section>
-        </div>
-    </div>
-    </div>
-{% endif %}
-
-
-
+{%elif user.is_authenticated%}
 {%else%}
 <h1>usuario anonimo</h1>
 {% endif %}

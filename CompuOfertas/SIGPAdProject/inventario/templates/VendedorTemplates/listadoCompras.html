@@ -1,0 +1,116 @@
+{% extends 'baseUser.html' %}
+{% load staticfiles %}
+
+{% block Titulo %}
+	Listado de Compras
+{% endblock Titulo %}
+
+{% block CSS %}
+    <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
+    <style>
+        td.highlight {
+            background-color: whitesmoke !important;
+        }
+    </style>
+{% endblock CSS %}
+
+{% block usuario %}
+      {{user.username}}
+{% endblock usuario %}
+    
+{% block Body %}
+<section class="panel default blue_title h2 text-center">
+    <div class="panel-heading">LISTADO DE <span class="semi-bold">COMPRAS</span> </div>
+</section>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="block-web">
+                {% if compras %}
+
+                    <table class="table" id="tabla">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>#</th>
+                                <th>Descripción</th>
+                                <th>Realizada por</th>
+                                <th>Proveedor</th>
+                                <th>Fecha y Hora</th>
+                                <th>Generar PDF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for compra in compras %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{compra.descripcion}}</td>
+                                <td>{{compra.empleado.nombre}}</td>
+                                <td>{{compra.proveedor.razon_social}}</td>
+                                <td>{{compra.fecha_hora}}</td>
+                                <td><a href="" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i> Generar PDF</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+        
+                    <!--
+                    <span class="step-links">
+                            <ul class="pager">
+                            {% if compras.has_previous %}
+                                <li><a href="?page={{ compras.previous_page_number }}">Anterior</a></li>
+                            {% endif %}
+                    
+                            <!--<span class="current">
+                                Page {{ compras.number }} of {{ compras.paginator.num_pages }}.
+                            </span>-->
+
+                <!--            {% for i in compras.paginator.page_range %} 
+                            {% if compras.number == i %}
+                                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                            {% else %}
+                                <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
+                            {% endif %} 
+                            {% endfor %} 
+                    
+                            {% if compras.has_next %}
+                                <li><a href="?page={{ compras.next_page_number }}">Siguiente</a></li>
+                            {% endif %}
+                            </ul>
+                    </span>-->
+
+                {% else %}
+                    <center><p>¡Ninguna compra realizada!</p></center>
+                {% endif %}
+                <a href="" class="btn btn-success">NUEVA COMPRA</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock Body %}
+
+{% block Script %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+
+    <script>
+        $(document).ready(function()
+        {
+            var table = $('#tabla').DataTable( {
+                "info": false,
+                "pagingType": "full_numbers",
+                "language": {
+                    url: "/static/json/es_ES.json"
+                }
+            });
+
+            $('#tabla tbody')
+                .on( 'mouseenter', 'td', function () {
+                    var colIdx = table.cell(this).index().column;
+ 
+                    $( table.cells().nodes() ).removeClass( 'highlight' );
+                    $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            });
+        });
+    </script>
+{% endblock Script %}

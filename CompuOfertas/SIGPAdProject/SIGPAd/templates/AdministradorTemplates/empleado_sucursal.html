@@ -1,15 +1,23 @@
-{% extends "baseUser.html" %}
+{% extends "baseInterior.html" %}
 {% load staticfiles %}
 
+	{% block Titulo %}
+		Ingresar Horas Extra
+	{% endblock Titulo %}
+	{% block CSS %}
+		<link rel="stylesheet" type="text/css" href="{% static "interior/css/ingresarPuesto.css" %}">
 
-{% block Body %}
-{% if user.is_superuser %}
-<h1>superusuario</h1>
-{%elif user.is_authenticated%}
+	{% endblock CSS %}
 
-{% if empleado.sucursal %}
+	{% block Body %}
+	{%if alerta %}
+ 		<p class="alert alert-success text-center" id="crearPuesto"><b>{{alerta}}</b></p>
+ 	{%endif%}
+	{%if error %}
+ 		<p class="alert alert-danger text-center" id="errorPuesto"><b>{{error}}</b></p>
+ 	{%endif%}
 
-<style type="text/css">
+ 	<style type="text/css">
     details {
         padding: 15px;
         background-color: #f6f7f8;
@@ -49,42 +57,47 @@
         {% endif %}
         <div class="col-xs-8 archivo">
             <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading">Seleccione su <span class="semi-bold">producto</span> </div>
+                <div class="panel-heading">Agregar sucursal a : <span class="semi-bold"> {{empleado.nombre}} </span> </div>
             </section>
 
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="">
+                            <input type="text" id="accion" name="accion" value="buscar" hidden="">
                             <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
                             <input type="submit" value="Buscar" class="btn btn-success">
                         </form>
                     </nav>
+                    <div>
+                    	<a href="{% url 'SIGPAd:quitarSucursal' empleado.empleado %}" class="btn btn-danger">Quitar a {{empleado.nombre}} de sucursal actual </a>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <div class="block-web">
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Codigo</th>
                                     <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>marca</th>
+                                    <th>Direccion</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for producto in productos %}
-                                <tr>
-                                    <td>{{producto.codigo}}</td>
-                                    <td>{{producto.nombre}}</td>
-                                    <td>{{producto.descripcion}}</td>
-                                    <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                    /
-                                     <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
-                                    </td>
-                                </tr>
+                                {% for s in sucursal %}
+                                    <tr>
+                                        <td>{{s.nombre_sucursal}}</td>
+                                        <td>{{s.ubicacion}}</td>
+                                        {% if empleado.sucursal %}
+                                        	{% if empleado.sucursal == s %}
+                                        	<td> <a href="{% url 'SIGPAd:quitarSucursal' empleado.empleado %}">Quitar a {{empleado.nombre}} </a> </td>
+                                        	{% else %}
+                                        	<td></td>
+                                        	{% endif %}
+                                        {% else %}
+                                        	<td> <a href="{% url 'SIGPAd:agregarSucursal' empleado.empleado s.id %}">agregar a {{empleado.nombre}} </a> </td>
+                                        {% endif %}
+                                    </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -117,26 +130,5 @@
         </div>
     </div>
 </div> 
-{% else %}
-    <div class="row">
-    <div class="col-xs-20">
-        {% if error %}
-            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
-        {% elif exito %}
-            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
-        {% endif %}
-        <div class="col-xs-10 archivo">
-            <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading"><span class="semi-bold"> {{empleado.nombre}} </span> usted NO posee una sucursal asignada comuniquese con el administrador</div>
-            </section>
-        </div>
-    </div>
-    </div>
-{% endif %}
 
-
-
-{%else%}
-<h1>usuario anonimo</h1>
-{% endif %}
-{% endblock Body %}
+	{% endblock Body %}

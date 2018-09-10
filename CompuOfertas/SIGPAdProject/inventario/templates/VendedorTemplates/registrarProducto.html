@@ -7,6 +7,7 @@
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 
+{% if empleado.sucursal %}
 <div class="row">
     <div class="col-xs-8">
         <section class="panel default blue_title h2 text-center">
@@ -98,9 +99,9 @@
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <td> <a href="/"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     /
-                                     <a href="{% url 'inventario:registrarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+                                     <a href="/"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -113,17 +114,17 @@
                 <div class="col">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            {% if categorias.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+                            {% if productos.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ productos.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
                             {%else%}
                             <li class="disabled"><span>Anterior</span></li>
-                            {% endif %} {% for i in categorias.paginator.page_range %} {% if categorias.number == i %}
+                            {% endif %} {% for i in productos.paginator.page_range %} {% if productos.number == i %}
                             <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                             </li>
                             {% else %}
                             <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
-                            {% endif %} {% endfor %} {% if categorias.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+                            {% endif %} {% endfor %} {% if productos.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ productos.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
                             {%else%}
                             <li class="disabled"><span>Siguiente</li>
                                         {% endif %}
@@ -136,6 +137,22 @@
     </div>
 </div> 
 
+{% else %}
+    <div class="row">
+    <div class="col-xs-20">
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+        <div class="col-xs-10 archivo">
+            <section class="panel default blue_title h2 text-center">
+                <div class="panel-heading"><span class="semi-bold"> {{empleado.nombre}} </span> usted NO posee una sucursal asignada comuniquese con el administrador</div>
+            </section>
+        </div>
+    </div>
+    </div>
+{% endif %}
 
 
 
