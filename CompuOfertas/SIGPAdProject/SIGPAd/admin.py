@@ -50,3 +50,10 @@ class CompraAdmin(admin.ModelAdmin):
 	pass
 admin.site.register(Compra, CompraAdmin)
 
+class VentaAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Venta, VentaAdmin)
+
+class InventarioAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Inventario, InventarioAdmin)

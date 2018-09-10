@@ -15,5 +15,6 @@ urlpatterns = [
 	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),
 	url(r'registrarVenta/$', login_required(registrarVenta), name="registrarVenta"),
 	url(r'productoDisponible/$', login_required(productoDisponible), name="productoDisponible"),
+	url(r'clienteRegistrado/$', login_required(clienteRegistrado), name="clienteRegistrado"),
 	url(r'subirExcel/$', login_required(subirExcel), name="subirExcel"),
 ]

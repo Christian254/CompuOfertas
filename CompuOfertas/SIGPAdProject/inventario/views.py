@@ -217,17 +217,20 @@ def registrarVenta(request):
 			if codigo!=None:
 				cantidad = request.POST.get('cantidad-{}'.format(x),None)
 				p = Producto.objects.get(codigo=codigo)
-				p.existencia = p.existencia - int(cantidad)
-				p.save()							
-				print (p.nombre)		
+				p.inventario.existencia = p.inventario.existencia - int(cantidad)					
+				p.inventario.save()		
 		return render(request,'VendedorTemplates/ingresarVenta.html',{})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
-	producto = serializers.serialize("json", Producto.objects.filter(existencia__gte = 1),fields=('id','nombre','marca','existencia', 'codigo', 'precioVenta'))
+	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1),use_natural_foreign_keys=True)
 	return HttpResponse(producto, content_type='application/json')
 
+@permission_required('SIGPAd.view_seller')
+def clienteRegistrado(request):
+	cliente = serializers.serialize("json", Cliente.objects.all(),use_natural_foreign_keys=True,fields=('usuario'))
+	return HttpResponse(cliente, content_type='application/json')
 
 @permission_required('SIGPAd.view_seller')
 def subirExcel(request):

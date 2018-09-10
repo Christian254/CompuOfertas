@@ -10,6 +10,9 @@ from SIGPAd.models import *
 class Sucursal(models.Model):
     nombre_sucursal = models.CharField(max_length=20)
     ubicacion = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre_sucursal
     
 
 class Inventario(models.Model):
@@ -17,6 +20,8 @@ class Inventario(models.Model):
     precio_venta_producto = models.DecimalField(max_digits=6,decimal_places=2,default=0)
     precio_promedio_compra = models.DecimalField(max_digits=6,decimal_places=2,default=0)
     existencia = models.IntegerField(default=0)
+    def natural_key(self):
+        return (self.existencia, self.precio_venta_producto)
 
 class Categoria(models.Model):
     codigo = models.CharField(max_length=10,unique=True)

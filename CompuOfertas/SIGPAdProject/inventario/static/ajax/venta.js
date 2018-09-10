@@ -9,12 +9,13 @@ $(document).ready(function() {
         $('form').append(`<input name="cantidad" type="text" value="${resp.length}" hidden>`)        
 		for(let i=0;i<resp.length;i++){
 			var elemento = resp[i].fields;
+            console.log(elemento.inventario);            
 			var producto = `<tr">`
             producto += `<td><input type="text" name="codigo-${i+1}" value="${elemento.codigo}" hidden>${elemento.codigo}</td>`			
 			producto +=	`<td>${elemento.nombre}</td>`
 			producto +=	`<td>${elemento.marca}</td>`
-            producto += `<td>${elemento.precioVenta}</td>`
-			producto +=	`<td>${elemento.existencia}</td>`
+            producto += `<td>${elemento.inventario[1]}</td>`
+			producto +=	`<td>${elemento.inventario[0]}</td>`
 			producto +=	`<td><button name="${resp[i].pk}" class="agregar btn btn-primary">Añadir</button></td>`
 			producto +=	'</tr>'
 			$('#productoDisponible').append(producto)
