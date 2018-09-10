@@ -94,10 +94,7 @@ def ingresarProducto(request):
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
 	empleado = request.user.empleado_set.all().latest('nombre')
-<<<<<<< HEAD
-=======
-	
->>>>>>> 76db12d5fdbdd82b820238a3564f396433926b30
+
 	if consulta:
 		categorias = categorias.filter(
 			Q(nombre__icontains = consulta)|
