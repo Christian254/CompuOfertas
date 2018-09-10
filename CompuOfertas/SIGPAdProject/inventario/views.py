@@ -269,9 +269,23 @@ def listado_de_compras(request):
 
 @permission_required('SIGPAd.view_seller')
 def nueva_compra(request):
-	context = {
-		
-	}
+	proveedores = Proveedor.objects.filter(estado=True)
+	productos = Producto.objects.filter(estado=1)
+	try:
+		if request.method == 'POST':
+			context = {
+				'proveedores':proveedores,
+				'productos': productos
+			}
+		else:
+			context = {
+				'proveedores':proveedores,
+				'productos':productos,
+			}
+		return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+
+	except Exception as e:
+		context = {'error':"Mensaje de error"}		
 	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
 #Fin vistas de Compras.	
 

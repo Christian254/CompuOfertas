@@ -14,5 +14,45 @@
 {% endblock usuario %}
     
 {% block Body %}
+<section class="panel default blue_title h2 text-center">
+      <div class="panel-heading">NUEVA<span class="semi-bold"> COMPRA</span> </div>
+</section>
+
+<div class="row">
+      <div class="col-md-12">
+            <div class="block-web">
+                  {% if proveedores %}
+                        {% for proveedor in proveedores %}
+                              <p>{{proveedor.razon_social}}</p>
+                              <p>{{proveedor.estado}}</p>
+                        {% endfor %}
+                  {% else %}
+                        <p>No existen proveedores.</p>
+                  {% endif %}
+            </div>
+      </div>
+</div>
+
+<div class="row">
+            <div class="col-md-6">
+                  <div class="block-web">
+                  {% if productos %}
+                        {% for producto in productos %}
+                              <p>{{producto.codigo}}</p>
+                              <p>{{producto.nombre}}</p>
+                        {% endfor %}
+                  {% else %}
+                        <p>No existen productos.</p>
+                  {% endif %}
+                  </div>
+            </div>
+            <div class="col-md-6">
+                        <div class="block-web">
+                              Contenido
+                        </div>
+            </div>
+</div>
+
+
 
 {% endblock Body %}
