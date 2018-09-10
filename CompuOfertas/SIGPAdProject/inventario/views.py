@@ -254,6 +254,14 @@ def listado_de_compras(request):
 	return render(request, 'VendedorTemplates/listadoCompras.html', context)
 
 @permission_required('SIGPAd.view_seller')
+def nueva_compra(request):
+	context = {
+		
+	}
+	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+#Fin vistas de Compras.	
+
+@permission_required('SIGPAd.view_seller')
 def subirExcel(request):
 	empleado = Empleado.objects.filter(usuario=request.user).latest('nombre')
 	if request.method=='POST':
