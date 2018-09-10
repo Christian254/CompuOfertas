@@ -596,8 +596,8 @@ def index(request):
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			empleado = request.user.empleado_set.all().latest('nombre')
-			return render(request,'VendedorTemplates/vendedorIndex.html',{'empleado':empleado})
+			#empleado = request.user.empleado_set.all().latest('nombre')
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})
 	else:
 		try:
 			user = User.objects.all()
@@ -617,7 +617,6 @@ def index(request):
 					content_type=content_type,
 					)
 				vendedor.user_permissions.add(permission)
-				vendedor.save()
 				empleado.usuario = vendedor
 				vendedor.save()
 				empleado.save()

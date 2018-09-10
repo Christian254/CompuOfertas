@@ -75,7 +75,7 @@ class Compra(models.Model):
     fecha_hora = models.DateTimeField(default=datetime.now)
 
     def _strftime():
-        return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return datetime.now().strftime('%d-%m-%Y %H:%M:%S')
 
 class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)

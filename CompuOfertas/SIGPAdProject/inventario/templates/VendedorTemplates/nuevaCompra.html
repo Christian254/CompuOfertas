@@ -6,6 +6,7 @@
 {% endblock Titulo %}
 
 {% block CSS %}
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.min.css'  %}" /> 
 
 {% endblock CSS %}
 
@@ -15,44 +16,99 @@
     
 {% block Body %}
 <section class="panel default blue_title h2 text-center">
-      <div class="panel-heading">NUEVA<span class="semi-bold"> COMPRA</span> </div>
+            <div class="panel-heading">NUEVA<span class="semi-bold"> COMPRA</span> </div>
 </section>
 
-<div class="row">
-      <div class="col-md-12">
-            <div class="block-web">
-                  {% if proveedores %}
-                        {% for proveedor in proveedores %}
-                              <p>{{proveedor.razon_social}}</p>
-                              <p>{{proveedor.estado}}</p>
-                        {% endfor %}
-                  {% else %}
-                        <p>No existen proveedores.</p>
-                  {% endif %}
-            </div>
-      </div>
-</div>
+<section class="panel default blue_title h2 text-center">
+<form action="" method="post">
+      {% csrf_token %}
+      <div class="row">
+            <div class="col-md-12">
+                        <div class="block-web">
+                              <div class="row">
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                                <label for="idproveedor">Proveedor:</label>
+                                                {% if proveedores %}
+                                                <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true" required>
+                                                      {% for proveedor in proveedores %}
+                                                      <option value="{{proveedor.razon_social}}">{{proveedor.razon_social}}</option>
+                                                      {% endfor %}
+                                                </select>
+                                                {% else %}
+                                                      <strong>No existen proveedores.</strong>
+                                                {% endif %}
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                                <div class="form-group">
+                                                            <label for="empleado">Empleado:</label>
+                                                      {% if empleado %}
+                                                            <input type="text" name="empleado" id="empleado" class="form-control" value="{{empleado}}" disabled required>
+                                                      {% else %}
+                                                            <strong>Empleado no asignado.</strong>
+                                                      {% endif %}
+                                                </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                                <div class="form-group">
+                                                            <label for="fecha_hora">Fecha y Hora:</label>
+                                                      {% if empleado %}
+                                                            <input type="text" name="fecha_hora" id="fecha_hora" class="form-control" value="{{fecha_hora}}" disabled required>
+                                                      {% else %}
+                                                            <strong>Empleado no asignado.</strong>
+                                                      {% endif %}
+                                                </div>
+                                    </div>                                                                          
+                              </div>
 
-<div class="row">
-            <div class="col-md-6">
+                        </div>
+                  </div>
+      </div>
+
+      <strong>DETALLES DEL PRODUCTO</strong>
+
+      <div class="row">
+            <div class="col-md-12">
                   <div class="block-web">
-                  {% if productos %}
-                        {% for producto in productos %}
-                              <p>{{producto.codigo}}</p>
-                              <p>{{producto.nombre}}</p>
-                        {% endfor %}
-                  {% else %}
-                        <p>No existen productos.</p>
-                  {% endif %}
+                        <div class="row">
+                              <div class="col-md-3">
+                                    <div class="form-group">
+                                          <label for="aux_producto">Producto:</label>
+                                          {% if productos %}
+                                                <select name="aux_producto" id="aux_idproducto" class="form-control selectpicker" data-live-search="true" required>
+                                                {% for producto in productos %}
+                                                      <option value="{{producto}}">{{producto}}</option>
+                                                      {% endfor %}
+                                                </select>
+                                          {% else %}
+                                                      <strong>No existen proveedores.</strong>
+                                          {% endif %}
+                                    </div>
+                              </div>
+                              <div class="col-md-3">
+                                    Hola2
+                              </div>
+                        </div>
                   </div>
             </div>
-            <div class="col-md-6">
-                        <div class="block-web">
-                              Contenido
+      </div>
+
+      <div class="row">
+            <div class="col-md-12">
+                        <div class="form-group">
+                              <button type="submit" class="btn btn-success">Guardar</button>
+                              <button type="reset" class="btn btn-danger">Cancelar</button>
                         </div>
             </div>
-</div>
+      </div>
+</form>
+</section>
 
 
 
 {% endblock Body %}
+
+{% block Script %}
+      <script type="text/javascript" src="{% static "js/bootstrap-select.min.js" %}"></script>
+{% endblock Script %}
