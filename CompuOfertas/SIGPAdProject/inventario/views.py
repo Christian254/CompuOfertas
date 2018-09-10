@@ -268,6 +268,14 @@ def listado_de_compras(request):
 
 
 @permission_required('SIGPAd.view_seller')
+def nueva_compra(request):
+	context = {
+		
+	}
+	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+#Fin vistas de Compras.	
+
+@permission_required('SIGPAd.view_seller')
 def subirExcel(request):
 	exito=''
 	error=''

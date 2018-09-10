@@ -19,6 +19,7 @@ urlpatterns = [
 	url(r'subirExcel/$', login_required(subirExcel), name="subirExcel"),
 	#Compras
 	url(r'listadoCompras/$',login_required(listado_de_compras), name="ListadoDeCompras"),
+	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
 	url(r'agregarProductoSucursal/$',login_required(agregarProductoSucursal),name="agregarProductoSucursal"),
