@@ -53,28 +53,28 @@ def  iniciar_sesion(request):
 
 @permission_required('SIGPAd.view_superuser')
 def inventarioGral(request):
-	sucursales = Sucursal.objects.all()
+	productos = Producto.objects.filter(estado=1)
 	consulta = request.GET.get('consulta')
 	if consulta:
-		sucursal = sucursales.filter(
+		productos = productos.filter(
 			Q(nombre_sucursal__icontains = consulta)|
 			Q(ubicacion__icontains = consulta)
 			).distinct()
 
-	paginator = Paginator(sucursales, 1)
+	paginator = Paginator(productos, 1)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
 	
 	page = request.GET.get('page')
 	try:
-		sucursal = paginator.page(page)
+		productos = paginator.page(page)
 	except PageNotAnInteger:
-		sucursal = paginator.page(1)
+		productos = paginator.page(1)
 	except EmptyPage:
-		sucursal = paginator.page(paginator.num_pages)
+		productos = paginator.page(paginator.num_pages)
 
-	context={'sucursal':sucursal}
+	context={'productos':productos}
 	return render(request,'AdministradorTemplates/inventarioGral.html',context)
 
 def inicializarPuesto():
@@ -228,42 +228,6 @@ def  crearEmpleado(request):
 
 
 
-@permission_required('SIGPAd.view_superuser')
-def empleadoSucursal(request,pk):
-	empleado = get_object_or_404(Empleado, empleado=pk)
-	sucursal = Sucursal.objects.all()
-	try:
-		pass
-	except Exception as e:
-		print(e.message)	
-	context = {'empleado':empleado,'sucursal':sucursal}
-	return render(request, 'AdministradorTemplates/empleado_sucursal.html', context)
-
-
-@permission_required('SIGPAd.view_superuser')
-def quitarSucursal(request, pk):
-	try:
-		empleado=Empleado.objects.get(empleado=pk)
-		empleado.sucursal = None
-		empleado.save()
-	except Exception as e:
-		print(e.message)
-	sucursal = Sucursal.objects.all()
-	context = {'empleado':empleado,'sucursal':sucursal}
-	return render(request, 'AdministradorTemplates/empleado_sucursal.html', context)
-@permission_required('SIGPAd.view_superuser')
-
-def agregarSucursal(request, pk, sucursal):
-	try:
-		empleado=Empleado.objects.get(empleado=pk)
-		sucursal = Sucursal.objects.get(pk=sucursal)
-		empleado.sucursal = sucursal
-		empleado.save()
-	except Exception as e:
-		print(e.message)
-	sucursales = Sucursal.objects.all()
-	context = {'empleado':empleado,'sucursal':sucursales}
-	return render(request, 'AdministradorTemplates/empleado_sucursal.html', context)
 
 @permission_required('SIGPAd.view_superuser') 
 def crearUsuario(request,pk):
@@ -641,13 +605,11 @@ def index(request):
 			if i==0:
 				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
 				user.save()
-				sucursal = Sucursal(nombre_sucursal='CompuOferta SS',ubicacion='SS')
-				sucursal.save()
 				puesto = Puesto()
 				puesto.nombre = "Vendedor"
 				puesto.salario = 600.00
 				puesto.save()
-				empleado=Empleado(sucursal=sucursal,puesto=puesto,nombre='walter',apellido='marroquin',telefono='7777777',sexo='Masculino',email='walter@hotmail.com',dui='123',nit='1234',afp='34556',isss='1234')
+				empleado=Empleado(puesto=puesto,nombre='walter',apellido='marroquin',telefono='7777777',sexo='Masculino',email='walter@hotmail.com',dui='123',nit='1234',afp='34556',isss='1234')
 				vendedor = User.objects.create_user(username='vendedor', password='root')
 				content_type = ContentType.objects.get_for_model(Empleado)
 				permission = Permission.objects.get(

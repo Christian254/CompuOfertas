@@ -6,7 +6,6 @@
 {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
-    {% if empleado.sucursal %}
 	<br />
     <main class="servicios p-y-1">
         <div class="container">
@@ -67,31 +66,9 @@
                     <h3><a href="/">Clientes</a></h3>
                     <p class="hidden-sm-down">Puedes gestionar a tus clientes</p>
                 </article>
-                <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                    <a href="/agregarProductoSucursal"><img src="{% static 'images/addSucursal.png' %}" width="150px" height="150px"></a>
-                    <h3><a href="/agregarProductoSucursal">Agregar productos a mis inventarios</a></h3>
-                    <p class="hidden-sm-down">Puedes agregar productos existentes en otras sucursales</p>
-                </article>
             </div>
         </div>
     </main>
-    {% else %}
-    <div class="row">
-    <div class="col-xs-20">
-        {% if error %}
-            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
-        {% elif exito %}
-            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
-        {% endif %}
-        <div class="col-xs-10 archivo">
-            <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading"><span class="semi-bold"> {{empleado.nombre}} </span> usted NO posee una sucursal asignada comuniquese con el administrador</div>
-            </section>
-        </div>
-    </div>
-    </div>
-    {% endif %}
-
 
 {%else%}
 <h1>usuario anonimo</h1>

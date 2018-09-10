@@ -69,20 +69,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for s in sucursal %}
-                                    {% for i in s.inventario_set.all %}
-                                        {% for p in i.producto_set.all %}
-                                        <tr>
-                                            <td>{{s.nombre_sucursal}}</td>
-                                            <td>{{s.ubicacion}}</td>
-                                            <td>{{p.nombre}}</td>
-                                            <td>{{p.descripcion}}</td>
-                                            <td> {{p.inventario.existencia}}</td>
-                                            <td> {{p.inventario.precio_venta_producto}} </td>
-                                        </tr>
-                                        {% endfor %}
-                                    {%endfor%}
-                                {% endfor %}
+                                {% for p in i.productos %}
+                                    <tr>
+                                        <td>{{s.nombre_sucursal}}</td>
+                                        <td>{{s.ubicacion}}</td>
+                                        <td>{{p.nombre}}</td>
+                                        <td>{{p.descripcion}}</td>
+                                        <td> {{p.inventario.existencia}}</td>
+                                        <td> {{p.inventario.precio_venta_producto}} </td>
+                                    </tr>
+                                {%endfor%}
                             </tbody>
                         </table>
                     </div>

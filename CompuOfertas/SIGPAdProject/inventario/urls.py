@@ -22,6 +22,4 @@ urlpatterns = [
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
-	url(r'agregarProductoSucursal/$',login_required(agregarProductoSucursal),name="agregarProductoSucursal"),
-	url(r'agregarPS/(?P<pk>\d+)$', login_required(agregarPS), name="agregarPS"),
 ]

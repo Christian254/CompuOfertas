@@ -18,7 +18,6 @@ class Puesto(models.Model):
 
 class Empleado(models.Model):
 	empleado = models.AutoField(primary_key=True)	
-	sucursal = models.ForeignKey(Sucursal, on_delete=models.SET_NULL, null=True)
 	usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 	puesto = models.ForeignKey(Puesto, models.SET_NULL, null=True, blank=True)
 	nombre = models.CharField(max_length=25)
