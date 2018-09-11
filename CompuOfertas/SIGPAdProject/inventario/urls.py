@@ -13,6 +13,7 @@ urlpatterns = [
 	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
 	url(r'registrarProducto/(?P<pk>\d+)/$', login_required(registrarProducto), name="registrarProducto"),
 	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),
+	url(r'editarProducto/(?P<pk>\d+)$', login_required(editarProducto), name="editarProducto"),
 	url(r'registrarVenta/$', login_required(registrarVenta), name="registrarVenta"),
 	url(r'productoDisponible/$', login_required(productoDisponible), name="productoDisponible"),
 	url(r'clienteRegistrado/$', login_required(clienteRegistrado), name="clienteRegistrado"),

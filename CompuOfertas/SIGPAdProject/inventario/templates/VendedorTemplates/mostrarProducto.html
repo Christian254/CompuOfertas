@@ -66,10 +66,10 @@
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Codigo</th>
+                                    <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>marca</th>
+                                    <th>Descripción</th>
+                                    <th>Marca</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -80,7 +80,7 @@
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td> <a href=""><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <td> <a href="{% url 'inventario:editarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                                     /
                                      <a href=""><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
                                     </td>
