@@ -36,6 +36,7 @@
 </section>
 
 <section class="panel default blue_title h2 text-center">
+
 <form action="" method="post">
       {% csrf_token %}
       <div class="row">
@@ -158,21 +159,12 @@
       </div>
 
       <div class="row">
-                  <div class="col-md-12">
-                        <div class="block-web">
-                              <div class="row">
-                              
-                              </div>
-                        </div>
-                  </div>
-      </div>
-
-      <div class="row">
             <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group" id="guardar">
                               <button type="submit" class="btn btn-success">Guardar</button>
                               <button type="reset" class="btn btn-danger">Cancelar</button>
                         </div>
+                        <h6 id="alerta_guardar"></h6>
             </div>
       </div>
 </form>
@@ -185,7 +177,7 @@
 {% block Script %}
     <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 
-
+    <!--Tabla-->
     <script>
         $(document).ready(function()
         {
@@ -205,5 +197,29 @@
                     $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
             });
         });
+    </script>
+
+    <!--Detalle de Compra y Compra-->
+    <script>
+            //Variables.
+            total = 0;
+
+            //Funciones
+            function limpiar(){
+                  $("#aux_cantidad").val("");
+                  $("#aux_p_compra").val("");
+                  $("#aux_p_venta").val("");
+                  $("#aux_p_total_u").val("");
+            }
+
+            function evaluar(){
+                  if(total>0){
+                        $("#guardar").show();
+                  }else{
+                        $("#guardar").hide();
+                        $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
+                  }
+            }
+
     </script>
 {% endblock Script %}
