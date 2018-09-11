@@ -6,7 +6,23 @@
 {% endblock Titulo %}
 
 {% block CSS %}
-      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.min.css'  %}" /> 
+<link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}">
+<style>
+      .bootstrap-select .btn, .bootstrap-select .dropdown-menu {
+            font-family: 'Open Sans', sans-serif;
+	      font-size: 12px;
+      }
+
+      thead{
+            background-color:rgba(66,139,202,1); 
+            color: whitesmoke;
+      }
+
+      td.highlight {
+            background-color: whitesmoke !important;
+      }
+
+</style>
 
 {% endblock CSS %}
 
@@ -66,7 +82,7 @@
                   </div>
       </div>
 
-      <strong>DETALLES DEL PRODUCTO</strong>
+      <strong>PRODUCTO:</strong>
 
       <div class="row">
             <div class="col-md-12">
@@ -86,12 +102,69 @@
                                           {% endif %}
                                     </div>
                               </div>
-                              <div class="col-md-3">
-                                    Hola2
+                              <div class="col-md-2">
+                                    <div class="form-group">
+                                          <label for="aux_cantidad">Cantidad:</label>
+                                          <input type="number" min="0" name="aux_cantidad" id="aux_cantidad" class="form-control" required>
+                                    </div>
                               </div>
+                              <div class="col-md-2">
+                                          <div class="form-group">
+                                                <label for="aux_p_compra">Precio de compra:</label>
+                                                <input type="number" min="0" name="aux_p_compra" id="aux_p_compra" class="form-control" required>
+                                          </div>
+                              </div>   
+                              <div class="col-md-2">
+                                          <div class="form-group">
+                                                <label for="aux_p_venta">Precio de venta:</label>
+                                                <input type="number" min="0" name="aux_p_venta" id="aux_p_venta" class="form-control" required>
+                                          </div>
+                              </div>
+                              <div class="col-md-2">
+                                          <div class="form-group">
+                                                <label for="aux_p_total_u">Total unitario:</label>
+                                                <input type="number" min="0" name="aux_p_total_u" id="aux_p_total_u" class="form-control" disabled>
+                                          </div>
+                              </div>
+                              <div class="col-md-1">
+                                          <div class="form-group">
+                                                <label for="btn_agregar"><strong>Agregar</strong></label>
+                                                <button type="button" id="btn_agregar" name="btn_agregar" class="btn btn-primary">+</button>
+                                          </div>
+                              </div>
+                                    <table id="tabla_de_detalles" class="table table-stripped table-bordered table-condensed table-hover">
+                                          <thead>
+                                                <th>Producto</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio de compra</th>;
+                                                <th>Precio de venta</th>
+                                                <th>Subtotal</th>
+                                                <th>Eliminar</th>
+                                          </thead>
+                                          <tbody>
+                                          </tbody>
+                                          <tfoot>
+                                                <th>Total</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><strong id="total">0.00</strong></th>
+                                                <th></th>
+                                          </tfoot>
+                                    </table>                                                                                                                       
                         </div>
                   </div>
             </div>
+      </div>
+
+      <div class="row">
+                  <div class="col-md-12">
+                        <div class="block-web">
+                              <div class="row">
+                              
+                              </div>
+                        </div>
+                  </div>
       </div>
 
       <div class="row">
@@ -110,5 +183,27 @@
 {% endblock Body %}
 
 {% block Script %}
-      <script type="text/javascript" src="{% static "js/bootstrap-select.min.js" %}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+
+    <script>
+        $(document).ready(function()
+        {
+            var table = $('#tabla_de_detalles').DataTable( {
+                "info": false,
+                "pagingType": "full_numbers",
+                "language": {
+                    url: "/static/json/es_ES.json"
+                }
+            });
+
+            $('#tabla tbody')
+                .on( 'mouseenter', 'td', function () {
+                    var colIdx = table.cell(this).index().column;
+ 
+                    $( table.cells().nodes() ).removeClass( 'highlight' );
+                    $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            });
+        });
+    </script>
 {% endblock Script %}
