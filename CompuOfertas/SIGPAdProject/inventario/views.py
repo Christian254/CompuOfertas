@@ -225,14 +225,29 @@ def mostrarProducto(request,pk):
 @permission_required('SIGPAd.view_seller')
 def registrarVenta(request):
 	if request.method == 'POST':
-		elementos = int(request.POST.get('cantidad'))		
+		elementos = int(request.POST.get('cantidad'))
+		venta = Venta()
+		venta.empleado = Empleado.objects.get(usuario=request.user)
+		venta.iva_venta = 0	
+		venta.descripcion = 'No se que va aqui xd'
+		venta.total_venta =  0
+		venta.save()		
 		for x in range(1,elementos+1):
-			codigo = request.POST.get('codigo-{}'.format(x),None)	
+			codigo = request.POST.get('codigo-{}'.format(x),None)				
 			if codigo!=None:
 				cantidad = request.POST.get('cantidad-{}'.format(x),None)
 				p = Producto.objects.get(codigo=codigo)
-				p.inventario.existencia = p.inventario.existencia - int(cantidad)					
-				p.inventario.save()		
+				p.inventario.existencia = p.inventario.existencia - int(cantidad)				
+				detalle_venta = DetalleVenta()				
+				detalle_venta.producto = p
+				detalle_venta.venta = venta
+				detalle_venta.cantidad = int(cantidad)
+				detalle_venta.precio_unitario = p.inventario.precio_venta_producto
+				detalle_venta.descuento = 0				
+				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)
+				detalle_venta.save()
+				p.inventario.save()	
+		venta.save()
 		return render(request,'VendedorTemplates/ingresarVenta.html',{})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
 
