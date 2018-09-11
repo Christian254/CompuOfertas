@@ -21,6 +21,11 @@ from SIGPAd.models import *
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+
+
 # Create your views here.
 ##No somos muy ordenados asique aqui vamos a empezar con el codigo del Sprint 2
 
@@ -28,11 +33,16 @@ from django.views.generic.edit import UpdateView, CreateView
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
 	user = request.user
+	error=''
+	if request.method=='POST':
+		error=enviarCorreo()
+		print(error)
+	
 	if user.is_authenticated():
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
+			return render(request,'VendedorTemplates/vendedorIndex.html',{'error':error})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -214,14 +224,29 @@ def mostrarProducto(request,pk):
 @permission_required('SIGPAd.view_seller')
 def registrarVenta(request):
 	if request.method == 'POST':
-		elementos = int(request.POST.get('cantidad'))		
+		elementos = int(request.POST.get('cantidad'))
+		venta = Venta()
+		venta.empleado = Empleado.objects.get(usuario=request.user)
+		venta.iva_venta = 0	
+		venta.descripcion = 'No se que va aqui xd'
+		venta.total_venta =  0
+		venta.save()		
 		for x in range(1,elementos+1):
-			codigo = request.POST.get('codigo-{}'.format(x),None)	
+			codigo = request.POST.get('codigo-{}'.format(x),None)				
 			if codigo!=None:
 				cantidad = request.POST.get('cantidad-{}'.format(x),None)
 				p = Producto.objects.get(codigo=codigo)
-				p.inventario.existencia = p.inventario.existencia - int(cantidad)					
-				p.inventario.save()		
+				p.inventario.existencia = p.inventario.existencia - int(cantidad)				
+				detalle_venta = DetalleVenta()				
+				detalle_venta.producto = p
+				detalle_venta.venta = venta
+				detalle_venta.cantidad = int(cantidad)
+				detalle_venta.precio_unitario = p.inventario.precio_venta_producto
+				detalle_venta.descuento = 0				
+				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)
+				detalle_venta.save()
+				p.inventario.save()	
+		venta.save()
 		return render(request,'VendedorTemplates/ingresarVenta.html',{})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
 
@@ -400,5 +425,27 @@ def mostrarInventario(request):
 
 	context={'inventario':inventario,'producto':producto}
 	return render(request,'VendedorTemplates/inventario.html',context)
+
+
+def enviarCorreo():
+	try:
+		msg = MIMEMultipart()
+		password = "toor215IDS"
+		msg['From'] = "compuofertaSDI215@gmail.com"
+		msg['To'] = "christianfuentes254@gmail.com"
+		msg['Subject'] = "Inventario critico"
+		message = "Saludos: {} , le informamos que algun producto tiene bajas existencias en el inventario, por favor abastecer dicho producto.... le saludamos y esparamos resuelva esto ALV".format(msg['To'])
+		msg.attach(MIMEText(message, 'plain'))
+		server = smtplib.SMTP('smtp.gmail.com: 587')
+		server.starttls()
+		server.login(msg['From'], password)
+		server.sendmail(msg['From'], msg['To'], msg.as_string())
+		server.quit()
+		print("successfully sent email to %s:" % (msg['To']))
+		return "successfully sent email to %s:" % (msg['To'])
+	except Exception as e:
+		return "Error, mensaje fallido al administrador, para anunciar el inventario {}".format(e.message)
+
+
 
 
