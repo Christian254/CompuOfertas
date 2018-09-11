@@ -21,6 +21,11 @@ from SIGPAd.models import *
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+
+
 # Create your views here.
 ##No somos muy ordenados asique aqui vamos a empezar con el codigo del Sprint 2
 
@@ -28,11 +33,16 @@ from django.views.generic.edit import UpdateView, CreateView
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
 	user = request.user
+	error=''
+	if request.method=='POST':
+		error=enviarCorreo()
+		print(error)
+	
 	if user.is_authenticated():
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
+			return render(request,'VendedorTemplates/vendedorIndex.html',{'error':error})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -400,5 +410,27 @@ def mostrarInventario(request):
 
 	context={'inventario':inventario,'producto':producto}
 	return render(request,'VendedorTemplates/inventario.html',context)
+
+
+def enviarCorreo():
+	try:
+		msg = MIMEMultipart()
+		password = "toor215IDS"
+		msg['From'] = "compuofertaSDI215@gmail.com"
+		msg['To'] = "christianfuentes254@gmail.com"
+		msg['Subject'] = "Inventario critico"
+		message = "Saludos: {} , le informamos que algun producto tiene bajas existencias en el inventario, por favor abastecer dicho producto.... le saludamos y esparamos resuelva esto ALV".format(msg['To'])
+		msg.attach(MIMEText(message, 'plain'))
+		server = smtplib.SMTP('smtp.gmail.com: 587')
+		server.starttls()
+		server.login(msg['From'], password)
+		server.sendmail(msg['From'], msg['To'], msg.as_string())
+		server.quit()
+		print("successfully sent email to %s:" % (msg['To']))
+		return "successfully sent email to %s:" % (msg['To'])
+	except Exception as e:
+		return "Error, mensaje fallido al administrador, para anunciar el inventario {}".format(e.message)
+
+
 
 
