@@ -8,6 +8,13 @@
 {%elif user.is_authenticated%}
 	<br />
     <main class="servicios p-y-1">
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% if error %}
+                <h1> {{error}} </h1>
+            {% endif %}
+            <input type="submit" name="enviar" value="enviar correo de prueba a christian :v">
+        </form>
         <div class="container">
             <div class="row">
                 <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">

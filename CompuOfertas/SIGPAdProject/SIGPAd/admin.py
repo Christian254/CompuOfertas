@@ -57,3 +57,7 @@ admin.site.register(Venta, VentaAdmin)
 class InventarioAdmin(admin.ModelAdmin):
 	pass
 admin.site.register(Inventario, InventarioAdmin)
+
+class DetalleVentaAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(DetalleVenta, DetalleVentaAdmin)

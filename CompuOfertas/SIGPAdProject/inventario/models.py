@@ -91,7 +91,7 @@ class Venta(models.Model):
     total_venta = models.DecimalField(max_digits=10, decimal_places=2)
     iva_venta = models.DecimalField(max_digits=4,decimal_places=2)
     descripcion = models.CharField(max_length=100)
-    fecha_hora = models.DateTimeField()
+    fecha_hora = models.DateTimeField(blank=False,auto_now_add=True, auto_now=False)
     nombre_cliente = models.CharField(max_length=20,blank=True,null=True) #Cliente que llega a la tienda y no esta en el sistema.
     dui_cliente = models.CharField(max_length=10, blank=True, null=True) #Cliente que llega a la tienda y no esta en el sistema.
 
