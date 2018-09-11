@@ -80,7 +80,7 @@ def registrarCategoria(request):
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categorias':categoria,'empleado':empleado}
+	context = {'error':error,'exito':exito,'categorias':categoria}
 	return render(request, 'VendedorTemplates/registrarCategoria.html', context)
 
 
@@ -91,7 +91,6 @@ def ingresarProducto(request):
 	exito = ''
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
-	empleado = request.user.empleado_set.all().latest('nombre')
 
 	if consulta:
 		categorias = categorias.filter(
@@ -111,7 +110,7 @@ def ingresarProducto(request):
 	except EmptyPage:
 		categoria = paginator.page(paginator.num_pages)
 
-	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros,'empleado':empleado}
+	context = {'error':error,'exito':exito,'categorias':categoria,'parametros':parametros}
 	return render(request, 'VendedorTemplates/ingresarProducto.html', context)
 
 
@@ -399,7 +398,7 @@ def mostrarInventario(request):
 	except EmptyPage:
 		producto = paginator.page(paginator.num_pages)
 
-	context={'empleado':empleado,'inventario':inventario,'producto':producto}
+	context={'inventario':inventario,'producto':producto}
 	return render(request,'VendedorTemplates/inventario.html',context)
 
 
