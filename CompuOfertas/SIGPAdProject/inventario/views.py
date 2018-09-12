@@ -67,9 +67,9 @@ def registrarCategoria(request):
 				except Exception as e:
 					print(e.message)
 					if 'column nombre is not unique' in e.message:
-						error='Lo el nombre se repite, intente nuevamente'
+						error='El nombre se repite, intente nuevamente'
 					if 'column codigo is not unique' in e.message:
-						error='El codigo que esta insertando ya esta ocupado'
+						error='El código que esta insertando ya esta ocupado'
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
 	if consulta:
@@ -200,6 +200,7 @@ def mostrarProducto(request,pk):
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
+		productos=categorias
 	paginator = Paginator(productos, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
@@ -220,6 +221,54 @@ def mostrarProducto(request,pk):
 		'parametros':parametros,
 	}
 	return render(request, 'VendedorTemplates/mostrarProducto.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def editarProducto(request, pk):
+	exito = None
+	existe = None
+	error = None
+	try:
+		producto = Producto.objects.get(pk=pk)
+	except Producto.DoesNotExist:
+		producto = None
+
+	if producto is not None:
+		if request.method == 'POST':
+			try:
+				producto.nombre = request.POST.get('nombre',None)
+				producto.marca = request.POST.get('marca',None)
+				producto.descripcion = request.POST.get('descripcion',None)
+				producto.save()
+				exito='Producto guardado con exito'
+			except Exception as e:
+				print(e.message)
+				if 'column codigo is not unique' in e.message:
+					error = 'Codigo de producto no es unico'
+				if 'column nombre is not unique' in e.message:
+					error='El nombre del producto debe ser unico'
+		else:
+			context = {
+				'producto':producto,
+				'exito':exito,
+				'error':error
+			}
+		
+		context = {
+				'producto':producto,
+				'exito':exito,
+				'error':error
+
+			}
+		return render(request,"VendedorTemplates/editarProducto.html", context) 
+
+	else:
+		existe = "El producto no existe"
+		context = {
+			'producto':producto,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarProducto.html", context)
 
 @permission_required('SIGPAd.view_seller')
 def registrarVenta(request):

@@ -63,10 +63,10 @@
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Codigo</th>
+                                    <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>Accion</th>
+                                    <th>Descripción</th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody id="#cuerpo-tabla">
@@ -76,7 +76,7 @@
                                     <td>{{categoria.nombre}}</td>
                                     <td>{{categoria.descripcion}}</td>
                                     <td> <a href="{% url 'inventario:registrarProducto' categoria.id %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> /
-                                        <a href="{% url 'inventario:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                        <a href="{% url 'inventario:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
                                     </td>
                                 </tr>
                                 {% endfor %}

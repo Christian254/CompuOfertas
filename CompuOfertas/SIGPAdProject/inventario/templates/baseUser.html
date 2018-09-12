@@ -27,7 +27,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/admin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}">     
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-select.min.css'  %}" />     
     <link rel="stylesheet" type="text/css" href="{% static 'sweet/sweetalert.min.css'  %}" /> 
 
     {% block Script %} {% endblock Script %}
@@ -334,12 +335,14 @@
 
     <script src="{% static "js/jquery-2.1.0.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/bootstrap-select.min.js" %}"></script>
     <script src="{% static "js/common-script.js" %}"></script>
     <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
     <script src="{% static "js/jPushMenu.js" %}"></script>
     <script src="{% static "js/side-chats.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery.dataTables.min.js" %}"></script>
+    
 
     {% block JavaScript %} {% endblock JavaScript %}
 

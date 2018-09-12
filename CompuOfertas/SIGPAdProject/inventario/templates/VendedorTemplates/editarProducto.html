@@ -1,0 +1,67 @@
+{% extends "baseUser.html" %}
+{% load staticfiles %}
+
+  {% block Titulo %}
+    Editar Productos
+  {% endblock Titulo %}
+
+  {% block Body %}
+  {% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+
+  <div class="row">
+    <div class="col-xs-8">
+        <section class="panel default blue_title h2 text-center">
+            <div class="panel-heading">Categoría:  <span class="semi-bold">{{categoria}} </span> </div>
+        </section>
+
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+
+        <div class="col-md-12">
+            <div class="block-web">
+                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Código</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese el codigo" id="codigo" name="codigo" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="codigo del producto" value="{{producto.codigo}}" disabled="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Nombre</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese el nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="nombre del producto">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Marca</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese la marca" id="marca" name="marca" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="marca del producto">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Descripción</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese la descripcion" id="descripcion" name="descripcion" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="descripcion del producto">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="center">
+                            <input type="submit" class="btn btn-success" value="Aceptar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
+{% endblock Body %}
