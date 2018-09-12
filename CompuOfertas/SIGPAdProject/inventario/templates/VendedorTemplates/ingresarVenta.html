@@ -7,7 +7,12 @@
 <script type="text/javascript" src="{% static 'ajax/funciones.js' %}"></script>
 <script type="text/javascript" src="{% static 'ajax/venta.js' %}"></script>
 <script type="text/javascript" src="{% static 'ajax/cliente.js' %}"></script>
-{% endblock Script %} {% block Body %}
+{% endblock Script %} 
+{% block Body %}
+{% if venta %}
+<div class="alert alert-success">{{venta}}</div>   
+
+{% endif %}
 <h2 class="text-center">Registrar Venta</h2>
 <br>
 <br>
@@ -53,7 +58,7 @@
 			<tbody id='productoVenta'>												
 			</tbody>
 		</table>
-		<select id="select-js" data-placeholder="Seleccione el Cliente"> 
+		<select name="select-js" id="select-js" data-placeholder="Seleccione el Cliente"> 
 			<option></option>		
 		</select>
 		<br>

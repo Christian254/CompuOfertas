@@ -340,12 +340,21 @@ def registrarVenta(request):
 				detalle_venta.venta = venta
 				detalle_venta.cantidad = int(cantidad)
 				detalle_venta.precio_unitario = p.inventario.precio_venta_producto
-				detalle_venta.descuento = 0				
-				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)
+				detalle_venta.descuento = 0	
+				detalle_venta.total = round(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)			
+				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.total),2)
 				detalle_venta.save()
 				p.inventario.save()	
+		cliente_usuario = request.POST.get('select-js',None)
+		if(cliente_usuario):
+			cliente = Cliente.objects.get(usuario__username=cliente_usuario)
+			venta.cliente = cliente
+			venta.nombre_cliente = cliente.nombre
+			venta.dui_cliente = cliente.dui
+			venta.save()
 		venta.save()
-		return render(request,'VendedorTemplates/ingresarVenta.html',{})	
+		detalles = DetalleVenta.objects.filter(venta=venta)		
+		return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':detalles, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
 
 @permission_required('SIGPAd.view_seller')

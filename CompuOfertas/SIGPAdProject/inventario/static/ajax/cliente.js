@@ -1,7 +1,8 @@
 $(document).ready(function($) {
 	$.ajax({
 		url: 'clienteRegistrado/',
-		type: 'GET',		
+		type: 'GET',
+		cache: false,		
 	})
 	.done(function(resp) {		        
 		for(let i=0;i<resp.length;i++){

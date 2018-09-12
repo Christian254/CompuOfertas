@@ -3,6 +3,7 @@ $(document).ready(function() {
 		url: 'productoDisponible/', //Servicio con los productos con existencia > 0
 		type: 'GET',
 		dataType: 'json',
+        cache: false,
 	})
 	.done( function(resp) {
 		/*Iterando el JSON y agregando la fila a la tabla*/
