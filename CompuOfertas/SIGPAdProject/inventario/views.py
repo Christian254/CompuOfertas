@@ -271,6 +271,55 @@ def editarProducto(request, pk):
 		return render(request,"VendedorTemplates/editarProducto.html", context)
 
 @permission_required('SIGPAd.view_seller')
+def eliminarProducto(request, pk):
+	error=None
+	exito=None
+	try:
+		producto=Producto.objects.get(pk=pk)
+	except Producto.DoesNotExist:
+		producto = None
+	if producto is not None:
+		producto.estado=0
+		producto.save()
+		exito='Producto eliminado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Producto no eliminado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	productos = Producto.objects.filter(estado=1)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = productos.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		productos=categorias
+	paginator = Paginator(productos, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		producto = paginator.page(page)
+	except PageNotAnInteger:
+		producto = paginator.page(1)
+	except EmptyPage:
+		producto = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'productos':producto,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/mostrarProducto.html',context)
+
+@permission_required('SIGPAd.view_seller')
 def registrarVenta(request):
 	if request.method == 'POST':
 		elementos = int(request.POST.get('cantidad'))
