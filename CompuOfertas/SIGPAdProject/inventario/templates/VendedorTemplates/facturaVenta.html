@@ -14,7 +14,12 @@
   </script>
 {% endblock Script %} 
 {% block Body %}
-<div class="alert alert-success">Se realizó la venta con exito</div>
+<div class="alert alert-success">
+	Se realizó la venta con exito
+	{% if detalle_ingreso %}
+		Productos anadidos con exito
+	{% endif %}
+</div>
 	<div id="imprimir" class="container">
 		<div class="row">
 			<div class="col">

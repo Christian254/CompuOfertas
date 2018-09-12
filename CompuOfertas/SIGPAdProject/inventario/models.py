@@ -43,7 +43,7 @@ class Producto(models.Model):
 
 #clase aun faltara a ponerla a prueba, se creara una nueva cada compra y venta
 class Kardex(models.Model):
-    fecha = models.DateField()
+    fecha = models.DateField(blank=False,auto_now_add=True, auto_now=False)
     cantEntrada = models.IntegerField()
     cantSalida = models.IntegerField()
     cantExistencia = models.IntegerField()
