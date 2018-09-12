@@ -101,6 +101,7 @@ class DetalleVenta(models.Model):
     cantidad = models.IntegerField(default=0)
     precio_unitario = models.DecimalField(max_digits=6,decimal_places=2)
     descuento = models.DecimalField(max_digits=6,decimal_places=2)
+    total = models.DecimalField(max_digits=6,decimal_places=2)
 
 
 
