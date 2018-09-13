@@ -439,8 +439,19 @@ def registrarVenta(request):
 		venta.save()
 		detalles = DetalleVenta.objects.filter(venta=venta)
 		detalle_ingreso = productos_anadidos_kardex
-		return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':detalles, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'detalle_ingreso':detalle_ingreso})	
+		return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':detalles, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'detalle_ingreso':detalle_ingreso, 'venta_id':venta.id})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
+
+@permission_required('SIGPAd.view_seller')
+def mostrarVenta(request):
+	ventas = Venta.objects.all()
+	return render(request, 'VendedorTemplates/mostrarVenta.html',{'ventas':ventas})
+
+@permission_required('SIGPAd.view_seller')
+def facturaVenta(request,id):
+	venta = Venta.objects.get(id=id)
+	factura = DetalleVenta.objects.filter(venta=venta)
+	return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':factura, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'venta_id':venta.id})
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):

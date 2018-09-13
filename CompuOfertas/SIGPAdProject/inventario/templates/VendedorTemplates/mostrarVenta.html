@@ -1,0 +1,39 @@
+{% extends "baseUser.html" %} 
+{% load staticfiles %} 
+{% block Script %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function($) {
+		$('#mostrarVenta').dataTable();
+	});
+	</script>
+{% endblock Script %}
+{% block Body %}
+  <div class="container">
+		<div class="row">
+			<div class="col">
+				<table id="mostrarVenta" class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Vendedor</th>
+							<th>Fecha</th>
+							<th style="width:135px;">Ver</th>					
+						</tr>
+					</thead>
+					<tbody>
+					{% for v in ventas  %}
+					<tr>
+						<td>{{v.id}}</td>
+						<td>{{v.empleado.apellido}}, {{v.empleado.nombre}}</td>
+						<td>{{v.fecha_hora}}</td>
+						<td class="text-center"><a href="{% url 'inventario:FacturaVenta' v.id %}" class="btn btn-info" style="width:125px;">Ver Factura {{v.id}} </a></td>
+					</tr>																	
+					{% endfor %}											
+					</tbody>
+				</table>
+			</div>
+		</div>		
+	</div>  
+{% endblock Body %}

@@ -19,6 +19,8 @@ urlpatterns = [
 	url(r'activarProducto/(?P<pk>\d+)$', login_required(activarProducto), name="activarProducto"),
 	#Venta
 	url(r'registrarVenta/$', login_required(registrarVenta), name="registrarVenta"),
+	url(r'mostrarVenta/$', login_required(mostrarVenta), name="mostrarVenta"),
+	url(r'^facturaVenta/(?P<id>\d+)$', login_required(facturaVenta), name="FacturaVenta"),
 	#Servicios
 	url(r'productoDisponible/$', login_required(productoDisponible), name="productoDisponible"),
 	url(r'clienteRegistrado/$', login_required(clienteRegistrado), name="clienteRegistrado"),
