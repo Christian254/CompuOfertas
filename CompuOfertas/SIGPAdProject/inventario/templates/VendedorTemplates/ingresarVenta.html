@@ -47,12 +47,14 @@
 			<thead>
 				<tr>
 					<th style="width:50px;">Código</th>
-					<th>Nombre</th>
-					<th>Marca</th>
+					<th style="width:150px;">Nombre</th>
+					<th style="width:150px;">Marca</th>
 					<th style="width:50px;">Precio</th>
 					<th style="width:75px;">Existencia</th>					
-					<th style="width:50px;">Cantidad</th>
-					<th style="width:50px;">Quitar</th>
+					<th style="width:35px;">Cantidad</th>
+					<th style="width:35px;">Descuento</th>
+					<th style="width:35px;">Total</th>
+					<th style="width:35px;">Quitar</th>
 				</tr>
 			</thead>
 			<tbody id='productoVenta'>												
@@ -61,6 +63,12 @@
 		<select name="select-js" id="select-js" data-placeholder="Seleccione el Cliente"> 
 			<option></option>		
 		</select>
+		<br>
+		<br>
+		<div class="form-group">
+  			<label for="descripcion">Descripción</label>
+  			<textarea class="form-control" rows="4"  id="descripcion"></textarea>
+		</div>
 		<br>
 		<br>
 		<input type="submit" id="botonVender" class="btn btn-success" value="Vender">

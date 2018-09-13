@@ -8,8 +8,8 @@ function agregarProducto(tabla,tablaVenta){
         console.log(dato);
         tablaVenta.row.add(
         	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input name="cantidad-${dato}" class="cantidad" value="1" type="number" step="1" style="width:75px;" min="1" max="${productoDatos[4]}">`,'<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
-		});
+        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="0" type="number" step="1" style="width:75px;" min="0" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true">`,'<button type="button" class="btn btn-danger quitar">Quitar</button>']).draw();			
+		});          
 }
 
 function quitarProducto(tablaVenta,tabla){
@@ -26,21 +26,45 @@ function quitarProducto(tablaVenta,tabla){
 	
 }
 function validarCantidad(tablaVenta){
-	$('#tablaVenta tbody').on('click keyup','input', function () {    	
+	$('#tablaVenta tbody').on('click keyup','.cantidad', function () {
+        $(this).attr('class', 'cantidad');        	
     	let productoDatos = tablaVenta.row( $(this).parents('tr') ).data();
     	let existencia = parseInt(productoDatos[4]);
-    	let cantidad = $(this).val();     	  	   	 	
-    	if( cantidad > existencia || cantidad < 1){
-    		$(this).attr('class', 'invalido');
-    		$(this).attr('style', 'border: 2px solid red; width:75px');  			
+    	let cantidad = $(this).val();
+        let dato=productoDatos[0].split('-')[1].split('"')[0]   	  	   	 	
+    	if( cantidad > existencia || cantidad < 0){
+    		$(this).addClass('invalido')
+    		$(this).attr('style', 'border: 2px solid red; width:75px');
+            $('#total-' + dato).text('');  			
     	}   
-    	else{   		
+    	else{  		
     		$(this).attr('style', 'width:75px');
-    		$(this).removeAttr('class');   		
+    		$(this).removeClass('invalido');
+            let precio_unitario = parseInt(productoDatos[3]);
+            $('#total-' + dato).val(precio_unitario*cantidad);
+            let descuento = $('#descuento-'+dato).val()
+            console.log(descuento);
+            let descontado = precio_unitario*cantidad - precio_unitario*cantidad*descuento;
+            $('#total-'+dato).val(descontado);             
     	} 
     	deshabilitarVenta();
     	});	 
 }
+
+function descuento(tablaVenta){
+    $('#tablaVenta tbody').on('click keyup','.descuento', function () {
+        $(this).attr('class', 'descuento');
+        let productoDatos = tablaVenta.row( $(this).parents('tr') ).data()
+        dato=productoDatos[0].split('-')[1].split('"')[0]  
+        precio_unitario = parseInt(productoDatos[3]);
+        cantidad = parseInt($('#cantidad-'+dato).val())
+        descuento = $(this).val()
+        let descontado = precio_unitario*cantidad - precio_unitario*cantidad*descuento;
+        console.log(descuento);                   
+        $('#total-'+dato).val(descontado);           
+    });
+}
+
 function deshabilitarVenta(){
 	error = $('input').filter($('.invalido')).length;    	
     	if(error>0){

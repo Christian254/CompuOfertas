@@ -68,7 +68,8 @@ $(document).ready(function() {
 		agregarProducto(tabla,tablaVenta); //Funcion Para agregar producto a la tablaVenta
 		quitarProducto(tablaVenta,tabla); //Funcion Para quitar el producto de la tablaVenta
 		validarCantidad(tablaVenta); //Funcion para validar que la cantidad a vender sea menor o igual a la existencia
-		})
+		descuento(tablaVenta);
+        })
 	.fail(function() {
 		console.log("error");
 	})

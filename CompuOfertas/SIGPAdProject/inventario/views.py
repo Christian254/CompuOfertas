@@ -341,8 +341,8 @@ def registrarVenta(request):
 				detalle_venta.venta = venta
 				detalle_venta.cantidad = int(cantidad)
 				detalle_venta.precio_unitario = p.inventario.precio_venta_producto
-				detalle_venta.descuento = 0	
-				detalle_venta.total = round(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)			
+				detalle_venta.descuento = Decimal(request.POST.get('descuento-{}'.format(x),None))*100
+				detalle_venta.total = round (Decimal(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario) -(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario)*Decimal(detalle_venta.descuento/100))),2)			
 				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.total),2)
 				detalle_venta.save()
 				productos_anadidos_kardex = nuevoKardex(2,p.id,detalle_venta.cantidad,0)
