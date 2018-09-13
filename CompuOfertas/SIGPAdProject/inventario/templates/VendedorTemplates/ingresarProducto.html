@@ -76,7 +76,9 @@
                                     <td>{{categoria.nombre}}</td>
                                     <td>{{categoria.descripcion}}</td>
                                     <td> <a href="{% url 'inventario:registrarProducto' categoria.id %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> /
-                                        <a href="{% url 'inventario:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                                        <a href="{% url 'inventario:mostrarProducto' categoria.id %}"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>/
+                                        <a href="{% url 'inventario:productoEliminado' categoria.id %}"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a>
+                                    </td>
                                     </td>
                                 </tr>
                                 {% endfor %}
