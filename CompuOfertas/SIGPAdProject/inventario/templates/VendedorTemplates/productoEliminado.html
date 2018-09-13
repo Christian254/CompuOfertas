@@ -76,16 +76,14 @@
                             <tbody>
                                 {% for producto in productos %}
                                 <tr>
-                                    {% if producto.estado %}
+                                    
                                     <td>{{producto.codigo}}</td>
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:editarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                    /
-                                     <a href="{% url 'inventario:eliminarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+                                    <td><a href="{% url 'inventario:activarProducto' producto.id %}" class="btn btn-success">Reactivar Producto</a> 
                                     </td>
-                                    {% endif %}
+                                    
                                 </tr>
                                 {% endfor %}
                             </tbody>
