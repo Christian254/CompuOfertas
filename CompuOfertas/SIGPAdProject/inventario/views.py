@@ -679,8 +679,7 @@ def mostrarKardex(request, pk):
 			'fecha':fech,
 		}
 		return render(request,'VendedorTemplates/kardex.html',context)
-	except Exception as e:
-		print(e.message)
-		context={}
+	except Producto.DoesNotExist:
+		context={'error':'producto no existe'}
 		return render(request,'VendedorTemplates/kardex.html',context)
 

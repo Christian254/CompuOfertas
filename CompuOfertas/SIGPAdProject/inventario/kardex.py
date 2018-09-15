@@ -13,9 +13,10 @@ def nuevoKardex(opcion,producto_id ,cantidad, precio):
 	try:
 		op = int(opcion)
 		producto = Producto.objects.get(pk=int(producto_id))
-		print("opcion= "+str(op)+"id producto"+str(producto_id))
 		kards = Kardex.objects.filter(producto=producto)
-		k = len(kards)
+		k = 0
+		for x in kards:
+			k = x.id
 		kardex = Kardex()
 		kardex.fecha = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 		retornar = False
@@ -42,7 +43,7 @@ def nuevoKardex(opcion,producto_id ,cantidad, precio):
 			print("se anadio exitosamente el producto")
 			retornar = True
 		elif op == 2:
-			if k >0 :
+			if k > 0:
 				ultimo = Kardex.objects.get(pk=k)
 				if cantidad <= ultimo.cantExistencia:
 					kardex.cantEntrada = 0

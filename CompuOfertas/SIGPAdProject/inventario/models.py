@@ -87,7 +87,9 @@ class DetalleCompra(models.Model):
     precio_total = models.DecimalField(max_digits=6,decimal_places=2)
     def save(self, *args, **kwargs):
         kards = Kardex.objects.filter(producto=self.producto)
-        k = len(kards)
+        k = 0
+        for x in kards:
+            k=x.id
         kardex = Kardex()
         kardex.fecha = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         kardex.cantEntrada = self.cantidad
