@@ -651,16 +651,15 @@ def mostrarKardex(request, pk):
 		consulta = request.GET.get('consulta')
 		producto = Producto.objects.get(pk=pk)
 		kardex_producto = Kardex.objects.filter(producto=producto)
+		ultimo = kardex_producto.last()
 		fech = datetime.now()
 		anio = fech.year
 		if consulta:
 			kardex_producto = kardex_producto.filter(
 				Q(fecha__icontains = consulta)).distinct()
 		else:
-			print("anio actual = "+ str(anio))
 			kardex_producto = kardex_producto.filter(
 				Q(fecha__icontains = anio)).distinct()
-
 		paginator = Paginator(kardex_producto, 7)
 		parametros = request.GET.copy()
 		if parametros.has_key('page'):
@@ -673,10 +672,12 @@ def mostrarKardex(request, pk):
 			kardex_producto = paginator.page(1)
 		except EmptyPage:
 			producto = paginator.page(paginator.num_pages)
+
 		context = {
 			'producto':producto,
 			'kardex':kardex_producto,
 			'fecha':fech,
+			'ultimo':ultimo,
 		}
 		return render(request,'VendedorTemplates/kardex.html',context)
 	except Producto.DoesNotExist:

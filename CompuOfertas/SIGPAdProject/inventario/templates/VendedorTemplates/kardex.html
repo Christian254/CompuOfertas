@@ -45,12 +45,14 @@
         <div class="col-xs-11 archivo">
             <section class="panel default blue_title h2 text-center">
                 <div class="panel-heading">Kardex de: <span class="semi-bold"> {{producto.nombre}} </span> en año {{fecha.year}} </div>
+                <div class="panel-heading">{{ultimo.fecha}} <span class="semi-bold"> Existencia {{ultimo.cantExistencia}} </span> precio de compra actual: {{ultimo.precExistencia}} </div>
             </section>
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="">
                             <input type="text" id="accion" name="accion" value="buscar" hidden="">
+                            <label>bucar fecha: YYYY-DD-MM </label>
                             <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
                             <input type="submit" value="Buscar" class="btn btn-success">
                         </form>
