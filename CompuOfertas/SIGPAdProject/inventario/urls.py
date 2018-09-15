@@ -30,4 +30,5 @@ urlpatterns = [
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
+	url(r'^mostrarKardex/(?P<pk>\d+)$', login_required(mostrarKardex), name="mostrarKardex"),
 ]

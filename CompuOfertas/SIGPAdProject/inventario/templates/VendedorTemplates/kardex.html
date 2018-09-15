@@ -33,8 +33,6 @@
         margin-left:60px;
         margin-top: 40px;
     }
-
-
 </style>
 
 <div class="row">
@@ -44,11 +42,10 @@
         {% elif exito %}
             <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
-        <div class="col-xs-8 archivo">
+        <div class="col-xs-11 archivo">
             <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading"><span class="semi-bold"> Inventario </span> </div>
+                <div class="panel-heading">Kardex de: <span class="semi-bold"> {{producto.nombre}} </span> en año {{fecha.year}} </div>
             </section>
-
             <div class="row">
                 <div class="col-12">
                     <nav class="navbar text-right">
@@ -64,25 +61,45 @@
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>marca</th>
-                                    <th>existencia</th>
-                                    <th>precio</th>
+                                    <th>fecha</th>
+                                    <th>Cantidad Entrada</th>
+                                    <th>Precio Entrada</th>
+                                    <th>Monto entrada</th>
+                                    <th>Cantidad Salida</th>
+                                    <th>Precio Salida</th>
+                                    <th>Monto Salida</th>
+                                    <th>Cantidad Existencia</th>
+                                    <th>Precio Existencia</th>
+                                    <th>Monto Exitencia</th>       
                                     <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                    {% for p in producto %}
+                                    {% for k in kardex %}
                                         <tr>
-                                            <td>{{p.codigo}}</td>
-                                            <td>{{p.nombre}}</td>
-                                            <td>{{p.descripcion}}</td>
-                                            <td>{{p.marca}}</td>
-                                            <td> {{p.inventario.existencia}}</td>
-                                            <td> {{p.inventario.precio_venta_producto}} </td>
-                                            <td align="center"> <a href="mostrarKardex/{{p.id}}"><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
+                                            <td>{{k.fecha}}</td>
+                                            {% if k.cantEntrada == 0 %}
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            {% else %}
+                                                <td>{{k.cantEntrada}}</td>
+                                                <td>{{k.precEntrada}}</td>
+                                                <td>{{k.montoEntrada}}</td>
+                                            {% endif %}
+                                            {% if k.cantSalida == 0 %}
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            {% else %}
+                                                <td>{{k.cantSalida}}</td>
+                                                <td>{{k.precSalida}}</td>
+                                                <td>{{k.montoSalida}}</td>
+                                            {% endif %}
+                                            <td>{{k.cantExistencia}}</td>
+                                            <td>{{k.precExistencia}}</td>
+                                            <td>{{k.montoExistencia}}</td>
+                                            <td align="center"> <a href=""><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -95,17 +112,17 @@
                 <div class="col">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            {% if producto.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ producto.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+                            {% if kardex.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ kardex.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
                             {%else%}
                             <li class="disabled"><span>Anterior</span></li>
-                            {% endif %} {% for i in producto.paginator.page_range %} {% if producto.number == i %}
+                            {% endif %} {% for i in kardex.paginator.page_range %} {% if kardex.number == i %}
                             <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
                             </li>
                             {% else %}
                             <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
-                            {% endif %} {% endfor %} {% if producto.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ producto.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+                            {% endif %} {% endfor %} {% if kardex.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ kardex.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
                             {%else%}
                             <li class="disabled"><span>Siguiente</li>
                                         {% endif %}
