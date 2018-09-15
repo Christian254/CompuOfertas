@@ -9,7 +9,9 @@ function agregarProducto(tabla,tablaVenta){
         tablaVenta.row.add(
         	[productoDatos[0], 
         	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="0" type="number" step="1" style="width:75px;" min="0" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true">`,'<a class="quitar"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a>']).draw();			
-		});          
+		$('#productosCantidad').val(tablaVenta.rows().count());
+        });
+
 }
 
 function quitarProducto(tablaVenta,tabla){
@@ -22,7 +24,8 @@ function quitarProducto(tablaVenta,tabla){
         	[productoDatos[0], 
         	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],'<a class="agregar"><span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span></a>']).draw();			
 		deshabilitarVenta();
-		});
+		$('#productosCantidad').val(tablaVenta.rows().count());
+        });
 	
 }
 function validarCantidad(tablaVenta){

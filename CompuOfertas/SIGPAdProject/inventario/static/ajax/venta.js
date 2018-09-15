@@ -9,8 +9,7 @@ $(document).ready(function() {
 		/*Iterando el JSON y agregando la fila a la tabla*/
         $('form').append(`<input name="cantidad" type="text" value="${resp.length}" hidden>`)        
 		for(let i=0;i<resp.length;i++){
-			var elemento = resp[i].fields;
-            console.log(elemento.inventario);            
+			var elemento = resp[i].fields;                       
 			var producto = `<tr">`
             producto += `<td><input type="text" name="codigo-${i+1}" value="${elemento.codigo}" hidden>${elemento.codigo}</td>`			
 			producto +=	`<td>${elemento.nombre}</td>`
@@ -64,6 +63,7 @@ $(document).ready(function() {
         			}
     			},    
 		});
+        $('#productosCantidad').val(tablaVenta.rows().count());
 		agregarProducto(tabla,tablaVenta); //Funcion Para agregar producto a la tablaVenta
 		quitarProducto(tablaVenta,tabla); //Funcion Para quitar el producto de la tablaVenta
 		validarCantidad(tablaVenta); //Funcion para validar que la cantidad a vender sea menor o igual a la existencia

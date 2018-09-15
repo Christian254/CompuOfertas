@@ -404,7 +404,11 @@ def activarProducto(request, pk):
 @permission_required('SIGPAd.view_seller')
 def registrarVenta(request):
 	if request.method == 'POST':
+		productos_cantidad = int(request.POST.get('productosCantidad'))
 		elementos = int(request.POST.get('cantidad'))
+		if(productos_cantidad <= 0):
+			return redirect('/registrarVenta')			
+			return render(request, 'VendedorTemplates/ingresarVenta.html',{'alerta':'Seleccione un producto para realizar una venta'})
 		venta = Venta()
 		venta.empleado = Empleado.objects.get(usuario=request.user)
 		venta.iva_venta = 0	

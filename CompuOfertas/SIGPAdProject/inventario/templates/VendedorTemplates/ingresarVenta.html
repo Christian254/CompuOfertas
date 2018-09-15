@@ -20,6 +20,9 @@ table tr {
 </style>
  {% endblock CSS %} 
 {% block Body %}
+{% if alerta %}
+   <div class="alert alert-warning text-center"><strong>{{alerta}}</strong></div>  
+{% endif %}
 {% if venta %}
 <div class="alert alert-success">{{venta}}</div>   
 
@@ -76,12 +79,13 @@ table tr {
 		</select>
 		<br>
 		<br>
-		<div class="form-group">
+		<a data-toggle="collapse" class="btn btn-info" data-target="#demo"><span class="glyphicon glyphicon-align-justify text-info" aria-hidden="true"></span>Descripción</a>
+		<div class="form-group collapse" id="demo">
   			<label for="descripcion">Descripción</label>
   			<textarea class="form-control" rows="4"  id="descripcion"></textarea>
 		</div>
-		<br>
-		<br>
+		<br>		
+		<input type="number" name="productosCantidad" id="productosCantidad" hidden>
 		<input type="submit" id="botonVender" class="btn btn-success" value="Vender">
 		</form> 
 		</div>		
