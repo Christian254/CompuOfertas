@@ -74,18 +74,22 @@ table tr {
 			<tbody id='productoVenta'>												
 			</tbody>
 		</table>
+		<a data-toggle="collapse" class="btn btn-info" data-target="#usuario"><span class="glyphicon glyphicon-user text-info" aria-hidden="true"></span>Usuario Registrado</a>
+		<div class="form-group collapse" id="usuario">
 		<select name="select-js" id="select-js" data-placeholder="Seleccione el Cliente"> 
 			<option></option>		
 		</select>
+		</div>
 		<br>
 		<br>
-		<a data-toggle="collapse" class="btn btn-info" data-target="#demo"><span class="glyphicon glyphicon-align-justify text-info" aria-hidden="true"></span>Descripción</a>
-		<div class="form-group collapse" id="demo">
+		<a data-toggle="collapse" class="btn btn-info" data-target="#desc"><span class="glyphicon glyphicon-align-justify text-info" aria-hidden="true"></span>Descripción</a>
+		<div class="form-group collapse" id="desc">
   			<label for="descripcion">Descripción</label>
-  			<textarea class="form-control" rows="4"  id="descripcion"></textarea>
+  			<textarea name="descripcionVenta" class="form-control" rows="4"  id="descripcion"></textarea>
 		</div>
 		<br>		
 		<input type="number" name="productosCantidad" id="productosCantidad" hidden>
+		<br>
 		<input type="submit" id="botonVender" class="btn btn-success" value="Vender">
 		</form> 
 		</div>		

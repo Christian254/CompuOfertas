@@ -8,15 +8,10 @@ function agregarProducto(tabla,tablaVenta){
         console.log(dato);
         tablaVenta.row.add(
         	[productoDatos[0], 
-<<<<<<< HEAD
-        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="0" type="number" step="1" style="width:75px;" min="0" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true">`,'<a class="quitar"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a>']).draw();			
+        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="1" type="number" step="1" style="width:75px;" min="0" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true">`,'<a class="quitar"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a>']).draw();			
 		$('#productosCantidad').val(tablaVenta.rows().count());
-        });
+        });                 
 
-=======
-        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="1" type="number" step="1" style="width:75px;" min="1" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true">`,'<a class="quitar"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a>']).draw();			
-		});          
->>>>>>> e43cb56676780c0ff34dd89c13ca08363c8dd0a6
 }
 
 function quitarProducto(tablaVenta,tabla){

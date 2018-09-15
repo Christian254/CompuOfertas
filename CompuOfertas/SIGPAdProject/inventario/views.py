@@ -402,13 +402,12 @@ def registrarVenta(request):
 	if request.method == 'POST':
 		productos_cantidad = int(request.POST.get('productosCantidad'))
 		elementos = int(request.POST.get('cantidad'))
-		if(productos_cantidad <= 0):
-			return redirect('/registrarVenta')			
+		if(productos_cantidad <= 0):						
 			return render(request, 'VendedorTemplates/ingresarVenta.html',{'alerta':'Seleccione un producto para realizar una venta'})
 		venta = Venta()
 		venta.empleado = Empleado.objects.get(usuario=request.user)
 		venta.iva_venta = 0	
-		venta.descripcion = 'No se que va aqui xd'
+		venta.descripcion = request.POST.get('descripcionVenta')
 		venta.total_venta =  0
 		venta.save()		
 		for x in range(1,elementos+1):
@@ -440,7 +439,7 @@ def registrarVenta(request):
 		venta.save()
 		detalles = DetalleVenta.objects.filter(venta=venta)
 		detalle_ingreso = productos_anadidos_kardex
-		return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':detalles, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'detalle_ingreso':detalle_ingreso, 'venta_id':venta.id})	
+		return redirect('/facturaVenta/{}'.format(venta.id))	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
 
 @permission_required('SIGPAd.view_seller')
