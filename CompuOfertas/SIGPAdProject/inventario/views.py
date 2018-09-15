@@ -24,6 +24,7 @@ from django.views.generic.edit import UpdateView, CreateView
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+from .kardex import nuevoKardex
 
 
 # Create your views here.
@@ -33,16 +34,11 @@ import smtplib
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
 	user = request.user
-	error=''
-	if request.method=='POST':
-		error=enviarCorreo()
-		print(error)
-	
 	if user.is_authenticated():
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{'error':error})			
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -67,9 +63,9 @@ def registrarCategoria(request):
 				except Exception as e:
 					print(e.message)
 					if 'column nombre is not unique' in e.message:
-						error='Lo el nombre se repite, intente nuevamente'
+						error='El nombre se repite, intente nuevamente'
 					if 'column codigo is not unique' in e.message:
-						error='El codigo que esta insertando ya esta ocupado'
+						error='El código que esta insertando ya esta ocupado'
 	categorias = Categoria.objects.all()
 	consulta = request.GET.get('consulta')
 	if consulta:
@@ -200,6 +196,7 @@ def mostrarProducto(request,pk):
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
+		productos=categorias
 	paginator = Paginator(productos, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
@@ -222,6 +219,185 @@ def mostrarProducto(request,pk):
 	return render(request, 'VendedorTemplates/mostrarProducto.html', context)
 
 @permission_required('SIGPAd.view_seller')
+def editarProducto(request, pk):
+	exito = None
+	existe = None
+	error = None
+	try:
+		producto = Producto.objects.get(pk=pk)
+	except Producto.DoesNotExist:
+		producto = None
+
+	if producto is not None:
+		if request.method == 'POST':
+			try:
+				producto.nombre = request.POST.get('nombre',None)
+				producto.marca = request.POST.get('marca',None)
+				producto.descripcion = request.POST.get('descripcion',None)
+				producto.save()
+				exito='Producto guardado con exito'
+			except Exception as e:
+				print(e.message)
+				if 'column codigo is not unique' in e.message:
+					error = 'Codigo de producto no es unico'
+				if 'column nombre is not unique' in e.message:
+					error='El nombre del producto debe ser unico'
+		else:
+			context = {
+				'producto':producto,
+				'exito':exito,
+				'error':error
+			}
+		
+		context = {
+				'producto':producto,
+				'exito':exito,
+				'error':error
+
+			}
+		return render(request,"VendedorTemplates/editarProducto.html", context) 
+
+	else:
+		existe = "El producto no existe"
+		context = {
+			'producto':producto,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarProducto.html", context)
+
+@permission_required('SIGPAd.view_seller')
+def productoEliminado(request,pk):
+	error = ''
+	exito = ''
+	productos = Producto.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = productos.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		productos=categorias
+	paginator = Paginator(productos, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		producto = paginator.page(page)
+	except PageNotAnInteger:
+		producto = paginator.page(1)
+	except EmptyPage:
+		producto = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'productos':producto,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/productoEliminado.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def eliminarProducto(request, pk):
+	error=None
+	exito=None
+	try:
+		producto=Producto.objects.get(pk=pk)
+	except Producto.DoesNotExist:
+		producto = None
+	if producto is not None:
+		producto.estado=0
+		producto.save()
+		exito='Producto eliminado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Producto no eliminado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	productos = Producto.objects.filter(estado=1)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = productos.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		productos=categorias
+	paginator = Paginator(productos, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		producto = paginator.page(page)
+	except PageNotAnInteger:
+		producto = paginator.page(1)
+	except EmptyPage:
+		producto = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'productos':producto,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/mostrarProducto.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def activarProducto(request, pk):
+	error=None
+	exito=None
+	try:
+		producto=Producto.objects.get(pk=pk)
+	except Producto.DoesNotExist:
+		producto = None
+	if producto is not None:
+		producto.estado=1
+		producto.save()
+		exito='Producto activado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Producto no activado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	productos = Producto.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = productos.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		productos=categorias
+	paginator = Paginator(productos, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		producto = paginator.page(page)
+	except PageNotAnInteger:
+		producto = paginator.page(1)
+	except EmptyPage:
+		producto = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'productos':producto,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/productoEliminado.html',context)
+
+@permission_required('SIGPAd.view_seller')
 def registrarVenta(request):
 	if request.method == 'POST':
 		elementos = int(request.POST.get('cantidad'))
@@ -232,7 +408,8 @@ def registrarVenta(request):
 		venta.total_venta =  0
 		venta.save()		
 		for x in range(1,elementos+1):
-			codigo = request.POST.get('codigo-{}'.format(x),None)				
+			codigo = request.POST.get('codigo-{}'.format(x),None)
+			productos_anadidos_kardex = False
 			if codigo!=None:
 				cantidad = request.POST.get('cantidad-{}'.format(x),None)
 				p = Producto.objects.get(codigo=codigo)
@@ -242,13 +419,36 @@ def registrarVenta(request):
 				detalle_venta.venta = venta
 				detalle_venta.cantidad = int(cantidad)
 				detalle_venta.precio_unitario = p.inventario.precio_venta_producto
-				detalle_venta.descuento = 0				
-				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)
+				detalle_venta.descuento = Decimal(request.POST.get('descuento-{}'.format(x),None))*100
+				detalle_venta.total = round (Decimal(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario) -(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario)*Decimal(detalle_venta.descuento/100))),2)			
+				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.total),2)
 				detalle_venta.save()
+				id_prod = p.id
+				productos_anadidos_kardex = nuevoKardex(2,id_prod,detalle_venta.cantidad,0)
 				p.inventario.save()	
+		cliente_usuario = request.POST.get('select-js',None)
+		if(cliente_usuario):
+			cliente = Cliente.objects.get(usuario__username=cliente_usuario)
+			venta.cliente = cliente
+			venta.nombre_cliente = cliente.nombre
+			venta.dui_cliente = cliente.dui
+			venta.save()
 		venta.save()
-		return render(request,'VendedorTemplates/ingresarVenta.html',{})	
+		detalles = DetalleVenta.objects.filter(venta=venta)
+		detalle_ingreso = productos_anadidos_kardex
+		return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':detalles, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'detalle_ingreso':detalle_ingreso, 'venta_id':venta.id})	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
+
+@permission_required('SIGPAd.view_seller')
+def mostrarVenta(request):
+	ventas = Venta.objects.all()
+	return render(request, 'VendedorTemplates/mostrarVenta.html',{'ventas':ventas})
+
+@permission_required('SIGPAd.view_seller')
+def facturaVenta(request,id):
+	venta = Venta.objects.get(id=id)
+	factura = DetalleVenta.objects.filter(venta=venta)
+	return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':factura, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'venta_id':venta.id})
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
@@ -423,7 +623,7 @@ def mostrarInventario(request):
 	except EmptyPage:
 		producto = paginator.page(paginator.num_pages)
 
-	context={'inventario':inventario,'producto':producto}
+	context={'producto':producto}
 	return render(request,'VendedorTemplates/inventario.html',context)
 
 
@@ -446,6 +646,41 @@ def enviarCorreo():
 	except Exception as e:
 		return "Error, mensaje fallido al administrador, para anunciar el inventario {}".format(e.message)
 
+def mostrarKardex(request, pk):
+	try:
+		consulta = request.GET.get('consulta')
+		producto = Producto.objects.get(pk=pk)
+		kardex_producto = Kardex.objects.filter(producto=producto)
+		fech = datetime.now()
+		anio = fech.year
+		if consulta:
+			kardex_producto = kardex_producto.filter(
+				Q(fecha__icontains = consulta)).distinct()
+		else:
+			print("anio actual = "+ str(anio))
+			kardex_producto = kardex_producto.filter(
+				Q(fecha__icontains = anio)).distinct()
 
-
+		paginator = Paginator(kardex_producto, 7)
+		parametros = request.GET.copy()
+		if parametros.has_key('page'):
+			del parametros['page']
+		
+		page = request.GET.get('page')
+		try:
+			kardex_producto = paginator.page(page)
+		except PageNotAnInteger:
+			kardex_producto = paginator.page(1)
+		except EmptyPage:
+			producto = paginator.page(paginator.num_pages)
+		context = {
+			'producto':producto,
+			'kardex':kardex_producto,
+			'fecha':fech,
+		}
+		return render(request,'VendedorTemplates/kardex.html',context)
+	except Exception as e:
+		print(e.message)
+		context={}
+		return render(request,'VendedorTemplates/kardex.html',context)
 

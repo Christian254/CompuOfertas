@@ -1,0 +1,66 @@
+{% extends "baseUser.html" %} {% load staticfiles %}
+{% block Script %}
+  <script type="text/javascript" src="{% static 'ajax/jquery.PrintArea.js' %}"></script>
+  <script type="text/javascript">
+  	$(document).ready(function($) {
+  		$('#imprimir').printArea();
+  		$('#nuevaVenta').click(function(event) {
+  			window.location.href = "/registrarVenta";
+  		});
+  		$('#imprimirVenta').click(function(event) {
+  			$('#imprimir').printArea();
+  		});
+  	});
+  </script>
+{% endblock Script %} 
+{% block Body %}
+<div class="alert alert-success">
+	Se realizó la venta con exito
+	{% if detalle_ingreso %}
+		Productos anadidos con exito
+	{% endif %}
+</div>
+	<div id="imprimir" class="container">
+		<div class="row">
+			<div class="col">
+				<p><strong>Empleado:</strong> {{empleado.apellido}}, {{empleado.nombre}}</p>
+				{% if cliente %}
+				    <p><strong>Cliente:</strong> {{cliente.apellido}}, {{cliente.nombre}}</p>		
+				{% endif %}
+				<p><strong>Código de venta:</strong> {{venta_id}}</p>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th style="width:50px;">Código</th>
+							<th>Nombre</th>
+							<th>Marca</th>
+							<th style="width:75px;">Precio</th>
+							<th style="width:75px;">Cantidad</th>
+							<th style="width:75px;">Descuento %</th>
+							<th style="width:75px;">Total</th>							
+						</tr>
+					</thead>
+					<tbody>
+					{% for d in vendido  %}
+					<tr>
+						<td>{{d.producto.codigo}}</td>
+						<td>{{d.producto.nombre}}</td>
+						<td>{{d.producto.marca}}</td>
+						<td>{{d.precio_unitario}}</td>	
+						<td>{{d.cantidad}}</td>
+						<td>{{d.descuento}}%</td>
+						<td>{{d.total}}</td>											
+					</tr>																		
+					{% endfor %}
+					<tr>
+						<td colspan="6">Total a Pagar</td>
+						<td>{{total}}</td>
+					</tr>												
+					</tbody>
+				</table>
+			</div>
+		</div>		
+	</div>
+	<input id="nuevaVenta" type="button" class="btn btn-primary" value="Nueva Venta">
+	<input id="imprimirVenta" type="button" class="btn btn-primary" value="Imprimir Factura">
+{% endblock Body %}

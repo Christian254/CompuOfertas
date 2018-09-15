@@ -8,13 +8,6 @@
 {%elif user.is_authenticated%}
 	<br />
     <main class="servicios p-y-1">
-        <form action="" method="POST">
-            {% csrf_token %}
-            {% if error %}
-                <h1> {{error}} </h1>
-            {% endif %}
-            <input type="submit" name="enviar" value="enviar correo de prueba a christian :v">
-        </form>
         <div class="container">
             <div class="row">
                 <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
@@ -72,6 +65,15 @@
                     <a href="/"><img src="{% static 'images/cliente.png' %}" width="150px" height="150px"></a>
                     <h3><a href="/">Clientes</a></h3>
                     <p class="hidden-sm-down">Puedes gestionar a tus clientes</p>
+                </article>
+            </div>
+            <div class="row">
+                <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
+                    <a href="/mostrarVenta"><img src="{% static 'images/misventas.png' %}" width="150px" height="150px"></a>
+                    <h3><a href="/mostrarVenta" class="btn btn-secondary"> <STRONG>Mostrar Ventas</STRONG> </a></h3>
+                    <p class="hidden-sm-down">Aquí podrás ver todas las ventas que se han
+                    realizado.
+                    </p>
                 </article>
             </div>
         </div>

@@ -13,7 +13,15 @@ urlpatterns = [
 	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
 	url(r'registrarProducto/(?P<pk>\d+)/$', login_required(registrarProducto), name="registrarProducto"),
 	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),
+	url(r'editarProducto/(?P<pk>\d+)$', login_required(editarProducto), name="editarProducto"),
+	url(r'eliminarProducto/(?P<pk>\d+)$', login_required(eliminarProducto), name="eliminarProducto"),
+	url(r'productoEliminado/(?P<pk>\d+)$', login_required(productoEliminado), name="productoEliminado"),
+	url(r'activarProducto/(?P<pk>\d+)$', login_required(activarProducto), name="activarProducto"),
+	#Venta
 	url(r'registrarVenta/$', login_required(registrarVenta), name="registrarVenta"),
+	url(r'mostrarVenta/$', login_required(mostrarVenta), name="mostrarVenta"),
+	url(r'^facturaVenta/(?P<id>\d+)$', login_required(facturaVenta), name="FacturaVenta"),
+	#Servicios
 	url(r'productoDisponible/$', login_required(productoDisponible), name="productoDisponible"),
 	url(r'clienteRegistrado/$', login_required(clienteRegistrado), name="clienteRegistrado"),
 	url(r'subirExcel/$', login_required(subirExcel), name="subirExcel"),
@@ -22,4 +30,5 @@ urlpatterns = [
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
+	url(r'^mostrarKardex/(?P<pk>\d+)$', login_required(mostrarKardex), name="mostrarKardex"),
 ]

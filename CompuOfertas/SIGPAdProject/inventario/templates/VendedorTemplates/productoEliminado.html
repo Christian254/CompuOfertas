@@ -8,62 +8,48 @@
 {%elif user.is_authenticated%}
 
 
-<div class="row">
-    <div class="col-xs-8">
-        <section class="panel default blue_title h2 text-center">
-            <div class="panel-heading">Categoria:  <span class="semi-bold">{{categoria}} </span> </div>
-        </section>
 
+<style type="text/css">
+    details {
+        padding: 15px;
+        background-color: #f6f7f8;
+        margin-bottom: 20px;
+    }
+    summary {
+        cursor: pointer;
+    }
+    summary::-webkit-details-marker {
+        display: none;
+    }
+    summary:before {
+        content: "\2714"; 
+        color: #696f7c;
+        margin-right: 5px;
+    }
+    .archivo{
+        padding:20px;
+        margin-left:60px;
+        margin-top: 40px;
+    }
+    .descarga{
+        padding:5px;
+        margin-left:60px;
+        margin-top: 40px;
+    }
+
+
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
         {% if error %}
             <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
         {% elif exito %}
             <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
-
-        <div class="col-md-12">
-            <div class="block-web">
-                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Código</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese el codigo" id="codigo" name="codigo" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="codigo del producto">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Nombre</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese el nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="nombre del producto">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Marca</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese la marca" id="marca" name="marca" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="marca del producto">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Descripción</label>
-                        <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese la descripcion" id="descripcion" name="descripcion" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="descripcion del producto">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="center">
-                            <input type="submit" class="btn btn-success" value="Aceptar">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12">
         <div class="col-xs-8 archivo">
             <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading">Seleccione su <span class="semi-bold">producto</span> </div>
+                <div class="panel-heading">Seleccione su producto<span class="semi-bold"> {{producto.nombre}} </span> </div>
             </section>
 
             <div class="row">
@@ -80,26 +66,24 @@
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Codigo</th>
+                                    <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>marca</th>
+                                    <th>Descripción</th>
+                                    <th>Marca</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for producto in productos %}
                                 <tr>
-                                    {% if producto.estado %}
+                                    
                                     <td>{{producto.codigo}}</td>
                                     <td>{{producto.nombre}}</td>
                                     <td>{{producto.descripcion}}</td>
                                     <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:editarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                    /
-                                     <a href="{% url 'inventario:eliminarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+                                    <td><a href="{% url 'inventario:activarProducto' producto.id %}" class="btn btn-success">Reactivar Producto</a> 
                                     </td>
-                                    {% endif %}
+                                    
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -133,7 +117,6 @@
         </div>
     </div>
 </div> 
-
 
 
 {%else%}

@@ -5,3 +5,12 @@ from django.contrib import admin
 from models import *
 
 # Register your models here.
+class KardexAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Kardex, KardexAdmin)
+
+
+class ProveedorAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Proveedor, ProveedorAdmin)
+

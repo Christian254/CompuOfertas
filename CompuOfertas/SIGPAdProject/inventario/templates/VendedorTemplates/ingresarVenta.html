@@ -1,13 +1,29 @@
 {% extends "baseUser.html" %} {% load staticfiles %} 
 {% block Script %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script> <!--ultima version de DataTables -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script type="text/javascript" src="{% static 'ajax/funciones.js' %}"></script>
 <script type="text/javascript" src="{% static 'ajax/venta.js' %}"></script>
 <script type="text/javascript" src="{% static 'ajax/cliente.js' %}"></script>
-{% endblock Script %} {% block Body %}
+{% endblock Script %}
+{% block CSS %}
+<style>
+table th {
+  text-align: center;
+}
+table tr {
+  			text-align: center;
+		}
+</style>
+ {% endblock CSS %} 
+{% block Body %}
+{% if venta %}
+<div class="alert alert-success">{{venta}}</div>   
+
+{% endif %}
 <h2 class="text-center">Registrar Venta</h2>
 <br>
 <br>
@@ -15,8 +31,8 @@
 <div class="container">
     <div class="row">
         <div class="col">
-		<table class="table table-striped table-bordered" id="tablaProducto"style="width:100%">
-			<thead>
+		<table class="table table-bordered table-hover" id="tablaProducto" style="width:100%">
+			<thead class="bg-primary">
 				<tr>
 					<th style="width:50px;">Código</th>
 					<th>Nombre</th>
@@ -38,24 +54,32 @@
         <div class="col"> 
         <form method="POST">
         {% csrf_token %}      
-		<table class="table table-striped table-bordered" id="tablaVenta" style="width:100%">
-			<thead>
+		<table class="table table-bordered table-hover display nowrap" id="tablaVenta" style="width:100%">
+			<thead class="bg-primary">
 				<tr>
 					<th style="width:50px;">Código</th>
-					<th>Nombre</th>
-					<th>Marca</th>
+					<th style="width:150px;">Nombre</th>
+					<th style="width:150px;">Marca</th>
 					<th style="width:50px;">Precio</th>
 					<th style="width:75px;">Existencia</th>					
-					<th style="width:50px;">Cantidad</th>
-					<th style="width:50px;">Quitar</th>
+					<th style="width:35px;">Cantidad</th>
+					<th style="width:35px;">Descuento</th>
+					<th style="width:35px;">Total</th>
+					<th style="width:35px;">Quitar</th>
 				</tr>
 			</thead>
 			<tbody id='productoVenta'>												
 			</tbody>
 		</table>
-		<select id="select-js" data-placeholder="Seleccione el Cliente"> 
+		<select name="select-js" id="select-js" data-placeholder="Seleccione el Cliente"> 
 			<option></option>		
 		</select>
+		<br>
+		<br>
+		<div class="form-group">
+  			<label for="descripcion">Descripción</label>
+  			<textarea class="form-control" rows="4"  id="descripcion"></textarea>
+		</div>
 		<br>
 		<br>
 		<input type="submit" id="botonVender" class="btn btn-success" value="Vender">

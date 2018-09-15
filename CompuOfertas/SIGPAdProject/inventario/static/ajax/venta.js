@@ -3,6 +3,7 @@ $(document).ready(function() {
 		url: 'productoDisponible/', //Servicio con los productos con existencia > 0
 		type: 'GET',
 		dataType: 'json',
+        cache: false,
 	})
 	.done( function(resp) {
 		/*Iterando el JSON y agregando la fila a la tabla*/
@@ -16,14 +17,12 @@ $(document).ready(function() {
 			producto +=	`<td>${elemento.marca}</td>`
             producto += `<td>${elemento.inventario[1]}</td>`
 			producto +=	`<td>${elemento.inventario[0]}</td>`
-			producto +=	`<td><button name="${resp[i].pk}" class="agregar btn btn-primary">Añadir</button></td>`
+			producto +=	`<td ><a name="${resp[i].pk}" class="agregar"><span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span></a></td>`
 			producto +=	'</tr>'
 			$('#productoDisponible').append(producto)
 		}
 		var tablaVenta = $('#tablaVenta').DataTable({ //Usando el plugin DataTable
-			 "scrollY": 150,
-             "scrollX": true,
-             "scrollCollapse": true,
+			 responsive: true,             
              "paging":         false,
              lengthMenu: [[-1],["Todos"]],
     			language: {
@@ -42,6 +41,7 @@ $(document).ready(function() {
     			},                 
 		});	
 		var tabla = $('#tablaProducto').DataTable({
+            responsive: true, 
 			 lengthMenu: [[2,5,7,-1],["2","5","7","Todos"]],
     			language: {
         			"decimal": "",
@@ -67,7 +67,8 @@ $(document).ready(function() {
 		agregarProducto(tabla,tablaVenta); //Funcion Para agregar producto a la tablaVenta
 		quitarProducto(tablaVenta,tabla); //Funcion Para quitar el producto de la tablaVenta
 		validarCantidad(tablaVenta); //Funcion para validar que la cantidad a vender sea menor o igual a la existencia
-		})
+		descuento(tablaVenta);
+        })
 	.fail(function() {
 		console.log("error");
 	})
