@@ -131,12 +131,3 @@ class DetalleVenta(models.Model):
     precio_unitario = models.DecimalField(max_digits=6,decimal_places=2)
     descuento = models.DecimalField(max_digits=6,decimal_places=2)
     total = models.DecimalField(max_digits=6,decimal_places=2)
-
-
-
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 7a7427a7ae3bf39d32c29ebf2187e8f759ec231d

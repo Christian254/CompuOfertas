@@ -30,11 +30,9 @@ urlpatterns = [
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
-<<<<<<< HEAD
 
 	url(r'grafica$', login_required(grafica), name="grafica"),
 	url(r'graficaMes$', login_required(graficaMes), name="graficaMes"),
-=======
+	
 	url(r'^mostrarKardex/(?P<pk>\d+)$', login_required(mostrarKardex), name="mostrarKardex"),
->>>>>>> 7a7427a7ae3bf39d32c29ebf2187e8f759ec231d
 ]

@@ -24,11 +24,8 @@ from django.views.generic.edit import UpdateView, CreateView
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-<<<<<<< HEAD
 import json
-=======
 from .kardex import nuevoKardex
->>>>>>> 7a7427a7ae3bf39d32c29ebf2187e8f759ec231d
 
 
 # Create your views here.
@@ -679,8 +676,17 @@ def mostrarKardex(request, pk):
 			kardex_producto = paginator.page(1)
 		except EmptyPage:
 			producto = paginator.page(paginator.num_pages)
+		context = {
+			'producto':producto,
+			'kardex':kardex_producto,
+			'fecha':fech,
+			'ultimo':ultimo,
+		}
+		return render(request,'VendedorTemplates/kardex.html',context)
+	except Producto.DoesNotExist:
+		context={'error':'producto no existe'}
+		return render(request,'VendedorTemplates/kardex.html',context)
 
-<<<<<<< HEAD
 @permission_required('SIGPAd.view_seller')
 
 def grafica(request):
@@ -706,18 +712,6 @@ def graficaMes(request):
 	mes10=0
 	mes11=0
 	mes12=0
-=======
-		context = {
-			'producto':producto,
-			'kardex':kardex_producto,
-			'fecha':fech,
-			'ultimo':ultimo,
-		}
-		return render(request,'VendedorTemplates/kardex.html',context)
-	except Producto.DoesNotExist:
-		context={'error':'producto no existe'}
-		return render(request,'VendedorTemplates/kardex.html',context)
->>>>>>> 7a7427a7ae3bf39d32c29ebf2187e8f759ec231d
 
 	if request.method=='POST':
 		anioAnterior = request.POST.get('anioAnterior',None)
