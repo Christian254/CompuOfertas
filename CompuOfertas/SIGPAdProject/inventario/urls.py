@@ -28,4 +28,7 @@ urlpatterns = [
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
+
+	url(r'grafica$', login_required(grafica), name="grafica"),
+	url(r'graficaMes$', login_required(graficaMes), name="graficaMes"),
 ]

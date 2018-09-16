@@ -18,6 +18,7 @@
     <script type="text/javascript" src="{% static 'sweet/sweetalert.js' %}">
     </script>    
     <script type="text/javascript" src="{% static 'js/alertas.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 
     <!-- Archivos CSS -->
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
@@ -216,6 +217,7 @@
                 </div>
                 <div class="container clear_both padding_fix">
                     <!--\\\\\\\ container  start \\\\\\-->
+                    
                     {% block Body %} {% endblock Body %}
 
 
@@ -340,12 +342,12 @@
     <script src="{% static "js/jquery.slimscroll.min.js" %}"></script>
     <script src="{% static "js/jPushMenu.js" %}"></script>
     <script src="{% static "js/side-chats.js" %}"></script>
+    <script src="{% static "js/Chart.bundle.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery.dataTables.min.js" %}"></script>
     
 
     {% block JavaScript %} {% endblock JavaScript %}
-
 
 </body>
 
