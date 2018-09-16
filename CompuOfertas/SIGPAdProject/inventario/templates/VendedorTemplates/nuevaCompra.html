@@ -130,14 +130,14 @@
                               <div class="col-md-1">
                                           <div class="form-group">
                                                 <label for="btn_agregar"><strong>Agregar</strong></label>
-                                                <button type="button" id="btn_agregar" name="btn_agregar" class="btn btn-primary">+</button>
+                                                <button type="button" id="btn_agregar" name="btn_agregar" class="agregar btn btn-primary">+</button>
                                           </div>
                               </div>
-                                    <table id="tabla_de_detalles" class="table table-stripped table-bordered table-condensed table-hover">
+                                    <table id="tabla_de_detalles" class="table display table-stripped table-bordered table-condensed table-hover">
                                           <thead>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
-                                                <th>Precio de compra</th>;
+                                                <th>Precio de compra</th>
                                                 <th>Precio de venta</th>
                                                 <th>Subtotal</th>
                                                 <th>Eliminar</th>
@@ -184,6 +184,9 @@
       <script>
             $(document).ready(function()
             {
+                  $("#guardar").hide();
+                  $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
+                  
                   var table = $('#tabla_de_detalles').DataTable( {
                   "info": false,
                   "pagingType": "full_numbers",
@@ -199,54 +202,85 @@
                         $( table.cells().nodes() ).removeClass( 'highlight' );
                         $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
                   });
-            });
-      </script>
 
-      <!--Detalle de Compra y Compra-->
-      <script>
-                  //Variables.
-                  var cont = 0;
-                  total = 0;
-                  subtotal = [];
-                  $("#guardar").hide();
-                  $("#alerta_guardar").show();
+                  agregar(table);
 
-                  $(document).ready(function(){
-                        $('#btn_agregar').click(function(){
-                              agregar();
-                        });
-                  });
+                  $('#tabla_de_detalles').on("click", ".eliminar", function(){
+                        var $target = $(event.target);
+                        var contador = $target.data("value");
 
-                  //Funciones
-                  function agregar(){
-                        idproducto = $('#aux_producto').val();
-                        producto = $("#aux_producto option:selected").text();
-                        cantidad = $("#aux_cantidad").val();
-                        precio_compra = $("#aux_p_compra").val();
-                        precio_venta = $("#aux_p_venta").val();
-
-                        if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && precio_venta != ""){
-                              subtotal[cont] = (cantidad * precio_compra);
-                              total = total + subtotal[cont];
-
-                              var fila = '<tr class="selected" id="fila'+cont+'"><td><input type="hidden" name="idproducto[]" value="'+idproducto+'">'+producto+'</td><td><input type="number" name="cantidad[]" value="'+cantidad+'"></td><td><input type="number" step="0.01" name="precio_compra[]" value="'+precio_compra+'"></td><td><input type="number" step="0.01" name="precio_venta[]" value="'+precio_venta+'"></td><td>'+subtotal[cont]+'</td><td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+');">X</button></td></tr>';
-                              cont++;
-                              limpiar();
-                              $("#total").html(total);
-                              evaluar();
-                              $("#tabla_de_detalles").append(fila);
-                        }else{
-                              alert("Campos vacíos");
-                        }
-
-                  }
-
-                  function eliminar(contador){
                         total = total - subtotal[contador];
                         $("#total").html(total);
                         $("#fila" + contador).remove();
                         evaluar();
+
+                        console.log($(this).parent());
+                        table.row($(this).parents('tr')).remove().draw(false);
+                  });
+
+            });
+
+            //Detalle de Compra y Compra
+
+                  //Variables.
+                  var cont = 0;
+                  total = 0;
+                  subtotal = [];
+
+                  $(document).ready(function(){
+                        /*$('#btn_agregar').click(function(){
+                              agregar();
+                        });*/
+                  });
+
+                  function agregar(table){
+                        $('#btn_agregar').on( 'click', function () {
+                              idproducto = $('#aux_producto').val();
+                              producto = $("#aux_producto option:selected").text();
+                              cantidad = $("#aux_cantidad").val();
+                              precio_compra = $("#aux_p_compra").val();
+                              precio_venta = $("#aux_p_venta").val();
+
+                              if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && precio_venta != ""){
+                                    subtotal[cont] = (cantidad * precio_compra);
+                                    total = total + subtotal[cont];
+
+                                    //var fila = '<tr id="fila'+cont+'">
+                                          //<td><input type="hidden" name="idproducto[]" value="'+idproducto+'">'+producto+'</td>
+                                          //<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>
+                                          //<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>
+                                          //<td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td>
+                                          //<td>'+subtotal[cont]+'</td><td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+');">X</button></td></tr>';
+                                    //$("#tabla_de_detalles").append(fila);
+                                    table.row.add( [
+                                          `<input type="hidden" name="idproducto[]" value="${idproducto}">'${producto}`,
+                                          `<input type="hidden" name="cantidad[]" value="${cantidad}">${cantidad}`,
+                                          `<input type="hidden" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
+                                          `<input type="hidden" name="precio_venta[]" value="${precio_venta}">${precio_venta}`,
+                                          `${subtotal[cont]}`,
+                                          `<button type="button" class="eliminar btn btn-danger" id="btn_eliminar" name="btn_eliminar" data-value="${cont}">X</button>`,
+                                    ] ).draw( false );
+
+                                    cont++;
+                                    limpiar();
+                                    $("#total").html(total);
+                                    evaluar();
+                              
+                                    
+                              }else{
+                                    alert("Campos vacíos");
+                              }
+                        } );
                   }
+
+
+                  //Funciones
+                  /*function eliminar(contador){
+                        total = total - subtotal[contador];
+                        $("#total").html(total);
+                        $("#fila" + contador).remove();
+                        evaluar();
+                  }*/
 
                   function limpiar(){
                         $("#aux_cantidad").val("");
@@ -258,6 +292,8 @@
                   function evaluar(){
                         if(total>0){
                               $("#guardar").show();
+                              $("#alerta_guardar").hide();
+
                         }else{
                               $("#guardar").hide();
                               $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
