@@ -27,6 +27,7 @@
 				{% if cliente %}
 				    <p><strong>Cliente:</strong> {{cliente.apellido}}, {{cliente.nombre}}</p>		
 				{% endif %}
+				<p><strong>Código de venta:</strong> {{venta_id}}</p>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
@@ -35,6 +36,7 @@
 							<th>Marca</th>
 							<th style="width:75px;">Precio</th>
 							<th style="width:75px;">Cantidad</th>
+							<th style="width:75px;">Descuento %</th>
 							<th style="width:75px;">Total</th>							
 						</tr>
 					</thead>
@@ -46,11 +48,12 @@
 						<td>{{d.producto.marca}}</td>
 						<td>{{d.precio_unitario}}</td>	
 						<td>{{d.cantidad}}</td>
+						<td>{{d.descuento}}%</td>
 						<td>{{d.total}}</td>											
 					</tr>																		
 					{% endfor %}
 					<tr>
-						<td colspan="5">Total a Pagar</td>
+						<td colspan="6">Total a Pagar</td>
 						<td>{{total}}</td>
 					</tr>												
 					</tbody>

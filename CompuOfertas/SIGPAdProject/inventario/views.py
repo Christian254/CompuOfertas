@@ -24,7 +24,11 @@ from django.views.generic.edit import UpdateView, CreateView
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+<<<<<<< HEAD
 import json
+=======
+from .kardex import nuevoKardex
+>>>>>>> 7a7427a7ae3bf39d32c29ebf2187e8f759ec231d
 
 
 # Create your views here.
@@ -34,16 +38,11 @@ import json
 @permission_required('SIGPAd.view_seller')
 def  indexVendedor(request):
 	user = request.user
-	error=''
-	if request.method=='POST':
-		error=enviarCorreo()
-		print(error)
-	
 	if user.is_authenticated():
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			return render(request,'VendedorTemplates/vendedorIndex.html',{'error':error})			
+			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
 
@@ -405,11 +404,14 @@ def activarProducto(request, pk):
 @permission_required('SIGPAd.view_seller')
 def registrarVenta(request):
 	if request.method == 'POST':
+		productos_cantidad = int(request.POST.get('productosCantidad'))
 		elementos = int(request.POST.get('cantidad'))
+		if(productos_cantidad <= 0):						
+			return render(request, 'VendedorTemplates/ingresarVenta.html',{'alerta':'Seleccione un producto para realizar una venta'})
 		venta = Venta()
 		venta.empleado = Empleado.objects.get(usuario=request.user)
 		venta.iva_venta = 0	
-		venta.descripcion = 'No se que va aqui xd'
+		venta.descripcion = request.POST.get('descripcionVenta')
 		venta.total_venta =  0
 		venta.save()		
 		for x in range(1,elementos+1):
@@ -424,11 +426,12 @@ def registrarVenta(request):
 				detalle_venta.venta = venta
 				detalle_venta.cantidad = int(cantidad)
 				detalle_venta.precio_unitario = p.inventario.precio_venta_producto
-				detalle_venta.descuento = 0	
-				detalle_venta.total = round(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario),2)			
+				detalle_venta.descuento = Decimal(request.POST.get('descuento-{}'.format(x),None))*100
+				detalle_venta.total = round (Decimal(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario) -(Decimal(detalle_venta.cantidad*detalle_venta.precio_unitario)*Decimal(detalle_venta.descuento/100))),2)			
 				venta.total_venta =  round(Decimal(venta.total_venta) + Decimal(detalle_venta.total),2)
 				detalle_venta.save()
-				productos_anadidos_kardex = nuevoKardex(2,p.id,detalle_venta.cantidad,0)
+				id_prod = p.id
+				productos_anadidos_kardex = nuevoKardex(2,id_prod,detalle_venta.cantidad,0)
 				p.inventario.save()	
 		cliente_usuario = request.POST.get('select-js',None)
 		if(cliente_usuario):
@@ -440,8 +443,19 @@ def registrarVenta(request):
 		venta.save()
 		detalles = DetalleVenta.objects.filter(venta=venta)
 		detalle_ingreso = productos_anadidos_kardex
-		return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':detalles, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'detalle_ingreso':detalle_ingreso})	
+		return redirect('/facturaVenta/{}'.format(venta.id))	
 	return render(request, 'VendedorTemplates/ingresarVenta.html',{})
+
+@permission_required('SIGPAd.view_seller')
+def mostrarVenta(request):
+	ventas = Venta.objects.all()
+	return render(request, 'VendedorTemplates/mostrarVenta.html',{'ventas':ventas})
+
+@permission_required('SIGPAd.view_seller')
+def facturaVenta(request,id):
+	venta = Venta.objects.get(id=id)
+	factura = DetalleVenta.objects.filter(venta=venta)
+	return render(request,'VendedorTemplates/facturaVenta.html',{'vendido':factura, 'empleado':venta.empleado, 'cliente':venta.cliente, 'total':venta.total_venta,'venta_id':venta.id})
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
@@ -639,67 +653,34 @@ def enviarCorreo():
 	except Exception as e:
 		return "Error, mensaje fallido al administrador, para anunciar el inventario {}".format(e.message)
 
-
-def nuevoKardex(opcion,producto_id ,cantidad, precio):
+def mostrarKardex(request, pk):
 	try:
-		op = int(opcion)
-		kards = Kardex.objects.all()
-		k = len(kards)
-		kardex = Kardex()
-		kardex.fecha = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-		producto = Producto.objects.get(pk=int(producto_id))
-		retornar = False
-		if op == 1:
-			kardex.cantEntrada = cantidad
-			kardex.cantSalida = 0
-			kardex.cantExistencia = cantidad
-			kardex.precEntrada = precio
-			kardex.precSalida = 0
-			kardex.precExistencia = precio
-			kardex.montoEntrada = Decimal(cantidad) * Decimal(precio)
-			kardex.montoSalida=0
-			kardex.montoExistencia = Decimal(cantidad) * Decimal(precio)
-			kardex.producto=producto
-			kardex.save()
-			if k > 0:
-				ultimo = Kardex.objects.get(pk=k)
-				cant = kardex.cantExistencia + ultimo.cantExistencia
-				monto = kardex.montoExistencia + ultimo.montoExistencia
-				kardex.cantExistencia = cant
-				kardex.montoExistencia = monto
-				kardex.precExistencia = monto / cant
-				kardex.save()
-			retornar = True
-		elif op == 2:
-			if k >0 :
-				ultimo = Kardex.objects.get(pk=k)
-				if cantidad <= ultimo.cantExistencia:
-					kardex.cantEntrada = 0
-					kardex.cantSalida = cantidad
-					kardex.cantExistencia = 0
-					kardex.precEntrada = 0
-					kardex.precSalida = ultimo.precExistencia
-					kardex.precExistencia = ultimo.precExistencia
-					kardex.montoEntrada = 0
-					montoS = Decimal(cantidad) * Decimal(ultimo.precExistencia)
-					kardex.montoSalida = montoS
-					kardex.montoExistencia = 0
-					kardex.producto=producto
-					kardex.save()
-					cant = ultimo.cantExistencia - cantidad  
-					monto = ultimo.montoExistencia - montoS
-					kardex.cantExistencia = cant
-					kardex.montoExistencia = monto
-					kardex.precExistencia = monto / cant
-					kardex.save()
-					retornar = True
-				retornar = False
-			retornar = False
-		return retornar
-	except Exception as e:
-		print (e.message)
-		return False
+		consulta = request.GET.get('consulta')
+		producto = Producto.objects.get(pk=pk)
+		kardex_producto = Kardex.objects.filter(producto=producto)
+		ultimo = kardex_producto.last()
+		fech = datetime.now()
+		anio = fech.year
+		if consulta:
+			kardex_producto = kardex_producto.filter(
+				Q(fecha__icontains = consulta)).distinct()
+		else:
+			kardex_producto = kardex_producto.filter(
+				Q(fecha__icontains = anio)).distinct()
+		paginator = Paginator(kardex_producto, 7)
+		parametros = request.GET.copy()
+		if parametros.has_key('page'):
+			del parametros['page']
+		
+		page = request.GET.get('page')
+		try:
+			kardex_producto = paginator.page(page)
+		except PageNotAnInteger:
+			kardex_producto = paginator.page(1)
+		except EmptyPage:
+			producto = paginator.page(paginator.num_pages)
 
+<<<<<<< HEAD
 @permission_required('SIGPAd.view_seller')
 
 def grafica(request):
@@ -725,6 +706,18 @@ def graficaMes(request):
 	mes10=0
 	mes11=0
 	mes12=0
+=======
+		context = {
+			'producto':producto,
+			'kardex':kardex_producto,
+			'fecha':fech,
+			'ultimo':ultimo,
+		}
+		return render(request,'VendedorTemplates/kardex.html',context)
+	except Producto.DoesNotExist:
+		context={'error':'producto no existe'}
+		return render(request,'VendedorTemplates/kardex.html',context)
+>>>>>>> 7a7427a7ae3bf39d32c29ebf2187e8f759ec231d
 
 	if request.method=='POST':
 		anioAnterior = request.POST.get('anioAnterior',None)

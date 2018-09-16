@@ -22,6 +22,10 @@
             background-color: whitesmoke !important;
       }
 
+      .alerta{
+            color:rgba(217,83,79,1);            
+      }
+
 </style>
 
 {% endblock CSS %}
@@ -53,7 +57,7 @@
                                                       {% endfor %}
                                                 </select>
                                                 {% else %}
-                                                      <strong>No existen proveedores.</strong>
+                                                      <input type="text" name="idproveedor" id="idproveedor" value="Desconocido" class="form-control" required>
                                                 {% endif %}
                                           </div>
                                     </div>
@@ -76,6 +80,12 @@
                                                             <strong>Empleado no asignado.</strong>
                                                       {% endif %}
                                                 </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                          <div class="form-group">
+                                                <label for="descripcion">escripción:</label>
+                                                <input type="text" name="descripcion" id="descripcion" class="form-control">
+                                          </div>
                                     </div>                                                                          
                               </div>
 
@@ -89,18 +99,16 @@
             <div class="col-md-12">
                   <div class="block-web">
                         <div class="row">
+                        {% if productos %}
                               <div class="col-md-3">
                                     <div class="form-group">
                                           <label for="aux_producto">Producto:</label>
-                                          {% if productos %}
-                                                <select name="aux_producto" id="aux_idproducto" class="form-control selectpicker" data-live-search="true" required>
+                        
+                                                <select name="aux_producto" id="aux_producto" class="form-control selectpicker" data-live-search="true" required>
                                                 {% for producto in productos %}
-                                                      <option value="{{producto}}">{{producto}}</option>
-                                                      {% endfor %}
+                                                      <option value="{{producto.id}}">{{producto}}</option>
+                                                {% endfor %}
                                                 </select>
-                                          {% else %}
-                                                      <strong>No existen proveedores.</strong>
-                                          {% endif %}
                                     </div>
                               </div>
                               <div class="col-md-2">
@@ -112,32 +120,39 @@
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_p_compra">Precio de compra:</label>
-                                                <input type="number" min="0" name="aux_p_compra" id="aux_p_compra" class="form-control" required>
+                                                <input type="number" min="0" step="0.01" name="aux_p_compra" id="aux_p_compra" class="form-control" required>
                                           </div>
-                              </div>   
+                              </div> 
+                              <div class="col-md-2">
+                                          <div class="form-group">
+                                                <label for="aux_descuento">Descuento:</label>
+                                                <input type="number" min="0" step="0.01" name="aux_descuento" id="aux_descuento" class="form-control" required>
+                                          </div>
+                              </div>                               
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_p_venta">Precio de venta:</label>
-                                                <input type="number" min="0" name="aux_p_venta" id="aux_p_venta" class="form-control" required>
-                                          </div>
-                              </div>
-                              <div class="col-md-2">
-                                          <div class="form-group">
-                                                <label for="aux_p_total_u">Total unitario:</label>
-                                                <input type="number" min="0" name="aux_p_total_u" id="aux_p_total_u" class="form-control" disabled>
+                                                <input type="number" min="0" step="0.01" name="aux_p_venta" id="aux_p_venta" class="form-control" required>
                                           </div>
                               </div>
                               <div class="col-md-1">
                                           <div class="form-group">
                                                 <label for="btn_agregar"><strong>Agregar</strong></label>
-                                                <button type="button" id="btn_agregar" name="btn_agregar" class="btn btn-primary">+</button>
+                                                <button type="button" id="btn_agregar" name="btn_agregar" class="agregar btn btn-primary">+</button>
                                           </div>
                               </div>
-                                    <table id="tabla_de_detalles" class="table table-stripped table-bordered table-condensed table-hover">
+
+                        {% else %}
+                              <div class="alert alert-danger" role="alert">
+                                    <strong>Importante:</strong> ¡Debe agregar productos para realizar una compra!
+                              </div>
+                        {% endif %}
+                                    <table id="tabla_de_detalles" class="table display table-stripped table-bordered table-condensed table-hover">
                                           <thead>
                                                 <th>Producto</th>
                                                 <th>Cantidad</th>
-                                                <th>Precio de compra</th>;
+                                                <th>Precio de compra</th>
+                                                <th>Descuento</th>
                                                 <th>Precio de venta</th>
                                                 <th>Subtotal</th>
                                                 <th>Eliminar</th>
@@ -146,6 +161,7 @@
                                           </tbody>
                                           <tfoot>
                                                 <th>Total</th>
+                                                <th></th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -164,7 +180,9 @@
                               <button type="submit" class="btn btn-success">Guardar</button>
                               <button type="reset" class="btn btn-danger">Cancelar</button>
                         </div>
-                        <h6 id="alerta_guardar"></h6>
+            </div>
+            <div class="col-md-12">
+                  <h6 id="alerta_guardar" class="alerta"></h6>
             </div>
       </div>
 </form>
@@ -175,51 +193,132 @@
 {% endblock Body %}
 
 {% block Script %}
-    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+      <!--Static-->
+      <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 
-    <!--Tabla-->
-    <script>
-        $(document).ready(function()
-        {
-            var table = $('#tabla_de_detalles').DataTable( {
-                "info": false,
-                "pagingType": "full_numbers",
-                "language": {
-                    url: "/static/json/es_ES.json"
-                }
-            });
 
-            $('#tabla tbody')
-                .on( 'mouseenter', 'td', function () {
-                    var colIdx = table.cell(this).index().column;
- 
-                    $( table.cells().nodes() ).removeClass( 'highlight' );
-                    $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
-            });
-        });
-    </script>
 
-    <!--Detalle de Compra y Compra-->
-    <script>
-            //Variables.
-            total = 0;
-
-            //Funciones
-            function limpiar(){
-                  $("#aux_cantidad").val("");
-                  $("#aux_p_compra").val("");
-                  $("#aux_p_venta").val("");
-                  $("#aux_p_total_u").val("");
-            }
-
-            function evaluar(){
-                  if(total>0){
-                        $("#guardar").show();
-                  }else{
-                        $("#guardar").hide();
-                        $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
+      <!--Tabla-->
+      <script>
+            $(document).ready(function()
+            {
+                  $("#guardar").hide();
+                  $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
+                  
+                  var table = $('#tabla_de_detalles').DataTable( {
+                  "info": false,
+                  "pagingType": "full_numbers",
+                  "language": {
+                        url: "/static/json/es_ES.json"
                   }
-            }
+                  });
 
-    </script>
+                  $('#tabla tbody')
+                  .on( 'mouseenter', 'td', function () {
+                        var colIdx = table.cell(this).index().column;
+      
+                        $( table.cells().nodes() ).removeClass( 'highlight' );
+                        $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+                  });
+
+                  agregar(table);
+
+                  $('#tabla_de_detalles').on("click", ".eliminar", function(){
+                        var $target = $(event.target);
+                        var contador = $target.data("value");
+
+                        total = total - subtotal[contador];
+                        $("#total").html(total);
+                        $("#fila" + contador).remove();
+                        evaluar();
+
+                        console.log($(this).parent());
+                        table.row($(this).parents('tr')).remove().draw(false);
+                  });
+
+            });
+
+            //Detalle de Compra y Compra
+
+                  //Variables.
+                  var cont = 0;
+                  total = 0;
+                  subtotal = [];
+
+                  $(document).ready(function(){
+                        /*$('#btn_agregar').click(function(){
+                              agregar();
+                        });*/
+                  });
+
+                  function agregar(table){
+                        $('#btn_agregar').on( 'click', function () {
+                              idproducto = $('#aux_producto').val();
+                              producto = $("#aux_producto option:selected").text();
+                              cantidad = $("#aux_cantidad").val();
+                              precio_compra = $("#aux_p_compra").val();
+                              precio_venta = $("#aux_p_venta").val();
+                              descuento = $("#aux_descuento").val();
+
+                              if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && descuento != "" && precio_venta != ""){
+                                    subtotal[cont] = (cantidad * precio_compra ) - (cantidad * precio_compra * descuento);
+                                    total = total + subtotal[cont];
+
+                                    //var fila = '<tr id="fila'+cont+'">
+                                          //<td><input type="hidden" name="idproducto[]" value="'+idproducto+'">'+producto+'</td>
+                                          //<td><input type="hidden" name="cantidad[]" value="'+cantidad+'">'+cantidad+'</td>
+                                          //<td><input type="hidden" name="precio_compra[]" value="'+precio_compra+'">'+precio_compra+'</td>
+                                          //<td><input type="hidden" name="precio_venta[]" value="'+precio_venta+'">'+precio_venta+'</td>
+                                          //<td>'+subtotal[cont]+'</td><td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+');">X</button></td></tr>';
+                                    //$("#tabla_de_detalles").append(fila);
+                                    table.row.add( [
+                                          `<input type="hidden" name="idproducto[]" value="${idproducto}">'${producto}`,
+                                          `<input type="hidden" name="cantidad[]" value="${cantidad}">${cantidad}`,
+                                          `<input type="hidden" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
+                                          `<input type="hidden" name="descuento[] value="${descuento}">${descuento}`,
+                                          `<input type="hidden" name="precio_venta[]" value="${precio_venta}">${precio_venta}`,
+                                          `${subtotal[cont]}`,
+                                          `<button type="button" class="eliminar btn btn-danger" id="btn_eliminar" name="btn_eliminar" data-value="${cont}">X</button>`,
+                                    ] ).draw( false );
+
+                                    cont++;
+                                    limpiar();
+                                    $("#total").html(total);
+                                    evaluar();
+                              
+                                    
+                              }else{
+                                    alert("Campos vacíos");
+                              }
+                        } );
+                  }
+
+
+                  //Funciones
+                  /*function eliminar(contador){
+                        total = total - subtotal[contador];
+                        $("#total").html(total);
+                        $("#fila" + contador).remove();
+                        evaluar();
+                  }*/
+
+                  function limpiar(){
+                        $("#aux_cantidad").val("");
+                        $("#aux_p_compra").val("");
+                        $("#aux_p_venta").val("");
+                        $("#aux_descuento").val("");
+                  }
+
+                  function evaluar(){
+                        if(total>0){
+                              $("#guardar").show();
+                              $("#alerta_guardar").hide();
+
+                        }else{
+                              $("#guardar").hide();
+                              $("#alerta_guardar").show();
+                        }
+                  }
+
+      </script>
 {% endblock Script %}
