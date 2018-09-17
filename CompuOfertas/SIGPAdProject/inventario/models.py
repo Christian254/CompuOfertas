@@ -71,7 +71,7 @@ class Compra(models.Model):
     empleado = models.ForeignKey('SIGPAd.Empleado', on_delete=models.SET_NULL, null=True)
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
     total_compra= models.DecimalField(max_digits=10,decimal_places=2)
-    iva_compra = models.DecimalField(max_digits=4,decimal_places=2)
+    total_compra_iva = models.DecimalField(max_digits=10,decimal_places=2)
     descripcion = models.CharField(max_length=100)
     fecha_hora = models.DateTimeField(default=datetime.now)
 
@@ -82,9 +82,11 @@ class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE) 
     cantidad = models.IntegerField(default=0)
-    precio_unitario = models.DecimalField(max_digits=6,decimal_places=2)
+    precio_compra = models.DecimalField(max_digits=6,decimal_places=2)
     descuento = models.DecimalField(max_digits=6,decimal_places=2)
-    precio_total = models.DecimalField(max_digits=6,decimal_places=2)
+    precio_venta = models.DecimalField(max_digits=6,decimal_places=2)
+
+    """
     def save(self, *args, **kwargs):
         kards = Kardex.objects.filter(producto=self.producto)
         k = 0
@@ -95,12 +97,12 @@ class DetalleCompra(models.Model):
         kardex.cantEntrada = self.cantidad
         kardex.cantSalida = 0
         kardex.cantExistencia = self.cantidad
-        kardex.precEntrada = self.precio_unitario
+        kardex.precEntrada = self.precio_compra
         kardex.precSalida = 0
-        kardex.precExistencia = self.precio_unitario
-        kardex.montoEntrada = Decimal(self.cantidad) * Decimal(self.precio_unitario)
+        kardex.precExistencia = self.precio_compra
+        kardex.montoEntrada = Decimal(self.cantidad) * Decimal(self.precio_compra)
         kardex.montoSalida=0
-        kardex.montoExistencia = Decimal(self.cantidad) * Decimal(self.precio_unitario)
+        kardex.montoExistencia = Decimal(self.cantidad) * Decimal(self.precio_compra)
         kardex.producto=self.producto
         kardex.save()
         if k > 0:
@@ -112,7 +114,7 @@ class DetalleCompra(models.Model):
             kardex.precExistencia = monto / cant
             kardex.save()
         print("se anadio exitosamente el producto")
-        return super(DetalleCompra,self).save(*args,**kwargs)
+        return super(DetalleCompra,self).save(*args,**kwargs)"""
 
 class Venta(models.Model):
     empleado = models.ForeignKey('SIGPAd.Empleado', on_delete=models.SET_NULL, null=True)

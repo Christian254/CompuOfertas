@@ -37,6 +37,9 @@
 {% block Body %}
 <section class="panel default blue_title h2 text-center">
             <div class="panel-heading">NUEVA<span class="semi-bold"> COMPRA</span> </div>
+            {{exito}}
+            {{error}}
+            {{idproducto}}
 </section>
 
 <section class="panel default blue_title h2 text-center">
@@ -53,11 +56,11 @@
                                                 {% if proveedores %}
                                                 <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true" required>
                                                       {% for proveedor in proveedores %}
-                                                      <option value="{{proveedor.razon_social}}">{{proveedor.razon_social}}</option>
+                                                      <option value="{{proveedor.id}}">{{proveedor.razon_social}}</option>
                                                       {% endfor %}
                                                 </select>
                                                 {% else %}
-                                                      <input type="text" name="idproveedor" id="idproveedor" value="Desconocido" class="form-control" required>
+                                                      <br><strong>¡Ningún proveedor creado!</strong>
                                                 {% endif %}
                                           </div>
                                     </div>
@@ -83,8 +86,8 @@
                                     </div>
                                     <div class="col-md-12">
                                           <div class="form-group">
-                                                <label for="descripcion">escripción:</label>
-                                                <input type="text" name="descripcion" id="descripcion" class="form-control">
+                                                <label for="descripcion">Descripción:</label>
+                                                <input type="text" name="descripcion" id="descripcion" class="form-control" required>
                                           </div>
                                     </div>                                                                          
                               </div>
@@ -114,25 +117,25 @@
                               <div class="col-md-2">
                                     <div class="form-group">
                                           <label for="aux_cantidad">Cantidad:</label>
-                                          <input type="number" min="0" name="aux_cantidad" id="aux_cantidad" class="form-control" required>
+                                          <input type="number" min="0" name="aux_cantidad" id="aux_cantidad" class="form-control">
                                     </div>
                               </div>
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_p_compra">Precio de compra:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_p_compra" id="aux_p_compra" class="form-control" required>
+                                                <input type="number" min="0" step="0.01" name="aux_p_compra" id="aux_p_compra" class="form-control">
                                           </div>
                               </div> 
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_descuento">Descuento:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_descuento" id="aux_descuento" class="form-control" required>
+                                                <input type="number" min="0" step="0.01" name="aux_descuento" id="aux_descuento" class="form-control">
                                           </div>
                               </div>                               
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_p_venta">Precio de venta:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_p_venta" id="aux_p_venta" class="form-control" required>
+                                                <input type="number" min="0" step="0.01" name="aux_p_venta" id="aux_p_venta" class="form-control">
                                           </div>
                               </div>
                               <div class="col-md-1">
@@ -160,14 +163,23 @@
                                           <tbody>
                                           </tbody>
                                           <tfoot>
+                                                <th>Total (con IVA)</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><input type="hidden" step="0.01" name="total_iva_input" id="total_iva_input" value="0.00"><strong id="total_iva" name="total_iva">0.00</strong></th>
+                                                <th></th>
+                                          </tfoot>
+                                          <tfoot>
                                                 <th>Total</th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
-                                                <th><strong id="total">0.00</strong></th>
+                                                <th><input type="hidden" step="0.01" name="total_input" id="total_input" value="0.00"><strong id="total" name="total">0.00</strong></th>
                                                 <th></th>
-                                          </tfoot>
+                                          </tfoot>                                          
                                     </table>                                                                                                                       
                         </div>
                   </div>
@@ -203,7 +215,7 @@
             $(document).ready(function()
             {
                   $("#guardar").hide();
-                  $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
+                  $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos a la tabla!")
                   
                   var table = $('#tabla_de_detalles').DataTable( {
                   "info": false,
@@ -228,7 +240,11 @@
                         var contador = $target.data("value");
 
                         total = total - subtotal[contador];
+                        total_iva = total + total * 0.13
                         $("#total").html(total);
+                        $("#total_input").val(total);
+                        $("#total_iva").html(total_iva);
+                        $("#total_iva_input").val(total_iva);
                         $("#fila" + contador).remove();
                         evaluar();
 
@@ -243,6 +259,7 @@
                   //Variables.
                   var cont = 0;
                   total = 0;
+                  total_iva = 0;
                   subtotal = [];
 
                   $(document).ready(function(){
@@ -263,6 +280,7 @@
                               if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && descuento != "" && precio_venta != ""){
                                     subtotal[cont] = (cantidad * precio_compra ) - (cantidad * precio_compra * descuento);
                                     total = total + subtotal[cont];
+                                    total_iva = total + total * 0.13
 
                                     //var fila = '<tr id="fila'+cont+'">
                                           //<td><input type="hidden" name="idproducto[]" value="'+idproducto+'">'+producto+'</td>
@@ -272,11 +290,11 @@
                                           //<td>'+subtotal[cont]+'</td><td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+');">X</button></td></tr>';
                                     //$("#tabla_de_detalles").append(fila);
                                     table.row.add( [
-                                          `<input type="hidden" name="idproducto[]" value="${idproducto}">'${producto}`,
-                                          `<input type="hidden" name="cantidad[]" value="${cantidad}">${cantidad}`,
-                                          `<input type="hidden" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
-                                          `<input type="hidden" name="descuento[] value="${descuento}">${descuento}`,
-                                          `<input type="hidden" name="precio_venta[]" value="${precio_venta}">${precio_venta}`,
+                                          `<input type="hidden" id="idproducto[]" name="idproducto[]" value="${idproducto}">${producto}`,
+                                          `<input type="hidden" id="cantidad[]" name="cantidad[]" value="${cantidad}">${cantidad}`,
+                                          `<input type="hidden" id="precio_compra[]" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
+                                          `<input type="hidden" id="descuento[]" name="descuento[]" value="${descuento}">${descuento}`,
+                                          `<input type="hidden" id="precio_venta[]" name="precio_venta[]" value="${precio_venta}">${precio_venta}`,
                                           `${subtotal[cont]}`,
                                           `<button type="button" class="eliminar btn btn-danger" id="btn_eliminar" name="btn_eliminar" data-value="${cont}">X</button>`,
                                     ] ).draw( false );
@@ -284,6 +302,9 @@
                                     cont++;
                                     limpiar();
                                     $("#total").html(total);
+                                    $("#total_input").val(total);
+                                    $("#total_iva").html(total_iva);
+                                    $("#total_iva_input").val(total_iva);
                                     evaluar();
                               
                                     

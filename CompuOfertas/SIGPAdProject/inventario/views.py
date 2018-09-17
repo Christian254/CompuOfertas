@@ -492,15 +492,50 @@ def nueva_compra(request):
 	proveedores = Proveedor.objects.filter(estado=True)
 	productos = Producto.objects.filter(estado=1)
 	fecha_hora = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-	try:
+
+	if empleado != None: #Cambiar en un try despues.
 		if request.method == 'POST':
+			compra = Compra()
+			compra.empleado = empleado
+			if proveedores:
+				prov = Proveedor.objects.get(id=request.POST.get('idproveedor', None))
+				compra.proveedor = prov
+			compra.total_compra = request.POST.get('total_input',None)
+			compra.total_compra_iva = request.POST.get('total_iva_input',None)
+			compra.descripcion = request.POST.get('descripcion',None)
+			compra.fecha_hora = datetime.now()
+			compra.save()
+
+			#idproducto = request.POST.get('idproducto',None)
+			idproducto = request.POST.getlist('idproducto[]')
+			cantidad = request.POST.getlist('cantidad[]')
+			precio_compra = request.POST.getlist('precio_compra[]')
+			descuento = request.POST.getlist('descuento[]')
+			precio_venta = request.POST.getlist('precio_venta[]')
+
+			contador = 0
+
+			while(contador < len(idproducto)):
+				detalle_compra = DetalleCompra()
+				detalle_compra.compra = compra
+				detalle_compra.producto_id = idproducto[contador]
+				detalle_compra.cantidad = cantidad[contador]
+				detalle_compra.precio_compra = precio_compra[contador]
+				detalle_compra.descuento = descuento[contador]
+				detalle_compra.precio_venta = precio_venta[contador]
+				detalle_compra.save()
+				contador = contador + 1
+
 			context = {
+				'idproducto':idproducto,
+				'exito':"Exito",
 				'proveedores':proveedores,
 				'productos': productos,
 				'usuario':usuario,
 				'empleado':empleado,
 				'fecha_hora':fecha_hora,
 			}
+			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
 		else:
 			context = {
 				'proveedores':proveedores,
@@ -509,10 +544,8 @@ def nueva_compra(request):
 				'empleado':empleado,
 				'fecha_hora':fecha_hora,
 			}
-		return render(request, 'VendedorTemplates/nuevaCompra.html', context)
-
-	except Exception as e:
-		context = {'error':"Mensaje de error"}		
+			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+	
 	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
 #Fin vistas de Compras.	
 
