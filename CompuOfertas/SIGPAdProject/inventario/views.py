@@ -716,10 +716,14 @@ def graficaMes(request):
 	if request.method=='POST':
 		anioAnterior = request.POST.get('anioAnterior',None)
 
+	if anioAnterior=='anio':
+		anioAnterior=2018
 	if anioAnterior=='anio1':
 		anio=anio-1
+		anioAnterior=2017
 	if anioAnterior=='anio2':
 		anio=anio-2
+		anioAnterior=2016
 
 	enero=datetime(anio, 1, 1)
 	febrero=datetime(anio, 2, 1)
@@ -769,6 +773,90 @@ def graficaMes(request):
         'anio':anio,
         'anio1':anio1,
         'anio2':anio2,
+        'anioAnterior':anioAnterior,
     }
 
 	return render(request, 'VendedorTemplates/graficaMes.html', context)
+
+def graficaEmpleado(request):
+	venta=''
+	nom=''
+	nomEmpleado = ''
+	nomb=''
+	empleado=Empleado.objects.all()
+	anioActual=datetime.now()
+	anio=int(str(anioActual.strftime('%Y')))
+
+	mes1=0
+	mes2=0
+	mes3=0
+	mes4=0
+	mes5=0
+	mes6=0
+	mes7=0
+	mes8=0
+	mes9=0
+	mes10=0
+	mes11=0
+	mes12=0
+
+	if request.method=='POST':
+		nomEmpleado = request.POST.get('nomEmpleado',None)
+
+	enero=datetime(anio, 1, 1)
+	febrero=datetime(anio, 2, 1)
+	marzo=datetime(anio, 3, 1)
+	abril=datetime(anio, 4, 1)
+	mayo=datetime(anio, 5, 1)
+	junio=datetime(anio, 6, 1)
+	julio=datetime(anio, 7, 1)
+	agosto=datetime(anio, 8, 1)
+	septiembre=datetime(anio, 9, 1)
+	octubre=datetime(anio, 10, 1)
+	noviembre=datetime(anio, 11, 1)
+	diciembre=datetime(anio, 12, 1)
+
+	if nomEmpleado:
+		nom = Empleado.objects.filter(pk=nomEmpleado)
+		venta = Venta.objects.filter(empleado=nomEmpleado)
+		fechas=[obj.fecha_hora for obj in venta]
+		for fecha in fechas:
+			if str(fecha) >= str(enero.strftime('%Y-%m-%d')) and str(fecha) < str(febrero.strftime('%Y-%m-%d')):
+				mes1=mes1+1
+			if str(fecha) >= str(febrero.strftime('%Y-%m-%d')) and str(fecha) < str(marzo.strftime('%Y-%m-%d')):
+				mes2=mes2+1
+			if str(fecha) >= str(marzo.strftime('%Y-%m-%d')) and str(fecha) < str(abril.strftime('%Y-%m-%d')):
+				mes3=mes3+1
+			if str(fecha) >= str(abril.strftime('%Y-%m-%d')) and str(fecha) < str(mayo.strftime('%Y-%m-%d')):
+				mes4=mes4+1
+			if str(fecha) >= str(mayo.strftime('%Y-%m-%d')) and str(fecha) < str(junio.strftime('%Y-%m-%d')):
+				mes5=mes5+1
+			if str(fecha) >= str(junio.strftime('%Y-%m-%d')) and str(fecha) < str(julio.strftime('%Y-%m-%d')):
+				mes6=mes6+1
+			if str(fecha) >= str(julio.strftime('%Y-%m-%d')) and str(fecha) < str(agosto.strftime('%Y-%m-%d')):
+				mes7=mes7+1
+			if str(fecha) >= str(agosto.strftime('%Y-%m-%d')) and str(fecha) < str(septiembre.strftime('%Y-%m-%d')):
+				mes8=mes8+1
+			if str(fecha) >= str(septiembre.strftime('%Y-%m-%d')) and str(fecha) < str(octubre.strftime('%Y-%m-%d')):
+				mes9=mes9+1
+			if str(fecha) >= str(octubre.strftime('%Y-%m-%d')) and str(fecha) < str(noviembre.strftime('%Y-%m-%d')):
+				mes10=mes10+1
+			if str(fecha) >= str(noviembre.strftime('%Y-%m-%d')) and str(fecha) < str(diciembre.strftime('%Y-%m-%d')):
+				mes11=mes11+1
+			if str(fecha) >= str(diciembre.strftime('%Y-%m-%d')) and str(fecha) < str(enero.strftime('%Y-%m-%d')):
+				mes12=mes12+1
+
+	anio=int(str(anioActual.strftime('%Y')))
+	meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+	ventas=[mes1, mes2, mes3, mes4, mes5, mes6, mes7, mes8, mes9, mes10, mes11, mes12]
+	context = {
+        'meses': json.dumps(meses),
+        'ventas': json.dumps(ventas),
+        'anio':anio,
+        'empleado':empleado,
+        'venta':venta,
+        'nom':nom,
+        'nomEmpleado':nomEmpleado,
+    }
+
+	return render(request, 'VendedorTemplates/graficaEmpleado.html', context)

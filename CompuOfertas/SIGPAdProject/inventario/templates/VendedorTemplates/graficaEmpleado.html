@@ -3,14 +3,14 @@
 {% block Body %}
 <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
     {% csrf_token %}
-    <div class="center">
+        <div class="center">
         <a href="{% url 'inventario:graficaMes' %}" class="btn btn-success">VENTAS POR MES</a>
         <a href="{% url 'inventario:graficaEmpleado' %}" class="btn btn-success">VENTAS POR EMPLEADO</a>
     </div>
-        <select id="anioAnterior" name="anioAnterior">
-            <option value="anio">{{anio}}</option>
-            <option value="anio1">{{anio1}}</option>
-            <option value="anio2">{{anio2}}</option>
+        <select id="nomEmpleado" name="nomEmpleado">
+            {% for e in empleado %}
+            <option value="{{e.pk}}">{{e.nombre}}</option>
+            {% endfor %}
         </select>
 
     <input type="submit" class="btn btn-success" value="Aceptar">
@@ -27,9 +27,12 @@ var productsChart = new Chart(ctx, {
     data: {
         labels: meses,
         datasets: [{
-            {% if anioAnterior %}
-            label: 'VENTAS POR MES DEL AÑO: {{anioAnterior}}',
+            {% if nomEmpleado %}
+             {% for n in nom %}
+            label: 'VENTAS ANUALES DE EMPLEADO: {{n.nombre}}',
+            {% endfor %}
             {% endif %}
+
             data: ventas,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

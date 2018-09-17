@@ -33,6 +33,7 @@ urlpatterns = [
 
 	url(r'grafica$', login_required(grafica), name="grafica"),
 	url(r'graficaMes$', login_required(graficaMes), name="graficaMes"),
+	url(r'graficaEmpleado$', login_required(graficaEmpleado), name="graficaEmpleado"),
 	
 	url(r'^mostrarKardex/(?P<pk>\d+)$', login_required(mostrarKardex), name="mostrarKardex"),
 ]
