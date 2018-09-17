@@ -519,10 +519,15 @@ def nueva_compra(request):
 				detalle_compra = DetalleCompra()
 				detalle_compra.compra = compra
 				detalle_compra.producto_id = idproducto[contador]
+				inventario = Inventario.objects.get(producto__id=idproducto[contador])
 				detalle_compra.cantidad = cantidad[contador]
 				detalle_compra.precio_compra = precio_compra[contador]
 				detalle_compra.descuento = descuento[contador]
 				detalle_compra.precio_venta = precio_venta[contador]
+				if int(precio_venta[contador]) > 0:
+					inventario.precio_venta_producto=precio_venta[contador]
+				inventario.existencia = int(inventario.existencia) + int(cantidad[contador])
+				inventario.save()
 				detalle_compra.save()
 				contador = contador + 1
 
@@ -689,6 +694,7 @@ def mostrarKardex(request, pk):
 		producto = Producto.objects.get(pk=pk)
 		kardex_producto = Kardex.objects.filter(producto=producto)
 		ultimo = kardex_producto.last()
+		precio_sugerido = round((Decimal(ultimo.precExistencia) * Decimal(1.25)),2)
 		fech = datetime.now()
 		anio = fech.year
 		if consulta:
@@ -709,11 +715,19 @@ def mostrarKardex(request, pk):
 			kardex_producto = paginator.page(1)
 		except EmptyPage:
 			producto = paginator.page(paginator.num_pages)
+
+		if request.method=='POST':
+			precio = request.POST.get('nuevoPrecio',None)
+			if precio != None:
+				inventario = producto.inventario
+				inventario.precio_venta_producto = precio
+				inventario.save()
 		context = {
 			'producto':producto,
 			'kardex':kardex_producto,
 			'fecha':fech,
 			'ultimo':ultimo,
+			'precio_sugerido':precio_sugerido,
 		}
 		return render(request,'VendedorTemplates/kardex.html',context)
 	except Producto.DoesNotExist:
