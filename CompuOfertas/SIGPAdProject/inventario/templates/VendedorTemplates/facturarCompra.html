@@ -6,7 +6,9 @@
 {% endblock Titulo %}
 
 {% block CSS %}
-
+<style type="text/css" media="print">
+    .ocultar {display:none}
+</style>
 {% endblock CSS %}
 
 {% block usuario %}
@@ -14,18 +16,17 @@
 {% endblock usuario %}
     
 {% block Body %}
-      <!-- Importante para el modal NO BORRAR -->
 
     <div id="mostrarmodal" class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <button type="button" class="close ocultar" data-dismiss="modal">x</button>
                     <h3>FACTURA DE COMPRA: <strong>{{compra.id}}</strong></h3>
                 </div>
                 <div class="modal-body">
                     <p><strong>Empleado:</strong> {{compra.empleado}}</p>
                     <p><strong>Proveedor:</strong> {% if compra.proveedor %}{{compra.proveedor}}{%else%}Desconocido{%endif%} </p>
-                    <p><strong>Descripción:</strong> {{compra.descripcion}}</p>
+                    <p><strong>Descripcion:</strong> {{compra.descripcion}}</p>
                     <p><strong>Fecha y Hora:</strong> {{compra.fecha_hora}}</p>
 
                     <table id="classTable" class="table">
@@ -54,10 +55,10 @@
                     </center>
                 </div>
                 <div class="modal-footer">
-                    <div class="col-lg-12 text-right">
-                        <form role="form" action="{% url 'inventario:ListadoDeCompras' %}" method="">
+                    <div id="noprint" class="col-lg-12 text-right">
+                        <form role="form" action="{% url 'inventario:ListadoDeCompras' %}" method="" class="ocultar">
                                 {% csrf_token %}
-                                <button type="button" class="btn btn-success">Imprimir</button>
+                                <input type="button" class="btn btn-success" onclick="printDiv('mostrarmodal')" value="Imprimir" />
                                 <a href="{% url 'inventario:ListadoDeCompras' %}" class="btn btn-danger">Regresar</a>
                         </form>
                     </div>
@@ -87,6 +88,17 @@
     function cerrar_modal() {
     $('#popup').modal('hide');
     return false;
+    }
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
     }
 </script>
 {% endblock Script %}
