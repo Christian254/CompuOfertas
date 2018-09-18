@@ -103,7 +103,7 @@
                   <div class="block-web">
                         <div class="row">
                         {% if productos %}
-                              <div class="col-md-3">
+                              <div class="col-md-5">
                                     <div class="form-group">
                                           <label for="aux_producto">Producto:</label>
                         
@@ -132,12 +132,6 @@
                                                 <input type="number" min="0" step="0.01" max="1" name="aux_descuento" id="aux_descuento" class="form-control" value="0" onkeypress="return validar_decimal(event)">
                                           </div>
                               </div>                               
-                              <div class="col-md-2">
-                                          <div class="form-group">
-                                                <label for="aux_p_venta">Precio de venta:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_p_venta" id="aux_p_venta" class="form-control" value="0"  onkeypress="return validar_decimal(event)">
-                                          </div>
-                              </div>
                               <div class="col-md-1">
                                           <div class="form-group">
                                                 <label for="btn_agregar"><strong>Agregar</strong></label>
@@ -156,7 +150,6 @@
                                                 <th>Cantidad</th>
                                                 <th>Precio de compra</th>
                                                 <th>Descuento</th>
-                                                <th>Precio de venta</th>
                                                 <th>Subtotal</th>
                                                 <th>Eliminar</th>
                                           </thead>
@@ -167,13 +160,11 @@
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
-                                                <th></th>
                                                 <th><input type="hidden" step="0.01" name="total_iva_input" id="total_iva_input" value="0.00"><strong id="total_iva" name="total_iva">0.00</strong></th>
                                                 <th></th>
                                           </tfoot>
                                           <tfoot>
                                                 <th>Total</th>
-                                                <th></th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
@@ -269,10 +260,9 @@
                               producto = $("#aux_producto option:selected").text();
                               cantidad = $("#aux_cantidad").val();
                               precio_compra = $("#aux_p_compra").val();
-                              precio_venta = $("#aux_p_venta").val();
                               descuento = $("#aux_descuento").val();
 
-                              if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && descuento != "" && precio_venta != ""){
+                              if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && descuento != ""){
                                     subtotal[cont] = (cantidad * precio_compra ) - (cantidad * precio_compra * descuento);
                                     total = total + subtotal[cont];
                                     total_iva = total + total * 0.13
@@ -289,7 +279,6 @@
                                           `<input type="hidden" id="cantidad[]" name="cantidad[]" value="${cantidad}">${cantidad}`,
                                           `<input type="hidden" id="precio_compra[]" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
                                           `<input type="hidden" id="descuento[]" name="descuento[]" value="${descuento}">${descuento}`,
-                                          `<input type="hidden" id="precio_venta[]" name="precio_venta[]" value="${precio_venta}">${precio_venta}`,
                                           `${subtotal[cont]}`,
                                           `<button type="button" class="eliminar btn btn-danger" id="btn_eliminar" name="btn_eliminar" data-value="${cont}">X</button>`,
                                     ] ).draw( false );
@@ -312,7 +301,6 @@
                   function limpiar(){
                         $("#aux_cantidad").val("");
                         $("#aux_p_compra").val("");
-                        $("#aux_p_venta").val("");
                         $("#aux_descuento").val("");
                   }
 
