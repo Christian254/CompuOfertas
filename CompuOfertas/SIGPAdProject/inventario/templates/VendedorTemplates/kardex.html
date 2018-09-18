@@ -50,6 +50,17 @@
                 <div class="col-md-12">
                     <div class="block-web">
                         <div class="panel-heading"><font size="4">Ultima compra: {{ultimo.fecha}} <span class="semi-bold"> Existencia actual: {{ultimo.cantExistencia}} </span> precio de compra actual: {{ultimo.precExistencia}} <span class="semi-bold"> Precio de venta actual: {{producto.inventario.precio_venta_producto}} </span></font> </div>
+                        <div class="col-xs-12 text-left">
+                            <form method="POST">
+                                {% csrf_token %}
+                                    <label>Desea camiar el precio de venta?.... el precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
+                                    <p>
+                                        <label>Nuevo precio: </label>
+                                        <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}">
+                                    </p>
+                                    <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
+                            </form>
+                        </div>
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
@@ -63,7 +74,6 @@
                                     <th>Cantidad Existencia</th>
                                     <th>Precio Existencia</th>
                                     <th>Monto Exitencia</th>       
-                                    <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,8 +101,6 @@
                                             <td>{{k.cantExistencia}}</td>
                                             <td>{{k.precExistencia}}</td>
                                             <td>{{k.montoExistencia}}</td>
-                                            <td align="center"> <a href=""><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
-                                            </td>
                                         </tr>
                                     {% endfor %}
                             </tbody>
@@ -120,25 +128,6 @@
                                         {% endif %}
                                     </ul>                        
                                 </nav>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-8">
-                                <div  class="row">
-                                    <div class="col-md-12">
-                                        <div class="block-web">
-                                            <form method="POST">
-                                                {% csrf_token %}
-                                                <label>Desea camiar el precio de venta?.... el precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
-                                                <p>
-                                                    <label>Nuevo precio: </label>
-                                                    <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}">
-                                                </p>
-                                                <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                 </div>
