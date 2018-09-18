@@ -1,0 +1,92 @@
+{% extends 'baseUser.html' %}
+{% load staticfiles %}
+
+{% block Titulo %}
+	Facturar Compra
+{% endblock Titulo %}
+
+{% block CSS %}
+
+{% endblock CSS %}
+
+{% block usuario %}
+      {{user.username}}
+{% endblock usuario %}
+    
+{% block Body %}
+      <!-- Importante para el modal NO BORRAR -->
+
+    <div id="mostrarmodal" class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h3>FACTURA DE COMPRA: <strong>{{compra.id}}</strong></h3>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Empleado:</strong> {{compra.empleado}}</p>
+                    <p><strong>Proveedor:</strong> {% if compra.proveedor %}{{compra.proveedor}}{%else%}Desconocido{%endif%} </p>
+                    <p><strong>Descripción:</strong> {{compra.descripcion}}</p>
+                    <p><strong>Fecha y Hora:</strong> {{compra.fecha_hora}}</p>
+
+                    <table id="classTable" class="table">
+                            <thead>
+                                <th>#</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio de compra</th>
+                                <th>Descuento</th>
+                            </thead>
+                            <tbody>
+                                {% for detalle in detalle_compra %}  
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{detalle.producto.nombre}}</td>
+                                    <td>{{detalle.cantidad}}</td>
+                                    <td>{{detalle.precio_compra}}</td>
+                                    <td>{{detalle.descuento}}</td>
+                                </tr>
+                                {% endfor %}                                
+                            </tbody>
+                    </table>
+                    <center>
+                            <p><strong>Total: </strong>{{compra.total_compra}}</p>
+                            <p><strong>Total (con IVA): </strong>{{compra.total_compra_iva}}</p>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-12 text-right">
+                        <form role="form" action="{% url 'inventario:ListadoDeCompras' %}" method="">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-success">Imprimir</button>
+                                <a href="{% url 'inventario:ListadoDeCompras' %}" class="btn btn-danger">Regresar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock Body %}
+
+{% block Script %}
+
+<script>
+    //Modal.
+    var modal;
+
+    $(document).ready(function()
+    {
+        abrir_modal();
+    });
+
+    function abrir_modal() {
+    $('#popup').load( function() {
+        $(this).modal('show');
+    });
+    return false;
+    }
+
+    function cerrar_modal() {
+    $('#popup').modal('hide');
+    return false;
+    }
+</script>
+{% endblock Script %}

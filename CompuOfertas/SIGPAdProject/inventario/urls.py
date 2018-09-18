@@ -29,6 +29,7 @@ urlpatterns = [
 	url(r'listadoCompras/$',login_required(listado_de_compras), name="ListadoDeCompras"),
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
 	url(r'cancelarCompra/$', login_required(cancelar_compra), name="CancelarCompra"),
+	url(r'facturarCompra/(?P<id>\d+)$', login_required(facturar_compra), name="FacturarCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
 

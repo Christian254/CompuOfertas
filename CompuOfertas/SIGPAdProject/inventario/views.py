@@ -535,7 +535,7 @@ def nueva_compra(request):
 				'empleado':empleado,
 				'fecha_hora':fecha_hora,
 			}
-			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+			return redirect('/facturarCompra/{}'.format(compra.id))
 		else:
 			context = {
 				'proveedores':proveedores,
@@ -559,6 +559,16 @@ def nueva_compra(request):
 @permission_required('SIGPAd.view_seller')
 def cancelar_compra(request):
 	return render(request,'VendedorTemplates/cancelarCompra.html',{})
+
+@permission_required('SIGPAd.view_seller')
+def facturar_compra(request, id):
+	compra = get_object_or_404(Compra, id=id)
+	detalle_compra = DetalleCompra.objects.filter(compra_id=id)
+	context = {
+		'compra': compra,
+		'detalle_compra': detalle_compra,
+	}
+	return render(request,'VendedorTemplates/facturarCompra.html',context)
 #Fin vistas de Compras.	
 
 @permission_required('SIGPAd.view_seller')
