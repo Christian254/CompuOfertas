@@ -511,7 +511,6 @@ def nueva_compra(request):
 			cantidad = request.POST.getlist('cantidad[]')
 			precio_compra = request.POST.getlist('precio_compra[]')
 			descuento = request.POST.getlist('descuento[]')
-			precio_venta = request.POST.getlist('precio_venta[]')
 
 			contador = 0
 
@@ -523,9 +522,6 @@ def nueva_compra(request):
 				detalle_compra.cantidad = cantidad[contador]
 				detalle_compra.precio_compra = precio_compra[contador]
 				detalle_compra.descuento = descuento[contador]
-				detalle_compra.precio_venta = precio_venta[contador]
-				if int(precio_venta[contador]) > 0:
-					inventario.precio_venta_producto=precio_venta[contador]
 				inventario.existencia = int(inventario.existencia) + int(cantidad[contador])
 				inventario.save()
 				detalle_compra.save()

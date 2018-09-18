@@ -84,7 +84,6 @@ class DetalleCompra(models.Model):
     cantidad = models.IntegerField(default=0)
     precio_compra = models.DecimalField(max_digits=10,decimal_places=2)
     descuento = models.DecimalField(max_digits=8,decimal_places=2)
-    precio_venta = models.DecimalField(max_digits=15,decimal_places=2)
 
     def save(self, *args, **kwargs):
         kards = Kardex.objects.filter(producto=self.producto)
