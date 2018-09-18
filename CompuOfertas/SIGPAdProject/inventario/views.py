@@ -12,6 +12,7 @@ from datetime import datetime
 from decimal import *
 from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
+from inventario.reporteCompra import *
 import openpyxl
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -569,6 +570,11 @@ def facturar_compra(request, id):
 		'detalle_compra': detalle_compra,
 	}
 	return render(request,'VendedorTemplates/facturarCompra.html',context)
+
+def reporte_compra(request, id):
+	compra = get_object_or_404(Compra, id=id)
+	detalle_compra = DetalleCompra.objects.filter(compra_id=id)
+	return generar_reporte_compra(request, compra, detalle_compra)
 #Fin vistas de Compras.	
 
 @permission_required('SIGPAd.view_seller')
