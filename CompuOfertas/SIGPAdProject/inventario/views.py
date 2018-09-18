@@ -493,7 +493,7 @@ def nueva_compra(request):
 	productos = Producto.objects.filter(estado=1)
 	fecha_hora = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
-	if empleado != None: #Cambiar en un try despues.
+	try:
 		if request.method == 'POST':
 			compra = Compra()
 			compra.empleado = empleado
@@ -528,7 +528,6 @@ def nueva_compra(request):
 				contador = contador + 1
 
 			context = {
-				'idproducto':idproducto,
 				'exito':"Exito",
 				'proveedores':proveedores,
 				'productos': productos,
@@ -546,8 +545,20 @@ def nueva_compra(request):
 				'fecha_hora':fecha_hora,
 			}
 			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
-	
+	except Exception as e:
+		context = {
+				'error':"Ha ocurrido un error, vuelva a intentarlo.",
+				'proveedores':proveedores,
+				'productos': productos,
+				'usuario':usuario,
+				'empleado':empleado,
+				'fecha_hora':fecha_hora,
+			}
 	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def cancelar_compra(request):
+	return render(request,'VendedorTemplates/cancelarCompra.html',{})
 #Fin vistas de Compras.	
 
 @permission_required('SIGPAd.view_seller')
