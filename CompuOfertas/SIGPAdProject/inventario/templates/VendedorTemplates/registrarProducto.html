@@ -1,15 +1,20 @@
 {% extends "baseUser.html" %}
 {% load staticfiles %}
 
+<style type="text/css">
 
+    .aceptar{
+        border-radius: 15px;
+    }
+
+</style>
 {% block Body %}
 {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 
-
 <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-12">
         <section class="panel default blue_title h2 text-center">
             <div class="panel-heading">Categoria:  <span class="semi-bold">{{categoria}} </span> </div>
         </section>
@@ -19,8 +24,10 @@
         {% elif exito %}
             <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
-
-        <div class="col-md-12">
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-6">
             <div class="block-web">
                 <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
                     {% csrf_token %}
@@ -56,86 +63,59 @@
                 </form>
             </div>
         </div>
+            <div class="col-md-6">
+            <form class="form-inline" method="GET" action="">
+                <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="aceptar">
+                <input type="submit" value="Buscar" class="btn btn-success">
+            </form>
+        <div class="block-web">
+            <table class="table">
+                <thead class="bg-primary">
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>marca</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        {% if producto.estado %}
+                        <td>{{producto.codigo}}</td>
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.descripcion}}</td>
+                        <td>{{producto.marca}}</td>
+                        <td> <a href="{% url 'inventario:editarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>/<a href="{% url 'inventario:eliminarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination">
+            {% if productos.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ productos.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+            {%else%}
+                <li class="disabled"><span>Anterior</span></li>
+            {% endif %} 
+            {% for i in productos.paginator.page_range %} 
+                {% if productos.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                    <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
+                {% endif %} 
+            {% endfor %} 
+            {% if productos.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ productos.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+            {%else%}
+                <li class="disabled"><span>Siguiente</li>
+            {% endif %}
+        </ul>
+    </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-xs-12">
-        <div class="col-xs-8 archivo">
-            <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading">Seleccione su <span class="semi-bold">producto</span> </div>
-            </section>
-
-            <div class="row">
-                <div class="col-12">
-                    <nav class="navbar text-right">
-                        <form class="form-inline" method="GET" action="">
-                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
-                            <input type="submit" value="Buscar" class="btn btn-success">
-                        </form>
-                    </nav>
-                </div>
-                <div class="col-md-12">
-                    <div class="block-web">
-                        <table class="table">
-                            <thead class="bg-primary">
-                                <tr>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>marca</th>
-                                    <th>Accion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for producto in productos %}
-                                <tr>
-                                    {% if producto.estado %}
-                                    <td>{{producto.codigo}}</td>
-                                    <td>{{producto.nombre}}</td>
-                                    <td>{{producto.descripcion}}</td>
-                                    <td>{{producto.marca}}</td>
-                                    <td> <a href="{% url 'inventario:editarProducto' producto.id %}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                                    /
-                                     <a href="{% url 'inventario:eliminarProducto' producto.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a> 
-                                    </td>
-                                    {% endif %}
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            {% if productos.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ productos.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
-                            {%else%}
-                            <li class="disabled"><span>Anterior</span></li>
-                            {% endif %} {% for i in productos.paginator.page_range %} {% if productos.number == i %}
-                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
-                            </li>
-                            {% else %}
-                            <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
-                            {% endif %} {% endfor %} {% if productos.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ productos.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
-                            {%else%}
-                            <li class="disabled"><span>Siguiente</li>
-                                        {% endif %}
-                                    </ul>                        
-                                </nav>
-                            </div>
-                        </div>
-                </div>
-        </div>
-    </div>
-</div> 
-
-
-
 {%else%}
 <h1>usuario anonimo</h1>
 {% endif %}

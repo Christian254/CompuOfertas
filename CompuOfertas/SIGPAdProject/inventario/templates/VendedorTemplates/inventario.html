@@ -30,8 +30,11 @@
     }
     .descarga{
         padding:5px;
-        margin-left:60px;
-        margin-top: 40px;
+        margin-left:10px;
+    }
+
+    .aceptar{
+        border-radius: 10px;
     }
 
 
@@ -51,17 +54,19 @@
 
             <div class="row">
                 <div class="col-12">
+                    <a href="/" class="btn btn-danger aceptar descarga">regresar</a>
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="">
                             <input type="text" id="accion" name="accion" value="buscar" hidden="">
-                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
-                            <input type="submit" value="Buscar" class="btn btn-success">
+                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="aceptar">
+                            <input type="submit" value="Buscar" class="btn btn-success aceptar">
                         </form>
                     </nav>
                 </div>
                 <div class="col-md-12">
                     <div class="block-web">
                         <table class="table">
+                            <marquee behavior="alternate">Asignele precio a los productos en rojo</marquee>
                             <thead class="bg-primary">
                                 <tr>
                                     <th>Codigo</th>
@@ -81,7 +86,11 @@
                                             <td>{{p.descripcion}}</td>
                                             <td>{{p.marca}}</td>
                                             <td> {{p.inventario.existencia}}</td>
-                                            <td> {{p.inventario.precio_venta_producto}} </td>
+                                            {% if p.inventario.precio_venta_producto == 0 %}
+                                                <td> <font size="3" style="color:white; background-color:red;">{{p.inventario.precio_venta_producto}} </font></td>
+                                            {% else %}
+                                                <td> {{p.inventario.precio_venta_producto}} </td>
+                                            {% endif %}
                                             <td align="center"> <a href="mostrarKardex/{{p.id}}"><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
                                             </td>
                                         </tr>

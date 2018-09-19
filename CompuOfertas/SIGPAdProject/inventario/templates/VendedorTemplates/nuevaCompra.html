@@ -46,6 +46,11 @@
       <div class="row">
             <div class="col-md-12">
                         <div class="block-web">
+                              {% if error %}
+                              <div class="alert alert-warning">
+                                          <strong>¡Advertencia!</strong> {{error}}
+                              </div>
+                              {% endif %}
                               <div class="row">
                                     <div class="col-md-4">
                                           <div class="form-group">
@@ -53,11 +58,11 @@
                                                 {% if proveedores %}
                                                 <select name="idproveedor" id="idproveedor" class="form-control selectpicker" data-live-search="true" required>
                                                       {% for proveedor in proveedores %}
-                                                      <option value="{{proveedor.razon_social}}">{{proveedor.razon_social}}</option>
+                                                      <option value="{{proveedor.id}}">{{proveedor.razon_social}}</option>
                                                       {% endfor %}
                                                 </select>
                                                 {% else %}
-                                                      <input type="text" name="idproveedor" id="idproveedor" value="Desconocido" class="form-control" required>
+                                                      <br><strong>¡Ningún proveedor creado!</strong>
                                                 {% endif %}
                                           </div>
                                     </div>
@@ -83,8 +88,8 @@
                                     </div>
                                     <div class="col-md-12">
                                           <div class="form-group">
-                                                <label for="descripcion">escripción:</label>
-                                                <input type="text" name="descripcion" id="descripcion" class="form-control">
+                                                <label for="descripcion">Descripción:</label>
+                                                <input type="text" name="descripcion" id="descripcion" class="form-control" required>
                                           </div>
                                     </div>                                                                          
                               </div>
@@ -100,7 +105,7 @@
                   <div class="block-web">
                         <div class="row">
                         {% if productos %}
-                              <div class="col-md-3">
+                              <div class="col-md-5">
                                     <div class="form-group">
                                           <label for="aux_producto">Producto:</label>
                         
@@ -114,27 +119,21 @@
                               <div class="col-md-2">
                                     <div class="form-group">
                                           <label for="aux_cantidad">Cantidad:</label>
-                                          <input type="number" min="0" name="aux_cantidad" id="aux_cantidad" class="form-control" required>
+                                          <input type="number" min="0" name="aux_cantidad" id="aux_cantidad" class="form-control" onkeypress="return validar_entero(event)">
                                     </div>
                               </div>
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_p_compra">Precio de compra:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_p_compra" id="aux_p_compra" class="form-control" required>
+                                                <input type="number" min="0" step="0.01" name="aux_p_compra" id="aux_p_compra" class="form-control" onkeypress="return validar_decimal(event)">
                                           </div>
                               </div> 
                               <div class="col-md-2">
                                           <div class="form-group">
                                                 <label for="aux_descuento">Descuento:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_descuento" id="aux_descuento" class="form-control" required>
+                                                <input type="number" min="0" step="0.01" max="1" name="aux_descuento" id="aux_descuento" class="form-control" value="0" onkeypress="return validar_decimal(event)">
                                           </div>
                               </div>                               
-                              <div class="col-md-2">
-                                          <div class="form-group">
-                                                <label for="aux_p_venta">Precio de venta:</label>
-                                                <input type="number" min="0" step="0.01" name="aux_p_venta" id="aux_p_venta" class="form-control" required>
-                                          </div>
-                              </div>
                               <div class="col-md-1">
                                           <div class="form-group">
                                                 <label for="btn_agregar"><strong>Agregar</strong></label>
@@ -153,21 +152,27 @@
                                                 <th>Cantidad</th>
                                                 <th>Precio de compra</th>
                                                 <th>Descuento</th>
-                                                <th>Precio de venta</th>
                                                 <th>Subtotal</th>
                                                 <th>Eliminar</th>
                                           </thead>
                                           <tbody>
                                           </tbody>
                                           <tfoot>
+                                                <th>Total (con IVA)</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th><input type="hidden" step="0.01" name="total_iva_input" id="total_iva_input" value="0.00"><strong id="total_iva" name="total_iva">0.00</strong></th>
+                                                <th></th>
+                                          </tfoot>
+                                          <tfoot>
                                                 <th>Total</th>
                                                 <th></th>
                                                 <th></th>
                                                 <th></th>
+                                                <th><input type="hidden" step="0.01" name="total_input" id="total_input" value="0.00"><strong id="total" name="total">0.00</strong></th>
                                                 <th></th>
-                                                <th><strong id="total">0.00</strong></th>
-                                                <th></th>
-                                          </tfoot>
+                                          </tfoot>                                          
                                     </table>                                                                                                                       
                         </div>
                   </div>
@@ -178,12 +183,16 @@
             <div class="col-md-12">
                         <div class="form-group" id="guardar">
                               <button type="submit" class="btn btn-success">Guardar</button>
-                              <button type="reset" class="btn btn-danger">Cancelar</button>
+                              <a onclick="return abrir_modal('{% url 'inventario:CancelarCompra' %}')" class="btn btn-danger">Cancelar</a>
                         </div>
             </div>
             <div class="col-md-12">
                   <h6 id="alerta_guardar" class="alerta"></h6>
             </div>
+      </div>
+
+      <!-- Importante para el modal NO BORRAR -->
+      <div id="popup" class="modal fade" role="dialog">
       </div>
 </form>
 </section>
@@ -203,7 +212,7 @@
             $(document).ready(function()
             {
                   $("#guardar").hide();
-                  $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos!")
+                  $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos a la tabla!")
                   
                   var table = $('#tabla_de_detalles').DataTable( {
                   "info": false,
@@ -228,7 +237,11 @@
                         var contador = $target.data("value");
 
                         total = total - subtotal[contador];
+                        total_iva = total + total * 0.13
                         $("#total").html(total);
+                        $("#total_input").val(total);
+                        $("#total_iva").html(total_iva);
+                        $("#total_iva_input").val(total_iva);
                         $("#fila" + contador).remove();
                         evaluar();
 
@@ -243,26 +256,22 @@
                   //Variables.
                   var cont = 0;
                   total = 0;
+                  total_iva = 0;
                   subtotal = [];
 
-                  $(document).ready(function(){
-                        /*$('#btn_agregar').click(function(){
-                              agregar();
-                        });*/
-                  });
-
+                  //Funciones.
                   function agregar(table){
                         $('#btn_agregar').on( 'click', function () {
                               idproducto = $('#aux_producto').val();
                               producto = $("#aux_producto option:selected").text();
                               cantidad = $("#aux_cantidad").val();
                               precio_compra = $("#aux_p_compra").val();
-                              precio_venta = $("#aux_p_venta").val();
                               descuento = $("#aux_descuento").val();
 
-                              if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && descuento != "" && precio_venta != ""){
+                              if (idproducto != "" && cantidad != "" && cantidad > 0 && precio_compra != "" && descuento != ""){
                                     subtotal[cont] = (cantidad * precio_compra ) - (cantidad * precio_compra * descuento);
                                     total = total + subtotal[cont];
+                                    total_iva = total + total * 0.13
 
                                     //var fila = '<tr id="fila'+cont+'">
                                           //<td><input type="hidden" name="idproducto[]" value="'+idproducto+'">'+producto+'</td>
@@ -272,11 +281,10 @@
                                           //<td>'+subtotal[cont]+'</td><td><button type="button" class="btn btn-danger" onclick="eliminar('+cont+');">X</button></td></tr>';
                                     //$("#tabla_de_detalles").append(fila);
                                     table.row.add( [
-                                          `<input type="hidden" name="idproducto[]" value="${idproducto}">'${producto}`,
-                                          `<input type="hidden" name="cantidad[]" value="${cantidad}">${cantidad}`,
-                                          `<input type="hidden" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
-                                          `<input type="hidden" name="descuento[] value="${descuento}">${descuento}`,
-                                          `<input type="hidden" name="precio_venta[]" value="${precio_venta}">${precio_venta}`,
+                                          `<input type="hidden" id="idproducto[]" name="idproducto[]" value="${idproducto}">${producto}`,
+                                          `<input type="hidden" id="cantidad[]" name="cantidad[]" value="${cantidad}">${cantidad}`,
+                                          `<input type="hidden" id="precio_compra[]" name="precio_compra[]" value="${precio_compra}">${precio_compra}`,
+                                          `<input type="hidden" id="descuento[]" name="descuento[]" value="${descuento}">${descuento}`,
                                           `${subtotal[cont]}`,
                                           `<button type="button" class="eliminar btn btn-danger" id="btn_eliminar" name="btn_eliminar" data-value="${cont}">X</button>`,
                                     ] ).draw( false );
@@ -284,6 +292,9 @@
                                     cont++;
                                     limpiar();
                                     $("#total").html(total);
+                                    $("#total_input").val(total);
+                                    $("#total_iva").html(total_iva);
+                                    $("#total_iva_input").val(total_iva);
                                     evaluar();
                               
                                     
@@ -293,19 +304,9 @@
                         } );
                   }
 
-
-                  //Funciones
-                  /*function eliminar(contador){
-                        total = total - subtotal[contador];
-                        $("#total").html(total);
-                        $("#fila" + contador).remove();
-                        evaluar();
-                  }*/
-
                   function limpiar(){
                         $("#aux_cantidad").val("");
                         $("#aux_p_compra").val("");
-                        $("#aux_p_venta").val("");
                         $("#aux_descuento").val("");
                   }
 
@@ -320,5 +321,62 @@
                         }
                   }
 
+                  function validar_entero(e){
+                        tecla = (document.all) ? e.keyCode : e.which;
+
+                        //Tecla de retroceso para borrar, siempre la permite.
+                        if (tecla==8){
+                              return true;
+                        }
+                              
+                        // Patron de entrada, en este caso solo acepta numeros enteros.
+                        patron =/[0-9]/;
+                        tecla_final = String.fromCharCode(tecla);
+                        return patron.test(tecla_final);
+                  }
+
+                  function validar_decimal(e){
+                        tecla = (document.all) ? e.keyCode : e.which;
+
+                        //Tecla de retroceso para borrar, siempre la permite.
+                        if (tecla==8){
+                              return true;
+                        }
+                              
+                        // Patron de entrada, en este caso acepta decimales.
+                        patron =/[0-9-.]/;
+                        tecla_final = String.fromCharCode(tecla);
+                        return patron.test(tecla_final);
+                  }
+
+                  $(function () {
+                        $( "#aux_descuento" ).change(function() {
+                        var max = parseInt($(this).attr('max'));
+                        var min = parseInt($(this).attr('min'));
+                        if ($(this).val() > max)
+                        {
+                              $(this).val(max);
+                        }
+                        else if ($(this).val() < min)
+                        {
+                              $(this).val(min);
+                        }       
+                        }); 
+                  });
+
+                  //Modal.
+                  var modal;
+
+                  function abrir_modal(url) {
+                  $('#popup').load(url, function() {
+                        $(this).modal('show');
+                  });
+                  return false;
+                  }
+
+                  function cerrar_modal() {
+                  $('#popup').modal('hide');
+                  return false;
+                  }
       </script>
 {% endblock Script %}

@@ -24,7 +24,7 @@ def nuevoKardex(opcion,producto_id ,cantidad, precio):
 			kardex.cantEntrada = cantidad
 			kardex.cantSalida = 0
 			kardex.cantExistencia = cantidad
-			kardex.precEntrada = precio
+			kardex.precEntrada = Decimal(precio)
 			kardex.precSalida = 0
 			kardex.precExistencia = precio
 			kardex.montoEntrada = Decimal(cantidad) * Decimal(precio)

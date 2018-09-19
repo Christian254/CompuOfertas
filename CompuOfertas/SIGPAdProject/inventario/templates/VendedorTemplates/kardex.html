@@ -7,22 +7,6 @@
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 <style type="text/css">
-    details {
-        padding: 15px;
-        background-color: #f6f7f8;
-        margin-bottom: 20px;
-    }
-    summary {
-        cursor: pointer;
-    }
-    summary::-webkit-details-marker {
-        display: none;
-    }
-    summary:before {
-        content: "\2714"; 
-        color: #696f7c;
-        margin-right: 5px;
-    }
     .archivo{
         padding:20px;
         margin-left:60px;
@@ -32,6 +16,15 @@
         padding:5px;
         margin-left:60px;
         margin-top: 40px;
+    }
+    .control{
+        border-radius: 15px;
+    }
+    .aceptar{
+        border-radius: 10px;
+    }
+    .espacio{
+        margin-left: 20px;
     }
 </style>
 
@@ -45,21 +38,33 @@
         <div class="col-xs-11 archivo">
             <section class="panel default blue_title h2 text-center">
                 <div class="panel-heading">Kardex de: <span class="semi-bold"> {{producto.nombre}} </span> en año {{fecha.year}} </div>
-                <div class="panel-heading">{{ultimo.fecha}} <span class="semi-bold"> Existencia {{ultimo.cantExistencia}} </span> precio de compra actual: {{ultimo.precExistencia}} </div>
             </section>
             <div class="row">
                 <div class="col-12">
+                    <a href="/mostrarInventario" class="btn btn-danger aceptar espacio">regresar</a>
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="">
                             <input type="text" id="accion" name="accion" value="buscar" hidden="">
                             <label>bucar fecha: YYYY-DD-MM </label>
-                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
-                            <input type="submit" value="Buscar" class="btn btn-success">
+                            <input name="consulta" type="text" placeholder="Buscar" class="control" value="{{request.GET.consulta}}">
+                            <input type="submit" value="Buscar" class="btn btn-success aceptar">
                         </form>
                     </nav>
                 </div>
                 <div class="col-md-12">
                     <div class="block-web">
+                        <div class="panel-heading"><font size="4">Ultima compra: {{ultimo.fecha}} <span class="semi-bold"> Existencia actual: {{ultimo.cantExistencia}} </span> precio de compra actual: {{ultimo.precExistencia}} <span class="semi-bold"> Precio de venta actual: {% if producto.inventario.precio_venta_producto == 0 %} <strong><font size="4" style="color:red;">{{producto.inventario.precio_venta_producto}}</font> <marquee behavior="alternate">Asignele precio a este producto</marquee></strong> {% else %}{{producto.inventario.precio_venta_producto}} {% endif %} </span></font> </div>
+                        <div class="col-xs-12 text-left">
+                            <form method="POST">
+                                {% csrf_token %}
+                                    <label>Desea camiar el precio de venta?.... el precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
+                                    <p>
+                                        <label>Nuevo precio: </label>
+                                        <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}" min="0.01" required="">
+                                    </p>
+                                    <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
+                            </form>
+                        </div>
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
@@ -73,7 +78,6 @@
                                     <th>Cantidad Existencia</th>
                                     <th>Precio Existencia</th>
                                     <th>Monto Exitencia</th>       
-                                    <th>Accion</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,8 +105,6 @@
                                             <td>{{k.cantExistencia}}</td>
                                             <td>{{k.precExistencia}}</td>
                                             <td>{{k.montoExistencia}}</td>
-                                            <td align="center"> <a href=""><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
-                                            </td>
                                         </tr>
                                     {% endfor %}
                             </tbody>
@@ -136,7 +138,6 @@
         </div>
     </div>
 </div> 
-
 
 
 {%else%}

@@ -12,6 +12,7 @@ from datetime import datetime
 from decimal import *
 from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
+from inventario.reporteCompra import *
 import openpyxl
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -457,7 +458,7 @@ def facturaVenta(request,id):
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
-	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1),use_natural_foreign_keys=True)
+	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1).exclude(inventario__precio_venta_producto=0),use_natural_foreign_keys=True)
 	return HttpResponse(producto, content_type='application/json')
 
 
@@ -493,15 +494,50 @@ def nueva_compra(request):
 	proveedores = Proveedor.objects.filter(estado=True)
 	productos = Producto.objects.filter(estado=1)
 	fecha_hora = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+
 	try:
 		if request.method == 'POST':
+			compra = Compra()
+			compra.empleado = empleado
+			if proveedores:
+				prov = Proveedor.objects.get(id=request.POST.get('idproveedor', None))
+				compra.proveedor = prov
+			compra.total_compra = request.POST.get('total_input',None)
+			compra.total_compra_iva = request.POST.get('total_iva_input',None)
+			compra.descripcion = request.POST.get('descripcion',None)
+			compra.fecha_hora = datetime.now()
+			compra.save()
+
+			#idproducto = request.POST.get('idproducto',None)
+			idproducto = request.POST.getlist('idproducto[]')
+			cantidad = request.POST.getlist('cantidad[]')
+			precio_compra = request.POST.getlist('precio_compra[]')
+			descuento = request.POST.getlist('descuento[]')
+
+			contador = 0
+
+			while(contador < len(idproducto)):
+				detalle_compra = DetalleCompra()
+				detalle_compra.compra = compra
+				detalle_compra.producto_id = idproducto[contador]
+				inventario = Inventario.objects.get(producto__id=idproducto[contador])
+				detalle_compra.cantidad = cantidad[contador]
+				detalle_compra.precio_compra = precio_compra[contador]
+				detalle_compra.descuento = descuento[contador]
+				inventario.existencia = int(inventario.existencia) + int(cantidad[contador])
+				inventario.save()
+				detalle_compra.save()
+				contador = contador + 1
+
 			context = {
+				'exito':"Exito",
 				'proveedores':proveedores,
 				'productos': productos,
 				'usuario':usuario,
 				'empleado':empleado,
 				'fecha_hora':fecha_hora,
 			}
+			return redirect('/facturarCompra/{}'.format(compra.id))
 		else:
 			context = {
 				'proveedores':proveedores,
@@ -510,11 +546,36 @@ def nueva_compra(request):
 				'empleado':empleado,
 				'fecha_hora':fecha_hora,
 			}
-		return render(request, 'VendedorTemplates/nuevaCompra.html', context)
-
+			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
 	except Exception as e:
-		context = {'error':"Mensaje de error"}		
+		context = {
+				'error':"Ha ocurrido un error, vuelva a intentarlo.",
+				'proveedores':proveedores,
+				'productos': productos,
+				'usuario':usuario,
+				'empleado':empleado,
+				'fecha_hora':fecha_hora,
+			}
 	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def cancelar_compra(request):
+	return render(request,'VendedorTemplates/cancelarCompra.html',{})
+
+@permission_required('SIGPAd.view_seller')
+def facturar_compra(request, id):
+	compra = get_object_or_404(Compra, id=id)
+	detalle_compra = DetalleCompra.objects.filter(compra_id=id)
+	context = {
+		'compra': compra,
+		'detalle_compra': detalle_compra,
+	}
+	return render(request,'VendedorTemplates/facturarCompra.html',context)
+
+def reporte_compra(request, id):
+	compra = get_object_or_404(Compra, id=id)
+	detalle_compra = DetalleCompra.objects.filter(compra_id=id)
+	return generar_reporte_compra(request, compra, detalle_compra)
 #Fin vistas de Compras.	
 
 @permission_required('SIGPAd.view_seller')
@@ -657,6 +718,10 @@ def mostrarKardex(request, pk):
 		producto = Producto.objects.get(pk=pk)
 		kardex_producto = Kardex.objects.filter(producto=producto)
 		ultimo = kardex_producto.last()
+		if ultimo:
+			precio_sugerido = round((Decimal(ultimo.precExistencia) * Decimal(1.25)),2)
+		else:
+			precio_sugerido = 0
 		fech = datetime.now()
 		anio = fech.year
 		if consulta:
@@ -677,11 +742,21 @@ def mostrarKardex(request, pk):
 			kardex_producto = paginator.page(1)
 		except EmptyPage:
 			producto = paginator.page(paginator.num_pages)
+
+		if request.method=='POST':
+			precio = request.POST.get('nuevoPrecio',None)
+			if precio != None:
+				pr = int(precio)
+				if pr >= 0:
+					inventario = producto.inventario
+					inventario.precio_venta_producto = precio
+					inventario.save()
 		context = {
 			'producto':producto,
 			'kardex':kardex_producto,
 			'fecha':fech,
 			'ultimo':ultimo,
+			'precio_sugerido':precio_sugerido,
 		}
 		return render(request,'VendedorTemplates/kardex.html',context)
 	except Producto.DoesNotExist:

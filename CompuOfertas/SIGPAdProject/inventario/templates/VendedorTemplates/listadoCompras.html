@@ -46,7 +46,7 @@
                                 <td>{{compra.empleado.nombre}}</td>
                                 <td>{{compra.proveedor.razon_social}}</td>
                                 <td>{{compra.fecha_hora}}</td>
-                                <td><a href="" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i> Generar PDF</a></td>
+                                <td><a href="{% url 'inventario:ReporteCompra' compra.id  %}" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i> Generar PDF</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
