@@ -7,16 +7,38 @@
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 <style type="text/css">
-    .archivo{
-        padding:20px;
-        margin-left:60px;
+    details {
+        padding: 15px;
+        background-color: #f6f7f8;
+        margin-bottom: 20px;
+    }
+    
+    summary {
+        cursor: pointer;
+    }
+    
+    summary::-webkit-details-marker {
+        display: none;
+    }
+    
+    summary:before {
+        content: "\2714";
+        color: #696f7c;
+        margin-right: 5px;
+    }
+    
+    .archivo {
+        padding: 20px;
+        margin-left: 60px;
         margin-top: 40px;
     }
-    .descarga{
-        padding:5px;
-        margin-left:60px;
+    
+    .descarga {
+        padding: 5px;
+        margin-left: 60px;
         margin-top: 40px;
     }
+
     .control{
         border-radius: 15px;
     }
@@ -36,7 +58,7 @@
             <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
         <div class="col-xs-11 archivo">
-            <section class="panel default blue_title h2 text-center">
+            <section class="panel panel-default h2 text-center">
                 <div class="panel-heading">Kardex de: <span class="semi-bold"> {{producto.nombre}} </span> en año {{fecha.year}} </div>
             </section>
             <div class="row">
@@ -55,15 +77,18 @@
                     <div class="block-web">
                         <div class="panel-heading"><font size="4">Ultima compra: {{ultimo.fecha}} <span class="semi-bold"> Existencia actual: {{ultimo.cantExistencia}} </span> precio de compra actual: {{ultimo.precExistencia}} <span class="semi-bold"> Precio de venta actual: {% if producto.inventario.precio_venta_producto == 0 %} <strong><font size="4" style="color:red;">{{producto.inventario.precio_venta_producto}}</font> <marquee behavior="alternate">Asignele precio a este producto</marquee></strong> {% else %}{{producto.inventario.precio_venta_producto}} {% endif %} </span></font> </div>
                         <div class="col-xs-12 text-left">
-                            <form method="POST">
-                                {% csrf_token %}
-                                    <label>Desea camiar el precio de venta?.... el precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
-                                    <p>
-                                        <label>Nuevo precio: </label>
-                                        <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}" min="0.01" required="">
-                                    </p>
-                                    <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
-                            </form>
+                            <details>
+                                <summary class="btn btn-info aceptar">Cambiar precio de venta</summary>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                        <label>Desea camiar el precio de venta?.... el precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
+                                        <p>
+                                            <label>Nuevo precio: </label>
+                                            <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}" min="0.01" required="">
+                                        </p>
+                                        <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
+                                </form>
+                            </details>
                         </div>
                         <table class="table">
                             <thead class="bg-primary">
