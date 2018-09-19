@@ -746,7 +746,7 @@ def mostrarKardex(request, pk):
 		if request.method=='POST':
 			precio = request.POST.get('nuevoPrecio',None)
 			if precio != None:
-				pr = int(precio)
+				pr = round(Decimal(precio),2)
 				if pr >= 0:
 					inventario = producto.inventario
 					inventario.precio_venta_producto = precio
