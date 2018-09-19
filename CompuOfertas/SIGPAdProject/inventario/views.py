@@ -457,7 +457,7 @@ def facturaVenta(request,id):
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
-	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1),use_natural_foreign_keys=True)
+	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1).exclude(inventario__precio_venta_producto=0),use_natural_foreign_keys=True)
 	return HttpResponse(producto, content_type='application/json')
 
 
@@ -717,7 +717,10 @@ def mostrarKardex(request, pk):
 		producto = Producto.objects.get(pk=pk)
 		kardex_producto = Kardex.objects.filter(producto=producto)
 		ultimo = kardex_producto.last()
-		precio_sugerido = round((Decimal(ultimo.precExistencia) * Decimal(1.25)),2)
+		if ultimo:
+			precio_sugerido = round((Decimal(ultimo.precExistencia) * Decimal(1.25)),2)
+		else:
+			precio_sugerido = 0
 		fech = datetime.now()
 		anio = fech.year
 		if consulta:
@@ -742,9 +745,11 @@ def mostrarKardex(request, pk):
 		if request.method=='POST':
 			precio = request.POST.get('nuevoPrecio',None)
 			if precio != None:
-				inventario = producto.inventario
-				inventario.precio_venta_producto = precio
-				inventario.save()
+				pr = int(precio)
+				if pr >= 0:
+					inventario = producto.inventario
+					inventario.precio_venta_producto = precio
+					inventario.save()
 		context = {
 			'producto':producto,
 			'kardex':kardex_producto,
