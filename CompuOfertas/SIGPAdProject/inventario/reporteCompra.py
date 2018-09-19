@@ -1,3 +1,5 @@
+# -*- coding: ascii -*-
+from __future__ import unicode_literals
 import os
 from io import BytesIO
 from reportlab.pdfgen import canvas
@@ -20,7 +22,6 @@ def generar_reporte_compra(request, compra, detalle_compra):
 	#Creando la cabecera HTTPResponse con PDF.
 	response =HttpResponse(content_type='application/pdf')
 	response['Content-Disposition'] = 'attachment; filename=factura_compra.pdf'
-	
 	#Creando el objeto PDF, usando el objeto BytesIO
 	buffer = BytesIO()
 	fecha= date.today()
@@ -81,16 +82,16 @@ def generar_reporte_compra(request, compra, detalle_compra):
 	high = 650
         high = high - 25
         c.setFont('Vera',10)
-        c.drawString(30,high,'Empleado: ' + str(compra.empleado.nombre))
+        c.drawString(30,high,'Empleado: ' + compra.empleado.nombre.encode('utf-8').decode('utf-8'))
         high = high - 12
         c.setFont('Vera',10)
         c.drawString(30,high,'Proveedor: ' + str(compra.proveedor))
         high = high - 12
         c.setFont('Vera',10)
-        c.drawString(30,high,'Descripcion: ' + str(compra.descripcion))
+        c.drawString(30,high,'Descripcion: ' + compra.descripcion.encode('utf-8').decode('utf-8'))
         high = high - 12
         c.setFont('Vera',10)
-        c.drawString(30,high,'Fecha y Hora: '+str(compra.fecha_hora))
+        c.drawString(30,high,'Fecha y Hora: '+ str(compra.fecha_hora))
         high = high - 12
         
         high = 525
