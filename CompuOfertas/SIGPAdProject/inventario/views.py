@@ -432,6 +432,8 @@ def registrarVenta(request):
 				id_prod = p.id
 				productos_anadidos_kardex = nuevoKardex(2,id_prod,detalle_venta.cantidad,0)
 				p.inventario.save()	
+				if p.inventario.existencia < 5:
+					enviarCorreo('Inventario Critico','Favor de revisar el inventario y agregar nuevas existencias')
 		cliente_usuario = request.POST.get('select-js',None)
 		if(cliente_usuario):
 			cliente = Cliente.objects.get(usuario__username=cliente_usuario)
@@ -671,16 +673,31 @@ def subirExcel(request):
 def mostrarInventario(request):
 	consulta = request.GET.get('consulta')
 	producto = Producto.objects.all()
+	empleado = request.user.empleado_set.all().first()
+	admin = Empleado.objects.filter(puesto__nombre='Gerente')
+	superUser = User.objects.filter(is_superuser=True).first()
+	error = ''
+	exito = ''
 	if consulta:
 		producto = producto.filter(
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
+	if request.method == 'POST':
+		mensaje = request.POST.get('mensaje',None)
+		if mensaje != None:
+			title = "mensaje: {} ".format(empleado.nombre)
+			for x in admin:
+				error = error + enviarCorreo(title,mensaje,x.email)
+			error = error + enviarCorreo(title,mensaje,superUser.email)
+			if error:
+				pass
+			else:
+				exito = 'Mensajes enviados con exito'
 	paginator = Paginator(producto, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
-	
 	page = request.GET.get('page')
 	try:
 		producto = paginator.page(page)
@@ -688,19 +705,19 @@ def mostrarInventario(request):
 		producto = paginator.page(1)
 	except EmptyPage:
 		producto = paginator.page(paginator.num_pages)
-
-	context={'producto':producto}
+	context={'producto':producto,'empleado':empleado,'admin':admin,'error':error,'exito':exito}
 	return render(request,'VendedorTemplates/inventario.html',context)
 
 
-def enviarCorreo():
+def enviarCorreo(title,string_data, email):
 	try:
 		msg = MIMEMultipart()
-		password = "toor215IDS"
+		password = "toor215IDSA"
 		msg['From'] = "compuofertaSDI215@gmail.com"
-		msg['To'] = "christianfuentes254@gmail.com"
-		msg['Subject'] = "Inventario critico"
-		message = "Saludos: {} , le informamos que algun producto tiene bajas existencias en el inventario, por favor abastecer dicho producto.... le saludamos y esparamos resuelva esto ALV".format(msg['To'])
+		print(email)
+		msg['To'] = email
+		msg['Subject'] = title
+		message = string_data
 		msg.attach(MIMEText(message, 'plain'))
 		server = smtplib.SMTP('smtp.gmail.com: 587')
 		server.starttls()
@@ -708,9 +725,10 @@ def enviarCorreo():
 		server.sendmail(msg['From'], msg['To'], msg.as_string())
 		server.quit()
 		print("successfully sent email to %s:" % (msg['To']))
-		return "successfully sent email to %s:" % (msg['To'])
+		return ''
 	except Exception as e:
-		return "Error, mensaje fallido al administrador, para anunciar el inventario {}".format(e.message)
+		print("Error, mensaje fallido al administrador, para anunciar el inventario {} Error: {}".format(string_data,e.message))
+		return 'Error el enviar {} \n'.format(email)
 
 def mostrarKardex(request, pk):
 	try:

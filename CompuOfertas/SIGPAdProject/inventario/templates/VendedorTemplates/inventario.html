@@ -39,94 +39,129 @@
 
 
 </style>
-
 <div class="row">
     <div class="col-xs-12">
-        {% if error %}
-            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
-        {% elif exito %}
-            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
-        {% endif %}
-        <div class="col-xs-8 archivo">
-            <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading"><span class="semi-bold"> Inventario </span> </div>
-            </section>
-
-            <div class="row">
-                <div class="col-12">
-                    <a href="/" class="btn btn-danger aceptar descarga">regresar</a>
-                    <nav class="navbar text-right">
-                        <form class="form-inline" method="GET" action="">
-                            <input type="text" id="accion" name="accion" value="buscar" hidden="">
-                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="aceptar">
-                            <input type="submit" value="Buscar" class="btn btn-success aceptar">
-                        </form>
-                    </nav>
-                </div>
-                <div class="col-md-12">
-                    <div class="block-web">
-                        <table class="table">
-                            <marquee behavior="alternate">Asignele precio a los productos en rojo</marquee>
-                            <thead class="bg-primary">
-                                <tr>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Descripcion</th>
-                                    <th>marca</th>
-                                    <th>existencia</th>
-                                    <th>precio</th>
-                                    <th>Accion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    {% for p in producto %}
-                                        <tr>
-                                            <td>{{p.codigo}}</td>
-                                            <td>{{p.nombre}}</td>
-                                            <td>{{p.descripcion}}</td>
-                                            <td>{{p.marca}}</td>
-                                            <td> {{p.inventario.existencia}}</td>
-                                            {% if p.inventario.precio_venta_producto == 0 %}
-                                                <td> <font size="3" style="color:white; background-color:red;">{{p.inventario.precio_venta_producto}} </font></td>
-                                            {% else %}
-                                                <td> {{p.inventario.precio_venta_producto}} </td>
-                                            {% endif %}
-                                            <td align="center"> <a href="mostrarKardex/{{p.id}}"><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <section class="panel default blue_title h2 text-center">
+            <div class="panel-heading"><span class="semi-bold"> Inventario </span> </div>
+        </section>
+        <div class="row">
+            <div class="col-xs-8">
+                <a href="/" class="btn btn-danger aceptar descarga">regresar</a>
+                <nav class="navbar text-right">
+                    <form class="form-inline" method="GET" action="">
+                        <input type="text" id="accion" name="accion" value="buscar" hidden="">
+                        <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="aceptar">
+                        <input type="submit" value="Buscar" class="btn btn-success aceptar">
+                    </form>
+                </nav>
             </div>
-            <div class="row text-center">
-                <div class="col">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            {% if producto.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page={{ producto.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
-                            {%else%}
-                            <li class="disabled"><span>Anterior</span></li>
-                            {% endif %} {% for i in producto.paginator.page_range %} {% if producto.number == i %}
-                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
-                            </li>
-                            {% else %}
-                            <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
-                            {% endif %} {% endfor %} {% if producto.has_next %}
-                            <li class="page-item"><a class="page-link" href="?page={{ producto.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
-                            {%else%}
-                            <li class="disabled"><span>Siguiente</li>
-                                        {% endif %}
-                                    </ul>                        
-                                </nav>
-                            </div>
-                        </div>
-                </div>
         </div>
     </div>
-</div> 
-
+</div>
+<div class="row">
+    <div class="col-xs-8">
+        <div class="block-web">
+            <table class="table">
+                <marquee behavior="alternate">Asignele precio a los productos en rojo</marquee>
+                <thead class="bg-primary">
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>marca</th>
+                        <th>existencia</th>
+                        <th>precio</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in producto %}
+                    <tr>
+                        <td>{{p.codigo}}</td>
+                        <td>{{p.nombre}}</td>
+                        <td>{{p.descripcion}}</td>
+                        <td>{{p.marca}}</td>
+                        <td> {{p.inventario.existencia}}</td>
+                        {% if p.inventario.precio_venta_producto == 0 %}
+                        <td> <font size="3" style="color:white; background-color:red;">{{p.inventario.precio_venta_producto}} </font></td>
+                        {% else %}
+                        <td> {{p.inventario.precio_venta_producto}} </td>
+                        {% endif %}
+                        <td align="center"> <a href="mostrarKardex/{{p.id}}"><font size="5"> <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></font></span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="block-web">
+                {% if error %}
+                    <div class="col-xs-12">
+                        <h4 class="center"><strong class="alert alert-danger">{{error}}</strong> </h4>
+                    </div>
+                    <br>
+                {% elif exito %}
+                    <div class="col-xs-12">
+                        <h4 class="center"><strong class="alert alert-success">{{exito}}</strong> </h4>
+                    </div>
+                    <br>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="accion" id="accion" hidden="">
+                    <div class="form-group row">
+                        <label for="de" class="col-md-8 col-form-label">De: <strong>{{empleado.nombre}} {{empleado.apellido}}</strong> </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="para" class="col-md-12 col-form-label">Para: <strong> 
+                            {% if admin %}
+                                {% for a in admin %} 
+                                    {{a.nombre}} {{a.apellido}}, 
+                                {% endfor %}
+                            {% endif %}
+                            Administrado por default
+                        </strong> </label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="msj" class="col-md-4 col-form-label">mensaje:</label>
+                        <div class="col-md-8">
+                            <textarea name="mensaje" id="mensaje" class="form-control" placeholder="mensaje al administrador" title="ingrese su mensaje" required="" maxlength="300"></TEXTAREA>
+                        </div>
+                    </div>
+                    <input type="submit" name="enviar" value="enviar" class="btn btn-success aceptar">
+                </form>
+                <div>
+                    <p>Aqui puede enviar mensajes a los administradores para que corrijan algo del inventario, o gregen el precio respectivo si se necesita</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-xs-9">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if producto.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ producto.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+                    {%else%}
+                    <li class="disabled"><span>Anterior</span></li>
+                    {% endif %} {% for i in producto.paginator.page_range %} {% if producto.number == i %}
+                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                    </li>
+                    {% else %}
+                    <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
+                    {% endif %} {% endfor %} {% if producto.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ producto.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+                    {%else%}
+                    <li class="disabled"><span>Siguiente </span></li>
+                    {% endif %}
+                </ul>                        
+            </nav>
+        </div>
+    </div>
+</div>
 
 
 {%else%}
