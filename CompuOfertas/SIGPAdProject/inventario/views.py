@@ -28,6 +28,7 @@ import json
 from .kardex import nuevoKardex
 
 
+
 # Create your views here.
 ##No somos muy ordenados asique aqui vamos a empezar con el codigo del Sprint 2
 
@@ -782,7 +783,6 @@ def graficaEmpleado(request):
 	venta=''
 	nom=''
 	nomEmpleado = ''
-	nomb=''
 	empleado=Empleado.objects.all()
 	anioActual=datetime.now()
 	anio=int(str(anioActual.strftime('%Y')))
@@ -860,3 +860,80 @@ def graficaEmpleado(request):
     }
 
 	return render(request, 'VendedorTemplates/graficaEmpleado.html', context)
+
+def graficaProducto(request):
+	venta=''
+	mes = ''
+	mes1=0
+	cantidades=''
+	 
+	producto=Producto.objects.all()
+	productos=[obj.nombre for obj in producto]
+	cant=len(productos)
+	total = [0 for i in range(cant)]
+
+	anioActual=datetime.now()
+	anio=int(str(anioActual.strftime('%Y')))
+
+	if request.method=='POST':
+		mes = request.POST.get('mes',None)
+	if mes=='enero':
+		mes1=1
+	if mes=='febrero':
+		mes1=2
+	if mes=='marzo':
+		mes1=3
+	if mes=='abril':
+		mes1=4
+	if mes=='mayo':
+		mes1=5
+	if mes=='junio':
+		mes1=6
+	if mes=='julio':
+		mes1=7
+	if mes=='agosto':
+		mes1=8
+	if mes=='septiembre':
+		mes1=9
+	if mes=='octubre':
+		mes1=10
+	if mes=='noviembre':
+		mes1=11
+	if mes=='diciembre':
+		mes1=12
+
+	j=0
+	if mes:
+		for p in productos:
+			mes2=datetime(anio,mes1,1)
+			mes_venta = mes2.strftime("%Y-%m")
+			venta = Venta.objects.filter(Q(fecha_hora__icontains = mes_venta))
+		
+			cant1=len(venta)
+			cantidades1 = [0 for i in range(cant1)]
+			k=0
+
+			for v in venta:
+				nom = Producto.objects.filter(nombre=p)
+				detalle_venta = DetalleVenta.objects.filter(producto=nom).filter(venta=v)
+				cantidades=[obj.cantidad for obj in detalle_venta]
+				cantidades1[k]=max(cantidades or [0])
+				k=k+1
+			print nom
+			print cantidades1
+
+			suma=0
+			for i in cantidades1:
+				suma=suma+i
+			total[j]=suma
+			j=j+1
+
+	meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+	context = {
+        'meses': meses,
+        'productos': json.dumps(productos),
+        'total': json.dumps(total),
+
+    }
+
+	return render(request, 'VendedorTemplates/graficaProducto.html', context)
