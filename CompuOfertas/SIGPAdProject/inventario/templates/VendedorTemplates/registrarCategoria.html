@@ -34,7 +34,7 @@
     }
 
     .formulario{
-        margin-left:80px;
+        margin-left:60px;
         border-radius: 15px;
         font-size: 15px;
         min-height: 30px;
@@ -43,7 +43,7 @@
         max-width: 600px;
     }    
     .formularioD{
-        margin-left:200px;
+        margin-left:60px;
         border-radius: 15px;
         font-size: 15px;
         min-height: 70px;
@@ -53,24 +53,17 @@
     }    
 
     .aceptar{
+        margin-top: 20px;
         border-radius: 15px;
-    }
+        min-width: 100px;
+    }    
 
     .formularioL{
-        margin-left:10px;
-    }
-    .margen{
-        margin-left: 200px;
-    }
-    .largo{
-        min-width: 300px;
-    }
-
-    .centrado{
-        align-content: center;
+        margin-left:60px;
     }
 
 </style>
+
 <div class="row">
     <div class="col-xs-12">
         {% if error %}
@@ -78,14 +71,36 @@
         {% elif exito %}
             <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
         {% endif %}
-        <div class="col-xs-12">
+        <div class="col-xs-8 archivo">
             <section class="panel default blue_title h2 text-center">
                 <div class="panel-heading">Registrar <span class="semi-bold">categoria </span> </div>
             </section>
+            <div class="col-md-12">
+                <div class="block-web">
+                    <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border">
+                        {% csrf_token %}
+                        <input type="text" name="action" id="action" value="insert" hidden="true">
+                        <div class="form-group">
+                            <label class="formularioL">Código:</label>
+                            <input type="text" name="codigo" id="codigo" required="" class="formulario">
+                        </div>
+                        <div class="form-group">
+                            <label class="formularioL">Nombre:</label>
+                            <input type="text" name="nombre" id="nombre" required="" class="formulario">
+                        </div>
+                        <div class="form-group">
+                            <label class="formularioL">Descripción:</label>
+                            <TEXTAREA name="descripcion" id="descripcion" required="" class="formularioD"></TEXTAREA>
+                        </div>
+                        <div class="form-group center">
+                            <input type="submit" name="aceptar" id="aceptar" class="btn btn-success aceptar" value="Ingresar">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
 <div class="row">
         <div class="col-xs-8 archivo">
             <div class="row">
@@ -132,86 +147,28 @@
                         {% if categorias.has_previous%}
 
                         <button class="btn page-link" id="anterior-pag" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</button> {% else %}
-=======
->>>>>>> e05dd36cd9029dc70787fe2e3dcb7b89a6969d9f
 
-<div class="row formularioL">
-    <div class="col-xs-5">
-        <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border">
-            {% csrf_token %}
-            <input type="text" name="action" id="action" value="insert" hidden="true">
-            <div class="form-group">
-                <label class="formularioL">Código:</label>
-                <input type="text" name="codigo" id="codigo" required="" class="aceptar largo">
-            </div>
-            <div class="form-group">
-                <label class="formularioL">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" required="" class="aceptar largo">
-            </div>
-            <div class="form-group">
-                <label class="formularioL">Descripción:</label>
-                <TEXTAREA name="descripcion" id="descripcion" required="" class="aceptar largo"></TEXTAREA>
-            </div>
-            <div class="form-group">
-                <input type="submit" name="aceptar" id="aceptar" class="btn btn-success aceptar margen" value="Ingresar">
-            </div>
-        </form>
-    </div>
-    <div class="col-xs-6">
-        <form class="form-inline" method="GET" action="">
-            <input name="consulta" type="text" placeholder="Buscar" class="aceptar" value="{{request.GET.consulta}}">
-            <input type="submit" value="Buscar" class="btn btn-success aceptar">
-        </form>
-        <div class="block-web">
-            <table class="table">
-                <thead class="bg-primary">
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Accion</th>
-                    </tr>
-                </thead>
-                <tbody id="#cuerpo-tabla">
-                    {% for categoria in categorias %}
-                    <tr>
-                        <td>{{categoria.codigo}}</td>
-                        <td>{{categoria.nombre}}</td>
-                        <td>{{categoria.descripcion}}</td>
-                        <td><a href=""><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div class="center">
-                <ul class="pagination centrado">
-                    {% if categorias.has_previous%}
-                        <button class="btn page-link" id="anterior-pag" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</button> 
-                    {% else %}
-                        <button class="btn page-link" id="anterior-pag">Anterior</button> 
-                    {%endif%} 
-                    {% for i in categorias.paginator.page_range %} 
-                        {% if categorias.number == i %}
-                            <li class="page-item active numPag " val="{{i}}">
-                                <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
-                            </li>
+                        <button class="btn page-link" id="anterior-pag">Anterior</button> {%endif%} {% for i in categorias.paginator.page_range %} {% if categorias.number == i %}
+                        <li class="page-item active numPag " val="{{i}}">
+                            <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
+                        </li>
                         {% else %}
-                            <li class="page-item numPag">
-                                <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
-                            </li>
-                        {%endif%} 
-                    {%endfor%} 
-                    {% if categorias.has_next %}
-                        <button class="btn page-link" id="siguiente-pag" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ categorias.next_page_number }}">Siguiente</button> 
-                    {%else%}
-                        <a class="page-link ">Siguiente</a> 
-                    {%endif%}
-                </ul>
+                        <li class="page-item numPag">
+                            <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
+                        </li>
+                        {%endif%} {%endfor%} {% if categorias.has_next %}
+
+                        <button class="btn page-link" id="siguiente-pag" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ categorias.next_page_number }}">Siguiente</button> {%else%}
+
+                        <a class="page-link ">Siguiente</a> {%endif%}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
 </div>
+</div>
+
 {%else%}
 <h1>usuario anonimo</h1>
 {% endif %}
