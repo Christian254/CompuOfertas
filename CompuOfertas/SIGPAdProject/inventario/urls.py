@@ -34,12 +34,16 @@ urlpatterns = [
 	#Compras
 	url(r'listadoCompras/$',login_required(listado_de_compras), name="ListadoDeCompras"),
 	url(r'nuevaCompra/$', login_required(nueva_compra), name="NuevaCompra"),
+	url(r'cancelarCompra/$', login_required(cancelar_compra), name="CancelarCompra"),
+	url(r'facturarCompra/(?P<id>\d+)$', login_required(facturar_compra), name="FacturarCompra"),
+	url(r'reporteCompra/(?P<id>\d+)$', login_required(reporte_compra), name="ReporteCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
 
 	url(r'grafica$', login_required(grafica), name="grafica"),
 	url(r'graficaMes$', login_required(graficaMes), name="graficaMes"),
 	url(r'graficaEmpleado$', login_required(graficaEmpleado), name="graficaEmpleado"),
+	url(r'graficaProducto$', login_required(graficaProducto), name="graficaProducto"),
 	
 	url(r'^mostrarKardex/(?P<pk>\d+)$', login_required(mostrarKardex), name="mostrarKardex"),
 ]

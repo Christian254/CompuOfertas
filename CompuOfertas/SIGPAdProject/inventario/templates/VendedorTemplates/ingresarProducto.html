@@ -35,6 +35,9 @@
         margin-left: 60px;
         margin-top: 40px;
     }
+    .modelo{
+        border-radius: 10px;
+    }
 </style>
 
 <div class="row">
@@ -53,8 +56,8 @@
                 <div class="col-12">
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="" id="busqueda">
-                            <input name="consulta" id='consulta' type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
-                            <input type="submit" value="Buscar" id="buscar" class="btn btn-success">
+                            <input name="consulta" id='consulta' type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="modelo">
+                            <input type="submit" value="Buscar" id="buscar" class="btn btn-success modelo">
                         </form>
                     </nav>
                 </div>

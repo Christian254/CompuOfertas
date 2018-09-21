@@ -3,35 +3,39 @@
 {% block Body %}
 <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
     {% csrf_token %}
-    <div class="center">
+        <div class="center">
         <a href="{% url 'inventario:graficaMes' %}" class="btn btn-success">VENTAS POR MES</a>
         <a href="{% url 'inventario:graficaEmpleado' %}" class="btn btn-success">VENTAS POR EMPLEADO</a>
         <a href="{% url 'inventario:graficaProducto' %}" class="btn btn-success">PRODUCTOS MÁS VENDIDOS</a>
     </div>
-        <select id="anioAnterior" name="anioAnterior">
-            <option value="anio">{{anio}}</option>
-            <option value="anio1">{{anio1}}</option>
-            <option value="anio2">{{anio2}}</option>
+        <select id="mes" name="mes">
+            {% for m in meses %}
+            <option value="{{m}}">{{m}}</option>
+            {% endfor %}
         </select>
 
     <input type="submit" class="btn btn-success" value="Aceptar">
 </form>
-  <canvas id="mesChart" height="120"></canvas>
+
+<canvas id="productosChart" height="120"></canvas>
 
 
 <script>
-var ctx = document.getElementById("mesChart");
-var meses = JSON.parse('{{ meses|safe }}');
-var ventas = JSON.parse('{{ ventas|safe }}');
-var mesChart = new Chart(ctx, {
-    type: 'bar',
+var ctx = document.getElementById("productosChart");
+var productos = JSON.parse('{{ productos|safe }}');
+var total = JSON.parse('{{ total|safe }}');
+var productosChart = new Chart(ctx, {
+    type: 'pie',
     data: {
-        labels: meses,
+        labels: productos,
         datasets: [{
-            {% if anioAnterior %}
-            label: 'VENTAS POR MES DEL AÑO: {{anioAnterior}}',
+            {% if mes %}
+             {% for m in meses %}
+            label: 'PRODUCTOS MAS VENDIDOS DEL MES: {{m}}',
+            {% endfor %}
             {% endif %}
-            data: ventas,
+
+            data: total,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',
                 'rgba(54, 162, 235, 0.5)',

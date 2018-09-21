@@ -12,6 +12,7 @@ from datetime import datetime
 from decimal import *
 from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
+from inventario.reporteCompra import *
 import openpyxl
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -26,6 +27,7 @@ from email.mime.text import MIMEText
 import smtplib
 import json
 from .kardex import nuevoKardex
+
 
 
 # Create your views here.
@@ -639,6 +641,8 @@ def registrarVenta(request):
 				id_prod = p.id
 				productos_anadidos_kardex = nuevoKardex(2,id_prod,detalle_venta.cantidad,0)
 				p.inventario.save()	
+				if p.inventario.existencia < 5:
+					enviarCorreo('Inventario Critico','Favor de revisar el inventario y agregar nuevas existencias')
 		cliente_usuario = request.POST.get('select-js',None)
 		if(cliente_usuario):
 			cliente = Cliente.objects.get(usuario__username=cliente_usuario)
@@ -665,7 +669,7 @@ def facturaVenta(request,id):
 
 @permission_required('SIGPAd.view_seller')
 def productoDisponible(request):
-	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1),use_natural_foreign_keys=True)
+	producto = serializers.serialize("json", Producto.objects.filter(inventario__existencia__gte=1).exclude(inventario__precio_venta_producto=0),use_natural_foreign_keys=True)
 	return HttpResponse(producto, content_type='application/json')
 
 
@@ -702,7 +706,7 @@ def nueva_compra(request):
 	productos = Producto.objects.filter(estado=1)
 	fecha_hora = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
-	if empleado != None: #Cambiar en un try despues.
+	try:
 		if request.method == 'POST':
 			compra = Compra()
 			compra.empleado = empleado
@@ -720,7 +724,6 @@ def nueva_compra(request):
 			cantidad = request.POST.getlist('cantidad[]')
 			precio_compra = request.POST.getlist('precio_compra[]')
 			descuento = request.POST.getlist('descuento[]')
-			precio_venta = request.POST.getlist('precio_venta[]')
 
 			contador = 0
 
@@ -732,16 +735,12 @@ def nueva_compra(request):
 				detalle_compra.cantidad = cantidad[contador]
 				detalle_compra.precio_compra = precio_compra[contador]
 				detalle_compra.descuento = descuento[contador]
-				detalle_compra.precio_venta = precio_venta[contador]
-				if int(precio_venta[contador]) > 0:
-					inventario.precio_venta_producto=precio_venta[contador]
 				inventario.existencia = int(inventario.existencia) + int(cantidad[contador])
 				inventario.save()
 				detalle_compra.save()
 				contador = contador + 1
 
 			context = {
-				'idproducto':idproducto,
 				'exito':"Exito",
 				'proveedores':proveedores,
 				'productos': productos,
@@ -749,7 +748,7 @@ def nueva_compra(request):
 				'empleado':empleado,
 				'fecha_hora':fecha_hora,
 			}
-			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+			return redirect('/facturarCompra/{}'.format(compra.id))
 		else:
 			context = {
 				'proveedores':proveedores,
@@ -759,8 +758,35 @@ def nueva_compra(request):
 				'fecha_hora':fecha_hora,
 			}
 			return render(request, 'VendedorTemplates/nuevaCompra.html', context)
-	
+	except Exception as e:
+		context = {
+				'error':"Ha ocurrido un error, vuelva a intentarlo.",
+				'proveedores':proveedores,
+				'productos': productos,
+				'usuario':usuario,
+				'empleado':empleado,
+				'fecha_hora':fecha_hora,
+			}
 	return render(request, 'VendedorTemplates/nuevaCompra.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def cancelar_compra(request):
+	return render(request,'VendedorTemplates/cancelarCompra.html',{})
+
+@permission_required('SIGPAd.view_seller')
+def facturar_compra(request, id):
+	compra = get_object_or_404(Compra, id=id)
+	detalle_compra = DetalleCompra.objects.filter(compra_id=id)
+	context = {
+		'compra': compra,
+		'detalle_compra': detalle_compra,
+	}
+	return render(request,'VendedorTemplates/facturarCompra.html',context)
+
+def reporte_compra(request, id):
+	compra = get_object_or_404(Compra, id=id)
+	detalle_compra = DetalleCompra.objects.filter(compra_id=id)
+	return generar_reporte_compra(request, compra, detalle_compra)
 #Fin vistas de Compras.	
 
 @permission_required('SIGPAd.view_seller')
@@ -856,16 +882,31 @@ def subirExcel(request):
 def mostrarInventario(request):
 	consulta = request.GET.get('consulta')
 	producto = Producto.objects.all()
+	empleado = request.user.empleado_set.all().first()
+	admin = Empleado.objects.filter(puesto__nombre='Gerente')
+	superUser = User.objects.filter(is_superuser=True).first()
+	error = ''
+	exito = ''
 	if consulta:
 		producto = producto.filter(
 			Q(nombre__icontains = consulta)|
 			Q(codigo__icontains = consulta)
 			).distinct()
+	if request.method == 'POST':
+		mensaje = request.POST.get('mensaje',None)
+		if mensaje != None:
+			title = "mensaje: {} ".format(empleado.nombre)
+			for x in admin:
+				error = error + enviarCorreo(title,mensaje,x.email)
+			error = error + enviarCorreo(title,mensaje,superUser.email)
+			if error:
+				pass
+			else:
+				exito = 'Mensajes enviados con exito'
 	paginator = Paginator(producto, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):
 		del parametros['page']
-	
 	page = request.GET.get('page')
 	try:
 		producto = paginator.page(page)
@@ -873,19 +914,19 @@ def mostrarInventario(request):
 		producto = paginator.page(1)
 	except EmptyPage:
 		producto = paginator.page(paginator.num_pages)
-
-	context={'producto':producto}
+	context={'producto':producto,'empleado':empleado,'admin':admin,'error':error,'exito':exito}
 	return render(request,'VendedorTemplates/inventario.html',context)
 
 
-def enviarCorreo():
+def enviarCorreo(title,string_data, email):
 	try:
 		msg = MIMEMultipart()
-		password = "toor215IDS"
+		password = "toor215IDSA"
 		msg['From'] = "compuofertaSDI215@gmail.com"
-		msg['To'] = "christianfuentes254@gmail.com"
-		msg['Subject'] = "Inventario critico"
-		message = "Saludos: {} , le informamos que algun producto tiene bajas existencias en el inventario, por favor abastecer dicho producto.... le saludamos y esparamos resuelva esto ALV".format(msg['To'])
+		print(email)
+		msg['To'] = email
+		msg['Subject'] = title
+		message = string_data
 		msg.attach(MIMEText(message, 'plain'))
 		server = smtplib.SMTP('smtp.gmail.com: 587')
 		server.starttls()
@@ -893,9 +934,10 @@ def enviarCorreo():
 		server.sendmail(msg['From'], msg['To'], msg.as_string())
 		server.quit()
 		print("successfully sent email to %s:" % (msg['To']))
-		return "successfully sent email to %s:" % (msg['To'])
+		return ''
 	except Exception as e:
-		return "Error, mensaje fallido al administrador, para anunciar el inventario {}".format(e.message)
+		print("Error, mensaje fallido al administrador, para anunciar el inventario {} Error: {}".format(string_data,e.message))
+		return 'Error el enviar {} \n'.format(email)
 
 def mostrarKardex(request, pk):
 	try:
@@ -903,7 +945,10 @@ def mostrarKardex(request, pk):
 		producto = Producto.objects.get(pk=pk)
 		kardex_producto = Kardex.objects.filter(producto=producto)
 		ultimo = kardex_producto.last()
-		precio_sugerido = round((Decimal(ultimo.precExistencia) * Decimal(1.25)),2)
+		if ultimo:
+			precio_sugerido = round((Decimal(ultimo.precExistencia) * Decimal(1.25)),2)
+		else:
+			precio_sugerido = 0
 		fech = datetime.now()
 		anio = fech.year
 		if consulta:
@@ -928,9 +973,11 @@ def mostrarKardex(request, pk):
 		if request.method=='POST':
 			precio = request.POST.get('nuevoPrecio',None)
 			if precio != None:
-				inventario = producto.inventario
-				inventario.precio_venta_producto = precio
-				inventario.save()
+				pr = round(Decimal(precio),2)
+				if pr >= 0:
+					inventario = producto.inventario
+					inventario.precio_venta_producto = precio
+					inventario.save()
 		context = {
 			'producto':producto,
 			'kardex':kardex_producto,
@@ -1038,7 +1085,6 @@ def graficaEmpleado(request):
 	venta=''
 	nom=''
 	nomEmpleado = ''
-	nomb=''
 	empleado=Empleado.objects.all()
 	anioActual=datetime.now()
 	anio=int(str(anioActual.strftime('%Y')))
@@ -1116,3 +1162,80 @@ def graficaEmpleado(request):
     }
 
 	return render(request, 'VendedorTemplates/graficaEmpleado.html', context)
+
+def graficaProducto(request):
+	venta=''
+	mes = ''
+	mes1=0
+	cantidades=''
+	 
+	producto=Producto.objects.all()
+	productos=[obj.nombre for obj in producto]
+	cant=len(productos)
+	total = [0 for i in range(cant)]
+
+	anioActual=datetime.now()
+	anio=int(str(anioActual.strftime('%Y')))
+
+	if request.method=='POST':
+		mes = request.POST.get('mes',None)
+	if mes=='enero':
+		mes1=1
+	if mes=='febrero':
+		mes1=2
+	if mes=='marzo':
+		mes1=3
+	if mes=='abril':
+		mes1=4
+	if mes=='mayo':
+		mes1=5
+	if mes=='junio':
+		mes1=6
+	if mes=='julio':
+		mes1=7
+	if mes=='agosto':
+		mes1=8
+	if mes=='septiembre':
+		mes1=9
+	if mes=='octubre':
+		mes1=10
+	if mes=='noviembre':
+		mes1=11
+	if mes=='diciembre':
+		mes1=12
+
+	j=0
+	if mes:
+		for p in productos:
+			mes2=datetime(anio,mes1,1)
+			mes_venta = mes2.strftime("%Y-%m")
+			venta = Venta.objects.filter(Q(fecha_hora__icontains = mes_venta))
+		
+			cant1=len(venta)
+			cantidades1 = [0 for i in range(cant1)]
+			k=0
+
+			for v in venta:
+				nom = Producto.objects.filter(nombre=p)
+				detalle_venta = DetalleVenta.objects.filter(producto=nom).filter(venta=v)
+				cantidades=[obj.cantidad for obj in detalle_venta]
+				cantidades1[k]=max(cantidades or [0])
+				k=k+1
+			print nom
+			print cantidades1
+
+			suma=0
+			for i in cantidades1:
+				suma=suma+i
+			total[j]=suma
+			j=j+1
+
+	meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+	context = {
+        'meses': meses,
+        'productos': json.dumps(productos),
+        'total': json.dumps(total),
+
+    }
+
+	return render(request, 'VendedorTemplates/graficaProducto.html', context)
