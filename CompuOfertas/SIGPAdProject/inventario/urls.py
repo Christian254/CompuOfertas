@@ -10,6 +10,12 @@ urlpatterns = [
     #URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
 	url(r'registrarCategoria$', login_required(registrarCategoria), name="registrarCategoria"),
+	url(r'editarCategoria/(?P<pk>\d+)$', login_required(editarCategoria), name="editarCategoria"),
+	url(r'mostrarCategoria/(?P<pk>\d+)$', login_required(mostrarCategoria), name="mostrarCategoria"),
+	url(r'eliminarCategoria/(?P<pk>\d+)$', login_required(eliminarCategoria), name="eliminarCategoria"),
+	url(r'categoriaEliminada/$', login_required(categoriaEliminada), name="categoriaEliminada"),
+	url(r'activarCategoria/(?P<pk>\d+)$', login_required(activarCategoria), name="activarCategoria"),
+	#URL Producto
 	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
 	url(r'registrarProducto/(?P<pk>\d+)/$', login_required(registrarProducto), name="registrarProducto"),
 	url(r'mostrarProducto/(?P<pk>\d+)$', login_required(mostrarProducto), name="mostrarProducto"),

@@ -90,7 +90,216 @@ def registrarCategoria(request):
 	context = {'error':error,'exito':exito,'categorias':categoria}
 	return render(request, 'VendedorTemplates/registrarCategoria.html', context)
 
+@permission_required('SIGPAd.view_seller')
+def editarCategoria(request, pk):
+	exito = None
+	existe = None
+	error = None
+	try:
+		categoria = Categoria.objects.get(pk=pk)
+	except Categoria.DoesNotExist:
+		categoria = None
 
+	if categoria is not None:
+		if request.method == 'POST':
+			try:
+				categoria.nombre = request.POST.get('nombre',None)
+				categoria.descripcion = request.POST.get('descripcion',None)
+				categoria.save()
+				#exito='Categoria guardada con exito'
+				return redirect("/registrarCategoria")
+			except Exception as e:
+				print(e.message)
+				if 'column codigo is not unique' in e.message:
+					error = 'Codigo de la categoria no es única'
+				if 'column nombre is not unique' in e.message:
+					error='El nombre de la categoria debe ser único'
+		else:
+			context = {
+				'categoria':categoria,
+				'exito':exito,
+				'error':error
+			}
+		
+		context = {
+				'categoria':categoria,
+				'exito':exito,
+				'error':error
+
+			}
+		return render(request,"VendedorTemplates/editarCategoria.html", context)
+	else:
+		existe = "La categoria no existe"
+		context = {
+			'categoria':categoria,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarCategoria.html", context)
+
+@permission_required('SIGPAd.view_seller')
+def eliminarCategoria(request, pk):
+	error=None
+	exito=None
+	try:
+		categoria=Categoria.objects.get(pk=pk)
+	except Categoria.DoesNotExist:
+		categoria = None
+	if categoria is not None:
+		categoria.estado=0
+		categoria.save()
+		exito='Categoria eliminada'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Categoria no eliminada'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	categorias = Categoria.objects.filter(estado=1)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = categorias.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		categorias=categorias
+	paginator = Paginator(categorias, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		categoria = paginator.page(page)
+	except PageNotAnInteger:
+		categoria = paginator.page(1)
+	except EmptyPage:
+		categoria = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'categorias':categoria,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/registrarCategoria.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def mostrarCategoria(request,pk):
+	error = ''
+	exito = ''
+	categorias = Categoria.objects.filter(categoria_id=pk)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = categorias.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		categorias=categorias
+	paginator = Paginator(categorias, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		categoria = paginator.page(page)
+	except PageNotAnInteger:
+		categoria = paginator.page(1)
+	except EmptyPage:
+		categoria = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'categorias':categoria,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/mostrarCategoria.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def categoriaEliminada(request):
+	error = ''
+	exito = ''
+	categoria = Categoria.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = categorias.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		categoria=categorias
+	paginator = Paginator(categoria, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		categoria = paginator.page(page)
+	except PageNotAnInteger:
+		categoria = paginator.page(1)
+	except EmptyPage:
+		categoria = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'categorias':categoria,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/categoriaEliminada.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def activarCategoria(request, pk):
+	error=None
+	exito=None
+	try:
+		categoria=Categoria.objects.get(pk=pk)
+	except Categoria.DoesNotExist:
+		categoria = None
+	if categoria is not None:
+		categoria.estado=1
+		categoria.save()
+		exito='Categoría activada'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Categoría no activada'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	categoria = Categoria.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		categorias = categorias.filter(
+			Q(nombre__icontains = consulta)|
+			Q(codigo__icontains = consulta)
+			).distinct()
+		categoria=categorias
+	paginator = Paginator(categoria, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		categoria = paginator.page(page)
+	except PageNotAnInteger:
+		categoria = paginator.page(1)
+	except EmptyPage:
+		categoria = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'categorias':categoria,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/categoriaEliminada.html',context)
 
 @permission_required('SIGPAd.view_seller')
 def ingresarProducto(request):

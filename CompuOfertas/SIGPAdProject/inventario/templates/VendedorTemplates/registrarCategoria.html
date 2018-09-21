@@ -1,7 +1,5 @@
 {% extends "baseUser.html" %}
 {% load staticfiles %}
-
-
 {% block Body %}
 {% if user.is_superuser %}
 <h1>superusuario</h1>
@@ -102,7 +100,7 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 <div class="row">
         <div class="col-xs-8 archivo">
             <div class="row">
@@ -122,8 +120,6 @@
                                     <th>Codigo</th>
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
-                                    <th>Condicion</th>
-                                    <th>Cantidad</th>
                                     <th>Accion</th>
                                 </tr>
                             </thead>
@@ -133,14 +129,13 @@
                                     <td>{{categoria.codigo}}</td>
                                     <td>{{categoria.nombre}}</td>
                                     <td>{{categoria.descripcion}}</td>
-                                    <td>{{categoria.condicion}}</td>
-                                    <td>{{categoria.cantidad}}</td>
-                                    <td><a href=""><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                                    <td><a href="{% url 'inventario:editarCategoria' categoria.id %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> / <a href="{% url 'inventario:eliminarCategoria' categoria.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <a href="{% url 'inventario:categoriaEliminada'%}">Categorías Eliminadas <span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
                     </div>
                 </div>
             </div>
