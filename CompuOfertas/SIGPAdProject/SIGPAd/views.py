@@ -42,7 +42,7 @@ def  iniciar_sesion(request):
 			else:
 				return redirect('/indexCliente')
 		else:
-			validar = "Credenciales erronéas."
+			validar = "Credenciales erróneas."
 			context = {'validar':validar}
 			return render(request, 'LogIn.html', context)
 	context = {}
