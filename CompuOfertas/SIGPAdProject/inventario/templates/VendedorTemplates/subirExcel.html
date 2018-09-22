@@ -3,22 +3,6 @@
 {%elif user.is_authenticated%}
 
 <style type="text/css">
-    details {
-        padding: 15px;
-        background-color: #f6f7f8;
-        margin-bottom: 20px;
-    }
-    summary {
-        cursor: pointer;
-    }
-    summary::-webkit-details-marker {
-        display: none;
-    }
-    summary:before {
-        content: "\2714"; 
-        color: #696f7c;
-        margin-right: 5px;
-    }
     .archivo{
         padding:20px;
         margin-left:60px;
@@ -42,18 +26,19 @@
         border: 0;
         font-size: 2rem;
         margin: 0;
-        padding: 0 .5rem;
+        padding: 0 0.5rem;
         background: transparent;
+        color: #04B431;
     }
     
     .boton-buscar:focus{
         outline: 0; 
     }
 
-    .boton-buscar {
-        margin-left: auto;
-        margin-right: .8rem; 
+    .boton-buscar:hover{
+        color: #0101DF;
     }
+
     /*Estilos bloque buscar*/
     #bloque-buscar {
         -webkit-box-flex: 1;
@@ -74,7 +59,7 @@
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-        height: 3rem;
+        height: 2rem;
         margin: 1rem 0; 
     }
     .contenedor-bloque-buscar input[type="text"] {
@@ -100,6 +85,23 @@
         padding: 0 1rem; 
     }
 
+    .servicios button {
+        -webkit-box-flex: 0;
+        -webkit-flex: 0 0 160px;
+        -ms-flex: 0 0 160px;
+        flex: 0 0 160px;
+        overflow: hidden;
+        margin-right: 0;
+        margin-bottom: 1rem;
+        -webkit-transition: all 1s ease;
+        transition: all 1s ease; }
+
+    .servicios article:hover button {
+        -webkit-transform: rotateY(360deg);
+        transform: rotateY(360deg);
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d; }
+
 </style>
 
 <div class="row">
@@ -115,7 +117,7 @@
                     <div class="col-xs-12">
                         <div class="col-xs-6">
                             <article class="wow bounceInLeft" data-wow-delay=".3s">
-                                <button type="button" class="btn btn-info aceptar descarga" data-toggle="collapse" data-target="#bloque-buscar1" aria-expanded="false">
+                                <button type="button" class="boton-buscar" data-toggle="collapse" data-target="#bloque-buscar1" aria-expanded="false">
                                     <p>
                                         <font size="5"><i class="glyphicon glyphicon-import"></i></font>
                                     </p>
@@ -140,7 +142,7 @@
                         </div>
                         <div class="col-xs-6">
                             <article class="wow bounceInLeft" data-wow-delay=".3s">
-                                <button type="button" class="btn btn-info aceptar descarga" data-toggle="collapse" data-target="#bloque-buscar" aria-expanded="false">
+                                <button type="button" class="boton-buscar" data-toggle="collapse" data-target="#bloque-buscar" aria-expanded="false">
                                     <p>
                                         <font size="5"><i class="glyphicon glyphicon-import"></i></font>
                                     </a>
