@@ -95,7 +95,6 @@ def inicializarPuesto():
 
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
-	inicializarPuesto()
 	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
@@ -603,14 +602,15 @@ def index(request):
 			user = User.objects.all()
 			i= len(user)
 			if i==0:
-				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
+				inicializarPuesto()
+				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root1234')
 				user.save()
 				puesto = Puesto()
 				puesto.nombre = "Vendedor"
 				puesto.salario = 600.00
 				puesto.save()
 				empleado=Empleado(puesto=puesto,nombre='walter',apellido='marroquin',telefono='7777777',sexo='Masculino',email='walter@hotmail.com',dui='123',nit='1234',afp='34556',isss='1234')
-				vendedor = User.objects.create_user(username='vendedor', password='root')
+				vendedor = User.objects.create_user(username='vendedor', password='root1234')
 				content_type = ContentType.objects.get_for_model(Empleado)
 				permission = Permission.objects.get(
 					codename='view_seller',
