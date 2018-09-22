@@ -246,6 +246,12 @@ def crearUsuario(request,pk):
 						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
 					else:
 						if password == password2:
+							if len(password) < 8:
+								validar = "tiene que tener minimo 8 caracteres"
+								context = { 
+								'validar':validar,  
+								'empleado':empleado,}
+								return render(request, 'AdministradorTemplates/crearUsuario.html', context)								
 							user = User.objects.create_user(username=username, password=password)
 							content_type = ContentType.objects.get_for_model(Empleado)
 							permission = Permission.objects.get(
@@ -259,7 +265,6 @@ def crearUsuario(request,pk):
 							empleado.save()
 							return redirect('/usuarios')
 						else:
-
 							validar = "Las contraseñas son diferentes"
 							context = { 
 							'validar':validar,  
