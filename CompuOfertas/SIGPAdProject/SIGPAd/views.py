@@ -603,7 +603,7 @@ def index(request):
 			user = User.objects.all()
 			i= len(user)
 			if i==0:
-				user = User.objects.create_superuser(username='admin', email='christianfuentes254@gmail.com',password= 'root')
+				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root')
 				user.save()
 				puesto = Puesto()
 				puesto.nombre = "Vendedor"

@@ -48,6 +48,63 @@
     .espacio{
         margin-left: 20px;
     }
+
+    /*Estilos para el boton: buscar */
+    .boton-buscar{
+        border: 0;
+        font-size: 2rem;
+        margin: 0;
+        padding: 0 .5rem;
+        background: transparent;
+    }
+    
+    .boton-buscar:focus{
+        outline: 0; 
+    }
+
+    .boton-buscar {
+        margin-left: auto;
+        margin-right: .8rem; 
+    }
+    /*Estilos bloque buscar*/
+    #bloque-buscar {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 100%;
+        -ms-flex: 1 1 100%;
+        flex: 1 1 100%; 
+    }
+
+    .contenedor-bloque-buscar {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        height: 3rem;
+        margin: 1rem 0; 
+    }
+    .contenedor-bloque-buscar input[type="text"] {
+        border: 0;
+        border-radius: 5px 0 0 5px;
+        padding: 1rem;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto; 
+    }
+    .contenedor-bloque-buscar input[type="submit"] {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        border: 0;
+        border-radius: 0 5px 5px 0;
+        -webkit-box-flex: 0;
+        -webkit-flex: 0 1 auto;
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        padding: 0 1rem; 
+    }
+
 </style>
 
 <div class="row">
@@ -62,34 +119,33 @@
                 <div class="panel-heading">Kardex de: <span class="semi-bold"> {{producto.nombre}} </span> en año {{fecha.year}} </div>
             </section>
             <div class="row">
-                <div class="col-12">
-                    <a href="/mostrarInventario" class="btn btn-danger aceptar espacio">regresar</a>
+                <div class="col-xs-8">
+                    <button type="button" class="boton-buscar">
+                        <a href="/mostrarInventario" class="btn btn-alert aceptar descarga">regresar <i class="glyphicon glyphicon-arrow-left"></i></a>
+                    </button>
+                    <button type="button" class="btn btn-info aceptar descarga" data-toggle="modal" data-target="#idmensaje" >
+                        Cambiar precio de venta
+                        <i class="glyphicon glyphicon-pencil"> </i>
+                    </button>
+
+                    <button type="button" class="btn btn-info aceptar descarga" data-toggle="collapse" data-target="#bloque-buscar" aria-expanded="false">buscar
+                        <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="col-xs-6">
                     <nav class="navbar text-right">
-                        <form class="form-inline" method="GET" action="">
+                        <form class="form-inline collapse" method="GET" action="" id="bloque-buscar">
                             <input type="text" id="accion" name="accion" value="buscar" hidden="">
-                            <label>bucar fecha: YYYY-DD-MM </label>
+                            <label>fecha: YYYY-DD-MM </label>
                             <input name="consulta" type="text" placeholder="Buscar" class="control" value="{{request.GET.consulta}}">
                             <input type="submit" value="Buscar" class="btn btn-success aceptar">
                         </form>
-                    </nav>
+                </nav>
+
                 </div>
                 <div class="col-md-12">
                     <div class="block-web">
                         <div class="panel-heading"><font size="4">Ultima compra: {{ultimo.fecha}} <span class="semi-bold"> Existencia actual: {{ultimo.cantExistencia}} </span> precio de compra actual: {{ultimo.precExistencia}} <span class="semi-bold"> Precio de venta actual: {% if producto.inventario.precio_venta_producto == 0 %} <strong><font size="4" style="color:red;">{{producto.inventario.precio_venta_producto}}</font> <marquee behavior="alternate">Asignele precio a este producto</marquee></strong> {% else %}{{producto.inventario.precio_venta_producto}} {% endif %} </span></font> </div>
-                        <div class="col-xs-12 text-left">
-                            <details>
-                                <summary class="btn btn-info aceptar">Cambiar precio de venta</summary>
-                                <form method="POST">
-                                    {% csrf_token %}
-                                        <label>Desea camiar el precio de venta?.... el precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
-                                        <p>
-                                            <label>Nuevo precio: </label>
-                                            <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}" min="0.01" required="">
-                                        </p>
-                                        <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
-                                </form>
-                            </details>
-                        </div>
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
@@ -163,6 +219,33 @@
         </div>
     </div>
 </div> 
+
+<div class="modal fade" id="idmensaje" tabindex="-1" role="dialog" aria-labelledy="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Cambiar precio de venta</h5>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <label>El precio actual es: <strong> {{producto.inventario.precio_venta_producto}} </strong> El precio sugerido es: <strong> {{precio_sugerido}} </strong> </label>
+                    <p>
+                        <label>Nuevo precio: </label>
+                        <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="{{precio_sugerido}}" min="0.01" required="">
+                    </p>
+                    <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary aceptar" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {%else%}
