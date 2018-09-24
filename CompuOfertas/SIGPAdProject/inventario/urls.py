@@ -9,12 +9,21 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
     #URL Vendedor.
 	url(r'indexVendedor$', login_required(indexVendedor), name="VendedorIndex"),
+	#URL Categoria
 	url(r'registrarCategoria$', login_required(registrarCategoria), name="registrarCategoria"),
 	url(r'editarCategoria/(?P<pk>\d+)$', login_required(editarCategoria), name="editarCategoria"),
 	url(r'mostrarCategoria/(?P<pk>\d+)$', login_required(mostrarCategoria), name="mostrarCategoria"),
 	url(r'eliminarCategoria/(?P<pk>\d+)$', login_required(eliminarCategoria), name="eliminarCategoria"),
 	url(r'categoriaEliminada/$', login_required(categoriaEliminada), name="categoriaEliminada"),
 	url(r'activarCategoria/(?P<pk>\d+)$', login_required(activarCategoria), name="activarCategoria"),
+	#URL Proveedor
+	url(r'registrarProveedores$', login_required(registrarProveedores), name="registrarProveedores"),
+	url(r'editarProveedores/(?P<pk>\d+)/$', login_required(editarProveedores), name="editarProveedores"),
+	url(r'eliminarProveedores/(?P<pk>\d+)$', login_required(eliminarProveedores), name="eliminarProveedores"),
+	url(r'proveedoresEliminados/$', login_required(proveedoresEliminados), name="proveedoresEliminados"),
+	url(r'activarProveedores/(?P<pk>\d+)$', login_required(activarProveedores), name="activarProveedores"),
+	#URL Cliente
+	url(r'registrarClientes$', login_required(registrarClientes), name="registrarClientes"),
 	#URL Producto
 	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
 	url(r'registrarProducto/(?P<pk>\d+)/$', login_required(registrarProducto), name="registrarProducto"),

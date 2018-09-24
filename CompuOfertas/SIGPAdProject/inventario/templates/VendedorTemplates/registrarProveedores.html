@@ -73,13 +73,13 @@
         {% endif %}
         <div class="col-xs-12 archivo">
             <section class="panel default blue_title h2 text-center">
-                <div class="panel-heading">Registrar <span class="semi-bold">categoría </span> </div>
+                <div class="panel-heading">Registrar <span class="semi-bold">proveedor </span> </div>
             </section>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-12 col-md-6">
+    <div class="col-xs-12 col-md-5">
         <div class="col-md-12">
                 <div class="block-web">
                     <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border">
@@ -87,23 +87,28 @@
                         <input type="text" name="action" id="action" value="insert" hidden="true">
                         <div class="form-group">                        
                             
-                                <label class="col-sm-3 control-label">Código</label>
+                                <label class="col-sm-3 control-label">Razón Social:</label>
                             <div class="col-sm-6 ">
-                                <input type="text" name="codigo" id="codigo" required="" class="form-control">
+                                <input type="text" name="razon_social" id="razon_social" required="" class="form-control">
                             </div>                            
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Nombre:</label>
+                            <label class="col-sm-3 control-label">NIT:</label>
                             <div class="col-sm-6">
-                                <input type="text" name="nombre" id="nombre" required="" class="form-control">
+                                <input type="text" name="nit" id="nit" required="" class="form-control">
                             </div>
                             
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Descripción:</label>
+                            <label class="col-sm-3 control-label">Teléfono:</label>
                             <div class="col-sm-6">
-                                <TEXTAREA name="descripcion" cols="25" id="descripcion" required="" class="form-control"></TEXTAREA>
-
+                                <input type="text" name="telefono" id="telefono" required="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Email:</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="email" id="email" required="" class="form-control">
                             </div>
                         </div>
                         <div class="form-group center">
@@ -129,25 +134,27 @@
                         <table class="table">
                             <thead class="bg-primary">
                                 <tr>
-                                    <th>Código</th>
-                                    <th>Nombre</th>
-                                    <th>Descripción</th>
+                                    <th>Razón Social</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>NIT</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody id="#cuerpo-tabla">
-                                {% for categoria in categorias %}
+                                {% for proveedor in proveedor %}
                                 <tr>
-                                    <td>{{categoria.codigo}}</td>
-                                    <td>{{categoria.nombre}}</td>
-                                    <td>{{categoria.descripcion}}</td>
-                                    <td><a href="{% url 'inventario:editarCategoria' categoria.id %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> / <a href="{% url 'inventario:eliminarCategoria' categoria.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                    <td>{{proveedor.razon_social}}</td>
+                                    <td>{{proveedor.telefono}}</td>
+                                    <td>{{proveedor.email}}</td>
+                                    <td>{{proveedor.nit}}</td>
+                                    <td><a href="{% url 'inventario:editarProveedores' proveedor.id %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> / <a href="{% url 'inventario:eliminarProveedores' proveedor.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
-                        <a href="{% url 'inventario:categoriaEliminada'%}">Categorías Eliminadas <span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                        <a href="{% url 'inventario:proveedoresEliminados'%}">Proveedores Eliminados <span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
                     </div>
                 </div>
             </div>
@@ -156,11 +163,11 @@
                 <nav aria-label="Page navigation example">
 
                     <ul class="pagination">
-                        {% if categorias.has_previous%}
+                        {% if proveedor.has_previous%}
 
-                        <button class="btn page-link" id="anterior-pag" href="?page={{ categorias.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</button> {% else %}
+                        <button class="btn page-link" id="anterior-pag" href="?page={{ proveedor.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</button> {% else %}
 
-                        <button class="btn page-link" id="anterior-pag">Anterior</button> {%endif%} {% for i in categorias.paginator.page_range %} {% if categorias.number == i %}
+                        <button class="btn page-link" id="anterior-pag">Anterior</button> {%endif%} {% for i in proveedor.paginator.page_range %} {% if proveedor.number == i %}
                         <li class="page-item active numPag " val="{{i}}">
                             <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
                         </li>
@@ -168,9 +175,9 @@
                         <li class="page-item numPag">
                             <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
                         </li>
-                        {%endif%} {%endfor%} {% if categorias.has_next %}
+                        {%endif%} {%endfor%} {% if proveedor.has_next %}
 
-                        <button class="btn page-link" id="siguiente-pag" href="?page={{ categorias.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ categorias.next_page_number }}">Siguiente</button> {%else%}
+                        <button class="btn page-link" id="siguiente-pag" href="?page={{ proveedor.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ proveedor.next_page_number }}">Siguiente</button> {%else%}
 
                         <a class="page-link ">Siguiente</a> {%endif%}
                     </ul>

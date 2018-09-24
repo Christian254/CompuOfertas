@@ -44,6 +44,62 @@ def  indexVendedor(request):
 			return render(request,'VendedorTemplates/vendedorIndex.html',{})			
 	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
+@permission_required('SIGPAd.view_seller')
+def registrarClientes(request):
+	error = ''
+	exito = ''
+	if request.method=='POST':
+		action = request.POST.get('action')
+		if action=='insert':
+			nombre = request.POST.get('nombre',None)
+			apellido = request.POST.get('apellido',None)
+			sexo = request.POST.get('sexo',None)
+			email = request.POST.get('email',None)
+			if nombre!=None and apellido !=None and sexo !=None and email !=None :
+				try:
+					cliente = Cliente()
+					nombre = request.POST.get('nombre', None)
+					password = 'cliente'
+					password2 = 'cliente'
+					username = nombre.strip() + str(cliente.id)
+					cliente.nombre = nombre
+					cliente.apellido = request.POST.get('apellido', None)
+					cliente.sexo = request.POST.get('sexo', None)
+					cliente.email = request.POST.get('email', None)
+					user = User.objects.create_user(username=username, password=password)
+					content_type = ContentType.objects.get_for_model(Cliente)
+					permission = Permission.objects.get(
+						codename='es_cliente',
+						content_type=content_type,
+						)
+					user.user_permissions.add(permission)
+					user.save()
+					cliente.usuario = user
+					cliente.save()
+				except Exception as e:
+					pass
+	cliente = Cliente.objects.all()
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {'error':error,'exito':exito,'cliente':cliente}
+	return render(request, 'VendedorTemplates/registrarClientes.html', context)
 
 @permission_required('SIGPAd.view_seller')
 def registrarCategoria(request):
@@ -302,6 +358,274 @@ def activarCategoria(request, pk):
 		'parametros':parametros,
 	}
 	return render(request,'VendedorTemplates/categoriaEliminada.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def registrarProveedores(request):
+	error = ''
+	exito = ''
+	if request.method=='POST':
+		action = request.POST.get('action')
+		if action=='insert':
+			razon_social = request.POST.get('razon_social',None)
+			nit = request.POST.get('nit',None)
+			telefono = request.POST.get('telefono',None)
+			email = request.POST.get('email',None)
+			if razon_social!=None and nit !=None and telefono !=None and email !=None :
+				try:
+					proveedor = Proveedor()
+					proveedor.razon_social=razon_social
+					proveedor.nit=nit
+					proveedor.telefono=telefono
+					proveedor.email=email
+					proveedor.save()
+					exito = 'Guardado con exito'
+				except Exception as e:
+					print(e.message)
+					if 'column nit is not unique' in e.message:
+						error='La razón social se repite, intente nuevamente'
+					if 'column razol_social is not unique' in e.message:
+						error='El nit que está insertando ya esta ocupado'
+	proveedor = Proveedor.objects.all()
+	consulta = request.GET.get('consulta')
+	if consulta:
+		proveedor = proveedor.filter(
+			Q(razon_social__icontains = consulta)|
+			Q(nit__icontains = consulta)
+			).distinct()
+	paginator = Paginator(proveedor, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		proveedor = paginator.page(page)
+	except PageNotAnInteger:
+		proveedor = paginator.page(1)
+	except EmptyPage:
+		proveedor = paginator.page(paginator.num_pages)
+
+	context = {'error':error,'exito':exito,'proveedor':proveedor}
+	return render(request, 'VendedorTemplates/registrarProveedores.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def editarProveedores(request, pk):
+	exito = None
+	existe = None
+	error = None
+	try:
+		proveedor = Proveedor.objects.get(pk=pk)
+	except Proveedor.DoesNotExist:
+		proveedor = None
+
+	if proveedor is not None:
+		if request.method == 'POST':
+			try:
+				proveedor.razon_social = request.POST.get('razon_social',None)
+				proveedor.nit = request.POST.get('nit',None)
+				proveedor.telefono = request.POST.get('telefono',None)
+				proveedor.email = request.POST.get('email',None)
+				proveedor.save()
+				#exito='Categoria guardada con exito'
+				return redirect("/registrarProveedores")
+			except Exception as e:
+				print(e.message)
+				if 'column razon_social is not unique' in e.message:
+					error = 'Razón Social del proveedor no es único'
+				if 'column nit is not unique' in e.message:
+					error='El NIT del proveedor debe ser único'
+				if 'column telefono is not unique' in e.message:
+					error='El teléfono del proveedor debe ser único'
+				if 'column email is not unique' in e.message:
+					error='El email del proveedor debe ser único'
+		else:
+			context = {
+				'proveedor':proveedor,
+				'exito':exito,
+				'error':error
+			}
+		
+		context = {
+				'proveedor':proveedor,
+				'exito':exito,
+				'error':error
+
+			}
+		return render(request,"VendedorTemplates/editarProveedores.html", context)
+	else:
+		existe = "El proveedor no existe"
+		context = {
+			'proveedor':proveedor,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarProveedores.html", context)
+
+@permission_required('SIGPAd.view_seller')
+def eliminarProveedores(request, pk):
+	error=None
+	exito=None
+	try:
+		proveedor=Proveedor.objects.get(pk=pk)
+	except Proveedor.DoesNotExist:
+		proveedor = None
+	if proveedor is not None:
+		proveedor.estado=0
+		proveedor.save()
+		exito='Proveedor eliminado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Proveedor no eliminado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	proveedor = Proveedor.objects.filter(estado=1)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		proveedor = proveedor.filter(
+			Q(razon_social__icontains = consulta)|
+			Q(nit__icontains = consulta)
+			).distinct()
+		proveedor=proveedor
+	paginator = Paginator(proveedor, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		proveedor = paginator.page(page)
+	except PageNotAnInteger:
+		proveedor = paginator.page(1)
+	except EmptyPage:
+		proveedor = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'proveedor':proveedor,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/registrarProveedores.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def mostrarProveedores(request,pk):
+	error = ''
+	exito = ''
+	proveedor = Proveedor.objects.filter(proveedor_id=pk)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		proveedor = proveedor.filter(
+			Q(razon_social__icontains = consulta)|
+			Q(nit__icontains = consulta)
+			).distinct()
+		proveedor=proveedor
+	paginator = Paginator(proveedor, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		proveedor = paginator.page(page)
+	except PageNotAnInteger:
+		proveedor = paginator.page(1)
+	except EmptyPage:
+		proveedor = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'proveedor':proveedor,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/mostrarProveedores.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def proveedoresEliminados(request):
+	error = ''
+	exito = ''
+	proveedor = Proveedor.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		proveedor = proveedor.filter(
+			Q(razon_social__icontains = consulta)|
+			Q(nit__icontains = consulta)
+			).distinct()
+		proveedor=proveedor
+	paginator = Paginator(proveedor, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		proveedor = paginator.page(page)
+	except PageNotAnInteger:
+		proveedor = paginator.page(1)
+	except EmptyPage:
+		proveedor = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'proveedor':proveedor,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/proveedoresEliminados.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def activarProveedores(request, pk):
+	error=None
+	exito=None
+	try:
+		proveedor=Proveedor.objects.get(pk=pk)
+	except Proveedor.DoesNotExist:
+		proveedor = None
+	if proveedor is not None:
+		proveedor.estado=1
+		proveedor.save()
+		exito='Proveedor activado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Proveedor no activado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	proveedor = Proveedor.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		proveedor = proveedor.filter(
+			Q(razon_social__icontains = consulta)|
+			Q(nit__icontains = consulta)
+			).distinct()
+		proveedor=proveedor
+	paginator = Paginator(proveedor, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		proveedor = paginator.page(page)
+	except PageNotAnInteger:
+		proveedor = paginator.page(1)
+	except EmptyPage:
+		proveedor = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'proveedor':proveedor,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/proveedoresEliminados.html',context)
+
+
 
 @permission_required('SIGPAd.view_seller')
 def ingresarProducto(request):

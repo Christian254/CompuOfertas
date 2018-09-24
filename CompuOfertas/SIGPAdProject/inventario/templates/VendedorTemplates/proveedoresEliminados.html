@@ -1,0 +1,124 @@
+{% extends "baseUser.html" %}
+{% load staticfiles %}
+
+
+{% block Body %}
+{% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+
+
+
+<style type="text/css">
+    details {
+        padding: 15px;
+        background-color: #f6f7f8;
+        margin-bottom: 20px;
+    }
+    summary {
+        cursor: pointer;
+    }
+    summary::-webkit-details-marker {
+        display: none;
+    }
+    summary:before {
+        content: "\2714"; 
+        color: #696f7c;
+        margin-right: 5px;
+    }
+    .archivo{
+        padding:20px;
+        margin-left:60px;
+        margin-top: 40px;
+    }
+    .descarga{
+        padding:5px;
+        margin-left:60px;
+        margin-top: 40px;
+    }
+
+
+</style>
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+        <div class="col-xs-8 archivo">
+            <section class="panel default blue_title h2 text-center">
+                <div class="panel-heading">Proveedores Eliminados<span class="semi-bold"> {{proveedor.razon_social}} </span> </div>
+            </section>
+
+            <div class="row">
+                <div class="col-12">
+                    <nav class="navbar text-right">
+                        <form class="form-inline" method="GET" action="">
+                            <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}">
+                            <input type="submit" value="Buscar" class="btn btn-success">
+                        </form>
+                    </nav>
+                </div>
+                <div class="col-md-12">
+                    <div class="block-web">
+                        <table class="table">
+                            <thead class="bg-primary">
+                                <tr>
+                                    <th>Razón Social</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>NIT</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for proveedor in proveedor %}
+                                <tr>
+                                    
+                                    <td>{{proveedor.razon_social}}</td>
+                                    <td>{{proveedor.telefono}}</td>
+                                    <td>{{proveedor.email}}</td>
+                                    <td>{{proveedor.nit}}</td>
+                                    <td><a href="{% url 'inventario:activarProveedores' proveedor.id %}" class="btn btn-success">Reactivar Proveedor</a>
+                                    </td>                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if proveedor.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ proveedor.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+                            {%else%}
+                            <li class="disabled"><span>Anterior</span></li>
+                            {% endif %} {% for i in proveedor.paginator.page_range %} {% if proveedor.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+                            </li>
+                            {% else %}
+                            <li><a href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
+                            {% endif %} {% endfor %} {% if proveedor.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ proveedor.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+                            {%else%}
+                            <li class="disabled"><span>Siguiente</li>
+                                        {% endif %}
+                                    </ul>                        
+                                </nav>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div> 
+
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
+{% endblock Body %}

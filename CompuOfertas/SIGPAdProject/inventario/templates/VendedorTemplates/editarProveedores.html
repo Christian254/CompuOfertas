@@ -1,0 +1,68 @@
+{% extends "baseUser.html" %}
+{% load staticfiles %}
+
+  {% block Titulo %}
+    Editar Categorias
+  {% endblock Titulo %}
+
+  {% block Body %}
+  {% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+
+  <div class="row">
+    <div class="col-xs-8">
+        <section class="panel default blue_title h2 text-center">
+            <div class="panel-heading">Proveedor:  <span class="semi-bold">{{proveedor.razon_social}} </span> </div>
+        </section>
+
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+
+        <div class="col-md-12">
+            <div class="block-web">
+                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Razón Social</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese razón social" id="razon_social" name="razon_social" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="razón social">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">NIT</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese el NIT" id="nit" name="nit" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="nit del proveedor">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Teléfono</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese número telefónico" id="telefono" name="telefono" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="telefono">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese Email" id="email" name="email" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="center">
+                            <input type="submit" class="btn btn-success" value="Actualizar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
+{% endblock Body %}
