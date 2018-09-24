@@ -39,6 +39,7 @@ urlpatterns = [
 	url(r'reporteCompra/(?P<id>\d+)$', login_required(reporte_compra), name="ReporteCompra"),
 	#inventario
 	url(r'mostrarInventario',login_required(mostrarInventario),name="mostrarInventario"),
+	url(r'descargarInventario',login_required(descargarInventario),name="descargarInventario"),
 
 	url(r'grafica$', login_required(grafica), name="grafica"),
 	url(r'graficaMes$', login_required(graficaMes), name="graficaMes"),

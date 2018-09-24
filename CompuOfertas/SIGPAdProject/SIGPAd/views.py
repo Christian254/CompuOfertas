@@ -24,7 +24,6 @@ from django.views.generic.edit import UpdateView, CreateView
 
 
 
-##aqui deberia terminar el codigo del Sprint 2 :v
 
 # Create your views here.
 

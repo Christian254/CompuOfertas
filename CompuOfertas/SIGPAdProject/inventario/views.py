@@ -27,6 +27,7 @@ from email.mime.text import MIMEText
 import smtplib
 import json
 from .kardex import nuevoKardex
+from .reporteInventario import descargarExcel
 
 
 
@@ -916,6 +917,9 @@ def mostrarInventario(request):
 		producto = paginator.page(paginator.num_pages)
 	context={'producto':producto,'empleado':empleado,'admin':admin,'error':error,'exito':exito}
 	return render(request,'VendedorTemplates/inventario.html',context)
+
+def descargarInventario(request):
+	return descargarExcel()
 
 
 def enviarCorreo(title,string_data, email):

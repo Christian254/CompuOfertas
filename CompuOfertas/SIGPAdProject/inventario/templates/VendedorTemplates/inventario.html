@@ -103,9 +103,18 @@
         <section class="panel panel-default h2 text-center">
             <div class="panel-heading"><span class="semi-bold"> Inventario </span> </div>
         </section>
+        {% if error %}
+            <section class="panel panel-default h2 text-center">
+                <div class="panel-heading"><span class="semi-bold alert-danger"> {{error}} </span> </div>
+            </section>
+        {% elif exito %}
+            <section class="panel panel-default h2 text-center">
+                <div class="panel-heading"><span class="semi-bold alert alert-success"> {{exito}} </span> </div>
+            </section>
+        {% endif %}
         <div class="row">
             <div class="col-xs-12">
-                <div class="col-xs-4">
+                <div class="col-xs-6">
                     <button type="button" class="boton-buscar">
                         <a href="/" class="btn btn-alert aceptar descarga">regresar <i class="glyphicon glyphicon-arrow-left"></i></a>
                     </button>
@@ -113,6 +122,10 @@
                         enviar mensaje
                         <i class="glyphicon glyphicon-send"> </i>
                     </button>
+                    <a href="/descargarInventario" class="btn btn-info aceptar descarga">
+                        Descargar inventario
+                        <i class="glyphicon glyphicon-save"> </i>
+                    </a>
                     <button type="button" class="btn btn-info aceptar descarga" data-toggle="collapse" data-target="#bloque-buscar" aria-expanded="false">buscar
                         <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
                     </button>
