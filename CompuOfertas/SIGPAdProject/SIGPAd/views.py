@@ -24,7 +24,6 @@ from django.views.generic.edit import UpdateView, CreateView
 
 
 
-##aqui deberia terminar el codigo del Sprint 2 :v
 
 # Create your views here.
 
@@ -42,7 +41,7 @@ def  iniciar_sesion(request):
 			else:
 				return redirect('/indexCliente')
 		else:
-			validar = "Credenciales erronéas."
+			validar = "Credenciales erróneas."
 			context = {'validar':validar}
 			return render(request, 'LogIn.html', context)
 	context = {}
@@ -95,7 +94,6 @@ def inicializarPuesto():
 
 @permission_required('SIGPAd.view_superuser')
 def  indexAdministrador(request):
-	inicializarPuesto()
 	return render(request,'AdministradorTemplates/adminIndex.html',{})
 
 
@@ -247,6 +245,12 @@ def crearUsuario(request,pk):
 						return render(request, 'AdministradorTemplates/crearUsuario.html', context)
 					else:
 						if password == password2:
+							if len(password) < 8:
+								validar = "tiene que tener minimo 8 caracteres"
+								context = { 
+								'validar':validar,  
+								'empleado':empleado,}
+								return render(request, 'AdministradorTemplates/crearUsuario.html', context)								
 							user = User.objects.create_user(username=username, password=password)
 							content_type = ContentType.objects.get_for_model(Empleado)
 							permission = Permission.objects.get(
@@ -260,7 +264,6 @@ def crearUsuario(request,pk):
 							empleado.save()
 							return redirect('/usuarios')
 						else:
-
 							validar = "Las contraseñas son diferentes"
 							context = { 
 							'validar':validar,  
@@ -603,14 +606,15 @@ def index(request):
 			user = User.objects.all()
 			i= len(user)
 			if i==0:
-				user = User.objects.create_superuser(username='admin', email='christianfuentes254@gmail.com',password= 'root')
+				inicializarPuesto()
+				user = User.objects.create_superuser(username='admin', email='mh15012@ues.edu.sv',password= 'root1234')
 				user.save()
 				puesto = Puesto()
 				puesto.nombre = "Vendedor"
 				puesto.salario = 600.00
 				puesto.save()
 				empleado=Empleado(puesto=puesto,nombre='walter',apellido='marroquin',telefono='7777777',sexo='Masculino',email='walter@hotmail.com',dui='123',nit='1234',afp='34556',isss='1234')
-				vendedor = User.objects.create_user(username='vendedor', password='root')
+				vendedor = User.objects.create_user(username='vendedor', password='root1234')
 				content_type = ContentType.objects.get_for_model(Empleado)
 				permission = Permission.objects.get(
 					codename='view_seller',

@@ -102,6 +102,11 @@ class DetalleCompra(models.Model):
         kardex.montoSalida=0
         kardex.montoExistencia = Decimal(self.cantidad) * Decimal(self.precio_compra)
         kardex.producto=self.producto
+        prod = self.producto
+        inv = prod.inventario
+        inv.precio_promedio_compra=Decimal(self.precio_compra)
+        inv.save()
+        print(inv.precio_promedio_compra)
         kardex.save()
         if k > 0:
             ultimo = Kardex.objects.get(pk=k)
@@ -111,6 +116,9 @@ class DetalleCompra(models.Model):
             kardex.montoExistencia = monto
             kardex.precExistencia = monto / cant
             kardex.save()
+            inv.precio_promedio_compra=kardex.precExistencia
+            inv.save()
+            print(inv.precio_promedio_compra)
         return super(DetalleCompra,self).save(*args,**kwargs)
 
 class Venta(models.Model):

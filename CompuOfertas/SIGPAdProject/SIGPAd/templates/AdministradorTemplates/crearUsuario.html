@@ -11,7 +11,37 @@
     
 
 {% block Body %}
-	
+
+<style type="text/css">
+    .bloque{
+        display: none;
+    }
+</style>
+
+<script type="text/javascript">
+    function validar() {
+        var pass1 = document.getElementById('pwd').value;
+        var pass2 = document.getElementById('pwd2').value;
+        var espacio = false;
+        var mensaje1 = document.getElementById('mensaje1');
+        var mensaje2 = document.getElementById('mensaje2');
+        var mensaje3 = document.getElementById('mensaje3');
+        var boton = document.getElementById('boton');
+
+        if (pass1.length < 8 ) {
+            mensaje1.style.display='block';
+        }else if (pass1 != pass2) {
+            mensaje1.style.display='none';
+            mensaje3.style.display='block';
+            mensaje2.style.display='none';
+        }else if (pass1 == pass2) {
+            mensaje1.style.display='none';
+            mensaje3.style.display='none';
+            mensaje2.style.display='block';
+            boton.style.display='block'
+        }
+    }
+</script>
 
 	<div class="row">
         <div class="col-md-6">
@@ -55,14 +85,17 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Contraseña de Verificación </label>
                   <div class="col-sm-9">
-                  	<input class="form-control" type="password" id="pwd2" name="pwd2">
+                  	<input class="form-control" type="password" id="pwd2" name="pwd2" onkeyup="validar()">
                   </div>
                 </div><!--/form-group--> 
 
                 <div class="bottom">
-                  <button type="submit" class="btn btn-success">Crear Usuario</button>
+                  <button type="submit" class="btn btn-success bloque" id="boton">Crear Usuario</button>
                 </div><!--/form-group-->
               </form>
+              <h1 id="mensaje1" class="alert-danger bloque">contraseñas muy cortas, debe tener minimo 8 caracteres</h1>
+              <h1 id="mensaje3" class="alert-danger bloque">contraseñas no coinciden</h1>
+              <h1 id="mensaje2" class="alert-success bloque">Contraseñas correctas</h1>
             </div><!--/porlets-content-->
           </div><!--/block-web--> 
         </div><!--/col-md-6-->

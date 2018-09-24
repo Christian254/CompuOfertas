@@ -27,6 +27,7 @@ from email.mime.text import MIMEText
 import smtplib
 import json
 from .kardex import nuevoKardex
+from .reporteInventario import descargarExcel
 
 
 
@@ -966,7 +967,14 @@ def registrarVenta(request):
 				productos_anadidos_kardex = nuevoKardex(2,id_prod,detalle_venta.cantidad,0)
 				p.inventario.save()	
 				if p.inventario.existencia < 5:
-					enviarCorreo('Inventario Critico','Favor de revisar el inventario y agregar nuevas existencias')
+					empleado = request.user.empleado_set.all().first()
+					admin = Empleado.objects.filter(puesto__nombre='Gerente')
+					superUser = User.objects.filter(is_superuser=True).first()
+					title = "mensaje: {} ".format(empleado.nombre)
+					mensaje = "el producto {} en el inventario se esta agotando, por favor renovar inventario pronto".format(p.nombre)
+					for x in admin:
+						error =  enviarCorreo(title,mensaje,x.email)
+					error =  enviarCorreo(title,mensaje,superUser.email)
 		cliente_usuario = request.POST.get('select-js',None)
 		if(cliente_usuario):
 			cliente = Cliente.objects.get(usuario__username=cliente_usuario)
@@ -1241,13 +1249,16 @@ def mostrarInventario(request):
 	context={'producto':producto,'empleado':empleado,'admin':admin,'error':error,'exito':exito}
 	return render(request,'VendedorTemplates/inventario.html',context)
 
+def descargarInventario(request):
+	return descargarExcel()
+
 
 def enviarCorreo(title,string_data, email):
 	try:
 		msg = MIMEMultipart()
 		password = "toor215IDSA"
 		msg['From'] = "compuofertaSDI215@gmail.com"
-		print(email)
+		print(email + " " + string_data)
 		msg['To'] = email
 		msg['Subject'] = title
 		message = string_data
@@ -1257,7 +1268,7 @@ def enviarCorreo(title,string_data, email):
 		server.login(msg['From'], password)
 		server.sendmail(msg['From'], msg['To'], msg.as_string())
 		server.quit()
-		print("successfully sent email to %s:" % (msg['To']))
+		print("mensaje enviado a %s:" % (msg['To']))
 		return ''
 	except Exception as e:
 		print("Error, mensaje fallido al administrador, para anunciar el inventario {} Error: {}".format(string_data,e.message))
