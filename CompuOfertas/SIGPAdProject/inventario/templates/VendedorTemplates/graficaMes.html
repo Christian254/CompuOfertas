@@ -1,6 +1,19 @@
 {% extends "baseUser.html" %}
 {% load staticfiles %} 
 {% block Body %}
+<style type="text/css">
+    .alerta {
+        padding: 20px;
+        margin-top: 20px;
+    }
+</style>
+<div >
+
+{% if mensaje %}
+        <h1 class="center alerta"><strong class="alert alert-danger">{{mensaje}}</strong> </h1>
+{% endif %}
+</div>
+
 <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
     {% csrf_token %}
     <div class="center">
