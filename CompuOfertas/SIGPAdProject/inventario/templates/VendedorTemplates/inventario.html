@@ -96,6 +96,9 @@
         flex: 0 1 auto;
         padding: 0 1rem; 
     }
+    #link{
+        margin-left: 10px;
+    }
 
 </style>
 <div class="row margen">
@@ -114,7 +117,7 @@
         {% endif %}
         <div class="row">
             <div class="col-xs-12">
-                <div class="col-xs-6">
+                <div class="col-xs-12">
                     <button type="button" class="boton-buscar">
                         <a href="/" class="btn btn-alert aceptar descarga">regresar <i class="glyphicon glyphicon-arrow-left"></i></a>
                     </button>
@@ -161,7 +164,7 @@
                         <th>marca</th>
                         <th>existencia</th>
                         <th>precio</th>
-                        <th align="center">&nbsp &nbsp &nbsp Accion &nbsp &nbsp &nbsp</th>
+                        <th>Accion</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -173,25 +176,19 @@
                         <td>{{p.marca}}</td>
                         <td> {{p.inventario.existencia}}</td>
                         {% if p.inventario.precio_venta_producto == 0 %}
-                        <td> <font size="3" style="color:white; background-color:red;">{{p.inventario.precio_venta_producto}} </font></td>
+                        <td> <font size="3" style="color:red;">{{p.inventario.precio_venta_producto}} </font></td>
                         {% else %}
                         <td> {{p.inventario.precio_venta_producto}} </td>
                         {% endif %}
 
-                        <td align="center">
-                            <div class="row text-center">
-                                <a href="mostrarKardex/{{p.id}}" class="col-xs-5 text-center">
+                        <td>
+                            <div class="row" align="center">
+                                <a href="mostrarKardex/{{p.id}}" class="col-xs-5 text-xs-center">
                                     <font size="4">
-                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="link"></span>
                                     </font>
-                                    <p>kardex</p>
+                                    kardex
                                 </a> 
-                                <a href="{% url 'inventario:editarProducto' p.id %}" class="col-xs-5">
-                                    <font size="4">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                    </font>
-                                    <p>editar</p>
-                                </a>
                             </div>
                         </td>
                     </tr>
