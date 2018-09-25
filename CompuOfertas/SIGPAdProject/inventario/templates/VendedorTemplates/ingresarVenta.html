@@ -20,6 +20,10 @@ table tr {
 </style>
  {% endblock CSS %} 
 {% block Body %}
+{% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+
 {% if alerta %}
    <div class="alert alert-warning text-center"><strong>{{alerta}}</strong></div>  
 {% endif %}
@@ -96,4 +100,5 @@ table tr {
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock Body %}

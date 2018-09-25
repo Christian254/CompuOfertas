@@ -3,26 +3,69 @@
 
 
 {% block Body %}
+
+<style type="text/css">
+    .flecha-bajar a {
+        display: inline-block;
+        font-size: 8rem;
+        position: relative;
+        -webkit-animation: flecha-animada 2s ease-in-out infinite;
+        animation: flecha-animada 2s ease-in-out infinite; 
+    }
+
+    @-webkit-keyframes flecha-animada {
+        from {
+            -webkit-transform: translateY(0);
+            transform: translateY(0); 
+        }
+        50% {
+            -webkit-transform: translateY(6px);
+            transform: translateY(6px); 
+        }
+        to {
+            -webkit-transform: translateY(0);
+            transform: translateY(0); 
+        } 
+    }
+
+    @keyframes flecha-animada {
+        from {
+            -webkit-transform: translateY(0);
+            transform: translateY(0); 
+        }
+
+        50% {
+            -webkit-transform: translateY(6px);
+            transform: translateY(6px); 
+        }
+
+        to {
+            -webkit-transform: translateY(0);
+            transform: translateY(0); 
+        } 
+    }
+</style>
+
 {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
-	<br />
+    <br/>
     <main class="servicios p-y-1">
         <div class="container">
             <div class="row">
                 <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
-	                <a href="/registrarVenta"><img src="{% static 'images/vender.png' %}" width="150px" height="150px"></a>
+                    <a href="/registrarVenta"><img src="{% static 'images/vender.png' %}" width="150px" height="150px"></a>
                     <h3><a href="/registrarVenta" class="btn btn-secondary"> <STRONG>Registrar Ventas</STRONG> </a></h3>
                     <p class="hidden-sm-down">Aquí debes registrar todas las ventas realizadas o servicios proporcionados.</p>
                 </article>
 
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-					<a href="/listadoCompras"><img src="{% static 'images/comprar.png' %}" width="150px" height="150px"></a>
+                    <a href="/listadoCompras"><img src="{% static 'images/comprar.png' %}" width="150px" height="150px"></a>
                     <h3><a href="/listadoCompras">Registrar compras</a></h3>
                     <p class="hidden-sm-down">Aqui debes registrar todas las compras realizadas por la compañia.</p>
                 </article>
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-					<a href="/mostrarInventario"><img src="{% static 'images/inventario.png' %}" width="200px" height="150px"></a>
+                    <a href="/mostrarInventario"><img src="{% static 'images/inventario.png' %}" width="200px" height="150px"></a>
                     <h3><a href="/mostrarInventario">Inventario</a></h3>
                     <p class="hidden-sm-down"><strong>Aqui puedes asignar el precio de venta a cada producto</strong> Aqui puedes ver los productos en inventario, la cantidad en existencia y otros detalles.</p>
 
@@ -46,8 +89,15 @@
                     <h3><a href="/graficaMes">Gráficos</a></h3>
                     <p class="hidden-sm-down">Aquí puedes ver los gráficos de venta y compra asi como los productos más vendidos.</p>
                 </article>
-
             </div>
+            <div class="row">
+                <article class="col-md-12 wow bounceInLeft" data-wow-delay=".3s">
+                    <div class="col-xs-12 flecha-bajar text-xs-center">
+                        <a data-scroll href="#ultimo"> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+            </div>
+            <br><br>
             <div class="row">
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
                     <a href="/subirExcel"><img src="{% static 'images/excel.png' %}" width="150px" height="150px"></a>
@@ -67,8 +117,8 @@
                     <p class="hidden-sm-down">Puedes gestionar a tus clientes</p>
                 </article>
             </div>
-            <div class="row">
-                <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
+            <div class="row" id="ultimo">
+                <article class="col-md-12 wow bounceInLeft" data-wow-delay=".3s">
                     <a href="/mostrarVenta"><img src="{% static 'images/misventas.png' %}" width="150px" height="150px"></a>
                     <h3><a href="/mostrarVenta" class="btn btn-secondary"> <STRONG>Mostrar Ventas</STRONG> </a></h3>
                     <p class="hidden-sm-down">Aquí podrás ver todas las ventas que se han
