@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from datetime import datetime
 from decimal import *
 from openpyxl import Workbook
-from openpyxl.workbook.protection import WorkbookProtection
 from openpyxl.styles import Alignment 
 from openpyxl.styles import Border, Side
 from django.db.models import Q
@@ -59,9 +58,7 @@ def descargarExcel():
 		contador += 1
 
 	ws.protection.set_password('root1234')
-
 	response = HttpResponse(content_type="application/ms-excel")
 	response['Content-Disposition'] = 'attachment; filename=inventario.xlsx'
-	wb.security = WorkbookProtection(workbookPassword='root1234', revisionsPassword = 'root1234', lockWindows = True, lockStructure = True, lockRevision = True)
 	wb.save(response)
 	return response
