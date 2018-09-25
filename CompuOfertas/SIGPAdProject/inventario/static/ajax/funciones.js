@@ -33,9 +33,9 @@ function validarCantidad(tablaVenta){
         $(this).attr('class', 'cantidad');        	
     	let productoDatos = tablaVenta.row( $(this).parents('tr') ).data();
     	let existencia = parseInt(productoDatos[4]);
-    	let cantidad = $(this).val();
+    	let cantidad = parseInt($(this).val());
         let dato=productoDatos[0].split('-')[1].split('"')[0]   	  	   	 	
-    	if( cantidad > existencia || cantidad < 0){
+    	if( cantidad > existencia || cantidad < 0 || isNaN(cantidad)){
     		$(this).addClass('invalido')
     		$(this).attr('style', 'border: 2px solid red; width:75px');
             $('#total-' + dato).text('');  			
@@ -61,9 +61,8 @@ function descuento(tablaVenta){
         dato=productoDatos[0].split('-')[1].split('"')[0]  
         precio_unitario = parseInt(productoDatos[3]);
         cantidad = parseInt($('#cantidad-'+dato).val())
-        descuento =parseFloat($(this).val());
-
-        if(descuento <0 || descuento > 1){
+        descuento =parseFloat($(this).val());        
+        if(descuento < 0 || descuento > 1 || isNaN(descuento)){
             $(this).addClass('invalido')
             $(this).attr('style', 'border: 2px solid red; width:75px');
             $('#total-' + dato).text('');  
