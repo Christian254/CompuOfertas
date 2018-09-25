@@ -1,0 +1,230 @@
+{% extends 'baseUser.html' %}
+
+{% block Body %}
+<section class="panel default blue_title h2 text-center">
+    <div class="panel-heading">EMPLEADO <span class="semi-bold">{{empleado.nombre}} {{empleado.apellido}}</span> </div>
+</section>
+
+{% if exito %}          
+<div class="alert alert-success">
+    <strong>{{exito}}</strong>
+</div>
+{% endif %}
+
+<!-- Formulario -->
+<div class="row">
+    <div class="col-md-6">
+      <div class="block-web">
+        <div class="header">
+          <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+          <h3 class="content-header"><strong>Datos Empleado</strong></h3>
+        </div>
+        <div class="porlets-content">
+          <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                {% csrf_token %}
+
+        <div class="form-group">
+              <label class="col-sm-5 control-label">Puesto <i class="glyphicon glyphicon-lock"></i></label>
+              <div class="col-sm-7">
+                    <input type="text" id="puestoEmpleado" name="puestoEmpleado" class="form-control" value="{{empleado.puesto.nombre}}" disabled>
+               </div>
+             </div>
+            <div class="form-group">
+              <label class="col-sm-5 control-label">Nombre</label>
+              <div class="col-sm-7">
+                <input class="form-control" type="text" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}"required="required" value="{{empleado.nombre}}" disabled>
+              </div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+              <label class="col-sm-5 control-label">Apellido</label>
+              <div class="col-sm-7">
+               <input class="form-control" type="text" value="{{empleado.apellido}}" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required" disabled>
+              </div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+                    <label class="col-sm-5 control-label">Sexo</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="sexo" id="sexo" class="form-control" value="{{empleado.sexo}}" disabled> 
+                    </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label col-md-5">Fecha de Nacimiento <i class="fa fa-calendar"></i></label>
+              <div class="col-md-7">
+                <div class="input-append date dpYears">
+                  <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{empleado.fechaNac}}" required="required" disabled>
+                  </span> </div></div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+              <label class="control-label col-md-5">Fecha de Inicio de Trabajo <i class="fa fa-calendar"></i></label>
+              <div class="col-md-7">
+                <div class="input-append date dpYears">
+                    <input type="date" class="form-control" id="fecha_trabajo" name="fecha_trabajo" required="required" value="{{empleado.fecha_trabajo}}" disabled>
+                </div>
+            </div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+              <label class="col-sm-5 control-label">DUI</label>
+              <div class="col-sm-7">
+                  <input class="input100" type="text" value="{{empleado.dui}}" id="dui" name="dui" disabled>
+              </div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+              <label class="col-sm-5 control-label">NIT</label>
+              <div class="col-sm-7">
+                  <input class="input100" type="text" value="{{empleado.nit}}" id="nit" name="nit" disabled>
+              </div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+              <label class="col-sm-5 control-label">AFP</label>
+              <div class="col-sm-7">
+                <input class="input100" type="text" value="{{empleado.afp}}" id="afp" name="afp" disabled>
+              </div>
+            </div><!--/form-group--> 
+
+            <div class="form-group">
+              <label class="col-sm-5 control-label">ISSS</label>
+              <div class="col-sm-7">
+                  <input class="input100" type="text" value="{{empleado.isss}}" id="isss" name="isss" disabled>
+              </div>
+            </div><!--/form-group--> 
+          </form>
+
+          <div class="alert alert-danger">
+              <strong>Importante: </strong>Para editar estos campos debe enviar un mensaje al administrador y esperar respuesta.
+          </div>
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#idmensaje" >
+            Enviar Mensaje
+          </button>
+        </div><!--/porlets-content-->
+      </div><!--/block-web--> 
+    </div><!--/col-md-6-->
+                
+    
+    <div class="col-md-6">
+      <div class="block-web">
+            <div class="header">
+                    <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+                    <h3 class="content-header"><strong>Datos Editables</strong></h3>
+            </div>
+            <hr>
+            <h5 class="content-header"><strong>Información personal</strong></h5>
+            <div class="porlets-content">
+                    <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                        {% csrf_token %}
+                        <div class="form-group">
+                                <label class="col-sm-3 control-label">Correo</label>
+                                <div class="col-sm-9">
+                                  <input class="form-control" type="email" id="email" name="email" required="required" value="{{empleado.email}}" >
+                                </div>
+                              </div><!--/form-group--> 
+                  
+                        <div class="form-group">
+                                      <label class="col-sm-3 control-label">Telefóno</label>
+                                      <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="telefono" name="telefono" value="{{empleado.telefono}}" pattern="[0-9]{8}" required="required">
+                                  </div>
+                        </div><!--/form-group--> 
+            
+                        <div class="bottom">
+                          <button type="submit" name="form1" class="btn btn-primary">Editar</button>
+                        </div>
+                    </form>
+            </div>
+            <hr>
+            <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+            <h5 class="content-header"><strong>Foto</strong></h5>
+        <div class="porlets-content">
+          <form class="form-inline" action="{% url 'inventario:EditarFotoVendedor' empleado.empleado %}" method="post" enctype="multipart/form-data" class="form-horizontal row-border" >
+              {% csrf_token %}
+            <div class="form-group">
+                {% if empleado.foto %}
+                      <label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+                      <div class="col-sm-9">
+                          <input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{empleado.foto.url}}" multiple>
+                      </div>
+                {% else %}
+                    <label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+                    <label> ¡Aún no ha subido imagen! </label>
+                    <div class="col-sm-9">
+                        <input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+                    </div>
+                   {% endif %}
+               </div>
+                   <div class="form-group">
+                    {% if empleado.foto %}
+                        <label class="col-sm-3 control-label">Foto</label>
+                          <div class="col-sm-9">
+                            <img src="{{empleado.foto.url}}" alt="" class="img-rounded img-responsive"  width="200" height="200" />
+                        </div>
+                    {% else %}
+                        <!-- No existe foto -->
+                       {% endif %}
+                       <div class="bottom">
+                          <input type="submit" class="btn btn-primary" id="guardar" name="submit" value="Guardar foto">
+                        </div><!--/form-group-->
+                   </div>
+
+              </form>
+             </div>
+            </div>
+            </div><!--/form-group-->
+             
+        </div><!--/porlets-content--> 
+      </div><!--/block-web--> 
+    </div><!--/col-md-6--> 
+
+  
+        </div><!--/porlets-content--> 
+      </div><!--/block-web--> 
+    </div><!--/col-md-12-->
+   </div><!--/row--> 
+
+   <div class="modal fade" id="idmensaje" tabindex="-1" role="dialog" aria-labelledy="modal">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h5 class="modal-title"><strong>ENVIO DE MENSAJES A ADMINISTRADORES</strong></h5>
+              </div>
+              <div class="modal-body">
+                  <form method="POST" action="">
+                      {% csrf_token %}
+                      <input type="text" name="accion" id="accion" hidden="">
+                      <div class="form-group row">
+                          <label for="de" class="col-md-8 col-form-label">De: <strong>{{empleado.nombre}} {{empleado.apellido}}</strong> </label>
+                      </div>
+                      <div class="form-group row">
+                          <label for="para" class="col-md-8 col-form-label">Para: <strong> 
+                              {% if admin %}
+                              {% for a in admin %} 
+                                  {{a.nombre}} {{a.apellido}}, 
+                              {% endfor %}
+                              {% endif %}
+                                  Administrado por default
+                              </strong> </label>
+                      </div>
+                      <div class="form-group row">
+                              <label for="msj" class="col-md-2 col-form-label">Mensaje:</label>
+                              <div class="col-md-10">
+                                  <textarea name="mensaje" id="mensaje" class="form-control" placeholder="Ingrese su mensaje." title="ingrese su mensaje" required="" maxlength="300"></textarea>
+                              </div>
+                      </div>
+              </div>
+              <div class="modal-footer">
+                  <input type="submit" name="form2" value="Enviar" class="btn btn-success">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>   
+{% endblock Body %}

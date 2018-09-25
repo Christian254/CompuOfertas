@@ -56,4 +56,7 @@ urlpatterns = [
 	url(r'graficaProducto$', login_required(graficaProducto), name="graficaProducto"),
 	
 	url(r'^mostrarKardex/(?P<pk>\d+)$', login_required(mostrarKardex), name="mostrarKardex"),
+	#Perfil Vendedor
+	url(r'^PerfilVendedor/$', login_required(editar_perfil_vendedor), name="PerfilVendedor"),
+	url(r'^editarFotoVendedor/(?P<pk>\d+)$', login_required(editar_foto_vendedor), name="EditarFotoVendedor"),
 ]
