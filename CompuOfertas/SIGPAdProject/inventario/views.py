@@ -103,6 +103,182 @@ def registrarClientes(request):
 	return render(request, 'VendedorTemplates/registrarClientes.html', context)
 
 @permission_required('SIGPAd.view_seller')
+def editarClientes(request, pk):
+	exito = None
+	existe = None
+	error = None
+	try:
+		cliente = Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+
+	if cliente is not None:
+		if request.method == 'POST':
+			try:
+				cliente.nombre = request.POST.get('nombre',None)
+				cliente.apellido = request.POST.get('apellido',None)
+				cliente.sexo = request.POST.get('sexo',None)
+				cliente.email = request.POST.get('email',None)
+				cliente.save()
+				#exito='Cliente guardada con exito'
+				return redirect("/registrarClientes")
+			except Exception as e:
+				pass
+		else:
+			context = {
+				'cliente':cliente,
+				'exito':exito,
+				'error':error
+			}
+		
+		context = {
+				'cliente':cliente,
+				'exito':exito,
+				'error':error
+
+			}
+		return render(request,"VendedorTemplates/editarClientes.html", context)
+	else:
+		existe = "El cliente no existe"
+		context = {
+			'cliente':cliente,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarClientes.html", context)
+
+@permission_required('SIGPAd.view_seller')
+def eliminarClientes(request, pk):
+	error=None
+	exito=None
+	try:
+		cliente=Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+	if cliente is not None:
+		cliente.estado=0
+		cliente.save()
+		exito='Cliente eliminado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Cliente no eliminada'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	cliente = Cliente.objects.filter(estado=1)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+		cliente=cliente
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'cliente':cliente,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/registrarClientes.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def clientesEliminados(request):
+	error = ''
+	exito = ''
+	cliente = Cliente.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+		cliente=cliente
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'cliente':cliente,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/clientesEliminados.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def activarClientes(request, pk):
+	error=None
+	exito=None
+	try:
+		cliente=Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+	if cliente is not None:
+		cliente.estado=1
+		cliente.save()
+		exito='Cliente activado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Cliente no activado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	cliente = Cliente.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+		cliente=cliente
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'cliente':cliente,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/clientesEliminados.html',context)
+
+@permission_required('SIGPAd.view_seller')
 def registrarCategoria(request):
 	error = ''
 	exito = ''
@@ -244,39 +420,6 @@ def eliminarCategoria(request, pk):
 		'parametros':parametros,
 	}
 	return render(request,'VendedorTemplates/registrarCategoria.html',context)
-
-@permission_required('SIGPAd.view_seller')
-def mostrarCategoria(request,pk):
-	error = ''
-	exito = ''
-	categorias = Categoria.objects.filter(categoria_id=pk)
-	consulta = request.GET.get('consulta')
-	if consulta:
-		categorias = categorias.filter(
-			Q(nombre__icontains = consulta)|
-			Q(codigo__icontains = consulta)
-			).distinct()
-		categorias=categorias
-	paginator = Paginator(categorias, 7)
-	parametros = request.GET.copy()
-	if parametros.has_key('page'):
-		del parametros['page']
-	
-	page = request.GET.get('page')
-	try:
-		categoria = paginator.page(page)
-	except PageNotAnInteger:
-		categoria = paginator.page(1)
-	except EmptyPage:
-		categoria = paginator.page(paginator.num_pages)
-
-	context = {
-		'error':error,
-		'exito':exito,
-		'categorias':categoria,
-		'parametros':parametros,
-	}
-	return render(request, 'VendedorTemplates/mostrarCategoria.html', context)
 
 @permission_required('SIGPAd.view_seller')
 def categoriaEliminada(request):
@@ -427,7 +570,7 @@ def editarProveedores(request, pk):
 				proveedor.telefono = request.POST.get('telefono',None)
 				proveedor.email = request.POST.get('email',None)
 				proveedor.save()
-				#exito='Categoria guardada con exito'
+				#exito='Proveedor guardado con exito'
 				return redirect("/registrarProveedores")
 			except Exception as e:
 				print(e.message)
@@ -510,39 +653,6 @@ def eliminarProveedores(request, pk):
 		'parametros':parametros,
 	}
 	return render(request,'VendedorTemplates/registrarProveedores.html',context)
-
-@permission_required('SIGPAd.view_seller')
-def mostrarProveedores(request,pk):
-	error = ''
-	exito = ''
-	proveedor = Proveedor.objects.filter(proveedor_id=pk)
-	consulta = request.GET.get('consulta')
-	if consulta:
-		proveedor = proveedor.filter(
-			Q(razon_social__icontains = consulta)|
-			Q(nit__icontains = consulta)
-			).distinct()
-		proveedor=proveedor
-	paginator = Paginator(proveedor, 7)
-	parametros = request.GET.copy()
-	if parametros.has_key('page'):
-		del parametros['page']
-	
-	page = request.GET.get('page')
-	try:
-		proveedor = paginator.page(page)
-	except PageNotAnInteger:
-		proveedor = paginator.page(1)
-	except EmptyPage:
-		proveedor = paginator.page(paginator.num_pages)
-
-	context = {
-		'error':error,
-		'exito':exito,
-		'proveedor':proveedor,
-		'parametros':parametros,
-	}
-	return render(request, 'VendedorTemplates/mostrarProveedores.html', context)
 
 @permission_required('SIGPAd.view_seller')
 def proveedoresEliminados(request):
@@ -1330,6 +1440,7 @@ def mostrarKardex(request, pk):
 def grafica(request):
 	return render_to_response('VendedorTemplates/grafica.html',context)
 
+@permission_required('SIGPAd.view_seller')
 def graficaMes(request):
 	venta=Venta.objects.all()
 	fechas=[obj.fecha_hora for obj in venta]
@@ -1417,87 +1528,98 @@ def graficaMes(request):
 	return render(request, 'VendedorTemplates/graficaMes.html', context)
 
 def graficaEmpleado(request):
-	venta=''
-	nom=''
-	nomEmpleado = ''
-	empleado=Empleado.objects.all()
-	anioActual=datetime.now()
-	anio=int(str(anioActual.strftime('%Y')))
+	user = request.user
+	if user.is_superuser:
+		venta=''
+		nom=''
+		nomEmpleado = ''
+		empleado=Empleado.objects.all()
+		anioActual=datetime.now()
+		anio=int(str(anioActual.strftime('%Y')))
 
-	mes1=0
-	mes2=0
-	mes3=0
-	mes4=0
-	mes5=0
-	mes6=0
-	mes7=0
-	mes8=0
-	mes9=0
-	mes10=0
-	mes11=0
-	mes12=0
+		mes1=0
+		mes2=0
+		mes3=0
+		mes4=0
+		mes5=0
+		mes6=0
+		mes7=0
+		mes8=0
+		mes9=0
+		mes10=0
+		mes11=0
+		mes12=0
 
-	if request.method=='POST':
-		nomEmpleado = request.POST.get('nomEmpleado',None)
+		if request.method=='POST':
+			nomEmpleado = request.POST.get('nomEmpleado',None)
 
-	enero=datetime(anio, 1, 1)
-	febrero=datetime(anio, 2, 1)
-	marzo=datetime(anio, 3, 1)
-	abril=datetime(anio, 4, 1)
-	mayo=datetime(anio, 5, 1)
-	junio=datetime(anio, 6, 1)
-	julio=datetime(anio, 7, 1)
-	agosto=datetime(anio, 8, 1)
-	septiembre=datetime(anio, 9, 1)
-	octubre=datetime(anio, 10, 1)
-	noviembre=datetime(anio, 11, 1)
-	diciembre=datetime(anio, 12, 1)
+		enero=datetime(anio, 1, 1)
+		febrero=datetime(anio, 2, 1)
+		marzo=datetime(anio, 3, 1)
+		abril=datetime(anio, 4, 1)
+		mayo=datetime(anio, 5, 1)
+		junio=datetime(anio, 6, 1)
+		julio=datetime(anio, 7, 1)
+		agosto=datetime(anio, 8, 1)
+		septiembre=datetime(anio, 9, 1)
+		octubre=datetime(anio, 10, 1)
+		noviembre=datetime(anio, 11, 1)
+		diciembre=datetime(anio, 12, 1)
 
-	if nomEmpleado:
-		nom = Empleado.objects.filter(pk=nomEmpleado)
-		venta = Venta.objects.filter(empleado=nomEmpleado)
-		fechas=[obj.fecha_hora for obj in venta]
-		for fecha in fechas:
-			if str(fecha) >= str(enero.strftime('%Y-%m-%d')) and str(fecha) < str(febrero.strftime('%Y-%m-%d')):
-				mes1=mes1+1
-			if str(fecha) >= str(febrero.strftime('%Y-%m-%d')) and str(fecha) < str(marzo.strftime('%Y-%m-%d')):
-				mes2=mes2+1
-			if str(fecha) >= str(marzo.strftime('%Y-%m-%d')) and str(fecha) < str(abril.strftime('%Y-%m-%d')):
-				mes3=mes3+1
-			if str(fecha) >= str(abril.strftime('%Y-%m-%d')) and str(fecha) < str(mayo.strftime('%Y-%m-%d')):
-				mes4=mes4+1
-			if str(fecha) >= str(mayo.strftime('%Y-%m-%d')) and str(fecha) < str(junio.strftime('%Y-%m-%d')):
-				mes5=mes5+1
-			if str(fecha) >= str(junio.strftime('%Y-%m-%d')) and str(fecha) < str(julio.strftime('%Y-%m-%d')):
-				mes6=mes6+1
-			if str(fecha) >= str(julio.strftime('%Y-%m-%d')) and str(fecha) < str(agosto.strftime('%Y-%m-%d')):
-				mes7=mes7+1
-			if str(fecha) >= str(agosto.strftime('%Y-%m-%d')) and str(fecha) < str(septiembre.strftime('%Y-%m-%d')):
-				mes8=mes8+1
-			if str(fecha) >= str(septiembre.strftime('%Y-%m-%d')) and str(fecha) < str(octubre.strftime('%Y-%m-%d')):
-				mes9=mes9+1
-			if str(fecha) >= str(octubre.strftime('%Y-%m-%d')) and str(fecha) < str(noviembre.strftime('%Y-%m-%d')):
-				mes10=mes10+1
-			if str(fecha) >= str(noviembre.strftime('%Y-%m-%d')) and str(fecha) < str(diciembre.strftime('%Y-%m-%d')):
-				mes11=mes11+1
-			if str(fecha) >= str(diciembre.strftime('%Y-%m-%d')) and str(fecha) < str(enero.strftime('%Y-%m-%d')):
-				mes12=mes12+1
+		if nomEmpleado:
+			nom = Empleado.objects.filter(pk=nomEmpleado)
+			venta = Venta.objects.filter(empleado=nomEmpleado)
+			fechas=[obj.fecha_hora for obj in venta]
+			for fecha in fechas:
+				if str(fecha) >= str(enero.strftime('%Y-%m-%d')) and str(fecha) < str(febrero.strftime('%Y-%m-%d')):
+					mes1=mes1+1
+				if str(fecha) >= str(febrero.strftime('%Y-%m-%d')) and str(fecha) < str(marzo.strftime('%Y-%m-%d')):
+					mes2=mes2+1
+				if str(fecha) >= str(marzo.strftime('%Y-%m-%d')) and str(fecha) < str(abril.strftime('%Y-%m-%d')):
+					mes3=mes3+1
+				if str(fecha) >= str(abril.strftime('%Y-%m-%d')) and str(fecha) < str(mayo.strftime('%Y-%m-%d')):
+					mes4=mes4+1
+				if str(fecha) >= str(mayo.strftime('%Y-%m-%d')) and str(fecha) < str(junio.strftime('%Y-%m-%d')):
+					mes5=mes5+1
+				if str(fecha) >= str(junio.strftime('%Y-%m-%d')) and str(fecha) < str(julio.strftime('%Y-%m-%d')):
+					mes6=mes6+1
+				if str(fecha) >= str(julio.strftime('%Y-%m-%d')) and str(fecha) < str(agosto.strftime('%Y-%m-%d')):
+					mes7=mes7+1
+				if str(fecha) >= str(agosto.strftime('%Y-%m-%d')) and str(fecha) < str(septiembre.strftime('%Y-%m-%d')):
+					mes8=mes8+1
+				if str(fecha) >= str(septiembre.strftime('%Y-%m-%d')) and str(fecha) < str(octubre.strftime('%Y-%m-%d')):
+					mes9=mes9+1
+				if str(fecha) >= str(octubre.strftime('%Y-%m-%d')) and str(fecha) < str(noviembre.strftime('%Y-%m-%d')):
+					mes10=mes10+1
+				if str(fecha) >= str(noviembre.strftime('%Y-%m-%d')) and str(fecha) < str(diciembre.strftime('%Y-%m-%d')):
+					mes11=mes11+1
+				if str(fecha) >= str(diciembre.strftime('%Y-%m-%d')) and str(fecha) < str(enero.strftime('%Y-%m-%d')):
+					mes12=mes12+1
 
-	anio=int(str(anioActual.strftime('%Y')))
-	meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
-	ventas=[mes1, mes2, mes3, mes4, mes5, mes6, mes7, mes8, mes9, mes10, mes11, mes12]
-	context = {
-        'meses': json.dumps(meses),
-        'ventas': json.dumps(ventas),
-        'anio':anio,
-        'empleado':empleado,
-        'venta':venta,
-        'nom':nom,
-        'nomEmpleado':nomEmpleado,
-    }
+		anio=int(str(anioActual.strftime('%Y')))
+		meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+		ventas=[mes1, mes2, mes3, mes4, mes5, mes6, mes7, mes8, mes9, mes10, mes11, mes12]
+		context = {
+	        'meses': json.dumps(meses),
+	        'ventas': json.dumps(ventas),
+	        'anio':anio,
+	        'empleado':empleado,
+	        'venta':venta,
+	        'nom':nom,
+	        'nomEmpleado':nomEmpleado,
+	    }
 
-	return render(request, 'VendedorTemplates/graficaEmpleado.html', context)
+		return render(request, 'VendedorTemplates/graficaEmpleado.html', context)
+	else:
+		mensaje=''
+		mensaje='Gráfica solo para administradores'
+		context={
+			'mensaje':mensaje,
+		}
+		return render(request, 'VendedorTemplates/graficaMes.html', context)
+	return render_to_response('VendedorTemplates/vendedorIndex.html')
 
+@permission_required('SIGPAd.view_seller')
 def graficaProducto(request):
 	venta=''
 	mes = ''
@@ -1556,8 +1678,6 @@ def graficaProducto(request):
 				cantidades=[obj.cantidad for obj in detalle_venta]
 				cantidades1[k]=max(cantidades or [0])
 				k=k+1
-			print nom
-			print cantidades1
 
 			suma=0
 			for i in cantidades1:

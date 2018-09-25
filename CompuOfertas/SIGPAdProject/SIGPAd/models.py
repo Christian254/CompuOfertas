@@ -94,6 +94,7 @@ class Cliente(models.Model):
 	sexo = models.CharField(max_length=10, blank=True)
 	email = models.EmailField(max_length=70)
 	dui = models.CharField(max_length=10, blank=True, null=True)
+	estado = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.nombre

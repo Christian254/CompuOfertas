@@ -1,0 +1,71 @@
+{% extends "baseUser.html" %}
+{% load staticfiles %}
+
+  {% block Titulo %}
+    Editar Clientes
+  {% endblock Titulo %}
+
+  {% block Body %}
+  {% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+
+  <div class="row">
+    <div class="col-xs-8">
+        <section class="panel default blue_title h2 text-center">
+            <div class="panel-heading">Cliente:  <span class="semi-bold">{{cliente.nombre}}{{cliente.apellido}} </span> </div>
+        </section>
+
+        {% if error %}
+            <h1 class="center archivo"><strong class="alert alert-danger">{{error}}</strong> </h1>
+        {% elif exito %}
+            <h1 class="center archivo"><strong class="alert alert-success">{{exito}}</strong> </h1>
+        {% endif %}
+
+        <div class="col-md-12">
+            <div class="block-web">
+                <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Nombre</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="nombre del cliente">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Apellido</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese apellido" id="apellido" name="apellido" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="apellido del cliente">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Sexo</label>
+                        <div class="col-sm-6">
+                            <select id="sexo" class="input100 has val" name="sexo">
+                                <option id="masculino" value="masculino">Masculino</option>
+                                <option id="femenino" value="femenino">Femenino</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-6">
+                            <input class="form-control"  type="text" placeholder="Ingrese Email" id="email" name="email" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="center">
+                            <input type="submit" class="btn btn-success" value="Actualizar">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
+{% endblock Body %}

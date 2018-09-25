@@ -19,6 +19,9 @@
 {% endblock usuario %}
     
 {% block Body %}
+{% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
 <section class="panel default blue_title h2 text-center">
     <div class="panel-heading">LISTADO DE <span class="semi-bold">COMPRAS</span> </div>
 </section>
@@ -92,6 +95,7 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock Body %}
 
 {% block Script %}

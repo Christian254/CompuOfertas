@@ -102,7 +102,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Sexo:</label>
                             <div class="col-sm-6">
-                                <input type="text" name="sexo" id="sexo" required="" class="form-control">
+                                <select id="sexo" class="input100 has val" name="sexo">
+                                    <option id="masculino" value="masculino">Masculino</option>
+                                    <option id="femenino" value="femenino">Femenino</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -148,13 +151,13 @@
                                     <td>{{cliente.apellido}}</td>
                                     <td>{{cliente.sexo}}</td>
                                     <td>{{cliente.email}}</td>
-                                    <td><a href=""><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> / <a href=""><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                    <td><a href="{% url 'inventario:editarClientes' cliente.id %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a> / <a href="{% url 'inventario:eliminarClientes' cliente.id %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
-                        <a href="">Clientes Eliminados <span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                        <a href="{% url 'inventario:clientesEliminados'%}">Clientes Eliminados <span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
                     </div>
                 </div>
             </div>
