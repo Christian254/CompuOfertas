@@ -12,7 +12,6 @@ urlpatterns = [
 	#URL Categoria
 	url(r'registrarCategoria$', login_required(registrarCategoria), name="registrarCategoria"),
 	url(r'editarCategoria/(?P<pk>\d+)$', login_required(editarCategoria), name="editarCategoria"),
-	url(r'mostrarCategoria/(?P<pk>\d+)$', login_required(mostrarCategoria), name="mostrarCategoria"),
 	url(r'eliminarCategoria/(?P<pk>\d+)$', login_required(eliminarCategoria), name="eliminarCategoria"),
 	url(r'categoriaEliminada/$', login_required(categoriaEliminada), name="categoriaEliminada"),
 	url(r'activarCategoria/(?P<pk>\d+)$', login_required(activarCategoria), name="activarCategoria"),
@@ -24,6 +23,10 @@ urlpatterns = [
 	url(r'activarProveedores/(?P<pk>\d+)$', login_required(activarProveedores), name="activarProveedores"),
 	#URL Cliente
 	url(r'registrarClientes$', login_required(registrarClientes), name="registrarClientes"),
+	url(r'editarClientes/(?P<pk>\d+)/$', login_required(editarClientes), name="editarClientes"),
+	url(r'eliminarClientes/(?P<pk>\d+)$', login_required(eliminarClientes), name="eliminarClientes"),
+	url(r'clientesEliminados/$', login_required(clientesEliminados), name="clientesEliminados"),
+	url(r'activarClientes/(?P<pk>\d+)$', login_required(activarClientes), name="activarClientes"),
 	#URL Producto
 	url(r'ingresarProducto$', login_required(ingresarProducto), name="ingresarProducto"),
 	url(r'registrarProducto/(?P<pk>\d+)/$', login_required(registrarProducto), name="registrarProducto"),

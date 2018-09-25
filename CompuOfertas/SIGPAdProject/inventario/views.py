@@ -103,6 +103,182 @@ def registrarClientes(request):
 	return render(request, 'VendedorTemplates/registrarClientes.html', context)
 
 @permission_required('SIGPAd.view_seller')
+def editarClientes(request, pk):
+	exito = None
+	existe = None
+	error = None
+	try:
+		cliente = Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+
+	if cliente is not None:
+		if request.method == 'POST':
+			try:
+				cliente.nombre = request.POST.get('nombre',None)
+				cliente.apellido = request.POST.get('apellido',None)
+				cliente.sexo = request.POST.get('sexo',None)
+				cliente.email = request.POST.get('email',None)
+				cliente.save()
+				#exito='Cliente guardada con exito'
+				return redirect("/registrarClientes")
+			except Exception as e:
+				pass
+		else:
+			context = {
+				'cliente':cliente,
+				'exito':exito,
+				'error':error
+			}
+		
+		context = {
+				'cliente':cliente,
+				'exito':exito,
+				'error':error
+
+			}
+		return render(request,"VendedorTemplates/editarClientes.html", context)
+	else:
+		existe = "El cliente no existe"
+		context = {
+			'cliente':cliente,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarClientes.html", context)
+
+@permission_required('SIGPAd.view_seller')
+def eliminarClientes(request, pk):
+	error=None
+	exito=None
+	try:
+		cliente=Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+	if cliente is not None:
+		cliente.estado=0
+		cliente.save()
+		exito='Cliente eliminado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Cliente no eliminada'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	cliente = Cliente.objects.filter(estado=1)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+		cliente=cliente
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'cliente':cliente,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/registrarClientes.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def clientesEliminados(request):
+	error = ''
+	exito = ''
+	cliente = Cliente.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+		cliente=cliente
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'cliente':cliente,
+		'parametros':parametros,
+	}
+	return render(request, 'VendedorTemplates/clientesEliminados.html', context)
+
+@permission_required('SIGPAd.view_seller')
+def activarClientes(request, pk):
+	error=None
+	exito=None
+	try:
+		cliente=Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+	if cliente is not None:
+		cliente.estado=1
+		cliente.save()
+		exito='Cliente activado'
+		context={'exito':exito,
+		    'error':error,
+		    }
+	else:
+		error='Cliente no activado'
+		context={'error':error,
+		    'exito':exito,
+		    }
+	cliente = Cliente.objects.filter(estado=0)
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(apellido__icontains = consulta)
+			).distinct()
+		cliente=cliente
+	paginator = Paginator(cliente, 7)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+
+	context = {
+		'error':error,
+		'exito':exito,
+		'cliente':cliente,
+		'parametros':parametros,
+	}
+	return render(request,'VendedorTemplates/clientesEliminados.html',context)
+
+@permission_required('SIGPAd.view_seller')
 def registrarCategoria(request):
 	error = ''
 	exito = ''
@@ -244,39 +420,6 @@ def eliminarCategoria(request, pk):
 		'parametros':parametros,
 	}
 	return render(request,'VendedorTemplates/registrarCategoria.html',context)
-
-@permission_required('SIGPAd.view_seller')
-def mostrarCategoria(request,pk):
-	error = ''
-	exito = ''
-	categorias = Categoria.objects.filter(categoria_id=pk)
-	consulta = request.GET.get('consulta')
-	if consulta:
-		categorias = categorias.filter(
-			Q(nombre__icontains = consulta)|
-			Q(codigo__icontains = consulta)
-			).distinct()
-		categorias=categorias
-	paginator = Paginator(categorias, 7)
-	parametros = request.GET.copy()
-	if parametros.has_key('page'):
-		del parametros['page']
-	
-	page = request.GET.get('page')
-	try:
-		categoria = paginator.page(page)
-	except PageNotAnInteger:
-		categoria = paginator.page(1)
-	except EmptyPage:
-		categoria = paginator.page(paginator.num_pages)
-
-	context = {
-		'error':error,
-		'exito':exito,
-		'categorias':categoria,
-		'parametros':parametros,
-	}
-	return render(request, 'VendedorTemplates/mostrarCategoria.html', context)
 
 @permission_required('SIGPAd.view_seller')
 def categoriaEliminada(request):
@@ -427,7 +570,7 @@ def editarProveedores(request, pk):
 				proveedor.telefono = request.POST.get('telefono',None)
 				proveedor.email = request.POST.get('email',None)
 				proveedor.save()
-				#exito='Categoria guardada con exito'
+				#exito='Proveedor guardado con exito'
 				return redirect("/registrarProveedores")
 			except Exception as e:
 				print(e.message)
@@ -510,39 +653,6 @@ def eliminarProveedores(request, pk):
 		'parametros':parametros,
 	}
 	return render(request,'VendedorTemplates/registrarProveedores.html',context)
-
-@permission_required('SIGPAd.view_seller')
-def mostrarProveedores(request,pk):
-	error = ''
-	exito = ''
-	proveedor = Proveedor.objects.filter(proveedor_id=pk)
-	consulta = request.GET.get('consulta')
-	if consulta:
-		proveedor = proveedor.filter(
-			Q(razon_social__icontains = consulta)|
-			Q(nit__icontains = consulta)
-			).distinct()
-		proveedor=proveedor
-	paginator = Paginator(proveedor, 7)
-	parametros = request.GET.copy()
-	if parametros.has_key('page'):
-		del parametros['page']
-	
-	page = request.GET.get('page')
-	try:
-		proveedor = paginator.page(page)
-	except PageNotAnInteger:
-		proveedor = paginator.page(1)
-	except EmptyPage:
-		proveedor = paginator.page(paginator.num_pages)
-
-	context = {
-		'error':error,
-		'exito':exito,
-		'proveedor':proveedor,
-		'parametros':parametros,
-	}
-	return render(request, 'VendedorTemplates/mostrarProveedores.html', context)
 
 @permission_required('SIGPAd.view_seller')
 def proveedoresEliminados(request):
