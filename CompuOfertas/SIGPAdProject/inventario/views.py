@@ -1758,8 +1758,6 @@ def editar_foto_vendedor(request,pk):
 	except Empleado.DoesNotExist:
 		empleado = None
 	if empleado is not None:
-		puestos = Puesto.objects.exclude(id=empleado.puesto.id)
-		data = Empleado.objects.exclude(sexo=empleado.sexo)[0]
 		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
 		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
 		if request.method == 'POST':
@@ -1768,10 +1766,8 @@ def editar_foto_vendedor(request,pk):
 			return redirect("/")
 		else:
 			context = {
-				'puestos':puestos,
 				'empleado':empleado,
 				'mensaje':mensaje,
-				'data':data,
 			}
 		return render(request,"VendedorTemplates/editarPerfilVendedor.html", context) 
 
