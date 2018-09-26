@@ -215,6 +215,7 @@
                   $("#alerta_guardar").text("¡No puede realizar compra, si no agrega productos a la tabla!")
                   
                   var table = $('#tabla_de_detalles').DataTable( {
+                  //"paging":   false,
                   "info": false,
                   "pagingType": "full_numbers",
                   "language": {
@@ -299,7 +300,7 @@
                               
                                     
                               }else{
-                                    alert("Campos vacíos");
+                                    swal("Campos vacíos");
                               }
                         } );
                   }
