@@ -79,7 +79,7 @@ def registrarClientes(request):
 					cliente.save()
 				except Exception as e:
 					pass
-	cliente = Cliente.objects.all()
+	cliente = Cliente.objects.filter(estado=1)
 	consulta = request.GET.get('consulta')
 	if consulta:
 		cliente = cliente.filter(
@@ -302,7 +302,7 @@ def registrarCategoria(request):
 						error='El nombre se repite, intente nuevamente'
 					if 'column codigo is not unique' in e.message:
 						error='El código que esta insertando ya esta ocupado'
-	categorias = Categoria.objects.all()
+	categorias = Categoria.objects.filter(estado=1)
 	consulta = request.GET.get('consulta')
 	if consulta:
 		categorias = categorias.filter(
@@ -529,7 +529,7 @@ def registrarProveedores(request):
 						error='La razón social se repite, intente nuevamente'
 					if 'column razol_social is not unique' in e.message:
 						error='El nit que está insertando ya esta ocupado'
-	proveedor = Proveedor.objects.all()
+	proveedor = Proveedor.objects.filter(estado=1)
 	consulta = request.GET.get('consulta')
 	if consulta:
 		proveedor = proveedor.filter(
