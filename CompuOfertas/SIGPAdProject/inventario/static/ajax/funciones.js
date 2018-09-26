@@ -5,10 +5,9 @@ function agregarProducto(tabla,tablaVenta){
         fila.remove();
         tabla.draw();
         dato=productoDatos[0].split('-')[1].split('"')[0]; //para asignar el name
-        console.log(dato);
         tablaVenta.row.add(
         	[productoDatos[0], 
-        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="1" type="number" step="1" style="width:75px;" min="0" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true">`,'<a class="quitar"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a>']).draw();			
+        	productoDatos[1],productoDatos[2],productoDatos[3],productoDatos[4],`<input class="cantidad" id="cantidad-${dato}" name="cantidad-${dato}" value="1" type="number" step="1" style="width:75px;" min="0" max="${productoDatos[4]}">`,`<input id="descuento-${dato}" class="descuento" value="0" name="descuento-${dato}" type="number" step="0.01" min="0.00" max="1.00" style="width:75px;">`,`<input type="number" id="total-${dato}" style="width:75px;" disabled="true" value="${productoDatos[3]}">`,'<a class="quitar"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a>']).draw();			
 		$('#productosCantidad').val(tablaVenta.rows().count());
         });                 
 
@@ -43,11 +42,11 @@ function validarCantidad(tablaVenta){
     	else{  		
     		$(this).attr('style', 'width:75px');
     		$(this).removeClass('invalido');
-            let precio_unitario = parseInt(productoDatos[3]);
+            let precio_unitario = parseFloat(productoDatos[3]);
             $('#total-' + dato).val(precio_unitario*cantidad);
-            let descuento = $('#descuento-'+dato).val()
-            console.log(descuento);
-            let descontado = precio_unitario*cantidad - precio_unitario*cantidad*descuento;
+            let descuento = $('#descuento-'+dato).val()            
+            let descontado = parseFloat(precio_unitario*cantidad - precio_unitario*cantidad*descuento);
+            descontado = descontado.toFixed(2);            
             $('#total-'+dato).val(descontado);             
     	} 
     	deshabilitarVenta();
@@ -59,7 +58,7 @@ function descuento(tablaVenta){
         $(this).attr('class', 'descuento');
         let productoDatos = tablaVenta.row( $(this).parents('tr') ).data()
         dato=productoDatos[0].split('-')[1].split('"')[0]  
-        precio_unitario = parseInt(productoDatos[3]);
+        precio_unitario = parseFloat(productoDatos[3]);
         cantidad = parseInt($('#cantidad-'+dato).val())
         descuento =parseFloat($(this).val());        
         if(descuento < 0 || descuento > 1 || isNaN(descuento)){
@@ -70,7 +69,8 @@ function descuento(tablaVenta){
         else{
             $(this).attr('style', 'width:75px');
             $(this).removeClass('invalido');
-            let descontado = precio_unitario*cantidad - precio_unitario*cantidad*descuento;                 
+            let descontado = parseFloat(precio_unitario*cantidad - precio_unitario*cantidad*descuento); 
+            descontado = descontado.toFixed(2);                
             $('#total-'+dato).val(descontado);
         }
        deshabilitarVenta()            

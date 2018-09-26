@@ -1694,3 +1694,80 @@ def graficaProducto(request):
     }
 
 	return render(request, 'VendedorTemplates/graficaProducto.html', context)
+
+#Perfil
+@permission_required('SIGPAd.view_seller')
+def editar_perfil_vendedor(request):
+	mensaje = None
+	existe = None
+	try:
+		usuario = request.user
+		empleado = Empleado.objects.get(usuario=usuario)
+	except Empleado.DoesNotExist:
+		empleado = None
+	if empleado is not None:
+		admin = Empleado.objects.filter(puesto__nombre='Gerente')
+		superUser = User.objects.filter(is_superuser=True).first()
+		error = ''
+		exito = ''
+		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
+		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		empleados = Empleado.objects.exclude(sexo=empleado.sexo)
+		if "form1" in request.POST:
+			empleado.telefono = request.POST.get('telefono',None)
+			empleado.email = request.POST.get('email',None)
+			empleado.save()
+			return redirect("/")
+		if "form2" in request.POST:
+			mensaje = request.POST.get('mensaje',None)
+			if mensaje != None:
+				title = "mensaje: {} ".format(empleado.nombre)
+				for x in admin:
+					error = error + enviarCorreo(title,mensaje,x.email)
+				error = error + enviarCorreo(title,mensaje,superUser.email)
+				if error:
+					pass
+				else:
+					exito = 'Mensajes enviados con exito'
+
+				context = {
+					'empleado':empleado,
+					'exito':exito,
+				}
+			return render(request,"VendedorTemplates/editarPerfilVendedor.html", context)
+		else:
+			context = {
+				'empleado':empleado,
+				'mensaje':mensaje,
+			}
+		return render(request,"VendedorTemplates/editarPerfilVendedor.html", context) 
+
+	else:
+		existe = "El empleado no existe"
+		context = {
+			'empleado':empleado,
+			'existe':existe,
+			'mensaje':mensaje,
+		}
+		return render(request,"VendedorTemplates/editarPerfilVendedor.html", context) 
+
+@permission_required('SIGPAd.view_seller')
+def editar_foto_vendedor(request,pk):
+	try:
+		empleado = Empleado.objects.get(empleado=pk)
+	except Empleado.DoesNotExist:
+		empleado = None
+	if empleado is not None:
+		empleado.fechaNac = empleado.fechaNac.strftime("%Y-%m-%d")
+		empleado.fecha_trabajo = empleado.fecha_trabajo.strftime("%Y-%m-%d")
+		if request.method == 'POST':
+			empleado.foto = request.FILES.get('foto',None) 
+			empleado.save()
+			return redirect("/")
+		else:
+			context = {
+				'empleado':empleado,
+				'mensaje':mensaje,
+			}
+		return render(request,"VendedorTemplates/editarPerfilVendedor.html", context) 
+

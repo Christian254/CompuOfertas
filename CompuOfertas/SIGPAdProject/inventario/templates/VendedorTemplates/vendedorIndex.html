@@ -4,48 +4,6 @@
 
 {% block Body %}
 
-<style type="text/css">
-    .flecha-bajar a {
-        display: inline-block;
-        font-size: 8rem;
-        position: relative;
-        -webkit-animation: flecha-animada 2s ease-in-out infinite;
-        animation: flecha-animada 2s ease-in-out infinite; 
-    }
-
-    @-webkit-keyframes flecha-animada {
-        from {
-            -webkit-transform: translateY(0);
-            transform: translateY(0); 
-        }
-        50% {
-            -webkit-transform: translateY(6px);
-            transform: translateY(6px); 
-        }
-        to {
-            -webkit-transform: translateY(0);
-            transform: translateY(0); 
-        } 
-    }
-
-    @keyframes flecha-animada {
-        from {
-            -webkit-transform: translateY(0);
-            transform: translateY(0); 
-        }
-
-        50% {
-            -webkit-transform: translateY(6px);
-            transform: translateY(6px); 
-        }
-
-        to {
-            -webkit-transform: translateY(0);
-            transform: translateY(0); 
-        } 
-    }
-</style>
-
 {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
@@ -90,14 +48,6 @@
                     <p class="hidden-sm-down">Aquí puedes ver los gráficos de venta y compra asi como los productos más vendidos.</p>
                 </article>
             </div>
-            <div class="row">
-                <article class="col-md-12 wow bounceInLeft" data-wow-delay=".3s">
-                    <div class="col-xs-12 flecha-bajar text-xs-center">
-                        <a data-scroll href="#ultimo"> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-            </div>
-            <br><br>
             <div class="row">
                 <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
                     <a href="/subirExcel"><img src="{% static 'images/excel.png' %}" width="150px" height="150px"></a>
