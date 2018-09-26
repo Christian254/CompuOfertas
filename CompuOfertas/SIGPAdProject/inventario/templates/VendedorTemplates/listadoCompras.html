@@ -17,11 +17,8 @@
 {% block usuario %}
       {{user.username}}
 {% endblock usuario %}
-    
 {% block Body %}
-{% if user.is_superuser %}
-<h1>superusuario</h1>
-{%elif user.is_authenticated%}
+{%if user.is_authenticated%}
 <section class="panel default blue_title h2 text-center">
     <div class="panel-heading">LISTADO DE <span class="semi-bold">COMPRAS</span> </div>
 </section>
@@ -89,7 +86,11 @@
                             {% endif %}
                             </ul>
                     </span>-->
-                <a href="{% url 'inventario:NuevaCompra' %}" class="btn btn-success">NUEVA COMPRA</a>
+                {% if user.is_superuser %}
+                    <h3>compras realizadas por los vendedores</h3>
+                {%elif user.is_authenticated%}
+                    <a href="{% url 'inventario:NuevaCompra' %}" class="btn btn-success">NUEVA COMPRA</a>
+                {% endif %}
 
             </div>
         </div>
