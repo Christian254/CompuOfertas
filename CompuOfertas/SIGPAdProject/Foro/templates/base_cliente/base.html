@@ -1,0 +1,358 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- META -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+
+    {% block META %}
+        
+    {% endblock META %}
+
+    <title>
+        {% block Titulo %}
+            SIGPAd:Index
+        {% endblock Titulo %}
+    </title>
+  <script type="text/javascript" src="{% static "interior/js/jspdf.debug.js" %}"> </script>
+  <script type="text/javascript" src="{% static "interior/js/jquery.min.js" %}"> </script> 
+  <script type="text/javascript" src="{% static "interior/js/sweetalert2.all.js" %}"> </script>  
+  <script type="text/javascript" src="{% static "alertas/alertas.js" %}"></script>
+  <link rel="shortcut icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
+  <link rel="icon" href ="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{% static "interior/css/font-awesome.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "interior/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "interior/css/animate.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "interior/css/admin.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "interior/css/estilos.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "interior/css/jquery-ui.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "interior/css/jquery.dataTables.min.css"  %}"/>
+  
+  {% block Script %}
+
+  {% endblock Script %}
+
+    {% block CSS %}
+
+    {% endblock CSS %}
+
+</head>
+
+<body class="green_thm fixed_header left_nav_fixed">
+<div class="wrapper">
+  <div class="header_bar">
+    <div class="brand">
+      <div class="logo" style="display:block"><img src="{% static 'images/logo.jpg' %}" width="50" height="47" alt="s-logo" /> <span class="theme_color">Cliente</span> </div>
+      <div class="small_logo" style="display:none;">
+          <img src="{% static 'images/logo.jpg' %}" width="50" height="47" alt="s-logo" /> 
+          <img src="{% static 'images/logo.jpg' %}" width="122" height="20" alt="r-logo" />
+      </div>
+    </div>
+    <div class="header_top_bar">
+      <a href="javascript:void(0);" class="menutoggle"> <i class="fa fa-bars"></i> </a>
+      <div class="top_left">
+        <div class="top_left_menu">
+          <ul>
+            <li> <a href="/"> <i class="fa fa-repeat"></i> </a> </li>
+            <li hidden="true"> <a href="/"> <i class="fa fa-th-large"></i> </a> </li>
+          </ul>
+        </div>
+      </div>
+      <a href="/" class="add_user"> <i class="fa fa-plus-square"></i> <span> Nuevo empleado</span> </a>
+      <div class="top_right_bar">
+        <div class="top_right">
+          <div class="top_right_menu">
+            <ul>
+              <li class="dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"> Compras <span class="badge badge">7</span> </a>
+                <ul class="drop_down_task dropdown-menu">
+                  <div class="top_pointer"></div>
+                  <li>
+                    <p class="number">You have 7 pending tasks</p>
+                  </li>
+                  <li> <a href="/mensajes" class="task">
+                    <div class="green_status task_height" style="width:80%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right green_label">80%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <a href="/mensajes" class="task">
+                    <div class="yellow_status task_height" style="width:50%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right yellow_label">50%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <a href="/mensajes" class="task">
+                    <div class="blue_status task_height" style="width:70%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right blue_label">70%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <a href="/mensajes" class="task">
+                    <div class="red_status task_height" style="width:85%;"></div>
+                    <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right red_label">85%</span> </div>
+                    <div class="task_detail">Task details goes here</div>
+                    </a> </li>
+                  <li> <span class="new"> <a href="/mensajes" class="pull_left">Create New</a> <a href="task.html" class="pull-right">View All</a> </span> </li>
+                </ul>
+              </li>
+
+              <li class="dropdown"> <a href="/" data-toggle="dropdown"> Mensajes <span class="badge badge color_1">4</span> </a>
+                <ul class="drop_down_task dropdown-menu">
+                  <div class="top_pointer"></div>
+                  <li>
+                    <p class="number">You have 4 mails</p>
+                  </li>
+                      <li> <a href="/" class="mail"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+                  <li> <a href="/" class="mail"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+                  <li> <a href="/" class="mail red_color"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+                  <li> <a href="/" class="mail"> <span class="photo"><img src="images/user.png" /></span> <span class="subject"> <span class="from">sarat m</span> <span class="time">just now</span> </span> <span class="message">Hello,this is an example msg.</span> </a> </li>
+              
+                </ul>
+              </li>
+              <li class="dropdown"> <a href="/" data-toggle="dropdown"> notificacion <span class="badge badge color_2">6</span> </a>
+                <div class="notification_drop_down dropdown-menu">
+                  <div class="top_pointer"></div>
+                  <div class="box"> <a href="/"> <span class="block primery_6"> <i class="fa fa-envelope-o"></i> </span> <span class="block_text">Mailbox</span> </a> </div>
+                  <div class="box"> <a href="/"> <span class="block primery_2"> <i class="fa fa-calendar-o"></i> </span> <span class="block_text">Calendar</span> </a> </div>
+                  <div class="box"> <a href="/"> <span class="block primery_4"> <i class="fa fa-map-marker"></i> </span> <span class="block_text">Map</span> </a> </div>
+                  <div class="box"> <a href="/"> <span class="block primery_3"> <i class="fa fa-plane"></i> </span> <span class="block_text">To-Do</span> </a> </div>
+                  <div class="box"> <a href="/"> <span class="block primery_5"> <i class="fa fa-picture-o"></i> </span> <span class="block_text">Tasks</span> </a> </div>
+                  <div class="box"> <a href="/"> <span class="block primery_1"> <i class="fa fa-clock-o"></i> </span> <span class="block_text">Timeline</span> </a> </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="user_admin dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"><img width="25px" height="25px" src="{% static "images/user.png" %}"/><span class="user_adminname" id="nombre">
+            {% block usuario %}
+                cliente
+            {% endblock usuario %}
+        </span> <b class="caret"></b> </a>
+          <ul class="dropdown-menu">
+            <div class="top_pointer"></div>
+            <li> <i class="fa fa-user"></i> perfil</a> </li>
+            <li> <i class="fa fa-question-circle"></i> ayuda</a> </li>
+            <li> <i class="fa fa-cog"></i> configuracion </a></li>
+            <li id="salir"> <i class="fa fa-power-off" ></i> salir </li>            
+          </ul>
+        </div>
+        <a hidden="true" href="javascript:;" class="toggle-menu menu-right push-body jPushMenuBtn rightbar-switch"><i class="fa fa-comment chat"></i></a>
+      </div>
+    </div>
+    <!--\\\\\\\ header top bar end \\\\\\-->
+  </div>
+  <!--\\\\\\\ header end \\\\\\-->
+  <div class="inner">
+    <!--\\\\\\\ inner start \\\\\\-->
+    <div class="left_nav">
+      <!--\\\\\\\left_nav start \\\\\\-->
+      <div class="search_bar"> <i class="fa fa-search"></i>
+        <input name="" type="text" class="search" placeholder="buscar....." />
+      </div>
+      <div class="left_nav_slidebar">
+        <ul>
+          <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Inicio <span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul style="display:block">
+              <li> <a href="/indexAdministrador" class="left_nav_sub_active"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Inicio</b> </a> </li>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Perfil</b> </a> </li>
+              <li> <a href="{% url 'SIGPAd:Empleados' %}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Empleados</b> </a> </li>
+              <li> <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Usuarios</b> </a> </li>
+              <li> <a href="/gestionarPuesto"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Puesto</b> </a> </li>
+              <li> <a href="/gestionarPlanilla"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Planilla</b> </a> </li>
+            </ul>
+          </li>
+          <li hidden="true"> <a href="javascript:void(0);"> <i class="fa fa-edit"></i> UI KIT <span class="plus"><i class="fa fa-plus"></i></span></a>
+            <ul>
+              <li> <a href="typography.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Typography</b> </a> </li>
+              <li> <a href="buttons.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Buttons</b> </a> </li>
+              <li> <a href="icons.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Icons</b> </a> </li>
+              <li> <a href="grid.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Grid</b> </a> </li>
+              
+              <li> <a href="alert.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Alert & Notification</b> </a> </li>
+              <li> <a href="tabs.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Tabs & Accordion</b> </a> </li>
+              <li> <a href="tree.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Tree View</b> </a> </li>
+              <li> <a href="list.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>List Group</b> </a> </li>
+              <li> <a href="portlets.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Portlets</b> </a> </li>
+              <li> <a href="general.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>General</b> </a> </li>
+            </ul>
+          </li>
+          
+          <li hidden="true"> <a href="javascript:void(0);"> <i class="fa fa-tasks"></i> Forms <span class="plus"><i class="fa fa-plus"></i></span></a>
+            <ul>
+                            <li> <a href="components.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Components</b> </a> </li>
+              <li> <a href="validation.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Validation</b> </a> </li>
+              <li> <a href="multi-upload.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Multi-upload</b> </a> </li>
+              <li> <a href="other-forms.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Others</b> </a> </li>
+            </ul>
+          </li>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-users icon"></i> Empleados <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="/empleados"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Empleados</b> </a> </li>
+              <li> <a href="/ingresarNuevoEmpleado"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Ingresar Empleado</b> </a> </li>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Sancionar Empleado</b> </a> </li>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Despedir Empleado</b> </a> </li>
+              <li> <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Usuarios</b> </a> </li>
+            </ul>
+          </li>
+          <li> <a href="javascript:void(0);"> <i class="fa fa-envelope"></i> Mensajes <span class="plus"><i class="fa fa-plus"></i></span> </a>
+            <ul>
+              <li> <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Inbox</b> </a> </li>
+              <li> <a href="compose.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Compose</b> </a> </li>
+              <li> <a href="readmail.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Read Mail</b> </a> </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!--\\\\\\\left_nav end \\\\\\-->
+    <div class="contentpanel">
+      <!--\\\\\\\ contentpanel start\\\\\\-->
+      <div class="pull-left breadcrumb_admin clear_both">
+        <div class="pull-left page_title theme_color">
+          <h1>Compu ofertas</h1>
+          <h2 class="">Los mejores servicios y respuestos al alcance de un click</h2>
+        </div>
+        <div class="porlets-content">
+        </div>
+        <div class="pull-right" hidden="true">
+          <ol class="breadcrumb">
+            <li><a href="/">inicio</a></li>
+            <li><a href="/">PAGES</a></li>
+            <li class="active"></li>
+          </ol>
+        </div>
+      </div>
+      <div class="container clear_both padding_fix">
+        <!--\\\\\\\ container  start \\\\\\-->
+            {% block Body %}
+
+            {% endblock Body %}
+        
+      
+      </div>
+      <!--\\\\\\\ container  end \\\\\\-->
+    </div>
+    <!--\\\\\\\ content panel end \\\\\\-->
+  </div>
+  <!--\\\\\\\ inner end\\\\\\-->
+</div>
+<!--\\\\\\\ wrapper end\\\\\\-->
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Compose New Task</h4>
+      </div>
+      <div class="modal-body"> content </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Compose New Task</h4>
+      </div>
+      <div class="modal-body"> sgxdfgxfg </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- sidebar chats -->
+<nav class="atm-spmenu atm-spmenu-vertical atm-spmenu-right side-chat">
+    <div class="header">
+    <input type="text" class="form-control chat-search" placeholder=" Search">
+  </div>
+  <div href="#" class="sub-header">
+    <div class="icon"><i class="fa fa-user"></i></div> <p>Online (4)</p>
+  </div>
+  <div class="content">
+    <p class="title">Family</p>
+    <ul class="nav nav-pills nav-stacked contacts">
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Steven Smith</a></li>
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> John Doe</a></li>
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Michael Smith</a></li>
+      <li class="busy"><a href="#"><i class="fa fa-circle-o"></i> Chris Rogers</a></li>
+    </ul>
+    
+    <p class="title">Friends</p>
+    <ul class="nav nav-pills nav-stacked contacts">
+      <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Vernon Philander</a></li>
+      <li class="outside"><a href="#"><i class="fa fa-circle-o"></i> Kyle Abbott</a></li>
+      <li><a href="#"><i class="fa fa-circle-o"></i> Dean Elgar</a></li>
+    </ul>   
+    
+    <p class="title">Work</p>
+    <ul class="nav nav-pills nav-stacked contacts">
+      <li><a href="#"><i class="fa fa-circle-o"></i> Dale Steyn</a></li>
+      <li><a href="#"><i class="fa fa-circle-o"></i> Morne Morkel</a></li>
+    </ul>
+    
+  </div>
+  <div id="chat-box">
+    <div class="header">
+      <span>Richard Avedon</span>
+      <a class="close"><i class="fa fa-times"></i></a>    </div>
+    <div class="messages nano nscroller has-scrollbar">
+      <div class="content" tabindex="0" style="right: -17px;">
+        <ul class="conversation">
+          <li class="odd">
+            <p>Hi John, how are you?</p>
+          </li>
+          <li class="text-right">
+            <p>Hello I am also fine</p>
+          </li>
+          <li class="odd">
+            <p>Tell me what about you?</p>
+          </li>
+          <li class="text-right">
+            <p>Sorry, I'm late... see you</p>
+          </li>
+          <li class="odd unread">
+            <p>OK, call me later...</p>
+          </li>
+        </ul>
+      </div>
+    <div class="pane" style="display: none;"><div class="slider" style="height: 20px; top: 0px;"></div></div></div>
+    <div class="chat-input">
+      <div class="input-group">
+        <input type="text" placeholder="Enter a message..." class="form-control">
+        <span class="input-group-btn">
+        <button class="btn btn-danger" type="button">Send</button>
+        </span>      </div>
+    </div>
+  </div>
+</nav>
+<!-- /sidebar chats -->
+
+
+<!-- Archivos JavaScript -->
+    
+    
+    <script src="{% static "interior/js/jquery-2.1.0.js" %}"></script>
+    <script src="{% static "interior/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "interior/js/common-script.js" %}"></script>
+    <script src="{% static "interior/js/jquery.slimscroll.min.js" %}"></script>
+    <script src="{% static "interior/js/jPushMenu.js" %}"></script>
+    <script src="{% static "interior/js/side-chats.js" %}"></script>
+  <script type="text/javascript" src="{% static "interior/js/jquery-ui.js" %}"></script>
+  <script type="text/javascript" src="{% static "interior/js/jquery.dataTables.min.js" %}"></script>
+
+    {% block JavaScript %}
+
+    {% endblock JavaScript %}
+
+
+</body>
+</html>
+
