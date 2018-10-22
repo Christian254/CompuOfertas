@@ -10,5 +10,7 @@ from django.views.defaults import page_not_found
 # Create your views here.
 @permission_required('SIGPAd.es_cliente')
 def mensajes(request):
-	contexto={}
+	user = request.user
+	usersEmpleados = User.objects.filter(empleado__estado__gte=1).exclude(username=user.username)
+	contexto={'usuarios':usersEmpleados}
 	return render(request,'cliente/mensajes.html',contexto)
