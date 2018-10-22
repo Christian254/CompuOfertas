@@ -11,4 +11,5 @@ urlpatterns = [
 	url(r'mensajes/(?P<pk>\d+)$', login_required(mensajes), name="mensajes"),
 	url(r'nuevoMensaje/$', login_required(nuevoMensaje), name="nuevoMensaje"),
 	url(r'enviarNuevoMensaje/(?P<pk>\d+)$', login_required(enviarNuevoMensaje), name="enviarNuevoMensaje"),
+	url(r'servicio_mensajeria/(?P<emisor_id>\d+)/(?P<receptor_id>\d+)$', login_required(servicio_mensajeria), name="servicio_mensajeria"),
 ]

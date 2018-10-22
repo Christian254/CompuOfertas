@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
 from .models import *
 from django.db.models import Q
+from django.core import serializers
 # Create your views here.
 
 #@permission_required('SIGPAd.es_cliente')
@@ -24,8 +25,13 @@ def mensajes(request,pk):
 	for x in chats:
 		us = User.objects.get(username=x.emisor)
 		datos.append(us)
+
 	for x in chats2:
-		datos.append(x.receptor)
+		if x.receptor in datos:
+			pass
+		else:
+			datos.append(x.receptor)
+
 	contactos = datos
 	print(contactos)
 	chat = None
@@ -35,7 +41,7 @@ def mensajes(request,pk):
 		if contactos:
 			chat =Chat.objects.all()
 			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
-			print(chat)
+			print("enviar: "+chat.receptor.username)
 			if request.method == 'POST':
 				c = request.POST.get('msg',None)
 				chat.ultimo=c
@@ -44,7 +50,6 @@ def mensajes(request,pk):
 				mens.save()
 	except Exception as e:
 		print("no tiene usuarios o chat "+e.message)
-
 	contexto={'usuarios':usersEmpleados,'clientes':userCliente,'contactos':contactos,'primer':primer,'chat':chat,'yo':user}
 	return render(request,'cliente/mensajes.html',contexto)
 
@@ -64,24 +69,52 @@ def enviarNuevoMensaje(request, pk):
 	if request.method=='POST':
 		try:
 			c = request.POST.get('msg',None)
-			chat = Chat.objects.get(receptor=new_contactos,emisor=user.username) | Chat.objects.get(receptor=user,emisor=new_contactos.username)
+			chat = Chat.objects.get(receptor=new_contactos,emisor=user.username)
 			chat.ultimo=c
 			chat.save()
 			mens = Mensaje(chat=chat,msj=c,enviado=user.id)
 			mens.save()
 		except Chat.DoesNotExist:
-			c = request.POST.get('msg',None)
-			print(c)
-			chat = Chat(emisor=user.username,receptor=new_contactos, conectado=1,estado=1,ultimo=c)
-			chat.save()
-			mens = Mensaje(chat=chat,msj=c,enviado=user.id)
-			mens.save()
+			try:
+				chat2 = Chat.objects.get(receptor=user,emisor=new_contactos.username)
+				chat2.ultimo=c
+				chat2.save()
+				mens = Mensaje(chat=chat2,msj=c,enviado=user.id)
+				mens.save()
+			except Chat2.DoesNotExist:
+				c = request.POST.get('msg',None)
+				print(c)
+				chat = Chat(emisor=user.username,receptor=new_contactos, conectado=1,estado=1,ultimo=c)
+				chat.save()
+				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+				mens.save()
 
 	contexto={'contactos':new_contactos,'yo':user}
 	return render(request,'cliente/enviarNuevoMensaje.html',contexto)
 
 
+def servicio_mensajeria(request,emisor_id,receptor_id):
+	user = request.user
+	if user.id==int(emisor_id) or user.id==int(receptor_id):
+		mensajes = serializers.serialize("json",getChat(emisor_id,receptor_id,True),use_natural_foreign_keys=True)
+	else:
+		mensajes = serializers.serialize("json",[],use_natural_foreign_keys=True)
+	return HttpResponse(mensajes, content_type='application/json')
 
+
+def getChat(id_emisor,id_receptor,contactos):
+	chat = None
+	primer = None
+	user = None
+	try:
+		primer = User.objects.get(pk=id_receptor)
+		user = User.objects.get(pk=id_emisor)
+		if contactos:
+			chat =Chat.objects.all()
+			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+			return chat.mensaje_set.all()
+	except Exception as e:
+		return []
 
 
 
