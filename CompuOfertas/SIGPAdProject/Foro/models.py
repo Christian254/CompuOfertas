@@ -8,16 +8,20 @@ from datetime import datetime
 from decimal import *
 
 class Chat(models.Model):
-	class Meta:
-		unique_together = (('emisor'),('receptor'))
-	emisor = models.CharField(max_length=70)
-	receptor = models.CharField(max_length=70)
-	chat = models.IntegerField(default=0)
-	conectado = models.IntegerField(default=0)
+    class Meta:
+        unique_together = (('emisor'),('receptor'))
+    emisor = models.CharField(max_length=70)
+    receptor = models.ForeignKey(User, on_delete=models.CASCADE)
+    chat = models.IntegerField(default=0)
+    conectado = models.IntegerField(default=0)
+    estado = models.IntegerField(default=0)
+    ultimo = models.CharField(max_length=300)
 
 class Mensaje(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     estado = models.IntegerField(default=0)
+    recibido = models.IntegerField(default=0)
+    enviado=models.IntegerField(default=1)
     fecha_hora = models.DateTimeField(default=datetime.now)
     msj = models.CharField(max_length=300)   
     img = models.ImageField(upload_to="img_producto", blank=True, null=True)

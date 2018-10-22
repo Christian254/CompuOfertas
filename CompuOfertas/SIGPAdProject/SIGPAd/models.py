@@ -94,8 +94,8 @@ class Cliente(models.Model):
 	sexo = models.CharField(max_length=10, blank=True)
 	email = models.EmailField(max_length=70)
 	dui = models.CharField(max_length=10, blank=True, null=True)
-	estado = models.BooleanField(default=True)
-
+	estado = models.IntegerField(default=1)
+	foto = models.ImageField(upload_to="foto_cliente", null=True,blank=True)
 	def __str__(self):
 		return self.nombre
 

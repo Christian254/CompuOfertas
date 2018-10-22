@@ -21,8 +21,13 @@
 <link rel='stylesheet prefetch' href="{% static "css/reset.min.css" %}">
 <link rel='stylesheet prefetch' href="{% static "css/font-awesome.min.css" %}">
 <link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
-</head><body>
+</head>
+<body>
+{% if yo.is_authenticated %}
 <div id="frame">
+  {% for us in contactos %}
+    <p> {{us.username}} </p>
+  {% endfor %}
   <div id="sidepanel">
     <div id="profile">
       <div class="wrap">
@@ -49,114 +54,42 @@
     </div>
     <div id="search">
       <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-      <input type="text" placeholder="Search contacts..." />
+      <input type="text" placeholder="Buscar contactos..." />
     </div>
     <div id="contacts">
       <ul>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status online"></span>
-            <img src="{% static "images/louislitt.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Louis Litt</p>
-              <p class="preview">You just got LITT up, Mike.</p>
+        {% for us in contactos %}
+          <li class="contact">
+            <a href="/mensajes/{{us.id}}">
+            <div class="wrap">
+              <span class="contact-status online"></span>
+              {% if us.cliente %}
+                {% if us.cliente.foto %}
+                  <img src="{{us.cliente.foto}}" alt="" />
+                {% else %}
+                  <img src="{% static "images/louislitt.png" %}" alt="" />
+                {% endif %}
+              {% elif us.empleado %}
+                {% if us.empleado.foto %}
+                  <img src="{{us.empleado.foto}}" alt="" />
+                {% else %}
+                  <img src="{% static "images/louislitt.png" %}" alt="" />
+                {% endif %}
+              {% else %}
+                <img src="{% static "images/louislitt.png" %}" alt="" />
+              {% endif %}
+              <div class="meta">
+                <p class="name">{{us.username}} </p>
+                <p class="preview"> {{us.ultimo}} </p>
+              </div>
             </div>
-          </div>
-        </li>
-        <li class="contact active">
-          <div class="wrap">
-            <span class="contact-status busy"></span>
-            <img src="{% static "images/harveyspecter.png" %}" alt="" />
-            <div class="meta">
-               <p class="name">Harvey Specter</p>
-              <p class="preview">Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status away"></span>
-            <img src="{% static "images/rachelzane.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Rachel Zane</p>
-              <p class="preview">I was thinking that we could have chicken tonight, sounds good?</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status online"></span>
-            <img src="{% static "images/donnapaulsen.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Donna Paulsen</p>
-              <p class="preview">Mike, I know everything! I'm Donna..</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status busy"></span>
-            <img src="{% static "images/jessicapearson.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Jessica Pearson</p>
-              <p class="preview">Have you finished the draft on the Hinsenburg deal?</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status"></span>
-            <img src="{% static "images/haroldgunderson.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Harold Gunderson</p>
-              <p class="preview">Thanks Mike! :)</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status"></span>
-            <img src="{% static "images/danielhardman.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Daniel Hardman</p>
-              <p class="preview">We'll meet again, Mike. Tell Jessica I said 'Hi'.</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status busy"></span>
-            <img src="{% static "images/katrinabennett.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Katrina Bennett</p>
-              <p class="preview">I've sent you the files for the Garrett trial.</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status"></span>
-            <img src="{% static "images/charlesforstman.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Charles Forstman</p>
-              <p class="preview">Mike, this isn't over.</p>
-            </div>
-          </div>
-        </li>
-        <li class="contact">
-          <div class="wrap">
-            <span class="contact-status"></span>
-            <img src="{% static "images/jonathansidwell.png" %}" alt="" />
-            <div class="meta">
-              <p class="name">Jonathan Sidwell</p>
-              <p class="preview"><span>You:</span> That's bullshit. This deal is solid.</p>
-            </div>
-          </div>
-        </li>
+            </a>
+          </li>
+        {% endfor %}
       </ul>
     </div>
     <div id="bottom-bar">
-      <button id="addcontact"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i> <span>Add contact</span></button>
+      <button id="addcontact"><a href="/nuevoMensaje"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i> <span>Add contact</span></a></button>
       <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
     </div>
   </div>
@@ -172,47 +105,38 @@
     </div>
     <div class="messages">
       <ul>
-        <li class="sent">
-          <img src="{% static "images/mikeross.png" %}" alt="" />
-          <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
-        </li>
-        <li class="replies">
-          <img src="{% static "images/harveyspecter.png" %}" alt="" />
-          <p>When you're backed against the wall, break the god damn thing down.</p>
-        </li>
-        <li class="replies">
-          <img src="{% static "images/harveyspecter.png" %}" alt="" />
-          <p>Excuses don't win championships.</p>
-        </li>
-        <li class="sent">
-          <img src="{% static "images/mikeross.png" %}" alt="" />
-          <p>Oh yeah, did Michael Jordan tell you that?</p>
-        </li>
-        <li class="replies">
-          <img src="{% static "images/harveyspecter.png" %}" alt="" />
-          <p>No, I told him that.</p>
-        </li>
-        <li class="replies">
-          <img src="{% static "images/harveyspecter.png" %}" alt="" />
-          <p>What are your choices when someone puts a gun to your head?</p>
-        </li>
-        <li class="sent">
-          <img src="{% static "images/mikeross.png" %}" alt="" />
-          <p>What are you talking about? You do what they say or they shoot you.</p>
-        </li>
-        <li class="replies">
-          <img src="{% static "images/harveyspecter.png" %}" alt="" />
-          <p>Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
-        </li>
+        {% if chat %}
+          {% for c in chat.mensaje_set.all %}
+            {% if c.enviado == yo.id %}
+              <li class="sent">
+                <img src="{% static "images/mikeross.png" %}" alt="" />
+                <p> {{c.msj}} </p>
+              </li>
+            {% else %}
+              <li class="replies">
+                <img src="{% static "images/harveyspecter.png" %}" alt="" />
+                <p>{{c.msj}}</p>
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <li class="replies">
+            <img src="{% static "images/anonimo.png" %}" alt="" />
+            <p>Selecciona un chat!!!</p>
+          </li>
+        {% endif %}
       </ul>
     </div>
-    <div class="message-input">
-      <div class="wrap">
-      <input type="text" placeholder="Write your message..." />
-      <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-      <button class="submit"><i class="glyphicon glyphicon-send" aria-hidden="true"></i></button>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="message-input">
+        <div class="wrap">
+        <input type="text" placeholder="Escriba su mensaje..." name="msg" id="msg"/>
+        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+        <button type="submit" class="submit"><i class="glyphicon glyphicon-send" aria-hidden="true"></i></button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 <script src='stopExecutionOnTimeout.js'></script>
@@ -250,8 +174,8 @@ $("#status-options ul li").click(function() {
   
   $("#status-options").removeClass("active");
 });
-
-function newMessage() {
+/*
+  function newMessage() {
   message = $(".message-input input").val();
   if($.trim(message) == '') {
     return false;
@@ -273,5 +197,10 @@ $(window).on('keydown', function(e) {
   }
 });
 //# sourceURL=pen.js
+*/
 </script>
+{% else %}
+<h1>para estar aqui debe registrarse</h1>
+{% endif %}
+
 </body></html>

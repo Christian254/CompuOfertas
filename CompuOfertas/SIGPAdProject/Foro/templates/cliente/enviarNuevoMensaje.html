@@ -1,0 +1,22 @@
+{% extends "base_cliente/base.html" %}
+{% load staticfiles %}
+
+
+{% block Body %}
+
+{% if user.is_superuser %}
+<h1>superusuario</h1>
+{%elif user.is_authenticated%}
+<h1>nuevo mensaje a: {{contactos.username}} </h1>
+
+<form method="POST">
+	{% csrf_token %}
+	<input type="text" name="msg" id="msg" placeholder="mensaje" required="">
+	<input type="submit" name="enviar" value="enviar" class="btn btn-info">
+</form>
+
+
+{%else%}
+<h1>usuario anonimo</h1>
+{% endif %}
+{% endblock Body %}

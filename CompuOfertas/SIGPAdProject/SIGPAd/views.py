@@ -599,8 +599,11 @@ def index(request):
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
-			#empleado = request.user.empleado_set.all().latest('nombre')
-			return render(request,'VendedorTemplates/vendedorIndex.html',{})
+			empleado = Empleado.objects.filter(usuario=user)
+			if len(empleado) > 0:
+				return render(request,'VendedorTemplates/vendedorIndex.html',{})
+			else:
+				return render_to_response('ClienteTemplates/clienteIndex.html')
 	else:
 		try:
 			user = User.objects.all()

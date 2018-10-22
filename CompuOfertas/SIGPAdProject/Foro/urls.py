@@ -8,5 +8,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-	url(r'mensajes/$', login_required(mensajes), name="mensajes"),
+	url(r'mensajes/(?P<pk>\d+)$', login_required(mensajes), name="mensajes"),
+	url(r'nuevoMensaje/$', login_required(nuevoMensaje), name="nuevoMensaje"),
+	url(r'enviarNuevoMensaje/(?P<pk>\d+)$', login_required(enviarNuevoMensaje), name="enviarNuevoMensaje"),
 ]
