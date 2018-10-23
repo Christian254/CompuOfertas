@@ -6,6 +6,8 @@ from django.contrib import admin
 from Foro.views import *
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 	url(r'mensajes/(?P<pk>\d+)$', login_required(mensajes), name="mensajes"),

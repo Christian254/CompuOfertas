@@ -28,8 +28,26 @@
   <div id="sidepanel">
     <div id="profile">
       <div class="wrap">
-        <img id="profile-img"  src="{% static "images/mikeross.png" %}" class="online" alt="" />
-        <p>Mike Ross</p>
+        {% if yo.cliente_set.all %}
+          {% for cl in yo.cliente_set.all %}
+            {% if cl.foto %}
+              <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online"/>
+            {% else %}
+              <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
+            {% endif %}
+          {% endfor %}
+        {% elif yo.empleado_set.all %}
+          {% for cl in yo.empleado_set.all %}
+            {% if cl.foto %}
+              <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" alt="foto empleado" />
+            {% else %}
+              <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <img src="{% static "images/louislitt.png" %}" alt="" />
+        {% endif %}
+        <p> {{yo.username}} </p>
         <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
         <div id="status-options">
           <ul>
@@ -60,20 +78,24 @@
             <a href="/mensajes/{{us.id}}">
             <div class="wrap">
               <span class="contact-status online"></span>
-              {% if us.cliente %}
-                {% if us.cliente.foto %}
-                  <img src="{{us.cliente.foto}}" alt="" />
-                {% else %}
-                  <img src="{% static "images/louislitt.png" %}" alt="" />
-                {% endif %}
-              {% elif us.empleado %}
-                {% if us.empleado.foto %}
-                  <img src="{{us.empleado.foto}}" alt="" />
-                {% else %}
-                  <img src="{% static "images/louislitt.png" %}" alt="" />
-                {% endif %}
+              {% if us.cliente_set.all %}
+                {% for cl in us.cliente_set.all %}
+                  {% if cl.foto %}
+                      <img src="/media/{{cl.foto}}" alt="" />
+                    {% else %}
+                      <img src="{% static "images/user.png" %}" alt="" />
+                  {% endif %}
+                {% endfor %}
+              {% elif us.empleado_set.all %}
+                {% for cl in us.empleado_set.all %}
+                  {% if cl.foto %}
+                      <img src="/media/{{cl.foto}}" alt="" />
+                    {% else %}
+                      <img src="{% static "images/user.png" %}" alt="" />
+                  {% endif %}
+                {% endfor %}
               {% else %}
-                <img src="{% static "images/louislitt.png" %}" alt="" />
+                <img src="{% static "images/user.png" %}" alt="" />
               {% endif %}
               <div class="meta">
                 <p class="name">{{us.username}} </p>
@@ -92,13 +114,24 @@
   </div>
   <div class="content">
     <div class="contact-profile">
-      <img src="{% static "images/harveyspecter.png" %}" alt="" />
-      <p>Harvey Specter</p>
-      <div class="social-media">
-        <i class="fa fa-facebook" aria-hidden="true"></i>
-        <i class="fa fa-twitter" aria-hidden="true"></i>
-         <i class="fa fa-instagram" aria-hidden="true"></i>
+      {% if primer %}
+        <img src="{% static "images/harveyspecter.png" %}" alt="" />
+        <p> {{primer.username}}</p>
+        <div class="social-media">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+          <i class="fa fa-instagram" aria-hidden="true"></i>
+        </div>
+      {% else %}
+      <img src="{% static "images/anonimo.png" %}" alt="" />
+        <p> Seleccione un destinatario </p>
+        <div class="social-media">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+          <i class="fa fa-instagram" aria-hidden="true"></i>
       </div>
+
+      {% endif %}
     </div>
     <div class="messages">
       <ul>
@@ -106,19 +139,38 @@
           {% for c in chat.mensaje_set.all %}
             {% if c.enviado == yo.id %}
               <li class="sent">
-                <img src="{% static "images/mikeross.png" %}" alt="" />
+
+              {% if primer.cliente_set.all %}
+                {% for cl in primer.cliente_set.all %}
+                  {% if cl.foto %}
+                      <img src="/media/{{cl.foto}}" alt="" />
+                    {% else %}
+                      <img src="{% static "images/user.png" %}" alt="" />
+                  {% endif %}
+                {% endfor %}
+              {% elif primer.empleado_set.all %}
+                {% for cl in primer.empleado_set.all %}
+                  {% if cl.foto %}
+                      <img src="/media/{{cl.foto}}" alt="" />
+                    {% else %}
+                      <img src="{% static "images/user.png" %}" alt="" />
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                <img src="{% static "images/user.png" %}" alt="" />
+              {% endif %}
                 <p> {{c.msj}} </p>
               </li>
             {% else %}
               <li class="replies">
-                <img src="{% static "images/harveyspecter.png" %}" alt="" />
+                <img src="{% static "images/user.png" %}" alt="" />
                 <p>{{c.msj}}</p>
               </li>
             {% endif %}
           {% endfor %}
         {% else %}
           <li class="replies">
-            <img src="{% static "images/anonimo.png" %}" alt="" />
+            <img src="{% static "images/user.png" %}" alt="" />
             <p>Selecciona un chat!!!</p>
           </li>
         {% endif %}
