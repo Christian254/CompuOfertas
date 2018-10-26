@@ -115,7 +115,20 @@
   <div class="content">
     <div class="contact-profile">
       {% if primer %}
-        <img src="{% static "images/harveyspecter.png" %}" alt="" />
+        {% for cl in primer.cliente_set.all %}
+          {% if cl.foto %}
+            <img src="/media/{{cl.foto}}" alt="" />
+          {% else %}
+            <img src="{% static "images/user.png" %}" alt="" />
+          {% endif %}
+        {% endfor %}
+        {% for cl in primer.empleado_set.all %}
+          {% if cl.foto %}
+            <img src="/media/{{cl.foto}}" alt="" />
+          {% else %}
+            <img src="{% static "images/user.png" %}" alt="" />
+          {% endif %}
+        {% endfor %}
         <p> {{primer.username}}</p>
         <div class="social-media">
           <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -139,7 +152,6 @@
           {% for c in chat.mensaje_set.all %}
             {% if c.enviado == yo.id %}
               <li class="sent">
-
               {% if primer.cliente_set.all %}
                 {% for cl in primer.cliente_set.all %}
                   {% if cl.foto %}
@@ -174,6 +186,9 @@
             <p>Selecciona un chat!!!</p>
           </li>
         {% endif %}
+        <div id="mostrar">
+          
+        </div>
       </ul>
     </div>
     <form method="POST">
@@ -190,7 +205,8 @@
 </div>
 <script src='stopExecutionOnTimeout.js'></script>
 <script src='jquery-2.1.0.js'></script>
-<script >$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+<script >
+$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 $("#profile-img").click(function() {
   $("#status-options").toggleClass("active");
@@ -223,30 +239,23 @@ $("#status-options ul li").click(function() {
   
   $("#status-options").removeClass("active");
 });
-/*
-  function newMessage() {
-  message = $(".message-input input").val();
-  if($.trim(message) == '') {
-    return false;
-  }
-  $('<li class="sent"><img src="mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
-  $('.message-input input').val(null);
-  $('.contact.active .preview').html('<span>You: </span>' + message);
-  $(".messages").animate({ scrollTop: $(document).height() }, "fast");
-};
 
-$('.submit').click(function() {
-  newMessage();
-});
+function peticion() {
+  $.get("/servicio_mensajeria/{{yo.id}}/{{primer.id}}",function(data,status){
+      for(let i=0;i<data.length;i++){
+        var valor = data[i].fields;                       
+        var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
+        $(lista).appendTo($('.messages ul'));
+        
+      }
+  });
+}
 
-$(window).on('keydown', function(e) {
-  if (e.which == 13) {
-    newMessage();
-    return false;
-  }
+$(document).ready(function(){
+   var refreshId = setInterval(peticion, 3000);
+   $.ajaxSetup({ cache: false });
 });
-//# sourceURL=pen.js
-*/
+$(".messages").animate({ scrollTop: $(document).height() }, "fast");
 </script>
 {% else %}
 <h1>para estar aqui debe registrarse</h1>
