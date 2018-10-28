@@ -10,6 +10,8 @@ from django.views.defaults import page_not_found
 from .models import *
 from django.db.models import Q
 from django.core import serializers
+import json 
+from django.core.serializers.json import DjangoJSONEncoder
 # Create your views here.
 
 #@permission_required('SIGPAd.es_cliente')
@@ -71,6 +73,7 @@ def enviarNuevoMensaje(request, pk):
 			c = request.POST.get('msg',None)
 			chat = Chat.objects.get(receptor=new_contactos,emisor=user.username)
 			chat.ultimo=c
+			chat.estado=0
 			chat.save()
 			mens = Mensaje(chat=chat,msj=c,enviado=user.id)
 			mens.save()
@@ -78,10 +81,11 @@ def enviarNuevoMensaje(request, pk):
 			try:
 				chat2 = Chat.objects.get(receptor=user,emisor=new_contactos.username)
 				chat2.ultimo=c
+				chat2.estado=0
 				chat2.save()
 				mens = Mensaje(chat=chat2,msj=c,enviado=user.id)
 				mens.save()
-			except Chat2.DoesNotExist:
+			except Chat.DoesNotExist:
 				c = request.POST.get('msg',None)
 				print(c)
 				chat = Chat(emisor=user.username,receptor=new_contactos, conectado=1,estado=1,ultimo=c)
@@ -116,9 +120,38 @@ def getChat(id_emisor,id_receptor,contactos,id):
 			for x in c:
 				x.estado=1
 				x.save()
+			print(c)
 			return c
 	except Exception as e:
 		return []
+
+
+def servicio_chat(request):
+	user = request.user
+	#ch = serializers.serialize("json",getChatUser(user),use_natural_foreign_keys=True)
+	ch = json.dumps(list(getChatUser(user)), cls=DjangoJSONEncoder)
+	return HttpResponse(ch, content_type='application/json')
+
+
+def getChatUser(user):
+	chats = Chat.objects.filter(receptor=user)
+	chats2 = Chat.objects.filter(emisor=user.username)
+	datos = []
+	for x in chats:
+		m1 = x.mensaje_set.all().filter(estado=0)
+		val = len(m1)
+		if val > 0:
+			m = m1.latest("id")
+			if m.enviado != user.id:
+				datos.append({"model":"Foro.mensaje","pk":m.id,"fields":{"ids":m.id,"msj":m.msj,"username":x.emisor,"enviado":m.enviado}})
+	for x in chats2:
+		m1 = x.mensaje_set.all().filter(estado=0)
+		val = len(m1)
+		if val > 0 :
+			m = m1.latest("id")
+			if m.enviado != user.id:
+				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":m.msj,"username":x.receptor.username,"enviado":m.enviado}})
+	return datos
 
 
 

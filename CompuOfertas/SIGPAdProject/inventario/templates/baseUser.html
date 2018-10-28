@@ -66,11 +66,31 @@
                         </ul>
                     </div>
                 </div>
-                <!--
-      <a href="/ingresarNuevoEmpleado" class="add_user" hidden=""> <i class="fa fa-plus-square"></i> <span> Nuevo empleado</span> </a> -->
                 <div class="top_right_bar">
                     <div class="top_right">
                         <div class="top_right_menu">
+                            <ul>
+                                <input type="number" name="controlUser" id="controlUser" class="controlUser" value="0" hidden="true">
+                                <li class="dropdown"> <a href="/" data-toggle="dropdown"> Mensajes <span class="badge badge color_1" id="cant">0</span> </a>
+                                    <ul class="drop_down_task dropdown-menu" id="msjUser">
+                                        <div class="top_pointer"></div>
+                                        <li>
+                                            <p class="number" style="color:black;">tienes <span id="tienes">0</span> mensajes</p>
+                                        </li>
+                                    </ul>
+                                </li>
+                              <li class="dropdown"> <a href="/" data-toggle="dropdown"> notificacion <span class="badge badge color_2">6</span> </a>
+                                <div class="notification_drop_down dropdown-menu">
+                                  <div class="top_pointer"></div>
+                                  <div class="box"> <a href="/"> <span class="block primery_6"> <i class="fa fa-envelope-o"></i> </span> <span class="block_text">Mailbox</span> </a> </div>
+                                  <div class="box"> <a href="/"> <span class="block primery_2"> <i class="fa fa-calendar-o"></i> </span> <span class="block_text">Calendar</span> </a> </div>
+                                  <div class="box"> <a href="/"> <span class="block primery_4"> <i class="fa fa-map-marker"></i> </span> <span class="block_text">Map</span> </a> </div>
+                                  <div class="box"> <a href="/"> <span class="block primery_3"> <i class="fa fa-plane"></i> </span> <span class="block_text">To-Do</span> </a> </div>
+                                  <div class="box"> <a href="/"> <span class="block primery_5"> <i class="fa fa-picture-o"></i> </span> <span class="block_text">Tasks</span> </a> </div>
+                                  <div class="box"> <a href="/"> <span class="block primery_1"> <i class="fa fa-clock-o"></i> </span> <span class="block_text">Timeline</span> </a> </div>
+                                </div>
+                              </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="user_admin dropdown">
@@ -349,6 +369,48 @@
     <script src="{% static "js/Chart.bundle.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery-ui.js" %}"></script>
     <script type="text/javascript" src="{% static "js/jquery.dataTables.min.js" %}"></script>
+        <script type="text/javascript">
+      function peticionChat() {
+        $.get("/servicio_chat/",function(data,status){
+            var cant = data.length;
+            $("#cant").text(cant);
+            $("#tienes").text(cant);
+            for(let i=0;i<=data.length;i++){
+              var valor = data[i].fields;
+              var d = document.getElementsByClassName('controlUser');
+              var j = d[0].value;
+              if (j < cant) {
+                var lista=`<li class="listado"> 
+                      <a href="/mensajes/${valor.enviado}" class="mail"> 
+                        <span class="photo">
+                          <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
+                        </span> 
+                        <span class="subject"> 
+                          <span class="from">
+                            ${valor.username}
+                          </span> 
+                          <span class="time">
+                            justo ahora 
+                          </span>  
+                        </span> 
+                        <span class="message">
+                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                        </span> 
+                      </a> 
+                    </li>`;
+                $(lista).appendTo($('#msjUser'));
+                j = j +1;
+                d[0].value=j
+              }
+            }
+        });
+      }
+
+      $(document).ready(function(){
+         var refreshId = setInterval(peticionChat, 3000);
+         $.ajaxSetup({ cache: false });
+      });
+    </script>
     
 
     {% block JavaScript %} {% endblock JavaScript %}

@@ -246,7 +246,7 @@ function peticion() {
         var valor = data[i].fields;                       
         var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
         $(lista).appendTo($('.messages ul'));
-        
+        $(".messages").animate({ scrollTop: $(document).height() }, "fast");
       }
   });
 }

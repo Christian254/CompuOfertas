@@ -24,7 +24,7 @@ class Mensaje(models.Model):
     enviado=models.IntegerField(default=1)
     fecha_hora = models.DateTimeField(default=datetime.now)
     msj = models.CharField(max_length=300)   
-    img = models.ImageField(upload_to="img_producto", blank=True, null=True)
+    img = models.ImageField(upload_to="img_mensaje", blank=True, null=True)
 
     def imagen(self):
         return format_html( "<image src='{}' style='height:100px' />".format(self.img.url) )

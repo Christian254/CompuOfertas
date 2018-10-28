@@ -590,7 +590,7 @@ def indexCliente(request):
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
 		else:
 			return render(request,'ClienteTemplates/clienteIndex.html',{})			
-	return render_to_response('ClienteTemplates/clienteIndex.html')
+	return render(request,'ClienteTemplates/clienteIndex.html',{})
 
 #Foro
 def index(request):
@@ -603,7 +603,7 @@ def index(request):
 			if len(empleado) > 0:
 				return render(request,'VendedorTemplates/vendedorIndex.html',{})
 			else:
-				return render_to_response('ClienteTemplates/clienteIndex.html')
+				return render(request,'ClienteTemplates/clienteIndex.html',{})
 	else:
 		try:
 			user = User.objects.all()
