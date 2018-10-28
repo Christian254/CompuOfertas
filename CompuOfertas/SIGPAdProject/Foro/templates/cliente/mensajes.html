@@ -246,7 +246,7 @@ function peticion() {
         var valor = data[i].fields;                       
         var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
         $(lista).appendTo($('.messages ul'));
-        $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+        $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
       }
   });
 }
@@ -255,7 +255,7 @@ $(document).ready(function(){
    var refreshId = setInterval(peticion, 3000);
    $.ajaxSetup({ cache: false });
 });
-$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+$(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
 </script>
 {% else %}
 <h1>para estar aqui debe registrarse</h1>
