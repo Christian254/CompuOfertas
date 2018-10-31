@@ -7,6 +7,11 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
+/*@font-face {
+  font-family: Poppins-Regular;
+  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+}*/
+
 @font-face {
   font-family: Poppins-Regular;
   src: url('../fonts/poppins/Poppins-Regular.ttf'); 
@@ -284,6 +289,12 @@ iframe {
   width: 100%;
   background: transparent;
   padding: 0 5px;
+}
+
+.input101{
+  font-family: Poppins-Regular;
+  font-size: 15px;
+  color: #555555;;
 }
 
 .focus-input100 {

@@ -24,8 +24,8 @@
                     <h3>FACTURA DE COMPRA: <strong>{{compra.id}}</strong></h3>
                 </div>
                 <div class="modal-body">
-                    <p><strong>Empleado:</strong> {{compra.empleado}}</p>
-                    <p><strong>Proveedor:</strong> {% if compra.proveedor %}{{compra.proveedor}}{%else%}Desconocido{%endif%} </p>
+                    <p><strong>Empleado:</strong> {{compra.empleado.nombre}}</p>
+                    <p><strong>Proveedor:</strong> {% if compra.proveedor %}{{compra.proveedor.razon_social}}{%else%}Desconocido{%endif%} </p>
                     <p><strong>Descripcion:</strong> {{compra.descripcion}}</p>
                     <p><strong>Fecha y Hora:</strong> {{compra.fecha_hora}}</p>
 

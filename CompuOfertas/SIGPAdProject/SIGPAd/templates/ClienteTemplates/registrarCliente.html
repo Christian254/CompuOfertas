@@ -23,17 +23,23 @@
 		}
 
 		.input100 {
-  font-family: Poppins-Regular;
-  font-size: 12px;
-  color: #555555;
-  line-height: 0.5;
+			font-family: Poppins-Regular;
+			font-size: 12px;
+			color: #555555;
+			line-height: 0.5;
 
-  display: block;
-  width: 100%;
-  background: transparent;
-  padding: 0 0px;
-}
+			display: block;
+			width: 100%;
+			background: transparent;
+			padding: 0 0px;
+		}
 
+		.form-control{
+			font-size: 12px;
+			height: 30px;
+			padding: 5px;
+			width: 100%;
+		}
 
 		</style>
 	{% endblock CSS %}
@@ -67,10 +73,10 @@
 
 	            <div class="wrap-input100 validate-input m-b-26" data-validate="Sexo es uncampo requerido.">
 					<span class="label-input100">Sexo</span>
-	                <select id="sexo" class="input100" name="sexo">
+	                <select id="sexo" class="form-control custom-select"  name="sexo">
 	                    <option id="masculino" value="masculino">Masculino</option>
 	                    <option id="femenino" value="femenino">Femenino</option>
-	                </select>
+					</select>
 					<span class="focus-input100"></span>
 				</div>
 
