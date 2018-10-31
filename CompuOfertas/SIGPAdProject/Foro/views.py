@@ -12,6 +12,7 @@ from django.db.models import Q
 from django.core import serializers
 import json 
 from django.core.serializers.json import DjangoJSONEncoder
+from inventario.models import *
 # Create your views here.
 
 #@permission_required('SIGPAd.es_cliente')
@@ -153,6 +154,10 @@ def getChatUser(user):
 				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":m.msj,"username":x.receptor.username,"enviado":m.enviado}})
 	return datos
 
+def articulo(request):
+	articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(inventario__precio_venta_producto=0)
+	contexto = {'art': articulos}
+	return render(request, 'cliente/articulos.html', contexto)
 
 
 

@@ -1,0 +1,20 @@
+{% extends "base_cliente/base.html" %} {% load staticfiles %} {% block Body %}
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="card-columns">
+                {% for p in art %}
+                <div class="card">
+                    <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid">
+                    <div class="card-body">
+                        <h3 class="card-title">{{p.nombre}}</h3>
+                        <p class="card-text">{{p.descripcion}}</p>
+                        <button class="btn-block btn-primary">ver</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock Body %}
