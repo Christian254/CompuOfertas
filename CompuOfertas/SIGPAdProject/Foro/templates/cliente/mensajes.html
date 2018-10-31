@@ -1,10 +1,6 @@
+{% extends "base_cliente/base.html" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html class=''>
-<head>
-  <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" id="bootstrap-css">
-  <script src="{% static "js/bootstrap.min.js" %}"></script>
-  <script src="{% static "js/jquery-2.1.0.js" %}"></script>
+{% block CSS %}
   <script src="{% static "console_1.js" %}"></script>
   <script src="{% static "events_runner.js" %}"></script>
   <script src="{% static "css_live_reload_init.js" %}"></script>
@@ -17,14 +13,12 @@
       Typekit.load({ async: true });
     }catch(e){}
 </script>
-
 <link rel='stylesheet prefetch' href="{% static "css/reset.min.css" %}">
 <link rel='stylesheet prefetch' href="{% static "css/font-awesome.min.css" %}">
-<link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
-</head>
-<body>
+{% endblock CSS %}
+{% block Body %}
 {% if yo.is_authenticated %}
-<div id="frame">
+<div id="frame" style="  min-width: 360px; max-width: 900px; height: 92vh; min-height: 300px; max-height: 625px;">
   <div id="sidepanel">
     <div id="profile">
       <div class="wrap">
@@ -197,7 +191,7 @@
         <div class="wrap">
         <input type="text" placeholder="Escriba su mensaje..." name="msg" id="msg"/>
         <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-        <button type="submit" class="submit"><i class="glyphicon glyphicon-send" aria-hidden="true"></i></button>
+        <button type="submit" class="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
         </div>
       </div>
     </form>
@@ -261,4 +255,6 @@ $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
 <h1>para estar aqui debe registrarse</h1>
 {% endif %}
 
-</body></html>
+{% endblock Body %}
+
+
