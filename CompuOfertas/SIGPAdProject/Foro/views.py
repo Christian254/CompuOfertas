@@ -159,5 +159,9 @@ def articulo(request):
 	contexto = {'art': articulos}
 	return render(request, 'cliente/articulos.html', contexto)
 
+def detalleArticulo(request, id):
+	detalle = Producto.objects.get(id=id)
+	contexto = {'art': detalle}
+	return render(request,'cliente/detalleArticulo.html', contexto)
 
 

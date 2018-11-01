@@ -1,15 +1,18 @@
-{% extends "base_cliente/base.html" %} {% load staticfiles %} {% block Body %}
+{% extends "base_cliente/base.html" %} {% load staticfiles %} {% block Script %}
+<!-- Add mousewheel plugin (this is optional) -->
+
+{% endblock Script %} {% block Body %}
 <div class="container">
     <div class="row mt-3 mb-3">
         <div class="col">
             <div class="card-columns">
                 {% for p in art %}
-                <div class="card">
+                <div class="card text-center">
                     <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid">
                     <div class="card-body">
-                        <h3 class="card-title">{{p.nombre}}</h3>
-                        <p class="card-text">{{p.descripcion}}</p>
-                        <button class="btn-block btn-primary">ver</button>
+                        <a href="{% url 'Foro:detalleArticulo' p.id %}" class="btn btn-outline-info btn-block">
+                            <h6><i class="fa fa-eye" aria-hidden="true"></i> {{p.nombre}}</h6>
+                        </a>
                     </div>
                 </div>
                 {% endfor %}

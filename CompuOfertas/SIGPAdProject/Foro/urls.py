@@ -16,4 +16,5 @@ urlpatterns = [
 	url(r'servicio_mensajeria/(?P<emisor_id>\d+)/(?P<receptor_id>\d+)$', login_required(servicio_mensajeria), name="servicio_mensajeria"),
 	url(r'servicio_chat/$', login_required(servicio_chat), name="servicio_chat"),
 	url(r'articulos/$',login_required(articulo), name="articulos"),
+	url(r'detalleArticulo/(?P<id>\d+)$',login_required(detalleArticulo), name="detalleArticulo"),
 ]

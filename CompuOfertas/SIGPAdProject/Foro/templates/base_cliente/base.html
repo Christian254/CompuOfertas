@@ -15,10 +15,11 @@
     </script>
     <script type="text/javascript" src="{% static 'interior/js/jquery.min.js'%}">
     </script>
-    <script type="text/javascript" src="{% static 'interior/js/sweetalert2.all.js'%}">
+    <script type="text/javascript" src="{% static 'interior/js/sweetalert2.all.js' %}">
     </script>
+    <script src="{% static 'fancy/jquery.fancybox.min.js'%}"></script>
     <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
-    <link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
+    <link rel='stylesheet prefetch' href="{% static 'css/frame.css' %}">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{% static 'interior/css/font-awesome.css'%}">
@@ -28,7 +29,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'interior/css/estilos.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'interior/css/jquery-ui.css'%}">
     <link rel="stylesheet" type="text/css" href="{% static 'interior/css/jquery.dataTables.min.css'%}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/mensajes.css'%}"> {% block Script %} {% endblock Script %} {% block CSS %} {% endblock CSS %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mensajes.css'%}">
+    <link rel="stylesheet" href="{% static 'fancy/jquery.fancybox.min.css' %}"> {% block Script %} {% endblock Script %} {% block CSS %} {% endblock CSS %}
 
 </head>
 
