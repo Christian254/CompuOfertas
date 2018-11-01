@@ -18,6 +18,7 @@ from inventario.models import *
 #@permission_required('SIGPAd.es_cliente')
 def mensajes(request,pk):
 	user = request.user
+	error = ''
 	usersEmpleados = User.objects.filter(empleado__estado__gte=1).exclude(username=user.username)
 	userCliente = User.objects.filter(cliente__estado__gte=1).exclude(username=user.username)
 	chats = Chat.objects.filter(receptor=user) 
@@ -44,7 +45,10 @@ def mensajes(request,pk):
 		if contactos:
 			chat =Chat.objects.all()
 			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
-			print("enviar: "+chat.receptor.username)
+			msj = chat.mensaje_set.all().filter(estado=0)
+			for x in msj:
+				x.estado=1
+				x.save()
 			if request.method == 'POST':
 				c = request.POST.get('msg',None)
 				chat.ultimo=c
@@ -52,8 +56,10 @@ def mensajes(request,pk):
 				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
 				mens.save()
 	except Exception as e:
-		print("no tiene usuarios o chat "+e.message)
-	contexto={'usuarios':usersEmpleados,'clientes':userCliente,'contactos':contactos,'primer':primer,'chat':chat,'yo':user}
+		print(e.message)
+		if 'object has no attribute' in e.message:
+			error = "Para enviar un nuevo mensaje tiene que buscar el usuario en \"add contact\""
+	contexto={'usuarios':usersEmpleados,'clientes':userCliente,'contactos':contactos,'primer':primer,'chat':chat,'yo':user,'error':error}
 	return render(request,'cliente/mensajes.html',contexto)
 
 
