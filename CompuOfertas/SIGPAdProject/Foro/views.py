@@ -133,6 +133,7 @@ def enviarNuevoMensaje(request, pk):
 				chat.save()
 				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
 				mens.save()
+		return redirect("/mensajes/0")
 
 	contexto={'contactos':new_contactos,'yo':user}
 	return render(request,'cliente/enviarNuevoMensaje.html',contexto)
