@@ -154,16 +154,16 @@
                         {% for c in chat.mensaje_set.all %}
                             {% if c.enviado == yo.id %}
                                 <li class="sent" style="margin-left: 0px;">
-                                {% if primer.cliente_set.all %}
-                                    {% for cl in primer.cliente_set.all %}
+                                {% if yo.cliente_set.all %}
+                                    {% for cl in yo.cliente_set.all %}
                                         {% if cl.foto %}
                                             <img src="/media/{{cl.foto}}" alt="" />
                                         {% else %}
                                             <img src="{% static "images/user.png" %}" alt="" />
                                         {% endif %}
                                     {% endfor %}
-                                {% elif primer.empleado_set.all %}
-                                    {% for cl in primer.empleado_set.all %}
+                                {% elif yo.empleado_set.all %}
+                                    {% for cl in yo.empleado_set.all %}
                                         {% if cl.foto %}
                                             <img src="/media/{{cl.foto}}" alt="" />
                                         {% else %}
@@ -175,19 +175,37 @@
                                 {% endif %}
                                     <p> {{c.msj}} </p>
                                 </li>
-                                {% else %}
+                            {% else %}
                                     <li class="replies">
+                                    {% if primer.cliente_set.all %}
+                                        {% for cl in primer.cliente_set.all %}
+                                            {% if cl.foto %}
+                                                <img src="/media/{{cl.foto}}" alt="" />
+                                            {% else %}
+                                                <img src="{% static "images/user.png" %}" alt="" />
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% elif primer.empleado_set.all %}
+                                        {% for cl in primer.empleado_set.all %}
+                                            {% if cl.foto %}
+                                                <img src="/media/{{cl.foto}}" alt="" />
+                                            {% else %}
+                                                <img src="{% static "images/user.png" %}" alt="" />
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
                                         <img src="{% static "images/user.png" %}" alt="" />
+                                    {% endif %}
                                         <p>{{c.msj}}</p>
                                     </li>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
                             <li class="replies">
                                 <img src="{% static "images/user.png" %}" alt="" />
                                 <p>Selecciona un chat!!!</p>
                             </li>
-                        {% endif %}
+                    {% endif %}
                         <div id="mostrar">
                               
                         </div>
