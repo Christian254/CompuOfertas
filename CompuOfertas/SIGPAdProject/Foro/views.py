@@ -102,6 +102,35 @@ def nuevoMensaje(request):
 		cliente = paginator.page(1)
 	except EmptyPage:
 		cliente = paginator.page(paginator.num_pages)
+
+	if request.method=='POST':
+		id_user = request.POST.get('id_usuario',None) 
+		new_contactos = User.objects.get(pk=id_user)
+		try:
+			c = request.POST.get('mensaje',None)
+			chat = Chat.objects.get(receptor=new_contactos,emisor=user.username)
+			chat.ultimo=c
+			chat.estado=0
+			chat.save()
+			mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+			mens.save()
+		except Chat.DoesNotExist:
+			try:
+				chat2 = Chat.objects.get(receptor=user,emisor=new_contactos.username)
+				chat2.ultimo=c
+				chat2.estado=0
+				chat2.save()
+				mens = Mensaje(chat=chat2,msj=c,enviado=user.id)
+				mens.save()
+			except Chat.DoesNotExist:
+				c = request.POST.get('mensaje',None)
+				print(c)
+				chat = Chat(emisor=user.username,receptor=new_contactos, conectado=1,estado=1,ultimo=c)
+				chat.save()
+				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+				mens.save()
+		return redirect("/mensajes/0")
+
 	contexto={'usuarios':empleados,'clientes':cliente,'yo':user}
 	return render(request,'cliente/nuevoMensaje.html',contexto)
 

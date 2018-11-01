@@ -75,7 +75,7 @@
 			<h3 class="alert-success center">Empleados</h3>
 			{% for us in usuarios %}
 			<div class="col-sm-10 empleado">
-				<div class="col-sm-10 col-sm-offset-1">
+				<div class="col-sm-16 col-sm-offset-1">
 					{% if us.foto %}
 						<img src="" alt="imagen usuario" height="50">
 					{% else %}
@@ -85,6 +85,9 @@
 						<h3><a href="/enviarNuevoMensaje/{{us.usuario.id}}"> {{us.usuario.username}} </a></h3>
 						<label>Nombre: {{us.nombre}}, {{us.apellido}}</label><br>
 						<label>Puesto: {{us.puesto}}</label>
+					</div>
+					<div class="col-sm-12 margen">
+						<button class="btn btn-info" onclick="mostrarModal({{us.usuario.id}})"><span><li class="fa fa-comments-o"></li></span> conectar</button>
 					</div>
 				</div>
 			</div><br>
@@ -127,6 +130,9 @@
 						<label>Nombre: {{us.nombre}}, {{us.apellido}}</label><br>
 						<label>sexo: {{us.sexo}}</label>
 					</div>
+					<div class="col-sm-12 margen">
+						<button class="btn btn-info" onclick="mostrarModal({{us.usuario.id}})"><span><li class="fa fa-comments-o"></li></span> conectar</button>
+					</div>
 				</div>
 			</div><br>
 			{% endfor %}
@@ -155,6 +161,46 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="idmensaje" tabindex="-1" role="dialog" aria-labelledy="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<h5 class="modal-title">Enviar mi primer mensaje a usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="id_usuario" id="id_usuario" value="0">
+                    <div class="form-group row">
+                            <label for="msj" class="col-md-4 col-form-label">mensaje:</label>
+                            <div class="col-md-8">
+                                <textarea name="mensaje" id="mensaje" class="form-control" placeholder="mensaje al administrador" title="ingrese su mensaje" required="" maxlength="300"></textarea>
+                            </div>
+                    </div>
+                    <input type="submit" name="enviar" value="enviar" class="btn btn-success aceptar">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary aceptar" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	function mostrarModal(id_user){
+		var valor = document.getElementById('id_usuario');
+		valor.value=id_user;
+		valor.hidden='true';
+		$('#idmensaje').modal('show');
+	}
+</script>
+
+
 
 {%else%}
 <h1>usuario anonimo</h1>

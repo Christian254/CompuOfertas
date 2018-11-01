@@ -8,7 +8,7 @@
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 <h1>nuevo mensaje a: {{contactos.username}} </h1>
-
+<h3>Aqui iran todos los detalles de este cliente</h3>
 <form method="POST">
 	{% csrf_token %}
 	<input type="text" name="msg" id="msg" placeholder="mensaje" required="">
