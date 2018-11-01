@@ -1,33 +1,8 @@
+{% extends "base_cliente/base.html" %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <!-- META -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW"> {% block META %} {% endblock META %}
-
-    <title>
-        {% block Titulo %} SIGPAd:Index {% endblock Titulo %}
-    </title>
-    <script type="text/javascript" src="{% static 'interior/js/jspdf.debug.js'%}">
-    </script>
-    <script type="text/javascript" src="{% static 'interior/js/jquery.min.js'%}">
-    </script>
-    <script type="text/javascript" src="{% static 'interior/js/sweetalert2.all.js'%}">
-    </script>
+{% block cssMensaje %}
     <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
-    <link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
-    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static '/css/bootstrap4.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/animate.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/admin.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/estilos.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/jquery-ui.css'%}">
-    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/jquery.dataTables.min.css'%}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/mensajes.css'%}"> 
     <script src="{% static "console_1.js" %}"></script>
     <script src="{% static "events_runner.js" %}"></script>
     <script src="{% static "css_live_reload_init.js" %}"></script>
@@ -39,592 +14,249 @@
           Typekit.load({ async: true });
         }catch(e){}
     </script>
+    <link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
     <link rel='stylesheet prefetch' href="{% static "css/reset.min.css" %}">
     <link rel='stylesheet prefetch' href="{% static "css/font-awesome.min.css" %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
-</head>
-<body class="green_thm fixed_header left_nav_fixed" style="background:;">
-    <div class="wrapper">
-        <div class="header_bar">
-            <div class="brand">
-                <div class="logo" style="display:block"><img src="{% static 'images/logo.jpg' %}" width="50" height="47" alt="s-logo" /> <span class="theme_color">Cliente</span> </div>
-                <div class="small_logo" style="display:none;">
-                    <img src="{% static 'images/logo.jpg' %}" width="50" height="47" alt="s-logo" />
-                    <img src="{% static 'images/logo.jpg' %}" width="122" height="20" alt="r-logo" />
-                </div>
-            </div>
-            <div class="header_top_bar">
-                <a href="javascript:void(0);" class="menutoggle"> <i class="fa fa-bars"></i> </a>
-                <div class="top_left">
-                    <div class="top_left_menu">
-                        <ul>
-                            <li>
-                                <a href="/"> <i class="fa fa-repeat"></i> </a>
-                            </li>
-                            <li hidden="true">
-                                <a href="/"> <i class="fa fa-th-large"></i> </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="top_right_bar">
-                    <div class="top_right">
-                        <div class="top_right_menu">
-                            <ul>
-                                <li class="dropdown"> <a href="javascript:void(0);" data-toggle="dropdown"> Compras <span class="badge badge"></span> </a>
-                                    <ul class="drop_down_task dropdown-menu">
-                                        <div class="top_pointer"></div>
-                                        <li>
-                                            <p style="color:black;"></p>
-                                        </li>
-                                        <li>
-                                            <a href="/mensajes" class="task">
-                                                <div class="green_status task_height" style="width:80%;"></div>
-                                                <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right green_label">80%</span> </div>
-                                                <div class="task_detail">Task details goes here</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/mensajes" class="task">
-                                                <div class="yellow_status task_height" style="width:50%;"></div>
-                                                <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right yellow_label">50%</span> </div>
-                                                <div class="task_detail">Task details goes here</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/mensajes" class="task">
-                                                <div class="blue_status task_height" style="width:70%;"></div>
-                                                <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right blue_label">70%</span> </div>
-                                                <div class="task_detail">Task details goes here</div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="/mensajes" class="task">
-                                                <div class="red_status task_height" style="width:85%;"></div>
-                                                <div class="task_head"> <span class="pull-left">Task Heading</span> <span class="pull-right red_label">85%</span> </div>
-                                                <div class="task_detail">Task details goes here</div>
-                                            </a>
-                                        </li>
-                                        <li> <span class="new"> <a href="/mensajes" class="pull_left">Create New</a> <a href="task.html" class="pull-right">View All</a> </span> </li>
-                                    </ul>
-                                </li>
-                                <input type="number" name="controlUser" id="controlUser" class="controlUser" value="0" hidden="true">
-                                <li class="dropdown"> <a href="/" data-toggle="dropdown"> Mensajes <span class="badge badge color_1" id="cant">0</span> </a>
-                                    <ul class="drop_down_task dropdown-menu" id="msjUser">
-                                        <div class="top_pointer"></div>
-                                        <li>
-                                            <p class="number" style="color:black;">tienes <span id="tienes">0</span> mensajes</p>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="user_admin dropdown">
-                        <a href="javascript:void(0);" data-toggle="dropdown"><img width="25px" height="25px" src="{% static 'images/user.png' %}" /><span class="user_adminname" id="nombre">
-            {% block usuario %}
-                {{user.username}}
-            {% endblock usuario %}
-        </span> <b class="caret"></b> </a>
-                        <ul class="dropdown-menu">
-                            <div class="top_pointer"></div>
-                            <li> <i class="fa fa-user"></i> perfil</a>
-                            </li>
-                            <li> <i class="fa fa-question-circle"></i> ayuda</a>
-                            </li>
-                            <li> <i class="fa fa-cog"></i> configuracion </a>
-                            </li>
-                            <li id="salir"> <i class="fa fa-power-off"></i> salir </li>
-                        </ul>
-                    </div>
-                    <a hidden="true" href="javascript:;" class="toggle-menu menu-right push-body jPushMenuBtn rightbar-switch"><i class="fa fa-comment chat"></i></a>
-                </div>
-            </div>
-            <!--\\\\\\\ header top bar end \\\\\\-->
-        </div>
-        <!--\\\\\\\ header end \\\\\\-->
-        <div class="inner">
-            <!--\\\\\\\ inner start \\\\\\-->
-            <div class="left_nav">
-                <!--\\\\\\\left_nav start \\\\\\-->
-                <div class="search_bar"> <i class="fa fa-search"></i>
-                    <input name="" type="text" class="search" placeholder="buscar....." />
-                </div>
-                <div class="left_nav_slidebar">
-                    <ul>
-                        <li class="left_nav_active theme_border"><a href="javascript:void(0);"><i class="fa fa-home"></i> Inicio <span class="left_nav_pointer"></span> <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                            <ul style="display:block">
-                                <li>
-                                    <a href="/indexAdministrador" class="left_nav_sub_active"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Inicio</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Perfil</b> </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'SIGPAd:Empleados' %}"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Empleados</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Usuarios</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/gestionarPuesto"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Puesto</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/gestionarPlanilla"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Planilla</b> </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> <i class="fa fa-users icon"></i> Empleados <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                            <ul>
-                                <li>
-                                    <a href="/empleados"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Empleados</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/ingresarNuevoEmpleado"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Ingresar Empleado</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Sancionar Empleado</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Despedir Empleado</b> </a>
-                                </li>
-                                <li>
-                                    <a href="/usuarios"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Gestionar Usuarios</b> </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);"> <i class="fa fa-envelope"></i> Mensajes <span class="plus"><i class="fa fa-plus"></i></span> </a>
-                            <ul>
-                                <li>
-                                    <a href="/"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Inbox</b> </a>
-                                </li>
-                                <li>
-                                    <a href="compose.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Compose</b> </a>
-                                </li>
-                                <li>
-                                    <a href="readmail.html"> <span>&nbsp;</span> <i class="fa fa-circle"></i> <b>Read Mail</b> </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+{% endblock cssMensaje %}
 
-
-            <div class="contentpanel">
-                <div class="container clear_both padding_fix">
-                    {% if yo.is_authenticated %}
-                    <div id="frame" style="min-width: 150px; max-width: 1000px; height: 92vh; min-height: 100px; max-height: 625px;">
-                      <div id="sidepanel">
-                        <div id="profile">
-                          <div class="wrap">
-                            {% if yo.cliente_set.all %}
-                              {% for cl in yo.cliente_set.all %}
-                                {% if cl.foto %}
-                                  <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online"/>
-                                {% else %}
-                                  <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
-                                {% endif %}
-                              {% endfor %}
-                            {% elif yo.empleado_set.all %}
-                              {% for cl in yo.empleado_set.all %}
-                                {% if cl.foto %}
-                                  <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" alt="foto empleado" />
-                                {% else %}
-                                  <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
-                                {% endif %}
-                              {% endfor %}
+{% block Body %}
+    {% if yo.is_authenticated %}
+        <div id="frame" style="min-width: 150px; max-width: 1000px; height: 92vh; min-height: 100px; max-height: 625px;">
+            <div id="sidepanel">
+                <div id="profile">
+                    <div class="wrap">
+                    {% if yo.cliente_set.all %}
+                        {% for cl in yo.cliente_set.all %}
+                            {% if cl.foto %}
+                                <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online"/>
                             {% else %}
-                              <img src="{% static "images/louislitt.png" %}" alt="" />
+                                <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
-                            <p> {{yo.username}} </p>
-                            <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                            <div id="status-options">
-                              <ul>
-                                <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
-                                <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
-                                <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
-                                <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
-                              </ul>
-                            </div>
-                            <div id="expanded" hidden="">
-                              <label for="twitter"><i class=" fa fa-facebook-f" aria-hidden="true"></i></label>
-                              <input name="twitter" type="text" value="mikeross" />
-                              <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                              <input name="twitter" type="text" value="ross81" />
-                              <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-                              <input name="twitter" type="text" value="mike.ross" />
-                            </div>
-                          </div>
-                        </div>
-                        <div id="search">
-                          <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-                          <input type="text" placeholder="Buscar contactos..." />
-                        </div>
-                        <div id="contacts">
-                          <ul>
-                            {% for us in contactos %}
-                              <li class="contact">
-                                <a href="/mensajes/{{us.id}}">
-                                <div class="wrap">
-                                  <span class="contact-status online"></span>
-                                  {% if us.cliente_set.all %}
-                                    {% for cl in us.cliente_set.all %}
-                                      {% if cl.foto %}
-                                          <img src="/media/{{cl.foto}}" alt="" />
-                                        {% else %}
-                                          <img src="{% static "images/user.png" %}" alt="" />
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% elif us.empleado_set.all %}
-                                    {% for cl in us.empleado_set.all %}
-                                      {% if cl.foto %}
-                                          <img src="/media/{{cl.foto}}" alt="" />
-                                        {% else %}
-                                          <img src="{% static "images/user.png" %}" alt="" />
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% else %}
-                                    <img src="{% static "images/user.png" %}" alt="" />
-                                  {% endif %}
-                                  <div class="meta">
+                        {% endfor %}
+                    {% elif yo.empleado_set.all %}
+                        {% for cl in yo.empleado_set.all %}
+                            {% if cl.foto %}
+                                <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" alt="foto empleado" />
+                            {% else %}
+                                <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <img src="{% static "images/louislitt.png" %}" alt="" />
+                    {% endif %}
+                    <p> {{yo.username}} </p>
+                    <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                    <div id="status-options">
+                        <ul>
+                            <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+                            <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+                            <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+                            <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+                        </ul>
+                    </div>
+                    <div id="expanded" hidden="">
+                        <label for="twitter"><i class=" fa fa-facebook-f" aria-hidden="true"></i></label>
+                        <input name="twitter" type="text" value="mikeross" />
+                        <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                        <input name="twitter" type="text" value="ross81" />
+                        <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+                        <input name="twitter" type="text" value="mike.ross" />
+                    </div>
+                </div>
+            </div>
+            <div id="search">
+                <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+                <input type="text" placeholder="Buscar contactos..." />
+            </div>
+            <div id="contacts">
+                <ul>
+                    {% for us in contactos %}
+                    <li class="contact">
+                        <a href="/mensajes/{{us.id}}">
+                            <div class="wrap">
+                                <span class="contact-status online"></span>
+                                {% if us.cliente_set.all %}
+                                {% for cl in us.cliente_set.all %}
+                                {% if cl.foto %}
+                                <img src="/media/{{cl.foto}}" alt="" />
+                                {% else %}
+                                <img src="{% static "images/user.png" %}" alt="" />
+                                {% endif %}
+                                {% endfor %}
+                                {% elif us.empleado_set.all %}
+                                {% for cl in us.empleado_set.all %}
+                                {% if cl.foto %}
+                                <img src="/media/{{cl.foto}}" alt="" />
+                                {% else %}
+                                <img src="{% static "images/user.png" %}" alt="" />
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <img src="{% static "images/user.png" %}" alt="" />
+                                {% endif %}
+                                <div class="meta">
                                     <p class="name">{{us.username}} </p>
                                     <p class="preview"> {{us.ultimo}} </p>
-                                  </div>
                                 </div>
-                                </a>
-                              </li>
-                            {% endfor %}
-                          </ul>
-                        </div>
-                        <div id="bottom-bar">
-                          <button id="addcontact"><a href="/nuevoMensaje"><i class="fa fa-plus" aria-hidden="true"></i> <span>Add contact</span></a></button>
-                          <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
-                        </div>
-                      </div>
-                      <div class="content">
-                        <div class="contact-profile">
-                          {% if primer %}
-                            {% for cl in primer.cliente_set.all %}
-                              {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
-                              {% else %}
-                                <img src="{% static "images/user.png" %}" alt="" />
-                              {% endif %}
-                            {% endfor %}
-                            {% for cl in primer.empleado_set.all %}
-                              {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
-                              {% else %}
-                                <img src="{% static "images/user.png" %}" alt="" />
-                              {% endif %}
-                            {% endfor %}
-                            <p> {{primer.username}}</p>
-                            <div class="social-media" hidden="">
-                              <i class="fa fa-facebook" aria-hidden="true"></i>
-                              <i class="fa fa-twitter" aria-hidden="true"></i>
-                              <i class="fa fa-instagram" aria-hidden="true"></i>
                             </div>
-                          {% else %}
-                          <img src="{% static "images/anonimo.png" %}" alt="" />
-                            <p> Seleccione un destinatario </p>
-                            <div class="social-media" hidden="">
-                              <i class="fa fa-facebook" aria-hidden="true"></i>
-                              <i class="fa fa-twitter" aria-hidden="true"></i>
-                              <i class="fa fa-instagram" aria-hidden="true"></i>
-                          </div>
-                          {% endif %}
-                          {% if error %}
-                          <div class="social-media">
-                            <h3 class="alert-danger">{{error}}</h3>
-                          </div>
-                          {% endif %}
-                        </div>
-                        <div class="messages">
-                          <ul>
-                            {% if chat %}
-                              {% for c in chat.mensaje_set.all %}
-                                {% if c.enviado == yo.id %}
-                                  <li class="sent">
-                                  {% if primer.cliente_set.all %}
-                                    {% for cl in primer.cliente_set.all %}
-                                      {% if cl.foto %}
-                                          <img src="/media/{{cl.foto}}" alt="" />
-                                        {% else %}
-                                          <img src="{% static "images/user.png" %}" alt="" />
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% elif primer.empleado_set.all %}
-                                    {% for cl in primer.empleado_set.all %}
-                                      {% if cl.foto %}
-                                          <img src="/media/{{cl.foto}}" alt="" />
-                                        {% else %}
-                                          <img src="{% static "images/user.png" %}" alt="" />
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% else %}
-                                    <img src="{% static "images/user.png" %}" alt="" />
-                                  {% endif %}
-                                    <p> {{c.msj}} </p>
-                                  </li>
-                                {% else %}
-                                  <li class="replies">
-                                    <img src="{% static "images/user.png" %}" alt="" />
-                                    <p>{{c.msj}}</p>
-                                  </li>
-                                {% endif %}
-                              {% endfor %}
-                            {% else %}
-                              <li class="replies">
-                                <img src="{% static "images/user.png" %}" alt="" />
-                                <p>Selecciona un chat!!!</p>
-                              </li>
-                            {% endif %}
-                            <div id="mostrar">
-                              
-                            </div>
-                          </ul>
-                        </div>
-                        <form method="POST">
-                          {% csrf_token %}
-                          <div class="message-input">
-                            <div class="wrap">
-                            <input type="text" placeholder="Escriba su mensaje..." name="msg" id="msg" required="" title="introdusca su mensaje" oninvalid="this.setCustomValidity('Ingrese un mensaje, como lo pensas mandar vacio!!!!!')" />
-                            <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-                            <button type="submit" class="submit"><span><i class="fa fa-send" aria-hidden="true"></i></span></button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                    <script src='stopExecutionOnTimeout.js'></script>
-                    <script src='jquery-2.1.0.js'></script>
-                    <script >
-                    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
-
-                    $("#profile-img").click(function() {
-                      $("#status-options").toggleClass("active");
-                    });
-
-                    $(".expand-button").click(function() {
-                      $("#profile").toggleClass("expanded");
-                      $("#contacts").toggleClass("expanded");
-                    });
-
-                    $("#status-options ul li").click(function() {
-                      $("#profile-img").removeClass();
-                      $("#status-online").removeClass("active");
-                      $("#status-away").removeClass("active");
-                      $("#status-busy").removeClass("active");
-                      $("#status-offline").removeClass("active");
-                      $(this).addClass("active");
-                      
-                      if($("#status-online").hasClass("active")) {
-                        $("#profile-img").addClass("online");
-                      } else if ($("#status-away").hasClass("active")) {
-                        $("#profile-img").addClass("away");
-                      } else if ($("#status-busy").hasClass("active")) {
-                        $("#profile-img").addClass("busy");
-                      } else if ($("#status-offline").hasClass("active")) {
-                        $("#profile-img").addClass("offline");
-                      } else {
-                        $("#profile-img").removeClass();
-                      };
-                      
-                      $("#status-options").removeClass("active");
-                    });
-
-                    function peticion() {
-                      $.get("/servicio_mensajeria/{{yo.id}}/{{primer.id}}",function(data,status){
-                          for(let i=0;i<data.length;i++){
-                            var valor = data[i].fields;                       
-                            var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
-                            $(lista).appendTo($('.messages ul'));
-                            $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
-                          }
-                      });
-                    }
-
-                    $(document).ready(function(){
-                       var refreshId = setInterval(peticion, 3000);
-                       $.ajaxSetup({ cache: false });
-                    });
-                    $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
-                    </script>
-                    {% else %}
-                    <h1>para estar aqui debe registrarse</h1>
-                    {% endif %}
-
-
-
-                </div>
-                <!--\\\\\\\ container  end \\\\\\-->
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
-            <!--\\\\\\\ content panel end \\\\\\-->
-        </div>
-        <!--\\\\\\\ inner end\\\\\\-->
-    </div>
-    <!--\\\\\\\ wrapper end\\\\\\-->
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Compose New Task</h4>
-                </div>
-                <div class="modal-body"> content </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+            <div id="bottom-bar">
+                <button id="addcontact"><a href="/nuevoMensaje" style="font-size: 15px;"><i class="fa fa-plus" aria-hidden="true"></i> <span>Add contact</span></a></button>
+                <button id="settings"> <a href="" style="font-size: 15px;"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></a></button>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Compose New Task</h4>
-                </div>
-                <div class="modal-body"> sgxdfgxfg </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- sidebar chats -->
-    <nav class="atm-spmenu atm-spmenu-vertical atm-spmenu-right side-chat">
-        <div class="header">
-            <input type="text" class="form-control chat-search" placeholder=" Search">
-        </div>
-        <div href="#" class="sub-header">
-            <div class="icon"><i class="fa fa-user"></i></div>
-            <p>Online (4)</p>
         </div>
         <div class="content">
-            <p class="title">Family</p>
-            <ul class="nav nav-pills nav-stacked contacts">
-                <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Steven Smith</a></li>
-                <li class="online"><a href="#"><i class="fa fa-circle-o"></i> John Doe</a></li>
-                <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Michael Smith</a></li>
-                <li class="busy"><a href="#"><i class="fa fa-circle-o"></i> Chris Rogers</a></li>
-            </ul>
-
-            <p class="title">Friends</p>
-            <ul class="nav nav-pills nav-stacked contacts">
-                <li class="online"><a href="#"><i class="fa fa-circle-o"></i> Vernon Philander</a></li>
-                <li class="outside"><a href="#"><i class="fa fa-circle-o"></i> Kyle Abbott</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Dean Elgar</a></li>
-            </ul>
-
-            <p class="title">Work</p>
-            <ul class="nav nav-pills nav-stacked contacts">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Dale Steyn</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Morne Morkel</a></li>
-            </ul>
-
-        </div>
-        <div id="chat-box">
-            <div class="header">
-                <span>Richard Avedon</span>
-                <a class="close"><i class="fa fa-times"></i></a> </div>
-            <div class="messages nano nscroller has-scrollbar">
-                <div class="content" tabindex="0" style="right: -17px;">
-                    <ul class="conversation">
-                        <li class="odd">
-                            <p>Hi John, how are you?</p>
-                        </li>
-                        <li class="text-right">
-                            <p>Hello I am also fine</p>
-                        </li>
-                        <li class="odd">
-                            <p>Tell me what about you?</p>
-                        </li>
-                        <li class="text-right">
-                            <p>Sorry, I'm late... see you</p>
-                        </li>
-                        <li class="odd unread">
-                            <p>OK, call me later...</p>
-                        </li>
+            <div class="contact-profile">
+                {% if primer %}
+                    {% for cl in primer.cliente_set.all %}
+                        {% if cl.foto %}
+                            <img src="/media/{{cl.foto}}" alt="" />
+                        {% else %}
+                            <img src="{% static "images/user.png" %}" alt="" />
+                        {% endif %}
+                    {% endfor %}
+                    {% for cl in primer.empleado_set.all %}
+                        {% if cl.foto %}
+                            <img src="/media/{{cl.foto}}" alt="" />
+                        {% else %}
+                            <img src="{% static "images/user.png" %}" alt="" />
+                        {% endif %}
+                    {% endfor %}
+                    <p> {{primer.username}}</p>
+                    <div class="social-media" hidden="">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </div>
+                {% else %}
+                    <img src="{% static "images/anonimo.png" %}" alt="" />
+                    <p> Seleccione un destinatario </p>
+                    <div class="social-media" hidden="">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </div>
+                {% endif %}
+                {% if error %}
+                    <div class="social-media">
+                        <h3 class="alert-danger">{{error}}</h3>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="messages">
+                <ul>
+                    {% if chat %}
+                        {% for c in chat.mensaje_set.all %}
+                            {% if c.enviado == yo.id %}
+                                <li class="sent" style="margin-left: 0px;">
+                                {% if primer.cliente_set.all %}
+                                    {% for cl in primer.cliente_set.all %}
+                                        {% if cl.foto %}
+                                            <img src="/media/{{cl.foto}}" alt="" />
+                                        {% else %}
+                                            <img src="{% static "images/user.png" %}" alt="" />
+                                        {% endif %}
+                                    {% endfor %}
+                                {% elif primer.empleado_set.all %}
+                                    {% for cl in primer.empleado_set.all %}
+                                        {% if cl.foto %}
+                                            <img src="/media/{{cl.foto}}" alt="" />
+                                        {% else %}
+                                            <img src="{% static "images/user.png" %}" alt="" />
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <img src="{% static "images/user.png" %}" alt="" />
+                                {% endif %}
+                                    <p> {{c.msj}} </p>
+                                </li>
+                                {% else %}
+                                    <li class="replies">
+                                        <img src="{% static "images/user.png" %}" alt="" />
+                                        <p>{{c.msj}}</p>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <li class="replies">
+                                <img src="{% static "images/user.png" %}" alt="" />
+                                <p>Selecciona un chat!!!</p>
+                            </li>
+                        {% endif %}
+                        <div id="mostrar">
+                              
+                        </div>
                     </ul>
                 </div>
-                <div class="pane" style="display: none;">
-                    <div class="slider" style="height: 20px; top: 0px;"></div>
-                </div>
-            </div>
-            <div class="chat-input">
-                <div class="input-group">
-                    <input type="text" placeholder="Enter a message..." class="form-control">
-                    <span class="input-group-btn">
-        <button class="btn btn-danger" type="button">Send</button>
-        </span> </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="message-input">
+                        <div class="wrap">
+                            <input type="text" placeholder="Escriba su mensaje..." style="font-size: 15px;" name="msg" id="msg" required="" title="introdusca su mensaje" oninvalid="this.setCustomValidity('Ingrese un mensaje, como lo pensas mandar vacio!!!!!')" />
+                            <i class="fa fa-bullhorn attachment" aria-hidden="true"></i>
+                            <button type="submit" class="submit"><span><i class="fa fa-upload" aria-hidden="true"></i></span></button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </nav>
-    <script src="{% static 'js/jquery-2.1.0.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="{% static 'interior/js/common-script.js' %}"></script>
-    <script src="{% static 'interior/js/jquery.slimscroll.min.js' %}"></script>
-    <script src="{% static 'interior/js/jPushMenu.js' %}"></script>
-    <script src="{% static 'interior/js/side-chats.js' %}"></script>
-    <script type="text/javascript" src="{% static 'interior/js/jquery-ui.js' %}"></script>
-    <script type="text/javascript" src="{% static 'interior/js/jquery.dataTables.min.js' %}"></script>
-    <script type="text/javascript">
-        function peticionChat() {
-            $.get("/servicio_chat/", function(data, status) {
-                var cant = data.length;
-                $("#cant").text(cant);
-                $("#tienes").text(cant);
-                for (let i = 0; i <= data.length; i++) {
-                    var valor = data[i].fields;
-                    var d = document.getElementsByClassName('controlUser');
-                    var j = d[0].value;
-                    if (j < cant) {
-                        var lista = `<li id=""> 
-                      <a href="/mensajes/${valor.enviado}" class="mail"> 
-                        <span class="photo">
-                          <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
-                        </span> 
-                        <span class="subject"> 
-                          <span class="from">
-                            ${valor.username}
-                          </span> 
-                          <span class="time">
-                            justo ahora 
-                          </span>  
-                        </span> 
-                        <span class="message">
-                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-                        </span> 
-                      </a> 
-                    </li>`;
-                        $(lista).appendTo($('#msjUser'));
-                        j = j + 1;
-                        d[0].value = j
+        <script src='stopExecutionOnTimeout.js'></script>
+        <script src='jquery-2.1.0.js'></script>
+        <script >
+            $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+            $("#profile-img").click(function() {
+                $("#status-options").toggleClass("active");
+                });
+
+            $(".expand-button").click(function() {
+                $("#profile").toggleClass("expanded");
+                $("#contacts").toggleClass("expanded");
+                });
+
+            $("#status-options ul li").click(function() {
+                $("#profile-img").removeClass();
+                $("#status-online").removeClass("active");
+                $("#status-away").removeClass("active");
+                $("#status-busy").removeClass("active");
+                $("#status-offline").removeClass("active");
+                $(this).addClass("active");
+                if($("#status-online").hasClass("active")) {
+                    $("#profile-img").addClass("online");
+                } else if ($("#status-away").hasClass("active")) {
+                    $("#profile-img").addClass("away");
+                } else if ($("#status-busy").hasClass("active")) {
+                    $("#profile-img").addClass("busy");
+                } else if ($("#status-offline").hasClass("active")) {
+                    $("#profile-img").addClass("offline");
+                } else {
+                    $("#profile-img").removeClass();
+                };
+                $("#status-options").removeClass("active");
+            });
+
+            function peticion() {
+                $.get("/servicio_mensajeria/{{yo.id}}/{{primer.id}}",function(data,status){
+                    for(let i=0;i<data.length;i++){
+                        var valor = data[i].fields;                       
+                        var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
+                        $(lista).appendTo($('.messages ul'));
+                        $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
                     }
-                }
+                });
+            }
+
+            $(document).ready(function(){
+                var refreshId = setInterval(peticion, 3000);
+                $.ajaxSetup({ cache: false });
             });
-        }
-        $(document).ready(function() {
-            var refreshId = setInterval(peticionChat, 3000);
-            $.ajaxSetup({
-                cache: false
-            });
-        });
-    </script>
-</body>
-
-</html>
-
-
-
-
-
-
+            $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
+            </script>    
+    {% else %}
+            <h1>para estar aqui debe registrarse</h1>
+    {% endif %}
+{% endblock Body %}

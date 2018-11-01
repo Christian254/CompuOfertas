@@ -1,27 +1,160 @@
 {% extends "base_cliente/base.html" %}
 {% load staticfiles %}
 
+{% block cssMensaje %}
+    <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
+    <link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap4.css'%}">
+    <script src="{% static "console_1.js" %}"></script>
+    <script src="{% static "events_runner.js" %}"></script>
+    <script src="{% static "css_live_reload_init.js" %}"></script>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <script src="{% static "js/hoy3lrg.js" %}"></script>
+    <script>
+        try{ 
+          Typekit.load({ async: true });
+        }catch(e){}
+    </script>
+    <link rel='stylesheet prefetch' href="{% static "css/reset.min.css" %}">
+    <link rel='stylesheet prefetch' href="{% static "css/font-awesome.min.css" %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+{% endblock cssMensaje %}
 
 {% block Body %}
+
+<style type="text/css">
+	.margen{
+		padding-left: 10em;
+	}
+	.cliente{
+		padding-top: 5em;
+	}
+	.empleado{
+		padding-top: 5em;
+	}
+	.margenPag{
+		padding-left: 20em;
+	}
+	.margenBtn{
+		padding-left: 37em;
+	}
+
+</style>
 
 {% if user.is_superuser %}
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
-<h1>usuario autentificado</h1>
-
-{% for us in usuarios %}
-<a href="/enviarNuevoMensaje/{{us.id}}"> {{us.username}} </a>
-{% endfor %}
-
-{% for us in clientes %}
-<a href="/enviarNuevoMensaje/{{us.id}}"> {{us.username}} </a>
-{% endfor %}
-
-{% for us in contactos %}
-<a href="/enviarNuevoMensaje/{{us.id}}"> {{us.username}} </a>
-{% endfor %}
-
-
+<div class="row">
+	<div class="col-sm-8 tab-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-12">
+                    <a href="/" class="btn btn-info"><i class="fa fa-reply"></i></a>
+                    <label class="margenBtn"></label>
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#bloque-buscar" aria-expanded="false">buscar
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+            	<nav class="navbar">
+            		<form class="form-inline collapse margen" method="GET" action="" id="bloque-buscar">
+            			<div class="contenedor-bloque-buscar margenPag">
+            				<input type="text" id="accion" name="accion" value="buscar" hidden="">
+            				<input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="aceptar">
+            				<button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
+            			</div>
+            		</form>
+            	</nav>
+            </div>
+        </div>
+		<div class="">
+			<h3 class="alert-success center">Empleados</h3>
+			{% for us in usuarios %}
+			<div class="col-sm-10 empleado">
+				<div class="col-sm-10 col-sm-offset-1">
+					{% if us.foto %}
+						<img src="" alt="imagen usuario" height="50">
+					{% else %}
+						<img src="{% static "images/user.png" %}" alt="" height="100" style="float:left;" />
+					{% endif %}
+					<div class="col-sm-12 margen">
+						<h3><a href="/enviarNuevoMensaje/{{us.usuario.id}}"> {{us.usuario.username}} </a></h3>
+						<label>Nombre: {{us.nombre}}, {{us.apellido}}</label><br>
+						<label>Puesto: {{us.puesto}}</label>
+					</div>
+				</div>
+			</div><br>
+			{% endfor %}
+		    <div class="row center margenPag">
+		        <div class="col-sm-8">
+		            <nav aria-label="Page navigation example">
+		                <ul class="pagination">
+		                    {% if usuarios.has_previous %}
+		                    <li class="page-item"><a class="page-link" href="?pageEm={{ usuarios.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+		                    {%else%}
+		                    <li class="disabled"><span>Anterior</span></li>
+		                    {% endif %} {% for i in usuarios.paginator.page_range %} {% if usuarios.number == i %}
+		                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+		                    </li>
+		                    {% else %}
+		                    <li><a href="?pageEm={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
+		                    {% endif %} {% endfor %} {% if usuarios.has_next %}
+		                    <li class="page-item"><a class="page-link" href="?pageEm={{ usuarios.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+		                    {%else%}
+		                    <li class="disabled"><span>Siguiente </span></li>
+		                    {% endif %}
+		                </ul>                        
+		            </nav>
+		        </div>
+		    </div>
+		</div>
+		<div >
+			<h3 class="alert-success center">Clientes</h3>
+			{% for us in clientes %}
+			<div class="col-sm-10 cliente">
+				<div class="col-sm-8 col-sm-offset-1">
+					{% if us.foto %}
+						<img src="" alt="imagen usuario" height="50">
+					{% else %}
+						<img src="{% static "images/user.png" %}" alt="" height="100" style="float:left;" />
+					{% endif %}
+					<div class="col-sm-12 margen">
+						<h3><a href="/enviarNuevoMensaje/{{us.usuario.id}}"> {{us.usuario.username}} </a></h3>
+						<label>Nombre: {{us.nombre}}, {{us.apellido}}</label><br>
+						<label>sexo: {{us.sexo}}</label>
+					</div>
+				</div>
+			</div><br>
+			{% endfor %}
+		    <div class="row center margenPag">
+		        <div class="col-sm-8">
+		            <nav aria-label="Page navigation example">
+		                <ul class="pagination">
+		                    {% if clientes.has_previous %}
+		                    <li class="page-item"><a class="page-link" href="?pageCl={{ clientes.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+		                    {%else%}
+		                    <li class="disabled"><span>Anterior</span></li>
+		                    {% endif %} {% for i in clientes.paginator.page_range %} {% if clientes.number == i %}
+		                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+		                    </li>
+		                    {% else %}
+		                    <li><a href="?pageCl={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
+		                    {% endif %} {% endfor %} {% if clientes.has_next %}
+		                    <li class="page-item"><a class="page-link" href="?pageCl={{ clientes.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+		                    {%else%}
+		                    <li class="disabled"><span>Siguiente </span></li>
+		                    {% endif %}
+		                </ul>                        
+		            </nav>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
 
 {%else%}
 <h1>usuario anonimo</h1>

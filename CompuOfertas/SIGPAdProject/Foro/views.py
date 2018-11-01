@@ -13,6 +13,7 @@ from django.core import serializers
 import json 
 from django.core.serializers.json import DjangoJSONEncoder
 from inventario.models import *
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 
 #@permission_required('SIGPAd.es_cliente')
@@ -65,10 +66,43 @@ def mensajes(request,pk):
 
 def nuevoMensaje(request):
 	user = request.user
-	usersEmpleados = User.objects.filter(empleado__estado__gte=1).exclude(username=user.username)
-	userCliente = User.objects.filter(cliente__estado__gte=1).exclude(username=user.username)
-	contactos = User.objects.filter(chat__estado__gte=1).exclude(username=user.username)
-	contexto={'usuarios':usersEmpleados,'clientes':userCliente,'contactos':contactos,'yo':user}
+	consulta = request.GET.get('consulta')
+	empleados = Empleado.objects.filter(estado=1).exclude(usuario=user)
+	cliente = Cliente.objects.filter(estado=1).exclude(usuario=user)
+	if consulta:
+		empleados = empleados.filter(
+			Q(nombre__icontains = consulta)|
+			Q(usuario__username__icontains = consulta)
+			).distinct()
+		cliente = cliente.filter(
+			Q(nombre__icontains = consulta)|
+			Q(usuario__username__icontains = consulta)
+			).distinct()
+
+	paginator = Paginator(empleados, 5)
+	parametros = request.GET.copy()
+	if parametros.has_key('pageEm'):
+		del parametros['pageEm']
+	page = request.GET.get('pageEm')
+	try:
+		empleados = paginator.page(page)
+	except PageNotAnInteger:
+		empleados = paginator.page(1)
+	except EmptyPage:
+		empleados = paginator.page(paginator.num_pages)
+
+	paginator = Paginator(cliente, 5)
+	parametros = request.GET.copy()
+	if parametros.has_key('pageCl'):
+		del parametros['pageCl']
+	page = request.GET.get('pageCl')
+	try:
+		cliente = paginator.page(page)
+	except PageNotAnInteger:
+		cliente = paginator.page(1)
+	except EmptyPage:
+		cliente = paginator.page(paginator.num_pages)
+	contexto={'usuarios':empleados,'clientes':cliente,'yo':user}
 	return render(request,'cliente/nuevoMensaje.html',contexto)
 
 
