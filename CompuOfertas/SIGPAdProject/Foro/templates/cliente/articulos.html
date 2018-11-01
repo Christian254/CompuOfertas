@@ -6,9 +6,11 @@
     <div class="row mt-3 mb-3">
 
         {% for p in art %}
-        <div class="col-4">
-            <div class="card text-center mb-3">
-                <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 18rem;">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card text-center mb-3" style="height: 20rem;">
+                <div class="text-center">
+                    <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 16rem;">
+                </div>
                 <div class="card-body">
                     <a href="{% url 'Foro:detalleArticulo' p.id %}" class="btn btn-outline-info btn-block">
                         <h6><i class="fa fa-eye" aria-hidden="true"></i> {{p.nombre}}</h6>
