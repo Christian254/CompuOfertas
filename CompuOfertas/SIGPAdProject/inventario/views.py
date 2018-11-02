@@ -1628,8 +1628,12 @@ def graficaProducto(request):
 	 
 	producto=Producto.objects.all()
 	productos=[obj.nombre for obj in producto]
+	productos1=productos[:]
 	cant=len(productos)
+	cant1=len(productos)-1
 	total = [0 for i in range(cant)]
+	total1 = [0 for i in range(cant)]
+	total2 = [0 for i in range(cant)]
 
 	anioActual=datetime.now()
 	anio=int(str(anioActual.strftime('%Y')))
@@ -1682,14 +1686,40 @@ def graficaProducto(request):
 			suma=0
 			for i in cantidades1:
 				suma=suma+i
-			total[j]=suma
+			total1[j]=suma
 			j=j+1
+		total=total1[:]
+		total2=total1[:]
+		u=0
+		t=0
+		for t in range(cant):
+			for u in range(cant-1):
+				if total[u]<total[u+1]:
+					aux=total[u]
+					total[u]=total[u+1]
+					total[u+1]=aux
+				u=u+1
+			t=t+1
+		print total1
+		print total
+		c=0
+		if len(total)>10:
+			var=total[9]
+			for t in total1:
+				if t<var:
+					total1[c]=0
+				c=c+1
+		print total1
 
+		
+			
 	meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
 	context = {
         'meses': meses,
+        'productos1': productos1,
         'productos': json.dumps(productos),
-        'total': json.dumps(total),
+        'total1': json.dumps(total1),
+        'total2': total2,
 
     }
 
