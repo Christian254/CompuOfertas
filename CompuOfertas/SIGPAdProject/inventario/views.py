@@ -1466,13 +1466,13 @@ def graficaMes(request):
 		anioAnterior = request.POST.get('anioAnterior',None)
 
 	if anioAnterior=='anio':
-		anioAnterior=2018
+		anioAnterior=anio
 	if anioAnterior=='anio1':
 		anio=anio-1
-		anioAnterior=2017
+		anioAnterior=anio
 	if anioAnterior=='anio2':
 		anio=anio-2
-		anioAnterior=2016
+		anioAnterior=anio
 
 	enero=datetime(anio, 1, 1)
 	febrero=datetime(anio, 2, 1)
@@ -1700,8 +1700,6 @@ def graficaProducto(request):
 					total[u+1]=aux
 				u=u+1
 			t=t+1
-		print total1
-		print total
 		c=0
 		if len(total)>10:
 			var=total[9]
@@ -1709,9 +1707,6 @@ def graficaProducto(request):
 				if t<var:
 					total1[c]=0
 				c=c+1
-		print total1
-
-		
 			
 	meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
 	context = {
