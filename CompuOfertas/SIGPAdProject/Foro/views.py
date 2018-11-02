@@ -225,7 +225,7 @@ def getChatUser(user):
 	return datos
 
 def articulo(request):
-	articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) & Q(img__isnull=True)).exclude(img='')
+	articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
 	contexto = paginacion_productos(request,articulos,6)
 	return render(request, 'cliente/articulos.html', contexto)
 
