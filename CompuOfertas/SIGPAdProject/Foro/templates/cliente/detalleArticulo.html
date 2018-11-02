@@ -1,13 +1,37 @@
-{% extends "base_cliente/base.html" %} {% load staticfiles %} {% block Script %}
-<!-- Add mousewheel plugin (this is optional) -->
+{% extends "base_cliente/base.html" %}
+{% load staticfiles %}
 
-{% endblock Script %} {% block Body %}
+{% block CSS %}
+    <style>
+    #precio {
+        font-size: 30px;
+        font-weight: 700;
+        margin-left: 10px;
+        color: #c00;
+    }
+    #lblinfo {
+        font-size: 20px;
+        font-weight: 650;    
+        color: black;
+    }
+    </style>
+{% endblock CSS %}
+    
+{% block Body %}
 <div class="container">
-    <h3 class="text-center">{{art.nombre}}</h3>
     <div class="row justify-content-center">
-        <img class="" src="{{art.img.url}}" alt="">
+        <div class="col-sm-10 col-md-4">
+            <a data-fancybox="gallery" href="{{art.img.url}}"><img class="rounded img-thumbnail" src="{{art.img.url}}" alt=""></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:8000/detalleArticulo/{{art.id}}" class="btn btn-block btn-outline-info"><i class="fa fa-facebook-square" aria-hidden="true"></i> Compartir</a>
+        </div>
+        <div class="col-sm-10 col-md-8">
+            <h1 class="text-left font-weight-bold">{{art.nombre}}</h1>
+            <h5 class="text-left">{{art.descripcion}}</h5>
+            <hr>
+            <label id="lblinfo" for="precio">Precio:</label>
+            <span id="precio">${{art.inventario.precio_venta_producto}}</span>            
+        </div>
     </div>
-    <p class="text-center">{{art.descripcion}}</p>
     <div class="row justify-content-center">
         <div class="fb-comments" data-href="http://127.0.0.1:8000/detalleArticulo/{{art.id}}" data-width="1000" data-numposts="7"></div>
     </div>

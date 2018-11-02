@@ -226,12 +226,27 @@ def getChatUser(user):
 
 def articulo(request):
 	articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(inventario__precio_venta_producto=0)
-	contexto = {'art': articulos}
+	contexto = paginacion_productos(request,articulos,6)
 	return render(request, 'cliente/articulos.html', contexto)
 
 def detalleArticulo(request, id):
 	detalle = Producto.objects.get(id=id)
 	contexto = {'art': detalle}
 	return render(request,'cliente/detalleArticulo.html', contexto)
+
+def paginacion_productos(request,articulos,elementos):
+	paginator = Paginator(articulos, elementos)
+	parametros = request.GET.copy()
+	if parametros.has_key('page'):
+		del parametros['page']
+	
+	page = request.GET.get('page')
+	try:
+		articulos = paginator.page(page)
+	except PageNotAnInteger:
+		articulos = paginator.page(1)
+	except EmptyPage:
+		articulos = paginator.page(paginator.num_pages)
+	return {'art':articulos,'parametros':parametros}
 
 
