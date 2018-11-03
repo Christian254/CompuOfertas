@@ -13,7 +13,9 @@ from django.core import serializers
 import json 
 from django.core.serializers.json import DjangoJSONEncoder
 from inventario.models import *
+from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 #@permission_required('SIGPAd.es_cliente')
@@ -232,6 +234,19 @@ def articulo(request):
 def detalleArticulo(request, id):
 	detalle = Producto.objects.get(id=id)
 	contexto = {'art': detalle}
+	if request.method == 'POST':		
+		try:
+			carrito_usuario = Carrito.objects.get(usuario=request.user)			
+			detalle.carrito.add(carrito_usuario)
+			messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+			return redirect('/detalleArticulo/{}'.format(detalle.id))
+		except Carrito.DoesNotExist:
+			carrito_usuario = Carrito()
+			carrito_usuario.usuario = request.user
+			carrito_usuario.save()
+			detalle.carrito.add(carrito_usuario)
+			messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+			return redirect('/detalleArticulo/{}'.format(detalle.id))		
 	return render(request,'cliente/detalleArticulo.html', contexto)
 
 def paginacion_productos(request,articulos,elementos):
@@ -249,4 +264,15 @@ def paginacion_productos(request,articulos,elementos):
 		articulos = paginator.page(paginator.num_pages)
 	return {'art':articulos,'parametros':parametros}
 
+def pre_orden(request):
+	usuario = request.user
+	producto = Producto.objects.all()
+	try:
+		carrito = Carrito.objects.get(usuario=request.user)
+		productos = carrito.producto_set.all()
+		contexto = {'art': productos}
+		return render(request,'cliente/carrito.html',contexto)
+	except Carrito.DoesNotExist:
+		return render(request,'cliente/carrito.html',{'error':'No se han reservado articulos'})
+	
 

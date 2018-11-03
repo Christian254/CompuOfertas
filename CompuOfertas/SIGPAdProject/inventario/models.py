@@ -5,6 +5,7 @@ from django.db import models
 from SIGPAd.models import *
 from datetime import datetime
 from decimal import *
+from Foro.models import Carrito
 
 # Create your models here.
 
@@ -29,6 +30,7 @@ class Categoria(models.Model):
 class Producto(models.Model):
     categoria = models.ForeignKey(Categoria,on_delete=models.CASCADE)
     inventario = models.ForeignKey(Inventario,on_delete=models.CASCADE)
+    carrito = models.ManyToManyField(Carrito, blank=True)
     codigo = models.CharField(max_length=10,unique=True) ##lo dejare asi para que el id siga siendo el que proporciona django
     nombre = models.CharField(max_length=70,unique=True)
     marca = models.CharField(max_length=30)

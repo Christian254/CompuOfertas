@@ -34,3 +34,7 @@ class Mensaje(models.Model):
 
     def _strftime():
         return datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+
+class Carrito(models.Model):
+    usuario = models.OneToOneField(User)
+    fecha_hora = models.DateTimeField(default=datetime.now)

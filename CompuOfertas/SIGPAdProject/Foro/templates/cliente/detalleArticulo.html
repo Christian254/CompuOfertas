@@ -45,18 +45,28 @@
 </style>
 {% endblock CSS %} {% block Script %}
 <script>
-$(document).ready(function() {
-    $('input').on('click', function() {
-        $('form').submit();
+    $(document).ready(function() {
+        $('.clasificacion input').on('click', function() {
+            $('#estrellas').submit();
+        });
     });
-});
 </script>
-{% endblock Script %} {% block Body %}
-<div class="container">
+{% endblock Script %} 
+{% block Body %}
+<div class="container">     
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert-{{ message.tags }} text-center" {% endif %}>
+            <h5 class="font-weight-bold">{{ message }}</h5>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <div class="row justify-content-center">
         <div class="col-sm-10 col-md-4">
             <a data-fancybox="gallery" href="{{art.img.url}}"><img class="rounded img-thumbnail" src="{{art.img.url}}" alt=""></a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:8000/detalleArticulo/{{art.id}}" class="btn btn-block btn-outline-info"><i class="fa fa-facebook-square" aria-hidden="true"></i> Compartir</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:8000/detalleArticulo/{{art.id}}" class="btn btn-block btn-outline-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Compartir</a>
         </div>
         <div class="col-sm-10 col-md-8">
             <h1 class="text-left font-weight-bold">{{art.nombre}}</h1>
@@ -64,9 +74,8 @@ $(document).ready(function() {
             <hr>
             <label id="lblinfo" for="precio">Precio:</label>
             <span id="precio">${{art.inventario.precio_venta_producto}}</span>
-
-            <form action="" method="post">
-                {% csrf_token %} 
+            <form id="estrellas" action="" method="post">
+                {% csrf_token %}
                 <p class="clasificacion">
                     <input id="radio1" type="radio" name="estrellas" value="5">
                     <label for="radio1">★</label>
@@ -80,13 +89,33 @@ $(document).ready(function() {
                     <label for="radio5">★</label>
                 </p>
             </form>
-
+            <button class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#crearFormatoModal"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                Reservar</button>
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="fb-comments" data-href="http://127.0.0.1:8000/detalleArticulo/{{art.id}}" data-width="1000" data-numposts="7"></div>
     </div>
 </div>
+<!-- modal  -->
+<div class="modal fade" id="crearFormatoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Reservar Articulo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="Submit" class="btn btn-primary">Reservar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <div id="fb-root"></div>
 <script>

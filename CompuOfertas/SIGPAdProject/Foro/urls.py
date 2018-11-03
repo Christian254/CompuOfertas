@@ -17,4 +17,5 @@ urlpatterns = [
 	url(r'servicio_chat/$', login_required(servicio_chat), name="servicio_chat"),
 	url(r'articulos/$',login_required(articulo), name="articulos"),
 	url(r'detalleArticulo/(?P<id>\d+)$',login_required(detalleArticulo), name="detalleArticulo"),
+	url(r'preorden/$',login_required(pre_orden), name="preOrdern"),
 ]
