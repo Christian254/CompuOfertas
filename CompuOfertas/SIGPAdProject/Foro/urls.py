@@ -18,4 +18,5 @@ urlpatterns = [
 	url(r'articulos/$',login_required(articulo), name="articulos"),
 	url(r'detalleArticulo/(?P<id>\d+)$',login_required(detalleArticulo), name="detalleArticulo"),
 	url(r'preorden/$',login_required(pre_orden), name="preOrdern"),
+	url(r'eliminar_pre/(?P<id>\d+)$',login_required(eliminar_pre), name="eliminarPre"),
 ]

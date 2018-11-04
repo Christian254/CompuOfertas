@@ -227,9 +227,16 @@ def getChatUser(user):
 	return datos
 
 def articulo(request):
-	articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
-	contexto = paginacion_productos(request,articulos,6)
-	return render(request, 'cliente/articulos.html', contexto)
+	try:
+		articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
+		if articulos:
+			contexto = paginacion_productos(request,articulos,6)
+			return render(request, 'cliente/articulos.html', contexto)
+		else:
+			return render(request, 'cliente/articulos.html', {'error':'No hay productos para mostrar'})
+	except Producto.DoesNotExist:
+		return render(request, 'cliente/articulos.html', {'error':'Ocurrió un error'})
+	
 
 def detalleArticulo(request, id):
 	detalle = Producto.objects.get(id=id)
@@ -264,15 +271,22 @@ def paginacion_productos(request,articulos,elementos):
 		articulos = paginator.page(paginator.num_pages)
 	return {'art':articulos,'parametros':parametros}
 
-def pre_orden(request):
-	usuario = request.user
-	producto = Producto.objects.all()
+def pre_orden(request):	
 	try:
 		carrito = Carrito.objects.get(usuario=request.user)
-		productos = carrito.producto_set.all()
-		contexto = {'art': productos}
-		return render(request,'cliente/carrito.html',contexto)
+		productos = Producto.objects.filter(carrito = carrito)		
+		if productos:
+			contexto = {'art': productos}
+			return render(request,'cliente/carrito.html',contexto)
+		else:
+			return render(request,'cliente/carrito.html',{'error':'No se han reservado articulos'})
 	except Carrito.DoesNotExist:
 		return render(request,'cliente/carrito.html',{'error':'No se han reservado articulos'})
-	
+
+def eliminar_pre(request, id):
+	p = Producto.objects.get(id=id)
+	carrito_usuario = Carrito.objects.get(usuario=request.user)			
+	p.carrito.remove(carrito_usuario)
+	messages.success(request, 'Se elimino de la pre-orden el articulo {}'.format(p.nombre))
+	return redirect('/preorden')
 

@@ -2,55 +2,64 @@
 <!-- Add mousewheel plugin (this is optional) -->
 
 {% endblock Script %} {% block Body %}
+
+    
 <div class="container">
+    {% if error %}
+        <div class="alert-info">
+            <h5 class="text-center">{{error}}</h5>
+        </div>
+    {% else %}
     <div class="row mt-3 mb-3">
 
-        {% for p in art %}
-        <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card text-center mb-3" style="height: 20rem;">
-                <div class="text-center">
-                    <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 16rem;">
-                </div>
-                <div class="card-body">
-                    <a href="{% url 'Foro:detalleArticulo' p.id %}" class="btn btn-outline-info btn-block">
-                        <h6><i class="fa fa-eye" aria-hidden="true"></i> {{p.nombre}}</h6>
-                    </a>
+            {% for p in art %}
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card text-center mb-3" style="height: 20rem;">
+                    <div class="text-center">
+                        <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 16rem;">
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'Foro:detalleArticulo' p.id %}" class="btn btn-outline-info btn-block">
+                            <h6><i class="fa fa-eye" aria-hidden="true"></i> {{p.nombre}}</h6>
+                        </a>
+                    </div>
                 </div>
             </div>
+            {%endfor%}
+    
         </div>
-        {%endfor%}
-
     </div>
-</div>
-<div class="row mt-3 justify-content-center" id="pag">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if art.has_previous%}
-            <li class="page-item">
-                <a class="page-link" id="anterior-pag" href="?page={{ art.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a>
-            </li>
-            {% else %}
-            <li class="page-item">
-                <a class="page-link disabled">Anterior</a>
-            </li>
-            {%endif%} {% for i in art.paginator.page_range %} {% if art.number == i %}
-            <li class="page-item active numPag " val="{{i}}">
-                <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
-            </li>
-            {% else %}
-            <li class="page-item numPag">
-                <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
-            </li>
-            {%endif%} {%endfor%} {% if art.has_next %}
-            <li class="page-item">
-                <a class="page-link" id="siguiente-pag" href="?page={{ art.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ art.next_page_number }}">Siguiente</a>
-            </li> {%else%}
-            <li class="page-item ">
-                <a class="page-link disabled">Siguiente</a>
-            </li>
-            {%endif%}
-        </ul>
-    </nav>
-</div>
+    <div class="row mt-3 justify-content-center" id="pag">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if art.has_previous%}
+                <li class="page-item">
+                    <a class="page-link" id="anterior-pag" href="?page={{ art.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link disabled">Anterior</a>
+                </li>
+                {%endif%} {% for i in art.paginator.page_range %} {% if art.number == i %}
+                <li class="page-item active numPag " val="{{i}}">
+                    <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
+                </li>
+                {% else %}
+                <li class="page-item numPag">
+                    <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
+                </li>
+                {%endif%} {%endfor%} {% if art.has_next %}
+                <li class="page-item">
+                    <a class="page-link" id="siguiente-pag" href="?page={{ art.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ art.next_page_number }}">Siguiente</a>
+                </li> {%else%}
+                <li class="page-item ">
+                    <a class="page-link disabled">Siguiente</a>
+                </li>
+                {%endif%}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    
 </div>
 {% endblock Body %}

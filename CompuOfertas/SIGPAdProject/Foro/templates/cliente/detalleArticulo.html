@@ -57,7 +57,7 @@
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-        <div {% if message.tags %} class="alert-{{ message.tags }} text-center" {% endif %}>
+        <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
             <h5 class="font-weight-bold">{{ message }}</h5>
         </div>
         {% endfor %}
