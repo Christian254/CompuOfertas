@@ -16,6 +16,7 @@ from inventario.models import *
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from SIGPAd.models import *
 # Create your views here.
 
 #@permission_required('SIGPAd.es_cliente')
