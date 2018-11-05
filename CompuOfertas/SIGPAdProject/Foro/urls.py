@@ -10,6 +10,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+	url(r'foro$', ForoIndex, name='ForoIndex'),
 	url(r'mensajes/(?P<pk>\d+)$', login_required(mensajes), name="mensajes"),
 	url(r'nuevoMensaje/$', login_required(nuevoMensaje), name="nuevoMensaje"),
 	url(r'enviarNuevoMensaje/(?P<pk>\d+)$', login_required(enviarNuevoMensaje), name="enviarNuevoMensaje"),

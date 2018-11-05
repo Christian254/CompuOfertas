@@ -19,6 +19,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from SIGPAd.models import *
 # Create your views here.
 
+def ForoIndex(request):
+	return render(request, 'exterior/foro.html', {})
+
 #@permission_required('SIGPAd.es_cliente')
 def mensajes(request,pk):
 	user = request.user
