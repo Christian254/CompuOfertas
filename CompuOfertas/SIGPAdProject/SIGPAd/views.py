@@ -43,9 +43,9 @@ def  iniciar_sesion(request):
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
-			return render(request, 'LogIn.html', context)
+			return render(request, 'exterior/foro.html', context)
 	context = {}
-	return render(request, 'LogIn.html', context)
+	return render(request, 'exterior/foro.html', {})
 
 #Vista administrador.
 
@@ -630,7 +630,24 @@ def index(request):
 
 		except Exception as e:
 			pass
-	return render(request,'index.html',{})
+
+	if request.method == 'POST':
+		username = request.POST.get('usr', None)
+		password = request.POST.get('pwd', None)
+		user = authenticate(username=username, password=password)
+		if user:
+			login(request, user)
+			if user.has_perm('SIGPAd.view_superuser'):
+				return redirect('/indexAdministrador')
+			elif user.has_perm('SIGPAd.view_seller'):
+				return redirect('/indexVendedor')
+			else:
+				return redirect('/indexCliente')
+		else:
+			validar = "Credenciales erróneas."
+			context = {'validar':validar}
+			return render(request, 'exterior/foro.html', context)
+	return render(request, 'exterior/foro.html', {})
 
 
 def planilla(request,idplanilla):
