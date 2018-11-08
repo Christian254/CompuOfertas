@@ -603,7 +603,7 @@ def index(request):
 			if len(empleado) > 0:
 				return render(request,'VendedorTemplates/vendedorIndex.html',{})
 			else:
-				return render(request,'ClienteTemplates/clienteIndex.html',{})
+				return redirect('/articulos')
 	else:
 		try:
 			user = User.objects.all()

@@ -1,0 +1,73 @@
+{% extends "base_exterior.html" %} 
+{% load staticfiles %} 
+
+{% block CSS %}
+    <style>
+        html,body{
+            height:100%;
+            width:100%;
+        }
+
+        .imagen{
+            height: 200%;
+            width: 100%;
+            border-radius: 15px;
+        }
+
+      </style>
+
+{% endblock CSS %}
+
+{% block Navegacion %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="#page-top">SIGPAd</a>
+          <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/articulos">CATALÓGO</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/preorden">Carrito de Compras</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0">Mensajes</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Cerrar Sesion</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+</nav>
+{% endblock Navegacion %}
+
+{% block Body %}
+{% endblock Body %}
+
+{% block Script %} 
+<script>
+        $(document).ready(function()
+        {
+          $("#validar_email").hide();
+    
+        });
+    
+        $('#email').change(function (e) {
+            var emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+            var EmailId = this.value;
+            if (emailRegex.test(EmailId)){
+                this.style.backgroundColor = "";
+                $("#validar_email").hide();
+            }else{
+                this.style.backgroundColor = "LightPink";
+                $("#validar_email").show();
+            }
+        });
+</script>
+{% endblock Script %}

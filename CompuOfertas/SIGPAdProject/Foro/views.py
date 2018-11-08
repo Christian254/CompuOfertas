@@ -247,10 +247,13 @@ def detalleArticulo(request, id):
 	contexto = {'art': detalle}
 	if request.method == 'POST':		
 		try:
-			carrito_usuario = Carrito.objects.get(usuario=request.user)			
-			detalle.carrito.add(carrito_usuario)
-			messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
-			return redirect('/detalleArticulo/{}'.format(detalle.id))
+			if (request.POST.get('estrellas')):
+				pass
+			else:
+				carrito_usuario = Carrito.objects.get(usuario=request.user)			
+				detalle.carrito.add(carrito_usuario)
+				messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+				return redirect('/detalleArticulo/{}'.format(detalle.id))
 		except Carrito.DoesNotExist:
 			carrito_usuario = Carrito()
 			carrito_usuario.usuario = request.user
