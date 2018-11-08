@@ -14,6 +14,26 @@
             border-radius: 15px;
         }
 
+        .color{
+          padding: 10px;
+          background-color: rgba(255, 255, 255, 0.2);
+          border-radius: 15px;
+          color:#262a33;
+        }
+
+        .alto{
+          height: 220px;
+        }
+
+        .letra{
+          font-size: 12px;
+        }
+
+        .colors{
+          background-color:#2c3e50;
+          color: white;
+        }
+
       </style>
 
 {% endblock CSS %}
@@ -30,16 +50,16 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">CATALÓGO</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Catalógo</a>
               </li>
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">¿Quiénes somos?</a>
               </li>
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contáctenos</a>
               </li>
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="" data-toggle="modal" data-target="#login">Iniciar Sesion</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="" data-toggle="modal" data-target="#login">Iniciar Sesión</a>
               </li>
             </ul>
           </div>
@@ -53,6 +73,9 @@
       <!-- Header -->
       <header class="masthead bg-primary text-white text-center">
         <div class="container">
+            {% if validar %}
+            <h3 class="alert-danger">{{validar}}</h3>
+            {% endif %}
                 <div class="row">
                         <div class="col-md-6">
                                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -81,13 +104,12 @@
                                           <span class="sr-only">Next</span>
                                         </a>
                                 </div>
+
+                                <hr class="star-light mb-5">
                                 
                         </div>
-                        <div class="col-md-6">
-                          {% if validar %}
-                          <h1 class="alert-danger">{{validar}}</h1>
-                          {% endif %}
-                                <img class="img-fluid mb-5 d-block mx-auto" src="{% static 'exterior/img/profile.png'%}" alt="">
+                        <div class="col-md-6 color">
+                                <img class="img-fluid d-block mx-auto alto" src="{% static 'exterior/img/tienda.png'%}" alt="">
                                 <h4 class="font-weight-light mb-0">¡Aquí encontrarás las mejores ofertas de computadoras y accesorios!</h4>
                                 <button class="btn btn-success btn-lg rounded-pill" onclick="location.href='/registrarCliente'">Registrarse</button>
                         </div>    
@@ -99,7 +121,8 @@
       <!-- Portfolio Grid Section -->
       <section class="portfolio" id="portfolio">
         <div class="container">
-          <h2 class="text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+          <h2 class="text-center text-uppercase text-secondary mb-0">Catalógo
+          </h2>
           <hr class="star-dark mb-5">
           <div class="row">
             <div class="col-md-6 col-lg-4">
@@ -169,7 +192,7 @@
       <!-- About Section -->
       <section class="bg-primary text-white mb-0" id="about">
         <div class="container">
-          <h2 class="text-center text-uppercase text-white">About</h2>
+          <h2 class="text-center text-uppercase text-white">¿Quiénes somos?</h2>
           <hr class="star-light mb-5">
           <div class="row">
             <div class="col-lg-4 ml-auto">
@@ -191,7 +214,7 @@
       <!-- Contact Section -->
       <section id="contact">
         <div class="container">
-          <h2 class="text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+          <h2 class="text-center text-uppercase text-secondary mb-0">Contáctenos</h2>
           <hr class="star-dark mb-5">
           <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -287,7 +310,7 @@
   
       <div class="copyright py-4 text-center text-white">
         <div class="container">
-          <small>Copyright &copy; Your Website 2018</small>
+          <small>Copyright &copy; SIGPAD - DSI215 - 2018</small>
         </div>
       </div>
   
@@ -433,16 +456,16 @@
       </div>
 
 
-<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledy="modal">
+<div class="modal fade letra" id="login" tabindex="-1" role="dialog" aria-labelledy="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header colors">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" style="color:white;">&times;</span>
                 </button>
-                <h5 class="modal-title">Iniciar Sesion</h5>
+                <h5 class="modal-title">INICIAR SESIÓN</h5>
             </div>
-            <form action="" method="POST">
+            <!--<form action="" method="POST">
                   {% csrf_token %} 
                   <div class="modal-body">
                         <div class="row">
@@ -462,10 +485,37 @@
                         </div>
                   </div>
                   <div class="modal-footer">
-                      <input type="submit" value="login" class="btn btn-primary col-md-4" id="entrar">
-                      <button type="button" class="btn btn-secondary aceptar" data-dismiss="modal">Cerrar</button>
+                      <input type="submit" value="Ingresar" class="btn btn-primary col-md-4" id="entrar">
+                      <button type="button" class="btn btn-danger aceptar" data-dismiss="modal">Cerrar</button>
                   </div>
-            </form>
+            </form>-->
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <form action="" method="POST">
+                        {% csrf_token %} 
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <label>Usuario:</label>
+                            <input class="form-control" type="text" placeholder="Ingresa Usuario" id="usr" name="usr" required="" data-validation-required-message="Ingresa tu usuario.">
+                            <p class="help-block text-danger"></p>
+                          </div>
+                        </div>
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <label>Contraseña:</label>
+                            <input class="form-control" type="password" placeholder="Ingresa Contraseña" id="pwd" name="pwd" required="" data-validation-required-message="Ingresa tu contraseña.">
+                            <p class="help-block text-danger"></p>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Ingresar" class="btn btn-primary col-md-4 " id="entrar">
+                          <button type="button" class="btn btn-danger aceptar" data-dismiss="modal">Cerrar</button>
+                      </div>
+                    </form>
+                </div>
+                <div class="col-md-1"></div>
+              </div>
         </div>
     </div>
 </div>
