@@ -1,4 +1,7 @@
-{% extends "base_cliente/base.html" %} {% load staticfiles %} {% block CSS %}
+{% extends "exterior/foro_interior.html" %} 
+{% load staticfiles %} 
+{% block CSS %}
+<link rel="stylesheet" type="text/css" href="{% static 'fancy/jquery.fancybox.min.css'%}">
 <style>
     #precio {
         font-size: 30px;
@@ -44,6 +47,7 @@
     }
 </style>
 {% endblock CSS %} {% block Script %}
+<script src="{% static 'fancy/jquery.fancybox.min.js'%}"></script>
 <script>
     $(document).ready(function() {
         $('.clasificacion input').on('click', function() {
@@ -53,50 +57,54 @@
 </script>
 {% endblock Script %} 
 {% block Body %}
-<div class="container">     
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
-            <h5 class="font-weight-bold">{{ message }}</h5>
+<section>
+    <div class="container mt-5">     
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
+                <h5 class="font-weight-bold">{{ message }}</h5>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-md-4">
+                <a data-fancybox="gallery" href="{{art.img.url}}"><img class="rounded img-thumbnail" src="{{art.img.url}}" alt=""></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:8000/detalleArticulo/{{art.id}}" class="btn btn-block btn-outline-primary"><i class="fab fa-facebook-square"></i> Compartir</a>
+            </div>
+            <div class="col-sm-10 col-md-8">
+                <h1 class="text-left font-weight-bold">{{art.nombre}}</h1>
+                <h5 class="text-left">{{art.descripcion}}</h5>
+                <hr>
+                <label id="lblinfo" for="precio">Precio:</label>
+                <span id="precio">${{art.inventario.precio_venta_producto}}</span>                
+                <form id="estrellas" action="" method="post">
+                    {% csrf_token %}
+                    <p class="clasificacion">                        
+                        <input id="radio1" type="radio" name="estrellas" value="5" {% if puntuacion == 5 %} checked {% endif %}>
+                        <label for="radio1">★</label>
+                        <input id="radio2" type="radio" name="estrellas" value="4" {% if puntuacion == 4 %} checked {% endif %}>
+                        <label for="radio2">★</label>
+                        <input id="radio3" type="radio" name="estrellas" value="3" {% if puntuacion == 3 %} checked {% endif %}>
+                        <label for="radio3">★</label>
+                        <input id="radio4" type="radio" name="estrellas" value="2" {% if puntuacion == 2 %} checked {% endif %}>
+                        <label for="radio4">★</label>
+                        <input id="radio5" type="radio" name="estrellas" value="1" {% if puntuacion == 1 %} checked {% endif %}>
+                        <label for="radio5">★</label>
+                        <label style="color:black">:Mi puntuación</label> 
+                    </p>
+                </form>
+                <button class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#crearFormatoModal"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    Reservar</button>
+            </div>
         </div>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="row justify-content-center">
-        <div class="col-sm-10 col-md-4">
-            <a data-fancybox="gallery" href="{{art.img.url}}"><img class="rounded img-thumbnail" src="{{art.img.url}}" alt=""></a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:8000/detalleArticulo/{{art.id}}" class="btn btn-block btn-outline-primary"><i class="fa fa-facebook-square" aria-hidden="true"></i> Compartir</a>
-        </div>
-        <div class="col-sm-10 col-md-8">
-            <h1 class="text-left font-weight-bold">{{art.nombre}}</h1>
-            <h5 class="text-left">{{art.descripcion}}</h5>
-            <hr>
-            <label id="lblinfo" for="precio">Precio:</label>
-            <span id="precio">${{art.inventario.precio_venta_producto}}</span>
-            <form id="estrellas" action="" method="post">
-                {% csrf_token %}
-                <p class="clasificacion">
-                    <input id="radio1" type="radio" name="estrellas" value="5">
-                    <label for="radio1">★</label>
-                    <input id="radio2" type="radio" name="estrellas" value="4">
-                    <label for="radio2">★</label>
-                    <input id="radio3" type="radio" name="estrellas" value="3">
-                    <label for="radio3">★</label>
-                    <input id="radio4" type="radio" name="estrellas" value="2">
-                    <label for="radio4">★</label>
-                    <input id="radio5" type="radio" name="estrellas" value="1">
-                    <label for="radio5">★</label>
-                </p>
-            </form>
-            <button class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#crearFormatoModal"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                Reservar</button>
+        <div class="row justify-content-center">
+            <div class="fb-comments" data-href="http://127.0.0.1:8000/detalleArticulo/{{art.id}}" data-width="1000" data-numposts="7"></div>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="fb-comments" data-href="http://127.0.0.1:8000/detalleArticulo/{{art.id}}" data-width="1000" data-numposts="7"></div>
-    </div>
-</div>
+</section>
+
 <!-- modal  -->
 <div class="modal fade" id="crearFormatoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">

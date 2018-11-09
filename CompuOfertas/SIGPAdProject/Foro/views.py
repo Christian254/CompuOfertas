@@ -243,22 +243,44 @@ def articulo(request):
 	
 
 def detalleArticulo(request, id):
-	detalle = Producto.objects.get(id=id)
-	contexto = {'art': detalle}
-	if request.method == 'POST':		
-		try:
-			carrito_usuario = Carrito.objects.get(usuario=request.user)			
-			detalle.carrito.add(carrito_usuario)
-			messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
-			return redirect('/detalleArticulo/{}'.format(detalle.id))
-		except Carrito.DoesNotExist:
-			carrito_usuario = Carrito()
-			carrito_usuario.usuario = request.user
-			carrito_usuario.save()
-			detalle.carrito.add(carrito_usuario)
-			messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
-			return redirect('/detalleArticulo/{}'.format(detalle.id))		
-	return render(request,'cliente/detalleArticulo.html', contexto)
+	try:
+		detalle = Producto.objects.get(id=id)
+		mi_valoracion = Valoracion.objects.get(Q(producto = detalle) & Q(usuario=request.user))	
+		contexto = {'art': detalle, 'puntuacion':mi_valoracion.puntuacion}
+		if request.method == 'POST':		
+			try:
+				estrellas = request.POST.get('estrellas')			
+				if (estrellas):
+					mi_puntuacion = int(estrellas)
+					if(mi_puntuacion<1 or mi_puntuacion>5):					
+						messages.error(request, 'La puntuacion debe estar entre 1 y 5')						
+						return redirect('/detalleArticulo/{}'.format(detalle.id))
+					else:
+						mi_valoracion.puntuacion = mi_puntuacion					
+						mi_valoracion.save()					
+						return redirect('/detalleArticulo/{}'.format(detalle.id))						
+				else:
+					carrito_usuario = Carrito.objects.get(usuario=request.user)			
+					detalle.carrito.add(carrito_usuario)
+					messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+					return redirect('/detalleArticulo/{}'.format(detalle.id))
+			except Carrito.DoesNotExist:
+				carrito_usuario = Carrito()
+				carrito_usuario.usuario = request.user
+				carrito_usuario.save()
+				detalle.carrito.add(carrito_usuario)
+				messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+				return redirect('/detalleArticulo/{}'.format(detalle.id))		
+		return render(request,'cliente/detalleArticulo.html', contexto)
+	except Valoracion.DoesNotExist:		
+		valoracion = Valoracion()
+		valoracion.puntuacion = 0
+		valoracion.usuario = request.user
+		valoracion.producto = detalle
+		valoracion.save()
+		detalle = Producto.objects.get(id=id)		
+		contexto = {'art': detalle, 'puntuacion':0}
+		return render(request,'cliente/detalleArticulo.html', contexto)
 
 def paginacion_productos(request,articulos,elementos):
 	paginator = Paginator(articulos, elementos)

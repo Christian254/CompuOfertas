@@ -1,44 +1,47 @@
-{% extends "base_cliente/base.html" %}
+{% extends "exterior/foro_interior.html" %} 
 {% load staticfiles %}
 {% block Body %}
-<div class="container">
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
-            <h5 class="font-weight-bold">{{ message }}</h5>
-        </div>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% if error %}
-    <ul>
-        <div class="alert-info">
-            <h4 class="text-center font-weight-bold">{{error}}</h4>
-        </div>
-    </ul>        
-    {% else %}
-    <div class="row">
-            <div class="col">
-                <h2 class="text-center">Pre-Orden</h2>
+<section>
+    <div class="container mt-5">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
+                <h5 class="font-weight-bold">{{ message }}</h5>
             </div>
-        </div>
-        <div class="row">
-            <table class="table table-hover text-center">            
-                <thead class="thead bg-info">
-                    <td><h5 class="font-weight-bold">Nombre</h5></td>
-                    <td><h5 class="font-weight-bold">Cantidad</h5></td>
-                    <td><h5 class="font-weight-bold">Accion</h5></td>
-                </thead>
-                {% for a in art %}
-                <tr>
-                    <td><h6>{{a.nombre}}</h6></td>
-                    <td><h6></h6></td>
-                    <td class="text-center"><button class="btn btn-success">Editar</button> <a class="btn btn-danger" href="/eliminar_pre/{{a.id}}"> Cancelar</a></td>
-                </tr>
-                {% endfor %}
-            </table>              
-        </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if error %}
+        <ul>
+            <div class="alert-info">
+                <h4 class="text-center font-weight-bold">{{error}}</h4>
+            </div>
+        </ul>        
+        {% else %}
+            <div class="row">
+                <div class="col">
+                    <h2 class="text-center">Pre-Orden</h2>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-hover text-center">            
+                    <thead class="thead bg-info">
+                        <td><h5 class="font-weight-bold">Nombre</h5></td>
+                        <td><h5 class="font-weight-bold">Cantidad</h5></td>
+                        <td><h5 class="font-weight-bold">Accion</h5></td>
+                    </thead>
+                    {% for a in art %}
+                    <tr>
+                        <td><h6>{{a.nombre}}</h6></td>
+                        <td><h6></h6></td>
+                        <td class="text-center"><button class="btn btn-success">Editar</button> <a class="btn btn-danger" href="/eliminar_pre/{{a.id}}"> Cancelar</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>              
+            </div>    
+        {% endif %}
     </div>
-    {% endif %}        
+</section>
+        
 {% endblock Body %}

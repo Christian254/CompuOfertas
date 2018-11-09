@@ -39,7 +39,7 @@ def  iniciar_sesion(request):
 			elif user.has_perm('SIGPAd.view_seller'):
 				return redirect('/indexVendedor')
 			else:
-				return redirect('/indexCliente')
+				return redirect('/articulos')
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
@@ -603,7 +603,7 @@ def index(request):
 			if len(empleado) > 0:
 				return render(request,'VendedorTemplates/vendedorIndex.html',{})
 			else:
-				return render(request,'ClienteTemplates/clienteIndex.html',{})
+				return redirect('/articulos')
 	else:
 		try:
 			user = User.objects.all()
@@ -642,7 +642,7 @@ def index(request):
 			elif user.has_perm('SIGPAd.view_seller'):
 				return redirect('/indexVendedor')
 			else:
-				return redirect('/indexCliente')
+				return redirect('/articulos')
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
