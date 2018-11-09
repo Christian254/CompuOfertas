@@ -6,7 +6,11 @@
     .aceptar{
         border-radius: 15px;
     }
-
+    .izquierda{
+        float:left;
+        position: relative;
+        z-index: 10;
+    }
 </style>
 {% block Body %}
 {% if user.is_superuser %}
@@ -64,10 +68,17 @@
             </div>
         </div>
             <div class="col-md-6">
+                <div class="col-12">
+                <div class="izquierda">
+                    <a href="/ingresarProducto" class="btn btn-success">Regresar</a>
+                </div>
+                <nav class="navbar text-right">
             <form class="form-inline" method="GET" action="">
                 <input name="consulta" type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="aceptar">
                 <input type="submit" value="Buscar" class="btn btn-success">
             </form>
+            </nav>
+            </div>
         <div class="block-web">
             <table class="table">
                 <thead class="bg-primary">

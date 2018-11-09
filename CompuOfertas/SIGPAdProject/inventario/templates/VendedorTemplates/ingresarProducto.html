@@ -38,6 +38,11 @@
     .modelo{
         border-radius: 10px;
     }
+    .izquierda{
+        float:left;
+        position: relative;
+        z-index: 10;
+    }
 </style>
 
 <div class="row">
@@ -51,9 +56,11 @@
             <section class="panel default blue_title h2 text-center">
                 <div class="panel-heading">Seleccione su <span class="semi-bold">categoria</span>  </div>
             </section>
-
             <div class="row">
                 <div class="col-12">
+                    <div class="izquierda">
+                        <a href="/" class="btn btn-success">Regresar</a>
+                    </div>
                     <nav class="navbar text-right">
                         <form class="form-inline" method="GET" action="" id="busqueda">
                             <input name="consulta" id='consulta' type="text" placeholder="Buscar" value="{{request.GET.consulta}}" class="modelo">
