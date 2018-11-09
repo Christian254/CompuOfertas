@@ -17,8 +17,8 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from SIGPAd.models import *
-# Create your views here.
 
+# Create your views here.
 def ForoIndex(request):
 	return render(request, 'exterior/foro.html', {})
 
@@ -174,7 +174,7 @@ def enviarNuevoMensaje(request, pk):
 	return render(request,'cliente/enviarNuevoMensaje.html',contexto)
 
 
-def servicio_mensajeria(request,emisor_id,receptor_id):
+def servicio_mensajeria(request,emisor_id,receptor_id): #chat
 	user = request.user
 	if user.id==int(emisor_id) or user.id==int(receptor_id):
 		mensajes = serializers.serialize("json",getChat(emisor_id,receptor_id,True,user.id),use_natural_foreign_keys=True)
@@ -203,7 +203,7 @@ def getChat(id_emisor,id_receptor,contactos,id):
 		return []
 
 
-def servicio_chat(request):
+def servicio_chat(request): #notificacion
 	user = request.user
 	#ch = serializers.serialize("json",getChatUser(user),use_natural_foreign_keys=True)
 	ch = json.dumps(list(getChatUser(user)), cls=DjangoJSONEncoder)
@@ -229,6 +229,37 @@ def getChatUser(user):
 			if m.enviado != user.id:
 				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":m.msj,"username":x.receptor.username,"enviado":m.enviado}})
 	return datos
+
+def get_servicio_mini_chat(request,receptor_id): #El emisor, no se necesita para estar logeado.
+	user = request.user
+	mensajes = serializers.serialize("json",get_parametros_mini_chat(user.id,receptor_id),use_natural_foreign_keys=True)
+	return HttpResponse(mensajes, content_type='application/json')
+
+
+def get_parametros_mini_chat(id_emisor,id_receptor):
+	try:
+		primer = User.objects.get(pk=id_emisor)
+		user = User.objects.get(pk=id_receptor)
+		chat =Chat.objects.all()
+		chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+		return chat.mensaje_set.all()
+	except Exception as e:
+		return []
+
+def enviar_mensajes_mini_chat(id_emisor,id_receptor, mensaje):
+	try:
+		primer = User.objects.get(pk=id_emisor)
+		user = User.objects.get(pk=id_receptor)
+		chat =Chat.objects.all()
+		chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+		chat.ultimo = mensaje
+		chat.save()
+		msg =  Mensaje(chat=chat,msj=mensaje,enviado=primer.id)
+		msg.save()
+		return True
+
+	except Exception as e:
+		return False
 
 def articulo(request):
 	try:

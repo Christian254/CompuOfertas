@@ -20,4 +20,7 @@ urlpatterns = [
 	url(r'detalleArticulo/(?P<id>\d+)$',login_required(detalleArticulo), name="detalleArticulo"),
 	url(r'preorden/$',login_required(pre_orden), name="preOrdern"),
 	url(r'eliminar_pre/(?P<id>\d+)$',login_required(eliminar_pre), name="eliminarPre"),
+
+	#Mensajeria
+	url(r'mini_chat/(?P<receptor_id>\d+)$',login_required(get_servicio_mini_chat), name="MiniChat"),
 ]

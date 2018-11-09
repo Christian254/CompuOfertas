@@ -42,7 +42,14 @@
     {% block Body %} 
     {% endblock Body %}    
 
-    
+
+    {% if user.is_authenticated %}
+        <div class="copyright py-4 text-center text-white">
+            <div class="container">
+              <small>Prueba</small>
+            </div>
+        </div>
+    {% endif %}
 
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'exterior/vendor/jquery/jquery.min.js'%}"></script>
