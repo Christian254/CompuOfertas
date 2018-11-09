@@ -115,7 +115,7 @@
                                 
                         </div>
                         <div class="col-md-6 color">
-                                <img class="img-fluid d-block mx-auto alto" src="{% static 'exterior/img/tienda.png'%}" alt="">
+                                <img class="img-fluid d-block mx-auto alto" src="{% static 'exterior/img/tienda_2.png'%}" alt="">
                                 <h4 class="font-weight-light mb-0">¡Aquí encontrarás las mejores ofertas de computadoras y accesorios!</h4>
                                 <button class="btn btn-success btn-lg rounded-pill" onclick="location.href='/registrarCliente'">Registrarse</button>
                         </div>    
@@ -460,7 +460,8 @@
         </div>
       </div>
 
-
+              
+ <!-- Importante para el modal del LogIn NO BORRAR -->              
 <div class="modal fade letra" id="login" tabindex="-1" role="dialog" aria-labelledy="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -495,6 +496,10 @@
                   </div>
             </form>-->
             <div class="row">
+                <div class="col-md-12">
+                    <img class="img-fluid d-block mx-auto alto" src="{% static 'exterior/img/compu_oferta_2.png'%}" alt="">
+                    <hr class="star-dark mb-5">
+                </div>
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
                     <form action="" method="POST">
@@ -526,6 +531,10 @@
 </div>
 
 
+ <!-- Importante para el modal de registro NO BORRAR -->
+<div id="popup" class="modal fade" role="dialog">
+</div>   
+
 {% endblock Body %}
 
 {% block Script %} 
@@ -547,5 +556,20 @@
                 $("#validar_email").show();
             }
         });
+
+        var modal;
+
+          function abrir_modal(url) {
+              $('#popup').load(url, function() {
+                  $(this).modal('show');
+              });
+              return false;
+          }
+
+          function cerrar_modal() {
+              $('#popup').modal('hide');
+              return false;
+          }
 </script>
+
 {% endblock Script %}

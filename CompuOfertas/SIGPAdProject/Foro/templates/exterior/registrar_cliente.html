@@ -1,0 +1,194 @@
+{% extends "base_exterior.html" %} 
+{% load staticfiles %} 
+
+{% block CSS %}
+<style>
+    html,body{
+            height:100%;
+            width:100%;
+    }
+
+    .color{
+          padding: 10px;
+          background-color: #FFFFFF;
+          border-radius: 15px;
+          color:#262a33;
+    }
+
+    @media (min-width: 992px) {
+
+        #mainNav {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+            transition: padding-top 0.3s, padding-bottom 0.3s;
+        }
+
+        .padd {
+            padding-top: 6rem;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+
+    }
+
+    .bg-dos{
+        background-color: #1bd6b2;
+    }
+    .color{
+        height: 100%;
+        color: black;
+    }
+
+
+    .colrs{
+        background-color:rgba(38, 42, 51, 1)
+    }
+
+
+</style>
+{% endblock CSS %}
+
+{% block Navegacion %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="#page-top">SIGPAd</a>
+          <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">Inicio</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+</nav>
+{% endblock Navegacion %}
+
+
+{% block Body %}
+ <!-- Header -->
+ <header class="padd bg-dos text-white text-center">
+        <div class="container">
+                <div class="row">
+                        <div class="col-md-6 color">
+                                <h1>Registrarse</h1>    
+                                {% if validar %}	
+                                    <h3 class="alert-danger">{{validar}}</h3>
+                                {% endif %}
+                                <hr class="star-dark mb-5">
+                                <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="needs-validation" novalidate>
+                                        {% csrf_token %}
+                                        <div class="form-row">
+                                          <div class="col-md-4 mb-3">
+                                            <label for="nombre"><b>Nombre</b></label>
+                                            <input type="text" class="form-control" placeholder="Ingresa Nombre" id="nombre" name="nombre" required>
+                                          </div>
+                                          <div class="col-md-4 mb-3">
+                                            <label for="apellido"><b>Apellido</b></label>
+                                            <input type="text" class="form-control"  placeholder="Ingresa Apellido" id="apellido" name="apellido"  required>
+                                          </div>
+                                          <div class="col-md-4 mb-3">
+                                            <label for="sexo"><b>Sexo</b></label>
+                                                <select id="sexo" class="form-control custom-select"  name="sexo">
+                                                        <option id="masculino" value="masculino">Masculino</option>
+                                                        <option id="femenino" value="femenino">Femenino</option>
+                                                </select>
+                                          </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-2 mb-3"></div>
+                                                <div class="col-md-8 mb-3">
+                                                    <label for="correo"><b>Correo</b></label>
+                                                    <input type="text" class="form-control"  placeholder="Ingrese correo electrónico" id="correo" name="correo" required>
+                                                    <p id="validar_email" style="color:#e51a4c;">Formato no adecuado. Ejemplo a seguir: prueba@gmail.com</p>                                                
+                                                </div>
+                                            <div class="col-md-2 mb-3"></div>
+                                        </div>
+
+                                        <div class="form-row">
+                                                <div class="col-md-2 mb-3"></div>
+                                                <div class="col-md-8 mb-3">
+                                                    <label for="usuario"><b>Usuario</b></label>
+                                                    <input type="text" class="form-control" placeholder="Ingresa Usuario" id="usr" name="usr" required>
+                                                </div>
+                                                <div class="col-md-2 mb-3"></div>
+                                        </div>
+
+                                        <div class="form-row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="pwd"><b>Contraseña</b></label>
+                                                    <input class="form-control" type="password" placeholder="Ingresa Contraseña" id="pwd" name="pwd" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                        <label for="pwd2"><b>Verificar Contraseña</b></label>
+                                                        <input class="form-control" type="password" placeholder="Ingresa Contraseña" id="pwd2" name="pwd2" required>
+                                                </div>
+                                        </div>
+                                          
+                                        <button id="registrar" class="btn btn-primary" type="submit">¡Registrar!</button>
+                                      </form>
+                                
+                        </div>
+                        <div class="col-md-6">
+                                <img class="img-fluid d-block mx-auto alto" src="{% static 'exterior/img/fondo_4.jpg'%}" alt="">
+                        </div>    
+                    </div>
+          
+        </div>
+      </header>
+  
+
+	<div class="copyright colrs py-4 text-center text-white">
+			<div class="container">
+			  <small>Copyright &copy; SIGPAD - DSI215 - 2018</small>
+			</div>
+	</div>
+
+{% endblock Body %}
+
+{% block Script %}
+<script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+
+
+        $(document).ready(function()
+        {
+          $("#validar_email").hide();
+    
+        });
+    
+        $('#correo').change(function (e) {
+            var emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+            var EmailId = this.value;
+            if (emailRegex.test(EmailId)){
+                this.style.backgroundColor = "White";
+                $("#validar_email").hide();
+            }else{
+                this.style.backgroundColor = "LightPink";
+                $("#validar_email").show();
+            }
+        });
+</script>
+{% endblock Script %}

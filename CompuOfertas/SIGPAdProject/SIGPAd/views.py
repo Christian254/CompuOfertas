@@ -558,7 +558,7 @@ def registrarCliente(request):
 		if user:
 			validar = "Registro de usuario, ya existe."
 			context = { 'validar':validar }
-			return render(request, 'ClienteTemplates/registrarCliente.html', context)
+			return render(request, 'exterior/registrar_cliente.html', context)
 		if password==password2:
 			cliente = Cliente()
 			cliente.nombre = request.POST.get('nombre', None)
@@ -579,9 +579,9 @@ def registrarCliente(request):
 		else:
 			validar = "Las contraseñas son diferentes"
 			context = { 'validar':validar }
-			return render(request, 'ClienteTemplates/registrarCliente.html', context)
+			return render(request, 'exterior/registrar_cliente.html', context)
 	context = {}
-	return render(request, 'ClienteTemplates/registrarCliente.html', context)
+	return render(request, 'exterior/registrar_cliente.html', context)
 
 def indexCliente(request):
 	user = request.user
