@@ -642,7 +642,7 @@ def index(request):
 			elif user.has_perm('SIGPAd.view_seller'):
 				return redirect('/indexVendedor')
 			else:
-				return redirect('/indexCliente')
+				return redirect('/articulos')
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}

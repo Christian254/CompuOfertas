@@ -14,3 +14,7 @@ class ProveedorAdmin(admin.ModelAdmin):
 	pass
 admin.site.register(Proveedor, ProveedorAdmin)
 
+class ValoracionAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Valoracion, ValoracionAdmin)
+

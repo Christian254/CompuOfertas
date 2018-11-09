@@ -15,12 +15,10 @@
                     <div class="card text-center mb-3" style="height: 20rem;">
                         <div class="text-center">
                             <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 16rem;">
-                        </div>
-                        <div class="card-body">
-                            <a href="{% url 'Foro:detalleArticulo' p.id %}" class="btn btn-outline-info btn-block">
+                            <a href="{% url 'Foro:detalleArticulo' p.id %}" class="mt-4 btn btn-outline-info btn-block">
                                 <i class="fa fa-eye" aria-hidden="true"></i> {{p.nombre}}
-                            </a>
-                        </div>
+                            </a>  
+                        </div>                                            
                     </div>
                 </div>
                 {%endfor%}
