@@ -44,11 +44,8 @@
 
 
     {% if user.is_authenticated %}
-        <div class="copyright py-4 text-center text-white">
-            <div class="container">
-              <small>Prueba</small>
-            </div>
-        </div>
+        <button id="btn_prueba" class="btn btn-primary">fkjfjsfs</button>
+        <div id="prueba"></div>
     {% endif %}
 
     <!-- Bootstrap core JavaScript -->
@@ -66,6 +63,41 @@
     <!-- Custom scripts for this template -->
     <script src="{% static 'exterior/js/freelancer.min.js'%}"></script>
     {% block Script %} {% endblock Script %}
+
+
+    <script type="text/javascript">
+        $("#btn_prueba").click(function(){        
+            $.get("/mini_chat/2", function(data,status){
+                var cant = data.length;
+                 $("#prueba").empty();
+                for (let i = 0; i <= data.length; i++) {
+                    var valor = data[i].fields;
+                    var d = document.getElementsByClassName('prueba');
+                        var lista = `<li id=""> 
+                      <a href="/mensajes/${valor.msj}" class="mail"> 
+                        <span class="photo">
+                          <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
+                        </span> 
+                        <span class="subject"> 
+                          <span class="from">
+                            ${valor.msj}
+                          </span> 
+                          <span class="time">
+                            justo ahora 
+                          </span>  
+                        </span> 
+                        <span class="message">
+                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                        </span> 
+                      </a> 
+                    </li>`;
+                        $(lista).appendTo($('#prueba'));
+                }
+            });
+
+        });
+    </script>
+
   </body>
 
 </html>
