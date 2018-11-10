@@ -1,4 +1,4 @@
-{% extends "exterior/foro_interior.html" %} 
+{% extends "exterior/foro_interior.html" %}  
 {% load staticfiles %}
 {% block cssMensaje %}
     <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
@@ -26,93 +26,6 @@
 {% block Body %}
     {% if yo.is_authenticated %}
         <div id="frame" style="min-width: 150px; max-width: 1000px; height: 92vh; min-height: 100px; max-height: 625px;">
-            <div id="sidepanel">
-                <div id="profile">
-                    <div class="wrap">
-                    {% if yo.cliente_set.all %}
-                        {% for cl in yo.cliente_set.all %}
-                            {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online"/>
-                            {% else %}
-                                <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
-                            {% endif %}
-                        {% endfor %}
-                    {% elif yo.empleado_set.all %}
-                        {% for cl in yo.empleado_set.all %}
-                            {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" alt="foto empleado" />
-                            {% else %}
-                                <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        <img src="{% static "images/louislitt.png" %}" alt="" />
-                    {% endif %}
-                    <p> {{yo.username}} </p>
-                    <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                    <div id="status-options">
-                        <ul>
-                            <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
-                            <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
-                            <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
-                            <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
-                        </ul>
-                    </div>
-                    <div id="expanded" hidden="">
-                        <label for="twitter"><i class=" fa fa-facebook-f" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="mikeross" />
-                        <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="ross81" />
-                        <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="mike.ross" />
-                    </div>
-                </div>
-            </div>
-            <div id="search">
-                <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-                <input type="text" placeholder="Buscar contactos..." />
-            </div>
-            <div id="contacts">
-                <ul>
-                    {% for us in contactos %}
-                    <li class="contact">
-                        <a href="/mensajes/{{us.id}}">
-                            <div class="wrap">
-                                <span class="contact-status online"></span>
-                                {% if us.cliente_set.all %}
-                                {% for cl in us.cliente_set.all %}
-                                {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
-                                {% else %}
-                                <img src="{% static "images/user.png" %}" alt="" />
-                                {% endif %}
-                                {% endfor %}
-                                {% elif us.empleado_set.all %}
-                                {% for cl in us.empleado_set.all %}
-                                {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
-                                {% else %}
-                                <img src="{% static "images/user.png" %}" alt="" />
-                                {% endif %}
-                                {% endfor %}
-                                {% else %}
-                                <img src="{% static "images/user.png" %}" alt="" />
-                                {% endif %}
-                                <div class="meta">
-                                    <p class="name">{{us.username}} </p>
-                                    <p class="preview"> {{us.ultimo}} </p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="bottom-bar">
-                <button id="addcontact" onclick="location.href='/nuevoMensaje'"><a href="/nuevoMensaje" style="font-size: 15px;"><i class="fa fa-plus" aria-hidden="true"></i> <span>Add contact</span></a></button>
-                <button id="settings"> <a href="" style="font-size: 15px;"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></a></button>
-            </div>
-        </div>
         <div class="content">
             <div class="contact-profile">
                 {% if primer %}
