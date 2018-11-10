@@ -296,7 +296,15 @@ def detalleArticulo(request, id):
 						return redirect('/detalleArticulo/{}'.format(detalle.id))
 					else:
 						mi_valoracion.puntuacion = mi_puntuacion					
-						mi_valoracion.save()					
+						mi_valoracion.save()
+						total = Valoracion.objects.filter(Q(producto = detalle) & Q(puntuacion__gte = 1))						
+						suma = 0
+						prom = 0
+						for i in total:
+							suma += i.puntuacion
+						prom = float(suma)/float(len(total))											
+						detalle.puntuacion_total = int(round(prom))
+						detalle.save()
 						return redirect('/detalleArticulo/{}'.format(detalle.id))						
 				else:
 					carrito_usuario = Carrito.objects.get(usuario=request.user)			
