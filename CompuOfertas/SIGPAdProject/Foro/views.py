@@ -34,12 +34,8 @@ def MiniChat(request):
 def mensajes(request,pk):
 	user = request.user
 	error = ''
-	usersEmpleados = User.objects.filter(empleado__estado__gte=1).exclude(username=user.username)
-	userCliente = User.objects.filter(cliente__estado__gte=1).exclude(username=user.username)
 	chats = Chat.objects.filter(receptor=user) 
 	chats2 = Chat.objects.filter(emisor=user.username)
-	print(chats)
-	print(chats2)
 	datos = []
 	for x in chats:
 		us = User.objects.get(username=x.emisor)
@@ -73,10 +69,28 @@ def mensajes(request,pk):
 	except Exception as e:
 		print(e.message)
 		if 'object has no attribute' in e.message:
-			error = "Para enviar un nuevo mensaje tiene que buscar el usuario en \"add contact\""
-	contexto={'usuarios':usersEmpleados,'clientes':userCliente,'contactos':contactos,'primer':primer,'chat':chat,'yo':user,'error':error}
-	return render(request,'cliente/mensajes.html',contexto)
-
+			error=''
+			if request.method == 'POST':
+				c = request.POST.get('msg',None)
+				print(c)
+				chat = Chat(emisor=user.username,receptor=primer, conectado=1,estado=1,ultimo=c)
+				chat.save()
+				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+				mens.save()
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cont = []
+		for x in contactos:
+			if consulta in x.username:
+				cont.append(x)
+		contactos = cont
+		primer=None
+		chat=None
+	contexto={'contactos':contactos,'primer':primer,'chat':chat,'yo':user,'error':error}
+	if user.empleado_set.all():
+		return render(request,'VendedorTemplates/vendedorMensaje.html',contexto)
+	else:
+		return render(request,'cliente/mensajes.html',contexto)
 
 def nuevoMensaje(request):
 	user = request.user
@@ -146,7 +160,10 @@ def nuevoMensaje(request):
 		return redirect("/mensajes/0")
 
 	contexto={'usuarios':empleados,'clientes':cliente,'yo':user}
-	return render(request,'cliente/nuevoMensaje.html',contexto)
+	if user.empleado_set.all():
+		return render(request,'VendedorTemplates/vendedorNuevoMsj.html',contexto)
+	else:
+		return render(request,'cliente/nuevoMensaje.html',contexto)
 
 
 def enviarNuevoMensaje(request, pk):
@@ -228,15 +245,28 @@ def getChatUser(user):
 		if val > 0:
 			m = m1.latest("id")
 			if m.enviado != user.id:
-				datos.append({"model":"Foro.mensaje","pk":m.id,"fields":{"ids":m.id,"msj":m.msj,"username":x.emisor,"enviado":m.enviado}})
+				mens = ''
+				if len(m.msj)>40:
+					mens = m.msj[:40:1]
+				else:
+					val = 40 - len(m.msj)
+					mens = m.msj + "."*val
+				datos.append({"model":"Foro.mensaje","pk":m.id,"fields":{"ids":m.id,"msj":mens,"username":x.emisor,"enviado":m.enviado,"fecha":m.fecha_hora.strftime("%d-%m-%y %H:%M:%S")}})
 	for x in chats2:
 		m1 = x.mensaje_set.all().filter(estado=0)
 		val = len(m1)
 		if val > 0 :
 			m = m1.latest("id")
 			if m.enviado != user.id:
-				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":m.msj,"username":x.receptor.username,"enviado":m.enviado}})
+				mens = ''
+				if len(m.msj)>40:
+					mens = m.msj[:40:1]
+				else:
+					val = 40 - len(m.msj)
+					mens = m.msj + "."*val
+				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":mens,"username":x.receptor.username,"enviado":m.enviado,"fecha":m.fecha_hora.strftime("%d-%m-%y %H:%M:%S")}})
 	return datos
+
 
 def get_servicio_mini_chat(request,receptor_id): #El emisor, no se necesita para estar logeado.
 	user = request.user

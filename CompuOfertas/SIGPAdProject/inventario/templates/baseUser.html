@@ -373,14 +373,19 @@
       function peticionChat() {
         $.get("/servicio_chat/",function(data,status){
             var cant = data.length;
+            $('#msjUser').empty();
+            var v = `
+                <div class="top_pointer"></div>
+                <li>
+                    <p class="number" style="color:black;">tienes <span id="tienes">0</span> mensajes</p>
+                </li>`;
+            $(v).appendTo($('#msjUser'));
             $("#cant").text(cant);
             $("#tienes").text(cant);
+            
             for(let i=0;i<=data.length;i++){
               var valor = data[i].fields;
-              var d = document.getElementsByClassName('controlUser');
-              var j = d[0].value;
-              if (j < cant) {
-                var lista=`<li class="listado"> 
+              var lista=`<li class="listado"> 
                       <a href="/mensajes/${valor.enviado}" class="mail"> 
                         <span class="photo">
                           <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
@@ -390,18 +395,15 @@
                             ${valor.username}
                           </span> 
                           <span class="time">
-                            justo ahora 
+                            ${valor.fecha} 
                           </span>  
                         </span> 
                         <span class="message">
-                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                           ${valor.msj}
                         </span> 
                       </a> 
                     </li>`;
                 $(lista).appendTo($('#msjUser'));
-                j = j +1;
-                d[0].value=j
-              }
             }
         });
       }

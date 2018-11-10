@@ -15,6 +15,7 @@
     </title>
 
     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/admin.css'%}">
     <link href="{% static 'exterior/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -67,7 +68,6 @@
     <script src="{% static 'exterior/js/freelancer.min.js'%}"></script>
     {% block Script %} {% endblock Script %}
 
-
     <script type="text/javascript">
         function peticionChat() {
             $.get("/servicio_chat/", function(data, status) {
@@ -75,27 +75,36 @@
                 $("#cant").text(cant);
                 $("#tienes").text(cant);
                 $('#msjUser').empty();
-                for (let i = 0; i <= data.length; i++) {
-                    var valor = data[i].fields;
-                      var lista = `<li id=""> 
-                      <a href="/mensajes/${valor.enviado}" class="mail"> 
+                var v = `
+                    <li><a class="py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0"><font size="1">ver todos</font></a></li>
+                    <li>
+                    <p class="number" style="color:black;"><font size="1">tienes <span id="tienes">0</span> mensajes</font></p>
+                    </li>
+                    `
+                $(v).appendTo($('#msjUser'));
+            for(let i=0;i<=data.length;i++){
+              var valor = data[i].fields;
+              var lista=`<li >
+                        <div>
+                        <a href="/mensajes/${valor.enviado}" class="mail"> 
                         <span class="photo">
                           <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
                         </span> 
                         <span class="subject"> 
-                          <span class="from">
-                            ${valor.username}
+                          <span class="from"><font size="1">
+                            ${valor.username}</font>
                           </span> 
-                          <span class="time">
-                            justo ahora 
+                          <span class="time"><font size="0.4">
+                            ${valor.fecha} </font>
                           </span>  
                         </span> 
-                        <span class="message">
-                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                        <span class="message"><font size="1">
+                           ${valor.msj}</font>
                         </span> 
-                      </a> 
+                      </a>
+                        </div>
                     </li>`;
-                        $(lista).appendTo($('#msjUser'));
+                $(lista).appendTo($('#msjUser'));
                 }
             });
         }

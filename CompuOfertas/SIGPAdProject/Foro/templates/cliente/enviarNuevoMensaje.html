@@ -1,8 +1,93 @@
-{% extends "base_cliente/base.html" %}
+{% extends "exterior/foro_interior.html" %} 
 {% load staticfiles %}
 
+{% block cssMensaje %}
+    <link rel="stylesheet" href="{% static '/css/bootstrap4.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/admin.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/estilos.css'%}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="{% static 'exterior/vendor/magnific-popup/magnific-popup.css'%}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'exterior/css/freelancer.css'%}" rel="stylesheet">
+    <link href="{% static 'exterior/vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'interior/css/font-awesome.css'%}">
+    
+
+{% endblock cssMensaje %}
 
 {% block Body %}
+
+<style type="text/css">
+	.margen{
+		padding-left: 10em;
+	}
+	.cliente{
+		padding-top: 5em;
+	}
+	.empleado{
+		padding-top: 5em;
+	}
+	.margenPag{
+		padding-left: 20em;
+	}
+	.margenBtn{
+		padding-left: 37em;
+	}
+	body{
+		background-color: white;
+	}
+
+</style>
+
+<style>
+    html,body{
+            height:100%;
+            width:100%;
+    }
+
+    .color{
+          padding: 10px;
+          background-color: #FFFFFF;
+          border-radius: 15px;
+          color:#262a33;
+    }
+
+    @media (min-width: 992px) {
+
+        #mainNav {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+            transition: padding-top 0.3s, padding-bottom 0.3s;
+        }
+
+        .padd {
+            padding-top: 6rem;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+
+    }
+
+    .bg-dos{
+        background-color: #1bd6b2;
+    }
+    .color{
+        height: 100%;
+        color: black;
+    }
+
+
+    .colrs{
+        background-color:rgba(38, 42, 51, 1)
+    }
+
+</style>
+
 
 {% if user.is_superuser %}
 <h1>superusuario</h1>
@@ -11,7 +96,7 @@
 <h3>Aqui iran todos los detalles de este cliente</h3>
 <form method="POST">
 	{% csrf_token %}
-	<input type="text" name="msg" id="msg" placeholder="mensaje" required="">
+	<input type="text" name="msg" id="msg" placeholder="mensaje" required="" maxlength="290" max="290">
 	<input type="submit" name="enviar" value="enviar" class="btn btn-info">
 </form>
 

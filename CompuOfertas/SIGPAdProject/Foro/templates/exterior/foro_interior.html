@@ -58,7 +58,6 @@
         background-color:rgba(38, 42, 51, 1)
     }
 
-
 </style>
 {% endblock CSS %}
 
@@ -73,24 +72,22 @@
           </button>
           <div class="collapse navbar-collapse " id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item mx-0 mx-lg-1 dropdown">
-                <a href="" data-toggle="dropdown" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"> notificacion <span class="badge badge color_1" id="cant">0</span> </a>
-                <ul class="drop_down_task dropdown-menu" id="msjUser">
-                  <div class="top_pointer"></div>
-                  <li>
-                    <p class="number" style="color:black;">tienes <span id="tienes">0</span> mensajes</p>
-                  </li>
-                </ul>
-              </li>
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/articulos">CATALÓGO</a>
               </li>
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/preorden">Carrito de Compras</a>
               </li>
-              <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0">Mensajes</a>
+              <li class="nav-item mx-0 mx-lg-1 dropdown">
+                <a href="" data-toggle="dropdown" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"> <i class="fa fa-envelope"></i> <span class="badge badge color_1" id="cant">0</span></a>
+                <ul class="drop_down_task dropdown-menu" id="msjUser" style="width:300px;">
+                  <li><a class="py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0"><font size="1">ver todos</font> </a></li>
+                  <li>
+                    <p class="number" style="color:black;"><font size="1">tienes <span id="tienes">0</span> mensajes</font> </p>
+                  </li>
+                </ul>
               </li>
+
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/logout">Cerrar Sesion</a>
               </li>

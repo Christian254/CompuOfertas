@@ -1,6 +1,6 @@
-{% extends "exterior/foro_interior.html" %} 
+{% extends 'baseUser.html' %}
 {% load staticfiles %}
-{% block cssMensaje %}
+{% block CSS %}
     <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
     <link rel="stylesheet" href="{% static '/css/bootstrap4.css'%}">
     <script src="{% static "console_1.js" %}"></script>
@@ -29,72 +29,15 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'exterior/css/freelancer.css'%}" rel="stylesheet">
-{% endblock cssMensaje %}
+{% endblock CSS %}
 
 {% block pestania %}
 {% endblock %}
 
 {% block Body %}
 
-<style>
-    html,body{
-        height:100%;
-        width:100%;
-    }
-
-    .imagen{
-        height: 200%;
-        width: 100%;
-        border-radius: 15px;
-    }
-
-    .alto{
-        height: 220px;
-        border: 10px solid transparent;
-        margin-bottom: 25px;
-    }
-
-
-    .color{
-          padding: 10px;
-          background-color: #FFFFFF;
-          border-radius: 15px;
-          color:#262a33;
-    }
-
-    @media (min-width: 992px) {
-
-        #mainNav {
-            padding-top: 0.4rem;
-            padding-bottom: 0.4rem;
-            -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
-            transition: padding-top 0.3s, padding-bottom 0.3s;
-        }
-
-        .padd {
-            padding-top: 6rem;
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-
-    }
-
-    .bg-dos{
-        background-color: #1bd6b2;
-    }
-    .color{
-        height: 100%;
-        color: black;
-    }
-
-
-    .colrs{
-        background-color:rgba(38, 42, 51, 1)
-    }
-
-</style>
     {% if yo.is_authenticated %}
-        <div id="frame" style="min-width: 150px; max-width: 8000px; height: 92vh; min-height: 100px; max-height: 625px; margin-top:45px;">
+        <div id="frame" style="min-width: 150px; max-width: 8000px; height: 92vh; min-height: 100px; max-height: 625px;">
             <div id="sidepanel">
                 <div id="profile">
                     <div class="wrap">
