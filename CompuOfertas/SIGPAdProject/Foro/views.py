@@ -275,7 +275,7 @@ def articulo(request):
 
 def detalleArticulo(request, id):
 	try:
-		detalle = Producto.objects.get(id=id)
+		detalle = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='').get(id=id)
 		mi_valoracion = Valoracion.objects.get(Q(producto = detalle) & Q(usuario=request.user))	
 		contexto = {'art': detalle, 'puntuacion':mi_valoracion.puntuacion}
 		if request.method == 'POST':		
@@ -320,6 +320,8 @@ def detalleArticulo(request, id):
 		detalle = Producto.objects.get(id=id)		
 		contexto = {'art': detalle, 'puntuacion':0}
 		return render(request,'cliente/detalleArticulo.html', contexto)
+	except Producto.DoesNotExist:
+		return render(request,'cliente/articulos.html',{'error':'No existe el producto solicitado'})
 
 def paginacion_productos(request,articulos,elementos):
 	paginator = Paginator(articulos, elementos)
