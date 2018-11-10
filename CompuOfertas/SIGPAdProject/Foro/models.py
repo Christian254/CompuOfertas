@@ -38,4 +38,5 @@ class Mensaje(models.Model):
 class Carrito(models.Model):
     usuario = models.OneToOneField(User)
     fecha_hora = models.DateTimeField(default=datetime.now)
+    cantidad= models.IntegerField(default=0)
 

@@ -339,9 +339,11 @@ def detalleArticulo(request, id):
 						detalle.save()
 						return redirect('/detalleArticulo/{}'.format(detalle.id))						
 				else:
+					cantidad = request.POST.get('cantidad',None)
 					carrito_usuario = Carrito.objects.get(usuario=request.user)			
 					detalle.carrito.add(carrito_usuario)
-					messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+					detalle.carrito.cantidad = cantidad
+					messages.success(request, 'Se reservó el artículo {}'.format(detalle.nombre))
 					return redirect('/detalleArticulo/{}'.format(detalle.id))
 			except Carrito.DoesNotExist:
 				carrito_usuario = Carrito()
