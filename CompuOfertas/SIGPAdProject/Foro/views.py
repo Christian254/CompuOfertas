@@ -252,7 +252,7 @@ def getChatUser(user):
 					mens = m.msj[:40:1]
 				else:
 					val = 40 - len(m.msj)
-					mens = m.msj + "."*val
+					mens = m.msj+" " + "_"*val 
 				datos.append({"model":"Foro.mensaje","pk":m.id,"fields":{"ids":m.id,"msj":mens,"username":x.emisor,"enviado":m.enviado,"fecha":m.fecha_hora.strftime("%d-%m-%y %H:%M:%S")}})
 	for x in chats2:
 		m1 = x.mensaje_set.all().filter(estado=0)
@@ -265,7 +265,7 @@ def getChatUser(user):
 					mens = m.msj[:40:1]
 				else:
 					val = 40 - len(m.msj)
-					mens = m.msj + "."*val
+					mens = m.msj+" " + "_"*val 
 				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":mens,"username":x.receptor.username,"enviado":m.enviado,"fecha":m.fecha_hora.strftime("%d-%m-%y %H:%M:%S")}})
 	return datos
 

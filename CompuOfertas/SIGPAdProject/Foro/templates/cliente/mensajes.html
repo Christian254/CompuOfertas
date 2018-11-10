@@ -101,7 +101,7 @@
                     {% if yo.cliente_set.all %}
                         {% for cl in yo.cliente_set.all %}
                             {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online"/>
+                                <img  id="profile-img" src="/media/{{cl.foto}}" alt="" height="50px"  class="online"/>
                             {% else %}
                                 <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
@@ -109,7 +109,7 @@
                     {% elif yo.empleado_set.all %}
                         {% for cl in yo.empleado_set.all %}
                             {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" alt="foto empleado" />
+                                <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" height="50px" alt="foto empleado" />
                             {% else %}
                                 <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
@@ -154,15 +154,15 @@
                                 {% if us.cliente_set.all %}
                                 {% for cl in us.cliente_set.all %}
                                 {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
+                                <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                 {% else %}
-                                <img src="{% static "images/user.png" %}" alt="" />
+                                <img src="{% static "images/user.png" %}" alt=""  />
                                 {% endif %}
                                 {% endfor %}
                                 {% elif us.empleado_set.all %}
                                 {% for cl in us.empleado_set.all %}
                                 {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
+                                <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                 {% else %}
                                 <img src="{% static "images/user.png" %}" alt="" />
                                 {% endif %}
@@ -190,14 +190,14 @@
                 {% if primer %}
                     {% for cl in primer.cliente_set.all %}
                         {% if cl.foto %}
-                            <img src="/media/{{cl.foto}}" alt="" />
+                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
                         {% else %}
                             <img src="{% static "images/user.png" %}" alt="" />
                         {% endif %}
                     {% endfor %}
                     {% for cl in primer.empleado_set.all %}
                         {% if cl.foto %}
-                            <img src="/media/{{cl.foto}}" alt="" />
+                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
                         {% else %}
                             <img src="{% static "images/user.png" %}" alt="" />
                         {% endif %}
@@ -232,7 +232,7 @@
                                 {% if yo.cliente_set.all %}
                                     {% for cl in yo.cliente_set.all %}
                                         {% if cl.foto %}
-                                            <img src="/media/{{cl.foto}}" alt="" />
+                                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                         {% else %}
                                             <img src="{% static "images/user.png" %}" alt="" />
                                         {% endif %}
@@ -240,7 +240,7 @@
                                 {% elif yo.empleado_set.all %}
                                     {% for cl in yo.empleado_set.all %}
                                         {% if cl.foto %}
-                                            <img src="/media/{{cl.foto}}" alt="" />
+                                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                         {% else %}
                                             <img src="{% static "images/user.png" %}" alt="" />
                                         {% endif %}
@@ -255,7 +255,7 @@
                                     {% if primer.cliente_set.all %}
                                         {% for cl in primer.cliente_set.all %}
                                             {% if cl.foto %}
-                                                <img src="/media/{{cl.foto}}" alt="" />
+                                                <img src="/media/{{cl.foto}}" alt="" height="30px" />
                                             {% else %}
                                                 <img src="{% static "images/user.png" %}" alt="" />
                                             {% endif %}
@@ -263,7 +263,7 @@
                                     {% elif primer.empleado_set.all %}
                                         {% for cl in primer.empleado_set.all %}
                                             {% if cl.foto %}
-                                                <img src="/media/{{cl.foto}}" alt="" />
+                                                <img src="/media/{{cl.foto}}" alt="" height="30px" />
                                             {% else %}
                                                 <img src="{% static "images/user.png" %}" alt="" />
                                             {% endif %}
