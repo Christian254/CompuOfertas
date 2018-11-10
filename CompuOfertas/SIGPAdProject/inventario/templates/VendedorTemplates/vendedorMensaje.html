@@ -44,7 +44,7 @@
                     {% if yo.cliente_set.all %}
                         {% for cl in yo.cliente_set.all %}
                             {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online"/>
+                                <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online" height="40px"/>
                             {% else %}
                                 <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
@@ -52,7 +52,7 @@
                     {% elif yo.empleado_set.all %}
                         {% for cl in yo.empleado_set.all %}
                             {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" alt="foto empleado" />
+                                <img  id="profile-img" src="/media/{{cl.foto}}" height="40px"  class="online" alt="foto empleado"/>
                             {% else %}
                                 <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
@@ -97,7 +97,7 @@
                                 {% if us.cliente_set.all %}
                                 {% for cl in us.cliente_set.all %}
                                 {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
+                                <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                 {% else %}
                                 <img src="{% static "images/user.png" %}" alt="" />
                                 {% endif %}
@@ -105,7 +105,7 @@
                                 {% elif us.empleado_set.all %}
                                 {% for cl in us.empleado_set.all %}
                                 {% if cl.foto %}
-                                <img src="/media/{{cl.foto}}" alt="" />
+                                <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                 {% else %}
                                 <img src="{% static "images/user.png" %}" alt="" />
                                 {% endif %}
@@ -133,14 +133,14 @@
                 {% if primer %}
                     {% for cl in primer.cliente_set.all %}
                         {% if cl.foto %}
-                            <img src="/media/{{cl.foto}}" alt="" />
+                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
                         {% else %}
                             <img src="{% static "images/user.png" %}" alt="" />
                         {% endif %}
                     {% endfor %}
                     {% for cl in primer.empleado_set.all %}
                         {% if cl.foto %}
-                            <img src="/media/{{cl.foto}}" alt="" />
+                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
                         {% else %}
                             <img src="{% static "images/user.png" %}" alt="" />
                         {% endif %}
@@ -279,7 +279,7 @@
                 $.get("/servicio_mensajeria/{{yo.id}}/{{primer.id}}",function(data,status){
                     for(let i=0;i<data.length;i++){
                         var valor = data[i].fields;                       
-                        var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
+                        var lista=`<li class="replies"><img src="${valor.img}" alt="" /><p> ${valor.msj}</p></li>`
                         $(lista).appendTo($('.messages ul'));
                         $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
                     }

@@ -202,7 +202,7 @@ def enviarNuevoMensaje(request, pk):
 def servicio_mensajeria(request,emisor_id,receptor_id): #chat
 	user = request.user
 	if user.id==int(emisor_id) or user.id==int(receptor_id):
-		mensajes = serializers.serialize("json",getChat(emisor_id,receptor_id,True,user.id),use_natural_foreign_keys=True)
+		mensajes = json.dumps(list(getChat(emisor_id,receptor_id,True,user.id)), cls=DjangoJSONEncoder)
 	else:
 		mensajes = serializers.serialize("json",[],use_natural_foreign_keys=True)
 	return HttpResponse(mensajes, content_type='application/json')
@@ -216,14 +216,16 @@ def getChat(id_emisor,id_receptor,contactos,id):
 		primer = User.objects.get(pk=id_receptor)
 		user = User.objects.get(pk=id_emisor)
 		if contactos:
+			datos = []
 			chat =Chat.objects.all()
 			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
 			c = chat.mensaje_set.all().filter(estado=0).exclude(enviado=id)
 			for x in c:
 				x.estado=1
 				x.save()
-			print(c)
-			return c
+				img = ''
+				datos.append({"model":"Foro.mensaje","pk":x.id,"fields":{"ids":x.id,"msj":x.msj,"img":img}})
+			return datos
 	except Exception as e:
 		return []
 
