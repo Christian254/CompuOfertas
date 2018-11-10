@@ -15,7 +15,51 @@
         }
 
       </style>
+<style>
+    html,body{
+            height:100%;
+            width:100%;
+    }
 
+    .color{
+          padding: 10px;
+          background-color: #FFFFFF;
+          border-radius: 15px;
+          color:#262a33;
+    }
+
+    @media (min-width: 992px) {
+
+        #mainNav {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+            transition: padding-top 0.3s, padding-bottom 0.3s;
+        }
+
+        .padd {
+            padding-top: 6rem;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+
+    }
+
+    .bg-dos{
+        background-color: #1bd6b2;
+    }
+    .color{
+        height: 100%;
+        color: black;
+    }
+
+
+    .colrs{
+        background-color:rgba(38, 42, 51, 1)
+    }
+
+
+</style>
 {% endblock CSS %}
 
 {% block Navegacion %}
@@ -27,8 +71,17 @@
             Menu
             <i class="fas fa-bars"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
+          <div class="collapse navbar-collapse " id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-0 mx-lg-1 dropdown">
+                <a href="" data-toggle="dropdown" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"> notificacion <span class="badge badge color_1" id="cant">0</span> </a>
+                <ul class="drop_down_task dropdown-menu" id="msjUser">
+                  <div class="top_pointer"></div>
+                  <li>
+                    <p class="number" style="color:black;">tienes <span id="tienes">0</span> mensajes</p>
+                  </li>
+                </ul>
+              </li>
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/articulos">CATALÓGO</a>
               </li>
@@ -69,5 +122,6 @@
                 $("#validar_email").show();
             }
         });
+        
 </script>
 {% endblock Script %}

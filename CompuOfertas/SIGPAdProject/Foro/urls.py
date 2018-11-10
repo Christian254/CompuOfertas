@@ -22,5 +22,6 @@ urlpatterns = [
 	url(r'eliminar_pre/(?P<id>\d+)$',login_required(eliminar_pre), name="eliminarPre"),
 
 	#Mensajeria
-	url(r'mini_chat/(?P<receptor_id>\d+)$',login_required(get_servicio_mini_chat), name="MiniChat"),
+	url(r'mini_chat/(?P<receptor_id>\d+)$',login_required(get_servicio_mini_chat), name="ServicioMiniChat"),
+	url(r'chat$',login_required(MiniChat), name="MiniChat"),
 ]

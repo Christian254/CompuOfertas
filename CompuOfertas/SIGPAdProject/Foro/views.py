@@ -22,6 +22,14 @@ from SIGPAd.models import *
 def ForoIndex(request):
 	return render(request, 'exterior/foro.html', {})
 
+@login_required
+def MiniChat(request):
+	yo = request.user
+	context = {
+		'yo':yo,
+	}
+	return render(request, 'cliente/mini_chat.html', context)
+
 #@permission_required('SIGPAd.es_cliente')
 def mensajes(request,pk):
 	user = request.user

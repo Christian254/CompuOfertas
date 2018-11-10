@@ -33,6 +33,8 @@
 
     {% block CSS %} {% endblock CSS %}
 
+    {% block cssMensaje %}{% endblock %}
+
   </head>
 
   <body id="page-top">
@@ -42,11 +44,12 @@
     {% block Body %} 
     {% endblock Body %}    
 
-
+    {% block pestania %}
     {% if user.is_authenticated %}
         <button id="btn_prueba" class="btn btn-primary">fkjfjsfs</button>
         <div id="prueba"></div>
     {% endif %}
+    {% endblock %}
 
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'exterior/vendor/jquery/jquery.min.js'%}"></script>
@@ -66,6 +69,42 @@
 
 
     <script type="text/javascript">
+        function peticionChat() {
+            $.get("/servicio_chat/", function(data, status) {
+                var cant = data.length;
+                $("#cant").text(cant);
+                $("#tienes").text(cant);
+                $('#msjUser').empty();
+                for (let i = 0; i <= data.length; i++) {
+                    var valor = data[i].fields;
+                      var lista = `<li id=""> 
+                      <a href="/mensajes/${valor.enviado}" class="mail"> 
+                        <span class="photo">
+                          <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
+                        </span> 
+                        <span class="subject"> 
+                          <span class="from">
+                            ${valor.username}
+                          </span> 
+                          <span class="time">
+                            justo ahora 
+                          </span>  
+                        </span> 
+                        <span class="message">
+                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                        </span> 
+                      </a> 
+                    </li>`;
+                        $(lista).appendTo($('#msjUser'));
+                }
+            });
+        }
+        $(document).ready(function() {
+            var refreshId = setInterval(peticionChat, 3000);
+            $.ajaxSetup({
+                cache: false
+            });
+        });
         $("#btn_prueba").click(function(){        
             $.get("/mini_chat/2", function(data,status){
                 var cant = data.length;
