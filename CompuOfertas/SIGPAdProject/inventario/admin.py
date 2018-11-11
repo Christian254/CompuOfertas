@@ -18,3 +18,6 @@ class ValoracionAdmin(admin.ModelAdmin):
 	pass
 admin.site.register(Valoracion, ValoracionAdmin)
 
+class ReservaAdmin(admin.ModelAdmin):
+	pass
+admin.site.register(Reserva, ReservaAdmin)

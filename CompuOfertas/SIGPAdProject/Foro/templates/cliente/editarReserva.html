@@ -1,0 +1,40 @@
+{% extends "exterior/foro_interior.html" %} 
+{% load staticfiles %}
+{% block Body %}
+{% if messages %}
+        <ul class="messages" style="margin-top: 100px">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
+                <h5 class="font-weight-bold">{{ message }}</h5>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    <div class="modal-dialog" role="document" style="margin-top: 150px">
+        <div class="modal-content container">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Editar Articulo</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="center">
+                <h5 class="color">Artículo: {{res.producto.nombre}}</h5>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    Cantidad de productos a reservar: 
+                    <input type="number" id="cantidad" name="cantidad" required min="1" max="3">
+            </div>
+                <div class="modal-footer">
+                    <a href="/preorden" class="btn btn-danger" style="margin-right: 150px">Regresar</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="Submit" class="btn btn-primary">Actualizar</button>
+                </div>
+                </form>
+        </div>
+    </div>
+        
+
+        
+{% endblock Body %}
