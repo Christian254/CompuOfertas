@@ -53,19 +53,18 @@ def mensajes(request,pk):
 	primer = None
 	try:
 		primer = User.objects.get(pk=pk)
-		if contactos:
-			chat =Chat.objects.all()
-			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
-			msj = chat.mensaje_set.all().filter(estado=0)
-			for x in msj:
-				x.estado=1
-				x.save()
-			if request.method == 'POST':
-				c = request.POST.get('msg',None)
-				chat.ultimo=c
-				chat.save()
-				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
-				mens.save()
+		chat =Chat.objects.all()
+		chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+		msj = chat.mensaje_set.all().filter(estado=0)
+		for x in msj:
+			x.estado=1
+			x.save()
+		if request.method == 'POST':
+			c = request.POST.get('msg',None)
+			chat.ultimo=c
+			chat.save()
+			mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+			mens.save()
 	except Exception as e:
 		print(e.message)
 		if 'object has no attribute' in e.message:
