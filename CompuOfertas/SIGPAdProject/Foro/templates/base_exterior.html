@@ -68,12 +68,11 @@
     <script src="{% static 'exterior/js/freelancer.min.js'%}"></script>
     {% block Script %} {% endblock Script %}
 
+    {% if user.is_authenticated %}
     <script type="text/javascript">
         function peticionChat() {
             $.get("/servicio_chat/", function(data, status) {
                 var cant = data.length;
-                $("#cant").text(cant);
-                $("#tienes").text(cant);
                 $('#msjUser').empty();
                 var v = `
                     <li><a class="py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0"><font size="1">ver todos</font></a></li>
@@ -82,17 +81,18 @@
                     </li>
                     `
                 $(v).appendTo($('#msjUser'));
+                $("#cant").text(cant);
+                $("#tienes").text(cant);
             for(let i=0;i<=data.length;i++){
               var valor = data[i].fields;
-              var lista=`<li >
-                        <div>
-                        <a href="/mensajes/${valor.enviado}" class="mail"> 
+              var lista=`<p><li>
+                        <a href="/mensajes/${valor.enviado}">
                         <span class="photo">
-                          <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
+                          <img src="{% static "images/user.png" %}" height="40" width="40" style="margin-left:0px;" />
                         </span> 
                         <span class="subject"> 
-                          <span class="from"><font size="1">
-                            ${valor.username}</font>
+                          <span class="from">
+                            ${valor.username}
                           </span> 
                           <span class="time"><font size="0.4">
                             ${valor.fecha} </font>
@@ -100,10 +100,10 @@
                         </span> 
                         <span class="message"><font size="1">
                            ${valor.msj}</font>
-                        </span> 
-                      </a>
-                        </div>
-                    </li>`;
+                        </span>
+                      </a><br><br><br>
+                    </li>
+                    </p>`;
                 $(lista).appendTo($('#msjUser'));
                 }
             });
@@ -121,7 +121,7 @@
                 for (let i = 0; i <= data.length; i++) {
                     var valor = data[i].fields;
                     var d = document.getElementsByClassName('prueba');
-                        var lista = `<li id=""> 
+                        var lista = `<li id="lista"> 
                       <a href="/mensajes/${valor.msj}" class="mail"> 
                         <span class="photo">
                           <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
@@ -135,17 +135,17 @@
                           </span>  
                         </span> 
                         <span class="message">
-                           &nbsp ${valor.msj} &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                            ${valor.msj}
                         </span> 
-                      </a> 
-                    </li>`;
-                        $(lista).appendTo($('#prueba'));
+                      </a>
+                    </li> <br> `;
+                    $(lista).appendTo($('#prueba'));
                 }
             });
 
         });
     </script>
-
+    {% endif %}
   </body>
 
 </html>
