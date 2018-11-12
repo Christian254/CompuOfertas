@@ -31,17 +31,23 @@
                         <td><h5 class="font-weight-bold">Cantidad</h5></td>
                         <td><h5 class="font-weight-bold">Accion</h5></td>
                     </thead>
-                    {% for a in art %}
+                    {% for r in reserva %}
                     <tr>
-                        <td><h6>{{a.nombre}}</h6></td>
-                        <td><h6></h6></td>
-                        <td class="text-center"><button class="btn btn-success">Editar</button> <a class="btn btn-danger" href="/eliminar_pre/{{a.id}}"> Cancelar</a></td>
+                        <td><h6>{{r.producto.nombre}}</h6></td>
+                        <td><h6>{{r.cantidad}}</h6></td>
+                        <td class="text-center">
+                        <a class="btn btn-success" href="{% url 'Foro:editarReserva' r.id %}"> Editar</a>
+                        <a class="btn btn-danger" href="/eliminar_pre/{{r.id}}"> Cancelar</a></td>
                     </tr>
+
                     {% endfor %}
                 </table>              
-            </div>    
+            </div>
+                
         {% endif %}
     </div>
+    
+                
 </section>
         
 {% endblock Body %}
