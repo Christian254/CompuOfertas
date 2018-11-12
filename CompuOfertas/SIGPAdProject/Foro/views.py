@@ -383,7 +383,6 @@ def detalleArticulo(request, id):
 					reserva.producto_id=id
 					reserva.cantidad=cantidad
 					reserva.save()
-					messages.success(request, 'Se reservó el artículo {}'.format(detalle.nombre))
 
 					#Restar existencia
 					nueva_existencia=existencia-cant
@@ -448,9 +447,23 @@ def eliminar_pre(request, id):
 def editarReserva(request, id):
 	res = Reserva.objects.get(id=id)
 	if request.method == 'POST':
-		res.cantidad = request.POST.get('cantidad',None)
-		res.save()
-		messages.success(request, 'Se actualizó la reserva del articulo')
+		existencia = int(res.producto.inventario.existencia)
+		cant_res= int(res.cantidad)
+		cantidad=request.POST.get('cantidad',None)
+		cant=int(cantidad)
+		existencia_real=existencia+cant_res
+
+		if cant > existencia_real:
+			messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
+		else:
+
+			res.cantidad = cantidad
+			res.save()
+			messages.success(request, 'Se actualizó el artículo {}'.format(res.producto.nombre))
+
+			#Restar existencia
+			res.producto.inventario.existencia=existencia+cant_res-cant
+			res.producto.inventario.save()
 	else:
 		context = {
 			'res':res,
