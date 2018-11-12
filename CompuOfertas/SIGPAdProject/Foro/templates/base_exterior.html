@@ -32,6 +32,19 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'exterior/css/freelancer.css'%}" rel="stylesheet">
 
+    <!-- Mini Chat -->
+    <link href="{% static 'css/mini_chat.css'%}" rel="stylesheet" type="text/css">
+
+    <!-- Para Footer y Mini Chat-->
+    <style>
+        .abajo {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: white;
+        }
+    </style>
     {% block CSS %} {% endblock CSS %}
 
     {% block cssMensaje %}{% endblock %}
@@ -39,19 +52,20 @@
   </head>
 
   <body id="page-top">
+        
     {% block Navegacion %}
     {% endblock Navegacion %}
-    
+
     {% block Body %} 
     {% endblock Body %}    
 
-    {% block pestania %}
-    {% if user.is_authenticated %}
-        <button id="btn_prueba" class="btn btn-primary">fkjfjsfs</button>
-        <div id="prueba"></div>
-    {% endif %}
-    {% endblock %}
+    {% block Footer %}
+    {% endblock Footer %}
 
+    {% if user.is_authenticated %}
+     Hola {{user.id}}
+     <div id="prueba_2"></div>
+    {% endif %}
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'exterior/vendor/jquery/jquery.min.js'%}"></script>
     <script src="{% static 'exterior/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
@@ -68,85 +82,115 @@
     <script src="{% static 'exterior/js/freelancer.min.js'%}"></script>
     {% block Script %} {% endblock Script %}
 
-    {% if user.is_authenticated %}
-    <script type="text/javascript">
-        function peticionChat() {
-            $.get("/servicio_chat/", function(data, status) {
-                var cant = data.length;
-                $('#msjUser').empty();
-                var v = `
-                    <li><a class="py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0"><font size="1">ver todos</font></a></li>
-                    <li>
-                    <p class="number" style="color:black;"><font size="1">tienes <span id="tienes">0</span> mensajes</font></p>
-                    </li>
-                    `
-                $(v).appendTo($('#msjUser'));
-                $("#cant").text(cant);
-                $("#tienes").text(cant);
-            for(let i=0;i<=data.length;i++){
-              var valor = data[i].fields;
-              var lista=`<p><li>
-                        <a href="/mensajes/${valor.enviado}">
-                        <span class="photo">
-                          <img src="{% static "images/user.png" %}" height="40" width="40" style="margin-left:0px;" />
-                        </span> 
-                        <span class="subject"> 
-                          <span class="from">
-                            ${valor.username}
-                          </span> 
-                          <span class="time"><font size="0.4">
-                            ${valor.fecha} </font>
-                          </span>  
-                        </span> 
-                        <span class="message"><font size="1">
-                           ${valor.msj}</font>
-                        </span>
-                      </a><br><br><br>
-                    </li>
-                    </p>`;
-                $(lista).appendTo($('#msjUser'));
-                }
-            });
-        }
-        $(document).ready(function() {
-            var refreshId = setInterval(peticionChat, 3000);
-            $.ajaxSetup({
-                cache: false
-            });
+  </body>
+
+  {% if user.is_authenticated %}
+    
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+        var refreshId = setInterval(peticionChat, 3000);
+        $.ajaxSetup({
+            cache: false
         });
-        $("#btn_prueba").click(function(){        
-            $.get("/mini_chat/2", function(data,status){
-                var cant = data.length;
-                 $("#prueba").empty();
-                for (let i = 0; i <= data.length; i++) {
-                    var valor = data[i].fields;
-                    var d = document.getElementsByClassName('prueba');
-                        var lista = `<li id="lista"> 
-                      <a href="/mensajes/${valor.msj}" class="mail"> 
-                        <span class="photo">
-                          <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
-                        </span> 
-                        <span class="subject"> 
-                          <span class="from">
-                            ${valor.msj}
-                          </span> 
-                          <span class="time">
-                            justo ahora 
-                          </span>  
-                        </span> 
-                        <span class="message">
-                            ${valor.msj}
-                        </span> 
-                      </a>
-                    </li> <br> `;
-                    $(lista).appendTo($('#prueba'));
+    });
+
+    //Para el footer de botones.
+    function peticionChat() {
+        $.get("/servicio_chat/", function(data, status) {
+            var cant = data.length;
+            $('#footer_botones').empty();
+            $('#msjUser').empty();
+            
+            var v = `
+                <li><a class="py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/mensajes/0"><font size="1">ver todos</font></a></li>
+                <li>
+                <p class="number" style="color:black;"><font size="1">tienes <span id="tienes">0</span> mensajes</font></p>
+                </li>
+                `
+            $(v).appendTo($('#msjUser'));
+            $("#cant").text(cant);
+            $("#tienes").text(cant);
+        for(let i=0;i<=data.length;i++){
+          var valor = data[i].fields;
+          var lista=`<p><li>
+                    <a href="/mensajes/${valor.enviado}">
+                    <span class="photo">
+                      <img src="{% static "images/user.png" %}" height="40" width="40" style="margin-left:0px;" />
+                    </span> 
+                    <span class="subject"> 
+                      <span class="from">
+                        ${valor.username}
+                      </span> 
+                      <span class="time"><font size="0.4">
+                        ${valor.fecha} </font>
+                      </span>  
+                    </span> 
+                    <span class="message"><font size="1">
+                       ${valor.msj}</font>
+                    </span>
+                  </a><br><br><br>
+                </li>
+                </p>`;
+            $(lista).appendTo($('#msjUser'));
+            var lista_2 = `<button id="boton'+${valor.enviado}+'" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" onclick="abrir_mini_chat(${valor.enviado})" style="margin-right: 7px"> ${valor.username} </button>`;
+            $(lista_2).appendTo($('#footer_botones'));
+
+            
+            }
+        });
+    }
+
+    //Adentro.
+    function abrir_mini_chat(id_chat){        
+        $.get("/mini_chat/"+id_chat, function(data,status){
+            var id_user = {{user.id}};
+            var cant = data.length;
+
+            $("#prueba_2").empty();
+            $("#prueba").empty();
+            for (let i = 0; i <= data.length; i++) {
+                var valor = data[i].fields;
+                var d = document.getElementsByClassName('prueba');
+
+
+                  /*  var lista = `<li id="lista"> 
+                  <a href="/mensajes/${valor.msj}" class="mail"> 
+                    <span class="photo">
+                      <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
+                    </span> 
+                    <span class="subject"> 
+                      <span class="from">
+                        ${id_user}
+                      </span> 
+                      <span class="time">
+                        justo ahora 
+                      </span>  
+                    </span> 
+                    <span class="message">
+                        ${valor.msj}
+                    </span> 
+                  </a>
+                </li> <br> `;
+                $(lista).appendTo($('#prueba'));*/
+                var lista = []; 
+                if(id_user == valor.enviado){
+                  lista = `<p><b>Emisor:</b>${id_user} ${valor.msj}</p>`;
+                }else{
+                  lista = `<p><b>Receptor:</b>${valor.enviado} ${valor.msj}</p>`;
                 }
-            });
+                $(lista).appendTo($('#prueba_2'));
+                $(lista).appendTo($('#prueba'));
+
+
+
+            }
 
         });
-    </script>
-    {% endif %}
-  </body>
+    }
+
+</script>
+  {% endif %}
 
 </html>
 

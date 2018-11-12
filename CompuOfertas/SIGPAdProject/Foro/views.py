@@ -30,6 +30,16 @@ def MiniChat(request):
 	}
 	return render(request, 'cliente/mini_chat.html', context)
 
+def ExteriorMiniChat(request):
+	if request.user.is_authenticated():
+		user = request.user
+		context = {
+			'user':user,
+		}
+		return render(request, 'base_exterior.html', context)
+	else:
+		render(request, 'base_exterior.html', {})
+
 #@permission_required('SIGPAd.es_cliente')
 def mensajes(request,pk):
 	user = request.user
