@@ -346,21 +346,50 @@ def detalleArticulo(request, id):
 					else:
 						carrito_usuario = Carrito.objects.get(usuario=request.user)			
 						detalle.carrito.add(carrito_usuario)
+						existencia= int(detalle.inventario.existencia)
 						cantidad = request.POST.get('cantidad',None)
-						reserva=Reserva()
-						reserva.carrito_id=carrito_usuario.id
-						reserva.producto_id=id
-						reserva.cantidad=cantidad
-						reserva.save()
-						messages.success(request, 'Se reservó el artículo {}'.format(detalle.nombre))
-						return redirect('/detalleArticulo/{}'.format(detalle.id))
+						cant=int(cantidad)
+
+						if cant > existencia:
+							messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
+						else:
+							reserva=Reserva()
+							reserva.carrito_id=carrito_usuario.id
+							reserva.producto_id=id
+							reserva.cantidad=cantidad
+							reserva.save()
+							messages.success(request, 'Se reservó el artículo {}'.format(detalle.nombre))
+
+							#Restar existencia
+							nueva_existencia=existencia-cant
+							detalle.inventario.existencia=nueva_existencia
+							detalle.inventario.save()
+							return redirect('/detalleArticulo/{}'.format(detalle.id))
 
 			except Carrito.DoesNotExist:
 				carrito_usuario = Carrito()
 				carrito_usuario.usuario = request.user
 				carrito_usuario.save()
 				detalle.carrito.add(carrito_usuario)
-				messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+				existencia= int(detalle.inventario.existencia)
+				cantidad = request.POST.get('cantidad',None)
+				cant=int(cantidad)
+
+				if cant > existencia:
+					messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
+				else:
+					reserva=Reserva()
+					reserva.carrito_id=carrito_usuario.id
+					reserva.producto_id=id
+					reserva.cantidad=cantidad
+					reserva.save()
+					messages.success(request, 'Se reservó el artículo {}'.format(detalle.nombre))
+
+					#Restar existencia
+					nueva_existencia=existencia-cant
+					detalle.inventario.existencia=nueva_existencia
+					detalle.inventario.save()
+					messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
 				return redirect('/detalleArticulo/{}'.format(detalle.id))		
 		return render(request,'cliente/detalleArticulo.html', contexto)
 	except Valoracion.DoesNotExist:		
@@ -404,7 +433,14 @@ def pre_orden(request):
 		return render(request,'cliente/carrito.html',{'error':'No se han reservado articulos'})
 
 def eliminar_pre(request, id):
-	r = Reserva.objects.get(id=id)			
+	r = Reserva.objects.get(id=id)
+
+	#Sumar existencia
+	cantidad = int(r.cantidad)
+	existencia = int(r.producto.inventario.existencia)
+	r.producto.inventario.existencia = cantidad+existencia
+	r.producto.inventario.save()
+
 	r.delete()
 	messages.success(request, 'Se eliminó de la pre-orden el articulo {}'.format(r.producto.nombre))
 	return redirect('/preorden')

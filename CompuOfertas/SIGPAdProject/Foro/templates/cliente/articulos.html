@@ -31,6 +31,10 @@
         direction: rtl;
         unicode-bidi: bidi-override;
     }
+    .existencia{
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
     
     
     
@@ -54,6 +58,9 @@
                 <div class="col-sm-12 col-md-6 col-lg-4 mt-4">
                     <div class="card text-center mb-3" style="height: 20rem;">
                         <div class="text-center">
+                            <div class="existencia">
+                                Existencia: {{p.inventario.existencia}}
+                            </div>
                             <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 16rem;">                         
                             <p class="clasificacion">                        
                                 <input id="radio1" type="radio" name="estrellas" value="5" {% if p.puntuacion_total == 5 %} checked {% endif %} disabled>
