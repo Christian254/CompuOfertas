@@ -63,9 +63,8 @@
     {% endblock Footer %}
 
     {% if user.is_authenticated %}
-     Hola {{user.id}}
-     <div id="prueba_2"></div>
-    {% endif %}
+    <div id="prueba_2"></div>
+  {% endif %}
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'exterior/vendor/jquery/jquery.min.js'%}"></script>
     <script src="{% static 'exterior/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
@@ -85,9 +84,11 @@
   </body>
 
   {% if user.is_authenticated %}
+
     
   <script type="text/javascript">
 
+    var nombre;
     $(document).ready(function() {
         var refreshId = setInterval(peticionChat, 3000);
         $.ajaxSetup({
@@ -113,6 +114,7 @@
             $("#tienes").text(cant);
         for(let i=0;i<=data.length;i++){
           var valor = data[i].fields;
+          nombre = valor.username;
           var lista=`<p><li>
                     <a href="/mensajes/${valor.enviado}">
                     <span class="photo">
@@ -132,9 +134,39 @@
                   </a><br><br><br>
                 </li>
                 </p>`;
+            
             $(lista).appendTo($('#msjUser'));
-            var lista_2 = `<button id="boton'+${valor.enviado}+'" type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" onclick="abrir_mini_chat(${valor.enviado})" style="margin-right: 7px"> ${valor.username} </button>`;
+            var lista_2 = `<div class="btn-group"><div class="dropup">
+              <button id="boton${i}" type="button" class="btn btn-secondary" data-toggle="dropdown" onclick="abrir_mini_chat(nombre, ${i},${valor.enviado})" style="margin-right: 7px"> ${valor.username} </button>
+              <ul id="drop${i}" class="dropdown-menu" role="menu">
+                <li id="lidrop${i}">
+                  <div id="chat${i}" class="chat">
+                    <header>
+                          <h2 id="nombre_mini${i}" class='title'>
+                           <!--Nombre-->
+                           ${valor.username}
+                          </h2>
+                          <ul class='tools'>
+                            <li>
+                              <a class='fa fa-gear' href='#'></a>
+                            </li>
+                            <li>
+                              <a class='fa fa-times' href='#'></a>  
+                            </li>
+                          </ul>
+                    </header>
+                    <div class="body">
+                    <p>Hola</p>
+                    </div>
+                    <footer>
+                        <a href='#'>Introduce un mensaje</a>
+                    </footer>
+                  </div>
+                </li>
+              </ul>
+            </div></div>`;
             $(lista_2).appendTo($('#footer_botones'));
+
 
             
             }
@@ -142,13 +174,18 @@
     }
 
     //Adentro.
-    function abrir_mini_chat(id_chat){        
+    function abrir_mini_chat(name,correlativo,id_chat){        
         $.get("/mini_chat/"+id_chat, function(data,status){
+
             var id_user = {{user.id}};
             var cant = data.length;
 
             $("#prueba_2").empty();
             $("#prueba").empty();
+            /*$("#chat"+correlativo).empty();
+            var botdr = ``;
+            $(botdr).appendTo($("#chat"+correlativo));*/
+            
             for (let i = 0; i <= data.length; i++) {
                 var valor = data[i].fields;
                 var d = document.getElementsByClassName('prueba');
@@ -173,14 +210,19 @@
                   </a>
                 </li> <br> `;
                 $(lista).appendTo($('#prueba'));*/
-                var lista = []; 
+                var lista = [];
                 if(id_user == valor.enviado){
-                  lista = `<p><b>Emisor:</b>${id_user} ${valor.msj}</p>`;
+                  lista = `<p>chat:${correlativo}</p>
+                  <p><b>Emisor:</b>${id_user} ${valor.msj}</p>`;
                 }else{
                   lista = `<p><b>Receptor:</b>${valor.enviado} ${valor.msj}</p>`;
                 }
+
+                var body = ``;
+                
                 $(lista).appendTo($('#prueba_2'));
                 $(lista).appendTo($('#prueba'));
+                $(body).appendTo($("#chat"+correlativo));
 
 
 
