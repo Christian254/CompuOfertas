@@ -1796,3 +1796,40 @@ def editar_foto_vendedor(request,pk):
 			}
 		return render(request,"VendedorTemplates/editarPerfilVendedor.html", context) 
 
+@permission_required('SIGPAd.view_seller')
+def mostrarReservas(request):
+	try:
+		reserva = Reserva.objects.all()		
+		if reserva:
+			contexto = {'reserva':reserva}
+			return render(request,'VendedorTemplates/mostrarReservas.html',contexto)
+		else:
+			return render(request,'VendedorTemplates/mostrarReservas.html',{'error':'No se han reservado articulos'})
+	except Carrito.DoesNotExist:
+		return render(request,'VendedorTemplates/mostrarReservas.html',{'error':'No hay reservas'})
+
+@permission_required('SIGPAd.view_seller')
+def eliminarReserva(request, id):
+	r = Reserva.objects.get(id=id)
+
+	#Sumar existencia
+	cantidad = int(r.cantidad)
+	existencia = int(r.producto.inventario.existencia)
+	r.producto.inventario.existencia = cantidad+existencia
+	r.producto.inventario.save()
+
+	r.delete()
+	return redirect('/mostrarReservas')
+
+@permission_required('SIGPAd.view_seller')
+def aceptarReserva(request, id):
+	r = Reserva.objects.get(id=id)
+
+	#Sumar existencia
+	cantidad = int(r.cantidad)
+	existencia = int(r.producto.inventario.existencia)
+	r.producto.inventario.existencia = cantidad+existencia
+	r.producto.inventario.save()
+
+	r.delete()
+	return render(request, 'VendedorTemplates/ingresarVenta.html',{'exito': 'Se aceptó la reserva: Proceder a realizar la venta'})

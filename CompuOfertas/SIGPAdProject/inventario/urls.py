@@ -39,6 +39,9 @@ urlpatterns = [
 	url(r'registrarVenta/$', login_required(registrarVenta), name="registrarVenta"),
 	url(r'mostrarVenta/$', login_required(mostrarVenta), name="mostrarVenta"),
 	url(r'^facturaVenta/(?P<id>\d+)$', login_required(facturaVenta), name="FacturaVenta"),
+	url(r'mostrarReservas/$', login_required(mostrarReservas), name="mostrarReservas"),
+	url(r'eliminarReserva/(?P<id>\d+)$',login_required(eliminarReserva), name="eliminarReserva"),
+	url(r'aceptarReserva/(?P<id>\d+)$',login_required(aceptarReserva), name="aceptarReserva"),
 	#Servicios
 	url(r'productoDisponible/$', login_required(productoDisponible), name="productoDisponible"),
 	url(r'clienteRegistrado/$', login_required(clienteRegistrado), name="clienteRegistrado"),

@@ -24,6 +24,13 @@ table tr {
 <h1>superusuario</h1>
 {%elif user.is_authenticated%}
 
+{% if exito %}
+    <ul>
+    <div class="alert alert-success">
+        <h4 class="text-center font-weight-bold">{{exito}}</h4>
+    </div>
+    </ul>
+ {% endif %}
 {% if alerta %}
    <div class="alert alert-warning text-center"><strong>{{alerta}}</strong></div>  
 {% endif %}
@@ -31,7 +38,11 @@ table tr {
 <div class="alert alert-success">{{venta}}</div>   
 
 {% endif %}
-<h2 class="text-center">Registrar Venta</h2>
+<div class="text-center">
+<h2 style="margin-left: 150px">Registrar Venta 
+	<a class="btn btn-danger" href="/mostrarReservas" style="float: right;"> Mostrar Reservas</a>
+</h2>
+</div>
 <br>
 <br>
 <h4 class="text-info text-center">Productos Disponibles</h4>

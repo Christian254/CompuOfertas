@@ -30,16 +30,6 @@ def MiniChat(request):
 	}
 	return render(request, 'cliente/mini_chat.html', context)
 
-def ExteriorMiniChat(request):
-	if request.user.is_authenticated():
-		user = request.user
-		context = {
-			'user':user,
-		}
-		return render(request, 'base_exterior.html', context)
-	else:
-		render(request, 'base_exterior.html', {})
-
 #@permission_required('SIGPAd.es_cliente')
 def mensajes(request,pk):
 	user = request.user
@@ -466,7 +456,6 @@ def editarReserva(request, id):
 		if cant > existencia_real:
 			messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
 		else:
-
 			res.cantidad = cantidad
 			res.save()
 			messages.success(request, 'Se actualizó el artículo {}'.format(res.producto.nombre))

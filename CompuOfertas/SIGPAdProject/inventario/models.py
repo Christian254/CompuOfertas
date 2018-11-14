@@ -54,6 +54,7 @@ class Reserva(models.Model):
     carrito = models.ForeignKey(Carrito,on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
     cantidad= models.IntegerField(default=0)
+    fecha_hora = models.DateTimeField(default=datetime.now)
 
 #clase aun faltara a ponerla a prueba, se creara una nueva cada compra y venta
 class Kardex(models.Model):
