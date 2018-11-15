@@ -32,8 +32,7 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'exterior/css/freelancer.css'%}" rel="stylesheet">
 
-    <!-- Mini Chat -->
-    <link href="{% static 'css/mini_chat.css'%}" rel="stylesheet" type="text/css">
+    {% block META %} {% endblock META %}
 
     <!-- Para Footer y Mini Chat-->
     <style>
@@ -96,11 +95,11 @@
         });
     });
 
-    //Para el footer de botones.
-    function peticionChat() {
+        //Para el footer de botones.
+        function peticionChat() {
         $.get("/servicio_chat/", function(data, status) {
             var cant = data.length;
-            $('#footer_botones').empty();
+            //$('#footer_botones').empty();
             $('#msjUser').empty();
             
             var v = `
@@ -134,41 +133,66 @@
                   </a><br><br><br>
                 </li>
                 </p>`;
-            
+                var val = "dr"+i;
+                var dr = null;
+                dr = document.getElementById(val);
+                if (dr) {
+
+                }else{
+                     var lista_2 = `<input type="number" value="${i}"  id="dr${i}" hidden=""><div class="btn-group"><div class="dropup">
+                    <button id="boton${i}" type="button" class="btn btn-secondary" data-toggle="dropdown" onclick="abrir(${i},${valor.enviado})" style="margin-right: 7px"> ${valor.username} </button>
+                    <ul id="drop${i}" class="dropdown-menu" role="menu">
+                      <li id="lidrop${i}">
+                        <div id="chat${i}" class="chat">
+                          <header>
+                                <h2 id="nombre_mini${i}" class='title'>
+                                 <!--Nombre-->
+                                 ${valor.username}
+                                </h2>
+                                <ul class='tools'>
+                                  <li>
+                                    <a class='fa fa-gear' href='#'></a>
+                                  </li>
+                                  <li>
+                                    <a class='fa fa-times' href='#'></a>  
+                                  </li>
+                                </ul>
+                          </header>
+                          <div class="body" id="msj${i}">
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          <p>....</p>
+                          </div>
+                          <footer>
+                              <a href='#'>Introduce un mensaje</a>
+                          </footer>
+                        </div>
+                      </li>
+                    </ul>
+                  </div></div>`;
+                  $(lista_2).appendTo($('#footer_botones'));
+                }
             $(lista).appendTo($('#msjUser'));
-            var lista_2 = `<div class="btn-group"><div class="dropup">
-              <button id="boton${i}" type="button" class="btn btn-secondary" data-toggle="dropdown" onclick="abrir_mini_chat(nombre, ${i},${valor.enviado})" style="margin-right: 7px"> ${valor.username} </button>
-              <ul id="drop${i}" class="dropdown-menu" role="menu">
-                <li id="lidrop${i}">
-                  <div id="chat${i}" class="chat">
-                    <header>
-                          <h2 id="nombre_mini${i}" class='title'>
-                           <!--Nombre-->
-                           ${valor.username}
-                          </h2>
-                          <ul class='tools'>
-                            <li>
-                              <a class='fa fa-gear' href='#'></a>
-                            </li>
-                            <li>
-                              <a class='fa fa-times' href='#'></a>  
-                            </li>
-                          </ul>
-                    </header>
-                    <div class="body">
-                    <p>Hola</p>
-                    </div>
-                    <footer>
-                        <a href='#'>Introduce un mensaje</a>
-                    </footer>
-                  </div>
-                </li>
-              </ul>
-            </div></div>`;
-            $(lista_2).appendTo($('#footer_botones'));
+            }
+        });
+    }
 
-
-            
+    function abrir(correlativo,id_chat) {
+        $.get("/get_servicio_mini_chat/"+id_chat, function(data,status){
+            var cant = data.length;
+            var cor ="#msj"+correlativo;
+            $(cor).empty();
+            for (let i = 0; i <= data.length; i++) {
+              var valor = data[i].fields;
+              var lista = `<p>chat:${correlativo}</p>
+                  <p><b>mensaje:</b>${valor.msj}</p>`;                
+              $(lista).appendTo($(cor));
             }
         });
     }
@@ -182,9 +206,6 @@
 
             $("#prueba_2").empty();
             $("#prueba").empty();
-            /*$("#chat"+correlativo).empty();
-            var botdr = ``;
-            $(botdr).appendTo($("#chat"+correlativo));*/
             
             for (let i = 0; i <= data.length; i++) {
                 var valor = data[i].fields;
@@ -217,12 +238,9 @@
                 }else{
                   lista = `<p><b>Receptor:</b>${valor.enviado} ${valor.msj}</p>`;
                 }
-
-                var body = ``;
                 
                 $(lista).appendTo($('#prueba_2'));
                 $(lista).appendTo($('#prueba'));
-                $(body).appendTo($("#chat"+correlativo));
 
 
 

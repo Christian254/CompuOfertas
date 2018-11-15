@@ -1,6 +1,11 @@
 {% extends "base_exterior.html" %} 
 {% load staticfiles %} 
 
+{% block META %}
+    <!-- Mini Chat -->
+    <link href="{% static 'css/mini_chat.css'%}" rel="stylesheet" type="text/css">
+{% endblock META %}
+
 {% block CSS %}
     <style>
         html,body{
