@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.views.defaults import page_not_found
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import *
 from SIGPAd.reporte import *
 from SIGPAd.reporteDespido import *
@@ -1812,14 +1812,31 @@ def mostrarReservas(request):
 def eliminarReserva(request, id):
 	r = Reserva.objects.get(id=id)
 
-	#Sumar existencia
-	cantidad = int(r.cantidad)
-	existencia = int(r.producto.inventario.existencia)
-	r.producto.inventario.existencia = cantidad+existencia
-	r.producto.inventario.save()
+	fecha=r.fecha_hora
+	fecha_actual=datetime.now()
+	dias = timedelta(minutes=2)
+	fecha_comparacion=fecha+dias
 
-	r.delete()
-	return redirect('/mostrarReservas')
+	if str(fecha_comparacion) < str(fecha_actual):
+		#Sumar existencia
+		cantidad = int(r.cantidad)
+		existencia = int(r.producto.inventario.existencia)
+		r.producto.inventario.existencia = cantidad+existencia
+		r.producto.inventario.save()
+
+		r.delete()
+		return redirect('/mostrarReservas')
+	else:
+		mensaje='La reserva es válida hasta dos días despues de la fecha reservada. No se puede cancelar'
+		try:
+			reserva = Reserva.objects.all()		
+			if reserva:
+				contexto = {'reserva':reserva, 'mensaje':mensaje}
+				return render(request,'VendedorTemplates/mostrarReservas.html',contexto)
+			else:
+				return render(request,'VendedorTemplates/mostrarReservas.html',{'error':'No se han reservado articulos'})
+		except Carrito.DoesNotExist:
+			return render(request,'VendedorTemplates/mostrarReservas.html',{'error':'No hay reservas'})
 
 @permission_required('SIGPAd.view_seller')
 def aceptarReserva(request, id):

@@ -20,10 +20,10 @@
   <div class="container">
 		<div class="row">
 			<div class="col">
-				{% if exito %}
+				{% if mensaje %}
         			<ul>
-            		<div class="alert alert-success">
-                		<h4 class="text-center font-weight-bold">{{exito}}</h4>
+            		<div class="alert alert-danger">
+                		<h4 class="text-center font-weight-bold">{{mensaje}}</h4>
             		</div>
         			</ul>
         		{% endif %}
@@ -62,5 +62,6 @@
 				{% endif %}
 			</div>
 		</div>		
-	</div>  
+	</div> 
+
 {% endblock Body %}
