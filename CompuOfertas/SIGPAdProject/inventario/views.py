@@ -778,7 +778,8 @@ def registrarProducto(request,pk):
 		nombre = request.POST.get('nombre',None)
 		descripcion = request.POST.get('descripcion',None)
 		marca = request.POST.get('marca',None)
-		if codigo!=None and nombre!=None and descripcion!=None and marca!=None:
+		img = request.FILES.get('img',None)
+		if codigo!=None and nombre!=None and descripcion!=None and marca!=None and img!=None:
 			try:
 				inventario = Inventario()
 				inventario.save()
@@ -789,6 +790,7 @@ def registrarProducto(request,pk):
 				producto.nombre=nombre
 				producto.marca=marca
 				producto.descripcion=descripcion
+				producto.img=img
 				producto.save()
 				exito='Producto guardado con exito'
 			except Exception as e:
@@ -881,6 +883,7 @@ def editarProducto(request, pk):
 				producto.nombre = request.POST.get('nombre',None)
 				producto.marca = request.POST.get('marca',None)
 				producto.descripcion = request.POST.get('descripcion',None)
+				producto.img = request.FILES.get('img',None)
 				producto.save()
 				exito='Producto guardado con exito'
 			except Exception as e:
@@ -1043,6 +1046,11 @@ def activarProducto(request, pk):
 		'parametros':parametros,
 	}
 	return render(request,'VendedorTemplates/productoEliminado.html',context)
+
+@permission_required('SIGPAd.view_seller')
+def productoAMostrar(request):
+	productos = Producto.objects.all()
+	return render(request, 'VendedorTemplates/productoAMostrar.html', {'productos':productos})
 
 @permission_required('SIGPAd.view_seller')
 def registrarVenta(request):

@@ -1,0 +1,53 @@
+{% extends "baseUser.html" %} 
+{% load staticfiles %}
+{% block Script %}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
+    <script>
+            $(document).ready(function(){
+                var table = $('#productos').dataTable({"pagingType": "full_numbers"});
+            });
+    </script>
+{% endblock Script %}
+{% block CSS %}
+    <link href="{% static 'css/bootstrap.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap4.min.css' %}" >
+{% endblock CSS %}
+{% block Body %}
+  <p></p>
+    <div class="container">
+      <h1>Productos</h1>
+      <table id="productos" class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Ver</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Ver</th>
+          </tr>
+        </tfoot>
+        <tbody>
+        {% for p in productos %}        
+          <tr>
+            <td>{{p.codigo}}</td>
+            <td>{{p.nombre}}</td>
+            <td>{{p.marca}}</td>
+            <td></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+{% endblock Body %}

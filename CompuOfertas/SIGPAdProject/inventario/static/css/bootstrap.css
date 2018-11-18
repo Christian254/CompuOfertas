@@ -1,0 +1,8981 @@
+/ *!
+ * Bootstrap v4.1.1 (https://getbootstrap.com/)
+ * Copyright 2011-2018 Los autores de Bootstrap
+ * Copyright 2011-2018 Twitter, Inc.
+ * Licenciado bajo MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * /
+: root {
+  --blue: # 007bff;
+  --indigo: # 6610f2;
+  --purple: # 6f42c1;
+  --pink: # e83e8c;
+  --red: # dc3545;
+  --orange: # fd7e14;
+  --yellow: # ffc107;
+  --verde: # 28a745;
+  --teal: # 20c997;
+  --cyan: # 17a2b8;
+  --blanco: #fff;
+  --gray: # 6c757d;
+  --gray-dark: # 343a40;
+  --primario: # 007bff;
+  --secundaria: # 6c757d;
+  - éxito: # 28a745;
+  --info: # 17a2b8;
+  --warning: # ffc107;
+  - peligro: # dc3545;
+  --light: # f8f9fa;
+  --dark: # 343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Símbolo";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+*,
+*::antes de,
+*::después {
+  tamaño de caja: caja de borde;
+}
+
+html {
+  Familia tipográfica: sans-serif;
+  altura de la línea: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparente;
+}
+
+@ -ms-viewport {
+  ancho: ancho del dispositivo;
+}
+
+artículo, aparte, figcaption, figura, pie de página, encabezado, hgroup, main, nav, sección {
+  bloqueo de pantalla;
+}
+
+cuerpo {
+  margen: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  tamaño de letra: 1rem;
+  peso de la fuente: 400;
+  línea de altura: 1.5;
+  color: # 212529;
+  alineación de texto: izquierda;
+  color de fondo: #fff;
+}
+
+[tabindex = "- 1"]: foco {
+  esquema: 0! importante;
+}
+
+hr {
+  tamaño de caja: caja de contenido;
+  altura: 0;
+  desbordamiento: visible;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margen superior: 0;
+  margen inferior: 0.5rem;
+}
+
+pag {
+  margen superior: 0;
+  margen inferior: 1rem;
+}
+
+abbr [título],
+abbr [data-original-title] {
+  texto-decoración: subrayado;
+  -webkit-text-decoration: subrayado punteado;
+  texto-decoración: subrayado punteado;
+  cursor: ayuda;
+  borde inferior: 0;
+}
+
+dirección {
+  margen inferior: 1rem;
+  estilo de letra: normal;
+  línea-altura: heredar;
+}
+
+ol
+ul
+dl {
+  margen superior: 0;
+  margen inferior: 1rem;
+}
+
+ol ol
+ul ul
+ol ul
+ul ol {
+  margen inferior: 0;
+}
+
+dt {
+  peso de la fuente: 700;
+}
+
+dd {
+  margen inferior: .5rem;
+  margen izquierdo: 0;
+}
+
+blockquote {
+  margen: 0 0 1rem;
+}
+
+dfn {
+  estilo de letra: cursiva;
+}
+
+segundo,
+fuerte {
+  peso de la fuente: más audaz;
+}
+
+pequeña {
+  tamaño de letra: 80%;
+}
+
+sub,
+sup {
+  posición: relativa;
+  tamaño de letra: 75%;
+  línea altura: 0;
+  alineación vertical: línea de base;
+}
+
+sub {
+  abajo: -.25em;
+}
+
+sup {
+  arriba: -.5em;
+}
+
+una {
+  color: # 007bff;
+  texto-decoración: ninguno;
+  color de fondo: transparente;
+  -webkit-text-decoration-skip: objetos;
+}
+
+a: flotar {
+  color: # 0056b3;
+  texto-decoración: subrayado;
+}
+
+a: not ([href]): not ([tabindex]) {
+  color: heredar;
+  texto-decoración: ninguno;
+}
+
+a: not ([href]): not ([tabindex]): hover, a: not ([href]): not ([tabindex]): focus {
+  color: heredar;
+  texto-decoración: ninguno;
+}
+
+a: not ([href]): not ([tabindex]): focus {
+  esquema: 0;
+}
+
+pre,
+código,
+kbd
+samp {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monoespacia;
+  tamaño de letra: 1em;
+}
+
+pre {
+  margen superior: 0;
+  margen inferior: 1rem;
+  desbordamiento: auto;
+  -ms-overflow-style: scrollbar;
+}
+
+figura {
+  margen: 0 0 1rem;
+}
+
+img {
+  alineación vertical: medio;
+  estilo de borde: ninguno;
+}
+
+svg: not (: root) {
+  desbordamiento: oculto;
+}
+
+mesa {
+  colapso de la frontera: colapso;
+}
+
+subtítulo {
+  relleno superior: 0.75rem;
+  parte inferior de relleno: 0.75rem;
+  color: # 6c757d;
+  alineación de texto: izquierda;
+  lado del subtítulo: parte inferior;
+}
+
+th {
+  text-align: heredar;
+}
+
+etiqueta {
+  pantalla: bloque en línea;
+  margen inferior: 0.5rem;
+}
+
+botón {
+  radio del borde: 0;
+}
+
+botón: enfocar {
+  esquema: 1px punteado;
+  esquema: 5px auto -webkit-focus-ring-color;
+}
+
+entrada,
+botón,
+seleccionar,
+optgroup,
+área de texto
+  margen: 0;
+  familia de fuentes: heredar;
+  tamaño de letra: heredar;
+  línea-altura: heredar;
+}
+
+botón,
+entrada {
+  desbordamiento: visible;
+}
+
+botón,
+seleccione {
+  transformación de texto: ninguna;
+}
+
+botón,
+html [tipo = "botón"],
+[type = "reset"],
+[type = "submit"] {
+  -webkit-apariencia: botón;
+}
+
+botón :: - moz-focus-inner,
+[type = "button"] :: - moz-focus-inner,
+[type = "reset"] :: - moz-focus-inner,
+[type = "submit"] :: - moz-focus-inner {
+  relleno: 0;
+  estilo de borde: ninguno;
+}
+
+entrada [tipo = "radio"],
+entrada [type = "checkbox"] {
+  tamaño de caja: caja de borde;
+  relleno: 0;
+}
+
+entrada [tipo = "fecha"],
+entrada [tipo = "tiempo"],
+entrada [type = "datetime-local"],
+entrada [tipo = "mes"] {
+  -webkit-apariencia: cuadro de lista;
+}
+
+área de texto
+  desbordamiento: auto;
+  redimensionar: vertical;
+}
+
+fieldset {
+  ancho mínimo: 0;
+  relleno: 0;
+  margen: 0;
+  borde: 0;
+}
+
+leyenda {
+  bloqueo de pantalla;
+  ancho: 100%;
+  ancho máximo: 100%;
+  relleno: 0;
+  margen inferior: .5rem;
+  tamaño de letra: 1.5rem;
+  línea-altura: heredar;
+  color: heredar;
+  espacio en blanco: normal;
+}
+
+Progreso {
+  alineación vertical: línea de base;
+}
+
+[type = "number"] :: - webkit-inner-spin-button,
+[type = "number"] :: - webkit-outer-spin-button {
+  altura: auto;
+}
+
+[tipo = "búsqueda"] {
+  contorno-desplazamiento: -2px;
+  -webkit-apariencia: ninguno;
+}
+
+[type = "search"] :: - webkit-search-cancel-button,
+[type = "search"] :: - webkit-search-decoration {
+  -webkit-apariencia: ninguno;
+}
+
+:: - webkit-file-upload-button {
+  fuente: heredar;
+  -webkit-apariencia: botón;
+}
+
+salida {
+  pantalla: bloque en línea;
+}
+
+resumen {
+  pantalla: lista de elementos;
+  cursor: puntero;
+}
+
+modelo {
+  pantalla: ninguna;
+}
+
+[oculto] {
+  pantalla: ninguna! importante;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margen inferior: 0.5rem;
+  familia de fuentes: heredar;
+  peso de la fuente: 500;
+  altura de la línea: 1.2;
+  color: heredar;
+}
+
+h1, .h1 {
+  tamaño de letra: 2.5rem;
+}
+
+h2, .h2 {
+  tamaño de letra: 2rem;
+}
+
+h3, .h3 {
+  tamaño de letra: 1.75rem;
+}
+
+h4, .h4 {
+  tamaño de letra: 1.5rem;
+}
+
+h5, .h5 {
+  tamaño de letra: 1.25rem;
+}
+
+h6, .h6 {
+  tamaño de letra: 1rem;
+}
+
+.dirigir {
+  tamaño de letra: 1.25rem;
+  peso de la fuente: 300;
+}
+
+.display-1 {
+  tamaño de letra: 6rem;
+  peso de la fuente: 300;
+  altura de la línea: 1.2;
+}
+
+.display-2 {
+  tamaño de letra: 5.5rem;
+  peso de la fuente: 300;
+  altura de la línea: 1.2;
+}
+
+.display-3 {
+  tamaño de letra: 4.5rem;
+  peso de la fuente: 300;
+  altura de la línea: 1.2;
+}
+
+.display-4 {
+  tamaño de letra: 3.5rem;
+  peso de la fuente: 300;
+  altura de la línea: 1.2;
+}
+
+hr {
+  margen superior: 1rem;
+  margen inferior: 1rem;
+  borde: 0;
+  borde superior: 1px rgba sólido (0, 0, 0, 0.1);
+}
+
+pequeña,
+.pequeña {
+  tamaño de letra: 80%;
+  peso de la fuente: 400;
+}
+
+marca,
+.marca {
+  relleno: 0.2em;
+  color de fondo: # fcf8e3;
+}
+
+.list-unstyled {
+  relleno-izquierda: 0;
+  estilo de lista: ninguno;
+}
+
+.list-inline {
+  relleno-izquierda: 0;
+  estilo de lista: ninguno;
+}
+
+.list-inline-item {
+  pantalla: bloque en línea;
+}
+
+.list-inline-item: no (: último hijo) {
+  margen derecho: 0.5rem;
+}
+
+.inicialismo {
+  tamaño de letra: 90%;
+  transformación de texto: mayúsculas;
+}
+
+.blockquote {
+  margen inferior: 1rem;
+  tamaño de letra: 1.25rem;
+}
+
+.blockquote-footer {
+  bloqueo de pantalla;
+  tamaño de letra: 80%;
+  color: # 6c757d;
+}
+
+.blockquote-footer :: antes de {
+  contenido: "\ 2014 \ 00A0";
+}
+
+.img-fluido {
+  ancho máximo: 100%;
+  altura: auto;
+}
+
+.img-thumbnail {
+  relleno: 0,25rem;
+  color de fondo: #fff;
+  borde: 1px sólido # dee2e6;
+  radio del borde: 0.25rem;
+  ancho máximo: 100%;
+  altura: auto;
+}
+
+.figura {
+  pantalla: bloque en línea;
+}
+
+.figure-img {
+  margen inferior: 0.5rem;
+  línea de altura: 1;
+}
+
+.pie de figura {
+  tamaño de letra: 90%;
+  color: # 6c757d;
+}
+
+código {
+  tamaño de letra: 87.5%;
+  color: # e83e8c;
+  descanso de palabra: palabra de descanso;
+}
+
+un> código {
+  color: heredar;
+}
+
+kbd {
+  relleno: 0.2rem 0.4rem;
+  tamaño de letra: 87.5%;
+  color: #fff;
+  color de fondo: # 212529;
+  radio del borde: 0.2rem;
+}
+
+kbd kbd {
+  relleno: 0;
+  tamaño de letra: 100%;
+  peso de la fuente: 700;
+}
+
+pre {
+  bloqueo de pantalla;
+  tamaño de letra: 87.5%;
+  color: # 212529;
+}
+
+pre código {
+  tamaño de letra: heredar;
+  color: heredar;
+  pausa de palabra: normal;
+}
+
+.pre-desplazable {
+  Altura máxima: 340 px;
+  overflow-y: scroll;
+}
+
+.envase {
+  ancho: 100%;
+  derecho de relleno: 15px;
+  relleno-izquierda: 15px;
+  margen derecho: auto;
+  margen izquierdo: auto;
+}
+
+@media (ancho mínimo: 576px) {
+  .envase {
+    ancho máximo: 540px;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .envase {
+    ancho máximo: 720px;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .envase {
+    ancho máximo: 960px;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .envase {
+    ancho máximo: 1140px;
+  }
+}
+
+.contenedor-fluido {
+  ancho: 100%;
+  derecho de relleno: 15px;
+  relleno-izquierda: 15px;
+  margen derecho: auto;
+  margen izquierdo: auto;
+}
+
+.fila {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  margen derecho: -15px;
+  margen izquierdo: -15px;
+}
+
+.no-gutters {
+  margen derecho: 0;
+  margen izquierdo: 0;
+}
+
+.no-cunetas> .col,
+.no-gutters> [class * = "col-"] {
+  derecho de relleno: 0;
+  relleno-izquierda: 0;
+}
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col,
+.col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col- sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm,
+.col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6,. col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md,
+.col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6,. col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg,
+.col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6,. col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl,
+.col-xl-auto {
+  posición: relativa;
+  ancho: 100%;
+  min-height: 1px;
+  derecho de relleno: 15px;
+  relleno-izquierda: 15px;
+}
+
+.col {
+  -ms-flex-preferido-tamaño: 0;
+  base flexible: 0;
+  -ms-flex-positivo: 1;
+  flex-grow: 1;
+  ancho máximo: 100%;
+}
+
+.col-auto {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  ancho: auto;
+  ancho máximo: ninguno;
+}
+
+.col-1 {
+  -ms-flex: 0 0 8.333333%;
+  flex: 0 0 8.333333%;
+  ancho máximo: 8.333333%;
+}
+
+.col-2 {
+  -ms-flex: 0 0 16.666667%;
+  flex: 0 0 16.666667%;
+  ancho máximo: 16.666667%;
+}
+
+.col-3 {
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  ancho máximo: 25%;
+}
+
+.col-4 {
+  -ms-flex: 0 0 33.333333%;
+  flex: 0 0 33.333333%;
+  ancho máximo: 33,333333%;
+}
+
+.col-5 {
+  -ms-flex: 0 0 41.666667%;
+  flex: 0 0 41.666667%;
+  ancho máximo: 41.666667%;
+}
+
+.col-6 {
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  ancho máximo: 50%;
+}
+
+.col-7 {
+  -ms-flex: 0 0 58.333333%;
+  flex: 0 0 58.333333%;
+  ancho máximo: 58.333333%;
+}
+
+.col-8 {
+  -ms-flex: 0 0 66.666667%;
+  flex: 0 0 66.666667%;
+  ancho máximo: 66.666667%;
+}
+
+.col-9 {
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%;
+  ancho máximo: 75%;
+}
+
+.col-10 {
+  -ms-flex: 0 0 83.333333%;
+  flex: 0 0 83.333333%;
+  ancho máximo: 83.333333%;
+}
+
+.col-11 {
+  -ms-flex: 0 0 91.666667%;
+  flex: 0 0 91.666667%;
+  ancho máximo: 91.666667%;
+}
+
+.col-12 {
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  ancho máximo: 100%;
+}
+
+.orden primero
+  -ms-orden-flexible: -1;
+  orden: -1;
+}
+
+.order-last {
+  -ms-orden-flexible: 13;
+  orden: 13;
+}
+
+.order-0 {
+  -ms-orden-flexible: 0;
+  orden: 0;
+}
+
+.order-1 {
+  -ms-orden-flexible: 1;
+  orden: 1;
+}
+
+.order-2 {
+  -ms-orden-flexible: 2;
+  orden: 2;
+}
+
+.order-3 {
+  -ms-orden-flex: 3;
+  orden: 3;
+}
+
+.order-4 {
+  -ms-orden-flexible: 4;
+  orden: 4;
+}
+
+.order-5 {
+  -ms-orden-flexible: 5;
+  orden: 5;
+}
+
+.order-6 {
+  -ms-orden-flexible: 6;
+  orden: 6;
+}
+
+.order-7 {
+  -ms-orden-flexible: 7;
+  orden: 7;
+}
+
+.order-8 {
+  -ms-orden-flexible: 8;
+  orden: 8;
+}
+
+.order-9 {
+  -ms-orden-flexible: 9;
+  orden: 9;
+}
+
+.order-10 {
+  -ms-orden-flexible: 10;
+  orden: 10;
+}
+
+.order-11 {
+  -ms-orden-flexible: 11;
+  orden: 11;
+}
+
+.order-12 {
+  -ms-orden-flexible: 12;
+  orden: 12;
+}
+
+.offset-1 {
+  margen izquierdo: 8,333333%;
+}
+
+.offset-2 {
+  margen izquierdo: 16.666667%;
+}
+
+.offset-3 {
+  margen izquierdo: 25%;
+}
+
+.offset-4 {
+  margen izquierdo: 33.333333%;
+}
+
+.offset-5 {
+  margen izquierdo: 41.666667%;
+}
+
+.offset-6 {
+  margen izquierdo: 50%;
+}
+
+.offset-7 {
+  margen izquierdo: 58.333333%;
+}
+
+.offset-8 {
+  margen izquierdo: 66.666667%;
+}
+
+.offset-9 {
+  margen izquierdo: 75%;
+}
+
+.offset-10 {
+  margen izquierdo: 83.333333%;
+}
+
+.offset-11 {
+  margen izquierdo: 91.666667%;
+}
+
+@media (ancho mínimo: 576px) {
+  .col-sm {
+    -ms-flex-preferido-tamaño: 0;
+    base flexible: 0;
+    -ms-flex-positivo: 1;
+    flex-grow: 1;
+    ancho máximo: 100%;
+  }
+  .col-sm-auto {
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    ancho: auto;
+    ancho máximo: ninguno;
+  }
+  .col-sm-1 {
+    -ms-flex: 0 0 8.333333%;
+    flex: 0 0 8.333333%;
+    ancho máximo: 8.333333%;
+  }
+  .col-sm-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    ancho máximo: 16.666667%;
+  }
+  .col-sm-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    ancho máximo: 25%;
+  }
+  .col-sm-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    ancho máximo: 33,333333%;
+  }
+  .col-sm-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    ancho máximo: 41.666667%;
+  }
+  .col-sm-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    ancho máximo: 50%;
+  }
+  .col-sm-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    ancho máximo: 58.333333%;
+  }
+  .col-sm-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    ancho máximo: 66.666667%;
+  }
+  .col-sm-9 {
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    ancho máximo: 75%;
+  }
+  .col-sm-10 {
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    ancho máximo: 83.333333%;
+  }
+  .col-sm-11 {
+    -ms-flex: 0 0 91.666667%;
+    flex: 0 0 91.666667%;
+    ancho máximo: 91.666667%;
+  }
+  .col-sm-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    ancho máximo: 100%;
+  }
+  .order-sm-first {
+    -ms-orden-flexible: -1;
+    orden: -1;
+  }
+  .order-sm-last {
+    -ms-orden-flexible: 13;
+    orden: 13;
+  }
+  .order-sm-0 {
+    -ms-orden-flexible: 0;
+    orden: 0;
+  }
+  .order-sm-1 {
+    -ms-orden-flexible: 1;
+    orden: 1;
+  }
+  .order-sm-2 {
+    -ms-orden-flexible: 2;
+    orden: 2;
+  }
+  .order-sm-3 {
+    -ms-orden-flex: 3;
+    orden: 3;
+  }
+  .order-sm-4 {
+    -ms-orden-flexible: 4;
+    orden: 4;
+  }
+  .order-sm-5 {
+    -ms-orden-flexible: 5;
+    orden: 5;
+  }
+  .order-sm-6 {
+    -ms-orden-flexible: 6;
+    orden: 6;
+  }
+  .order-sm-7 {
+    -ms-orden-flexible: 7;
+    orden: 7;
+  }
+  .order-sm-8 {
+    -ms-orden-flexible: 8;
+    orden: 8;
+  }
+  .order-sm-9 {
+    -ms-orden-flexible: 9;
+    orden: 9;
+  }
+  .order-sm-10 {
+    -ms-orden-flexible: 10;
+    orden: 10;
+  }
+  .order-sm-11 {
+    -ms-orden-flexible: 11;
+    orden: 11;
+  }
+  .order-sm-12 {
+    -ms-orden-flexible: 12;
+    orden: 12;
+  }
+  .offset-sm-0 {
+    margen izquierdo: 0;
+  }
+  .offset-sm-1 {
+    margen izquierdo: 8,333333%;
+  }
+  .offset-sm-2 {
+    margen izquierdo: 16.666667%;
+  }
+  .offset-sm-3 {
+    margen izquierdo: 25%;
+  }
+  .offset-sm-4 {
+    margen izquierdo: 33.333333%;
+  }
+  .offset-sm-5 {
+    margen izquierdo: 41.666667%;
+  }
+  .offset-sm-6 {
+    margen izquierdo: 50%;
+  }
+  .offset-sm-7 {
+    margen izquierdo: 58.333333%;
+  }
+  .offset-sm-8 {
+    margen izquierdo: 66.666667%;
+  }
+  .offset-sm-9 {
+    margen izquierdo: 75%;
+  }
+  .offset-sm-10 {
+    margen izquierdo: 83.333333%;
+  }
+  .offset-sm-11 {
+    margen izquierdo: 91.666667%;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .col-md {
+    -ms-flex-preferido-tamaño: 0;
+    base flexible: 0;
+    -ms-flex-positivo: 1;
+    flex-grow: 1;
+    ancho máximo: 100%;
+  }
+  .col-md-auto {
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    ancho: auto;
+    ancho máximo: ninguno;
+  }
+  .col-md-1 {
+    -ms-flex: 0 0 8.333333%;
+    flex: 0 0 8.333333%;
+    ancho máximo: 8.333333%;
+  }
+  .col-md-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    ancho máximo: 16.666667%;
+  }
+  .col-md-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    ancho máximo: 25%;
+  }
+  .col-md-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    ancho máximo: 33,333333%;
+  }
+  .col-md-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    ancho máximo: 41.666667%;
+  }
+  .col-md-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    ancho máximo: 50%;
+  }
+  .col-md-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    ancho máximo: 58.333333%;
+  }
+  .col-md-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    ancho máximo: 66.666667%;
+  }
+  .col-md-9 {
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    ancho máximo: 75%;
+  }
+  .col-md-10 {
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    ancho máximo: 83.333333%;
+  }
+  .col-md-11 {
+    -ms-flex: 0 0 91.666667%;
+    flex: 0 0 91.666667%;
+    ancho máximo: 91.666667%;
+  }
+  .col-md-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    ancho máximo: 100%;
+  }
+  .order-md-first {
+    -ms-orden-flexible: -1;
+    orden: -1;
+  }
+  .order-md-last {
+    -ms-orden-flexible: 13;
+    orden: 13;
+  }
+  .order-md-0 {
+    -ms-orden-flexible: 0;
+    orden: 0;
+  }
+  .order-md-1 {
+    -ms-orden-flexible: 1;
+    orden: 1;
+  }
+  .order-md-2 {
+    -ms-orden-flexible: 2;
+    orden: 2;
+  }
+  .order-md-3 {
+    -ms-orden-flex: 3;
+    orden: 3;
+  }
+  .order-md-4 {
+    -ms-orden-flexible: 4;
+    orden: 4;
+  }
+  .order-md-5 {
+    -ms-orden-flexible: 5;
+    orden: 5;
+  }
+  .order-md-6 {
+    -ms-orden-flexible: 6;
+    orden: 6;
+  }
+  .order-md-7 {
+    -ms-orden-flexible: 7;
+    orden: 7;
+  }
+  .order-md-8 {
+    -ms-orden-flexible: 8;
+    orden: 8;
+  }
+  .order-md-9 {
+    -ms-orden-flexible: 9;
+    orden: 9;
+  }
+  .order-md-10 {
+    -ms-orden-flexible: 10;
+    orden: 10;
+  }
+  .order-md-11 {
+    -ms-orden-flexible: 11;
+    orden: 11;
+  }
+  .order-md-12 {
+    -ms-orden-flexible: 12;
+    orden: 12;
+  }
+  .offset-md-0 {
+    margen izquierdo: 0;
+  }
+  .offset-md-1 {
+    margen izquierdo: 8,333333%;
+  }
+  .offset-md-2 {
+    margen izquierdo: 16.666667%;
+  }
+  .offset-md-3 {
+    margen izquierdo: 25%;
+  }
+  .offset-md-4 {
+    margen izquierdo: 33.333333%;
+  }
+  .offset-md-5 {
+    margen izquierdo: 41.666667%;
+  }
+  .offset-md-6 {
+    margen izquierdo: 50%;
+  }
+  .offset-md-7 {
+    margen izquierdo: 58.333333%;
+  }
+  .offset-md-8 {
+    margen izquierdo: 66.666667%;
+  }
+  .offset-md-9 {
+    margen izquierdo: 75%;
+  }
+  .offset-md-10 {
+    margen izquierdo: 83.333333%;
+  }
+  .offset-md-11 {
+    margen izquierdo: 91.666667%;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .col-lg {
+    -ms-flex-preferido-tamaño: 0;
+    base flexible: 0;
+    -ms-flex-positivo: 1;
+    flex-grow: 1;
+    ancho máximo: 100%;
+  }
+  .col-lg-auto {
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    ancho: auto;
+    ancho máximo: ninguno;
+  }
+  .col-lg-1 {
+    -ms-flex: 0 0 8.333333%;
+    flex: 0 0 8.333333%;
+    ancho máximo: 8.333333%;
+  }
+  .col-lg-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    ancho máximo: 16.666667%;
+  }
+  .col-lg-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    ancho máximo: 25%;
+  }
+  .col-lg-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    ancho máximo: 33,333333%;
+  }
+  .col-lg-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    ancho máximo: 41.666667%;
+  }
+  .col-lg-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    ancho máximo: 50%;
+  }
+  .col-lg-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    ancho máximo: 58.333333%;
+  }
+  .col-lg-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    ancho máximo: 66.666667%;
+  }
+  .col-lg-9 {
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    ancho máximo: 75%;
+  }
+  .col-lg-10 {
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    ancho máximo: 83.333333%;
+  }
+  .col-lg-11 {
+    -ms-flex: 0 0 91.666667%;
+    flex: 0 0 91.666667%;
+    ancho máximo: 91.666667%;
+  }
+  .col-lg-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    ancho máximo: 100%;
+  }
+  .order-lg-first {
+    -ms-orden-flexible: -1;
+    orden: -1;
+  }
+  .order-lg-last {
+    -ms-orden-flexible: 13;
+    orden: 13;
+  }
+  .order-lg-0 {
+    -ms-orden-flexible: 0;
+    orden: 0;
+  }
+  .order-lg-1 {
+    -ms-orden-flexible: 1;
+    orden: 1;
+  }
+  .order-lg-2 {
+    -ms-orden-flexible: 2;
+    orden: 2;
+  }
+  .order-lg-3 {
+    -ms-orden-flex: 3;
+    orden: 3;
+  }
+  .order-lg-4 {
+    -ms-orden-flexible: 4;
+    orden: 4;
+  }
+  .order-lg-5 {
+    -ms-orden-flexible: 5;
+    orden: 5;
+  }
+  .order-lg-6 {
+    -ms-orden-flexible: 6;
+    orden: 6;
+  }
+  .order-lg-7 {
+    -ms-orden-flexible: 7;
+    orden: 7;
+  }
+  .order-lg-8 {
+    -ms-orden-flexible: 8;
+    orden: 8;
+  }
+  .order-lg-9 {
+    -ms-orden-flexible: 9;
+    orden: 9;
+  }
+  .order-lg-10 {
+    -ms-orden-flexible: 10;
+    orden: 10;
+  }
+  .order-lg-11 {
+    -ms-orden-flexible: 11;
+    orden: 11;
+  }
+  .order-lg-12 {
+    -ms-orden-flexible: 12;
+    orden: 12;
+  }
+  .offset-lg-0 {
+    margen izquierdo: 0;
+  }
+  .offset-lg-1 {
+    margen izquierdo: 8,333333%;
+  }
+  .offset-lg-2 {
+    margen izquierdo: 16.666667%;
+  }
+  .offset-lg-3 {
+    margen izquierdo: 25%;
+  }
+  .offset-lg-4 {
+    margen izquierdo: 33.333333%;
+  }
+  .offset-lg-5 {
+    margen izquierdo: 41.666667%;
+  }
+  .offset-lg-6 {
+    margen izquierdo: 50%;
+  }
+  .offset-lg-7 {
+    margen izquierdo: 58.333333%;
+  }
+  .offset-lg-8 {
+    margen izquierdo: 66.666667%;
+  }
+  .offset-lg-9 {
+    margen izquierdo: 75%;
+  }
+  .offset-lg-10 {
+    margen izquierdo: 83.333333%;
+  }
+  .offset-lg-11 {
+    margen izquierdo: 91.666667%;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .col-xl {
+    -ms-flex-preferido-tamaño: 0;
+    base flexible: 0;
+    -ms-flex-positivo: 1;
+    flex-grow: 1;
+    ancho máximo: 100%;
+  }
+  .col-xl-auto {
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    ancho: auto;
+    ancho máximo: ninguno;
+  }
+  .col-xl-1 {
+    -ms-flex: 0 0 8.333333%;
+    flex: 0 0 8.333333%;
+    ancho máximo: 8.333333%;
+  }
+  .col-xl-2 {
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    ancho máximo: 16.666667%;
+  }
+  .col-xl-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    ancho máximo: 25%;
+  }
+  .col-xl-4 {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    ancho máximo: 33,333333%;
+  }
+  .col-xl-5 {
+    -ms-flex: 0 0 41.666667%;
+    flex: 0 0 41.666667%;
+    ancho máximo: 41.666667%;
+  }
+  .col-xl-6 {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    ancho máximo: 50%;
+  }
+  .col-xl-7 {
+    -ms-flex: 0 0 58.333333%;
+    flex: 0 0 58.333333%;
+    ancho máximo: 58.333333%;
+  }
+  .col-xl-8 {
+    -ms-flex: 0 0 66.666667%;
+    flex: 0 0 66.666667%;
+    ancho máximo: 66.666667%;
+  }
+  .col-xl-9 {
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    ancho máximo: 75%;
+  }
+  .col-xl-10 {
+    -ms-flex: 0 0 83.333333%;
+    flex: 0 0 83.333333%;
+    ancho máximo: 83.333333%;
+  }
+  .col-xl-11 {
+    -ms-flex: 0 0 91.666667%;
+    flex: 0 0 91.666667%;
+    ancho máximo: 91.666667%;
+  }
+  .col-xl-12 {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    ancho máximo: 100%;
+  }
+  .order-xl-first {
+    -ms-orden-flexible: -1;
+    orden: -1;
+  }
+  .order-xl-last {
+    -ms-orden-flexible: 13;
+    orden: 13;
+  }
+  .order-xl-0 {
+    -ms-orden-flexible: 0;
+    orden: 0;
+  }
+  .order-xl-1 {
+    -ms-orden-flexible: 1;
+    orden: 1;
+  }
+  .order-xl-2 {
+    -ms-orden-flexible: 2;
+    orden: 2;
+  }
+  .order-xl-3 {
+    -ms-orden-flex: 3;
+    orden: 3;
+  }
+  .order-xl-4 {
+    -ms-orden-flexible: 4;
+    orden: 4;
+  }
+  .order-xl-5 {
+    -ms-orden-flexible: 5;
+    orden: 5;
+  }
+  .order-xl-6 {
+    -ms-orden-flexible: 6;
+    orden: 6;
+  }
+  .order-xl-7 {
+    -ms-orden-flexible: 7;
+    orden: 7;
+  }
+  .order-xl-8 {
+    -ms-orden-flexible: 8;
+    orden: 8;
+  }
+  .order-xl-9 {
+    -ms-orden-flexible: 9;
+    orden: 9;
+  }
+  .order-xl-10 {
+    -ms-orden-flexible: 10;
+    orden: 10;
+  }
+  .order-xl-11 {
+    -ms-orden-flexible: 11;
+    orden: 11;
+  }
+  .order-xl-12 {
+    -ms-orden-flexible: 12;
+    orden: 12;
+  }
+  .offset-xl-0 {
+    margen izquierdo: 0;
+  }
+  .offset-xl-1 {
+    margen izquierdo: 8,333333%;
+  }
+  .offset-xl-2 {
+    margen izquierdo: 16.666667%;
+  }
+  .offset-xl-3 {
+    margen izquierdo: 25%;
+  }
+  .offset-xl-4 {
+    margen izquierdo: 33.333333%;
+  }
+  .offset-xl-5 {
+    margen izquierdo: 41.666667%;
+  }
+  .offset-xl-6 {
+    margen izquierdo: 50%;
+  }
+  .offset-xl-7 {
+    margen izquierdo: 58.333333%;
+  }
+  .offset-xl-8 {
+    margen izquierdo: 66.666667%;
+  }
+  .offset-xl-9 {
+    margen izquierdo: 75%;
+  }
+  .offset-xl-10 {
+    margen izquierdo: 83.333333%;
+  }
+  .offset-xl-11 {
+    margen izquierdo: 91.666667%;
+  }
+}
+
+.mesa {
+  ancho: 100%;
+  ancho máximo: 100%;
+  margen inferior: 1rem;
+  color de fondo: transparente;
+}
+
+.tabla,
+.table td {
+  relleno: 0,75rem;
+  alineación vertical: superior;
+  borde superior: 1px sólido # dee2e6;
+}
+
+. thead thead
+  alineación vertical: inferior;
+  borde inferior: 2px sólido # dee2e6;
+}
+
+.tbody tbody + tbody {
+  borde superior: 2px sólido # dee2e6;
+}
+
+.table .table {
+  color de fondo: #fff;
+}
+
+.table-sm th,
+.table-sm td {
+  relleno: 0.3rem;
+}
+
+de mesa
+  borde: 1px sólido # dee2e6;
+}
+
+con borde de mesa,
+.td-bordered td {
+  borde: 1px sólido # dee2e6;
+}
+
+.to-bordeado thead thead,
+.to-bordeado thead td {
+  ancho del borde inferior: 2px;
+}
+
+mesa sin fronteras,
+.ttable-borderless td,
+.to sin fronteras thead th,
+.ttable + borderless tbody + tbody {
+  borde: 0;
+}
+
+.t-rayas cuerpo t: nth-of-type (impar) {
+  color de fondo: rgba (0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr: hover {
+  color de fondo: rgba (0, 0, 0, 0.075);
+}
+
+.table-primaria,
+.table-primario> th,
+.table-primary> td {
+  color de fondo: # b8daff;
+}
+
+.table-hover .table-primary: hover {
+  color de fondo: # 9fcdff;
+}
+
+.table-hover .table-primary: hover> td,
+.table-hover .table-primary: hover> th {
+  color de fondo: # 9fcdff;
+}
+
+.tabla-secundaria,
+.tabla-secundaria> th,
+.tabla-secundaria> td {
+  color de fondo: # d6d8db;
+}
+
+.table-hover .table-secundario: hover {
+  color de fondo: # c8cbcf;
+}
+
+.table-hover .table-secundario: hover> td,
+.table-hover .table-secundario: hover> th {
+  color de fondo: # c8cbcf;
+}
+
+.table-éxito,
+.table-success> th,
+.table-success> td {
+  color de fondo: # c3e6cb;
+}
+
+.table-hover .table-success: hover {
+  color de fondo: # b1dfbb;
+}
+
+.table-hover .table-success: hover> td,
+.table-hover .table-success: hover> th {
+  color de fondo: # b1dfbb;
+}
+
+.table-info,
+.table-info> th,
+.table-info> td {
+  color de fondo: # bee5eb;
+}
+
+.table-hover .table-info: hover {
+  color de fondo: # abdde5;
+}
+
+.table-hover .table-info: hover> td,
+.table-hover .table-info: hover> th {
+  color de fondo: # abdde5;
+}
+
+.tabla de advertencia,
+.table-warning> th,
+.table-warning> td {
+  color de fondo: #ffeeba;
+}
+
+.table-hover .table-warning: hover {
+  color de fondo: # ffe8a1;
+}
+
+.table-hover .table-warning: hover> td,
+.table-hover .table-warning: hover> th {
+  color de fondo: # ffe8a1;
+}
+
+Peligro,
+.tabla-peligro> th,
+.tabla de peligro> td {
+  color de fondo: # f5c6cb;
+}
+
+.table-hover .table-danger: hover {
+  color de fondo: # f1b0b7;
+}
+
+.table-hover .table-danger: hover> td,
+.table-hover .table-danger: hover> th {
+  color de fondo: # f1b0b7;
+}
+
+luz de la mesa,
+.table-light> th,
+.table-light> td {
+  color de fondo: #fdfdfe;
+}
+
+.table-hover .table-light: hover {
+  color de fondo: # ececf6;
+}
+
+.table-hover .table-light: hover> td,
+.table-hover .table-light: hover> th {
+  color de fondo: # ececf6;
+}
+
+.table-oscuro,
+.table-oscuro> th,
+.table-oscuro> td {
+  color de fondo: # c6c8ca;
+}
+
+.table-hover .table-dark: hover {
+  color de fondo: # b9bbbe;
+}
+
+.table-hover .table-dark: hover> td,
+.table-hover .table-dark: hover> th {
+  color de fondo: # b9bbbe;
+}
+
+.table-activo,
+.table-activo> th,
+.table-activo> td {
+  color de fondo: rgba (0, 0, 0, 0.075);
+}
+
+.table-hover .table-active: hover {
+  color de fondo: rgba (0, 0, 0, 0.075);
+}
+
+.table-hover .table-active: hover> td,
+.table-hover .table-active: hover> th {
+  color de fondo: rgba (0, 0, 0, 0.075);
+}
+
+.table .thead-dark th {
+  color: #fff;
+  color de fondo: # 212529;
+  color de borde: # 32383e;
+}
+
+.table. thead-light th {
+  color: # 495057;
+  color de fondo: # e9ecef;
+  color de borde: # dee2e6;
+}
+
+.table-oscuro {
+  color: #fff;
+  color de fondo: # 212529;
+}
+
+.Tabla oscura
+.td-dark td,
+thead-dark thead th {
+  color de borde: # 32383e;
+}
+
+.table-dark.table-bordered {
+  borde: 0;
+}
+
+.table-dark.table-striped tbody tr: nth-of-type (impar) {
+  color de fondo: rgba (255, 255, 255, 0.05);
+}
+
+.table-dark.table-hover tbody tr: hover {
+  color de fondo: rgba (255, 255, 255, 0.075);
+}
+
+@media (ancho máximo: 575.98px) {
+  .table-responsive-sm {
+    bloqueo de pantalla;
+    ancho: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: toque;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .table-responsive-sm> .table-bordered {
+    borde: 0;
+  }
+}
+
+@media (ancho máximo: 767.98 px) {
+  .table-responsive-md {
+    bloqueo de pantalla;
+    ancho: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: toque;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .table-responsive-md> .table-bordered {
+    borde: 0;
+  }
+}
+
+@media (ancho máximo: 991.98 px) {
+  .table-responsive-lg {
+    bloqueo de pantalla;
+    ancho: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: toque;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .table-responsive-lg> .table-bordered {
+    borde: 0;
+  }
+}
+
+@media (ancho máximo: 1199.98 px) {
+  .table-responsive-xl {
+    bloqueo de pantalla;
+    ancho: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: toque;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .table-responsive-xl> .table-bordered {
+    borde: 0;
+  }
+}
+
+.table-responsive {
+  bloqueo de pantalla;
+  ancho: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: toque;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table-responsive> .table-bordered {
+  borde: 0;
+}
+
+.form-control {
+  bloqueo de pantalla;
+  ancho: 100%;
+  relleno: 0.375rem 0.75rem;
+  tamaño de letra: 1rem;
+  línea de altura: 1.5;
+  color: # 495057;
+  color de fondo: #fff;
+  clip de fondo: caja de relleno;
+  borde: 1px sólido # ced4da;
+  radio del borde: 0.25rem;
+  transición: color de borde 0.15s facilidad de entrada, box-shadow 0.15s facilidad de entrada;
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .form-control {
+    transición: ninguna;
+  }
+}
+
+.form-control :: - ms-expand {
+  color de fondo: transparente;
+  borde: 0;
+}
+
+.form-control: focus {
+  color: # 495057;
+  color de fondo: #fff;
+  color de borde: # 80bdff;
+  esquema: 0;
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.form-control :: - webkit-input-placeholder {
+  color: # 6c757d;
+  opacidad: 1;
+}
+
+.form-control :: - moz-placeholder {
+  color: # 6c757d;
+  opacidad: 1;
+}
+
+.form-control: -ms-input-placeholder {
+  color: # 6c757d;
+  opacidad: 1;
+}
+
+.form-control :: - ms-input-placeholder {
+  color: # 6c757d;
+  opacidad: 1;
+}
+
+.form-control :: marcador de posición {
+  color: # 6c757d;
+  opacidad: 1;
+}
+
+.form-control: disabled, .form-control [readonly] {
+  color de fondo: # e9ecef;
+  opacidad: 1;
+}
+
+select.form-control: not ([tamaño]): not ([multiple]) {
+  altura: calc (2.25rem + 2px);
+}
+
+select.form-control: focus :: - ms-value {
+  color: # 495057;
+  color de fondo: #fff;
+}
+
+.form-control-file,
+.form-control-range {
+  bloqueo de pantalla;
+  ancho: 100%;
+}
+
+.col-form-label {
+  relleno superior: calc (0.375rem + 1px);
+  fondo de relleno: calc (0.375rem + 1px);
+  margen inferior: 0;
+  tamaño de letra: heredar;
+  línea de altura: 1.5;
+}
+
+.col-form-label-lg {
+  relleno superior: calc (0.5rem + 1px);
+  parte inferior de relleno: calc (0.5rem + 1px);
+  tamaño de letra: 1.25rem;
+  línea de altura: 1.5;
+}
+
+.col-form-label-sm {
+  relleno superior: calc (0.25rem + 1px);
+  fondo de relleno: calc (0.25rem + 1px);
+  tamaño de letra: 0.875rem;
+  línea de altura: 1.5;
+}
+
+.form-control-plaintext {
+  bloqueo de pantalla;
+  ancho: 100%;
+  relleno superior: 0.375rem;
+  parte inferior de relleno: 0.375rem;
+  margen inferior: 0;
+  línea de altura: 1.5;
+  color: # 212529;
+  color de fondo: transparente;
+  borde: sólido transparente;
+  ancho del borde: 1px 0;
+}
+
+.form-control-plaintext.form-control-sm, .input-group-sm> .form-control-plaintext.form-control,
+.input-group-sm> .input-group-prepend> .form-control-plaintext.input-group-text,
+.input-group-sm> .input-group-append> .form-control-plaintext.input-group-text,
+.input-group-sm> .input-group-prepend> .form-control-plaintext.btn,
+.input-group-sm> .input-group-append> .form-control-plaintext.btn, .form-control-plaintext.form-control-lg, .input-group-lg> .form-control-plaintext. control de forma,
+.input-group-lg> .input-group-prepend> .form-control-plaintext.input-group-text,
+.input-group-lg> .input-group-append> .form-control-plaintext.input-group-text,
+.input-group-lg> .input-group-prepend> .form-control-plaintext.btn,
+.input-group-lg> .input-group-append> .form-control-plaintext.btn {
+  derecho de relleno: 0;
+  relleno-izquierda: 0;
+}
+
+.form-control-sm, .input-group-sm> .form-control,
+.input-group-sm> .input-group-prepend> .input-group-text,
+.input-group-sm> .input-group-append> .input-group-text,
+.input-group-sm> .input-group-prepend> .btn,
+.input-group-sm> .input-group-append> .btn {
+  relleno: 0.25rem 0.5rem;
+  tamaño de letra: 0.875rem;
+  línea de altura: 1.5;
+  radio del borde: 0.2rem;
+}
+
+select.form-control-sm: not ([tamaño]): no ([multiple]), .input-group-sm> select.form-control: not ([size]): not ([multiple]),
+.input-group-sm> .input-group-prepend> select.input-group-text: no ([tamaño]): no ([múltiple]),
+.input-group-sm> .input-group-append> select.input-group-text: no ([tamaño]): no ([múltiple]),
+.input-group-sm> .input-group-prepend> select.btn: no ([tamaño]): no ([múltiple]),
+.input-group-sm> .input-group-append> select.btn: no ([tamaño]): no ([múltiple]) {
+  altura: calc (1.8125rem + 2px);
+}
+
+.form-control-lg, .input-group-lg> .form-control,
+.input-group-lg> .input-group-prepend> .input-group-text,
+.input-group-lg> .input-group-append> .input-group-text,
+.input-group-lg> .input-group-prepend> .btn,
+.input-group-lg> .input-group-append> .btn {
+  relleno: 0.5rem 1rem;
+  tamaño de letra: 1.25rem;
+  línea de altura: 1.5;
+  radio del borde: 0.3rem;
+}
+
+select.form-control-lg: no ([tamaño]): no ([múltiple]), .input-group-lg> select.form-control: no ([tamaño]): no ([múltiple]),
+.input-group-lg> .input-group-prepend> select.input-group-text: no ([tamaño]): no ([múltiple]),
+.input-group-lg> .input-group-append> select.input-group-text: no ([tamaño]): no ([múltiple]),
+.input-group-lg> .input-group-prepend> select.btn: no ([tamaño]): no ([múltiple]),
+.input-group-lg> .input-group-append> select.btn: no ([tamaño]): no ([múltiple]) {
+  altura: calc (2.875rem + 2px);
+}
+
+.form-group {
+  margen inferior: 1rem;
+}
+
+.form-text {
+  bloqueo de pantalla;
+  margen superior: 0,25rem;
+}
+
+.form-row {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  margen derecho: -5px;
+  margen izquierdo: -5px;
+}
+
+.form-row> .col,
+.form-row> [class * = "col-"] {
+  derecho de relleno: 5px;
+  relleno-izquierda: 5px;
+}
+
+.form-check {
+  posición: relativa;
+  bloqueo de pantalla;
+  relleno-izquierda: 1.25rem;
+}
+
+.form-check-input {
+  posición: absoluta;
+  margen superior: 0.3rem;
+  margen izquierdo: -1.25rem;
+}
+
+.form-check-input: deshabilitado ~ .form-check-label {
+  color: # 6c757d;
+}
+
+.form-check-label {
+  margen inferior: 0;
+}
+
+.form-check-inline {
+  pantalla: -ms-inline-flexbox;
+  pantalla: inline-flex;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  relleno-izquierda: 0;
+  margen derecho: 0.75rem;
+}
+
+.form-check-inline .form-check-input {
+  posición: estática;
+  margen superior: 0;
+  margen derecho: 0.3125rem;
+  margen izquierdo: 0;
+}
+
+.valid-feedback {
+  pantalla: ninguna;
+  ancho: 100%;
+  margen superior: 0,25rem;
+  tamaño de letra: 80%;
+  color: # 28a745;
+}
+
+.valid-tooltip {
+  posición: absoluta;
+  Top 100%;
+  índice z: 5;
+  pantalla: ninguna;
+  ancho máximo: 100%;
+  relleno: .5rem;
+  margen superior: .1rem;
+  tamaño de fuente: .875rem;
+  línea de altura: 1;
+  color: #fff;
+  color de fondo: rgba (40, 167, 69, 0,8);
+  radio del borde: .2rem;
+}
+
+.was-validated .form-control: valid, .form-control.is-valid, .was-validated
+.custom-select: válido,
+.custom-select.is-valid {
+  color de borde: # 28a745;
+}
+
+.was-validated .form-control: valid: focus, .form-control.is-valid: focus, .was-validated
+.custom-select: valid: focus,
+.custom-select.is-valid: focus {
+  color de borde: # 28a745;
+  caja-sombra: 0 0 0 0.2rem rgba (40, 167, 69, 0.25);
+}
+
+.was-validated .form-control: válido ~ .valid-feedback,
+.was-validated .form-control: valid ~ .valid-tooltip, .form-control.is-valid ~ .valid-feedback,
+.form-control.is-valid ~ .valid-tooltip, .was-validated
+.custom-select: valid ~ .valid-feedback,
+fue validado
+.custom-select: valid ~ .valid-tooltip,
+.custom-select.is-valid ~ .valid-feedback,
+.custom-select.is-valid ~ .valid-tooltip {
+  bloqueo de pantalla;
+}
+
+.was-validated .form-control-file: válido ~ .valid-feedback,
+.was-validated .form-control-file: valid ~ .valid-tooltip, .form-control-file.is-valid ~ .valid-feedback,
+.form-control-file.is-valid ~ .valid-tooltip {
+  bloqueo de pantalla;
+}
+
+.was-validated .form-check-input: válido ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
+  color: # 28a745;
+}
+
+.was-validated .form-check-input: válido ~ .valid-feedback,
+.was-validated .form-check-input: válido ~ .valid-tooltip, .form-check-input.is-valid ~ .valid-feedback,
+.form-check-input.is-valid ~ .valid-tooltip {
+  bloqueo de pantalla;
+}
+
+fue validado .custom-control-input: válido ~ .custom-control-label, .custom-control-input.is-valid ~ .custom-control-label {
+  color: # 28a745;
+}
+
+fue validado .custom-control-input: válido ~ .custom-control-label :: before, .custom-control-input.is-valid ~ .custom-control-label :: before {
+  color de fondo: # 71dd8a;
+}
+
+.was-validated .custom-control-input: válido ~ .valid-feedback,
+.la validación .custom-control-input: válida ~ .valid-tooltip, .custom-control-input.is-valid ~ .valid-feedback,
+.custom-control-input.is-valid ~ .valid-tooltip {
+  bloqueo de pantalla;
+}
+
+fue validado .custom-control-input: válido: verificado ~ .custom-control-label :: antes, .custom-control-input.is-válido: verificado ~ .custom-control-label :: antes de {
+  color de fondo: # 34ce57;
+}
+
+fue validado .custom-control-input: válido: focus ~ .custom-control-label :: before, .custom-control-input.is-valid: focus ~ .custom-control-label :: before {
+  caja-sombra: 0 0 0 1px #fff, 0 0 0 0.2rem rgba (40, 167, 69, 0.25);
+}
+
+.was-validated .custom-file-input: válido ~ .custom-file-label, .custom-file-input.is-valid ~ .custom-file-label {
+  color de borde: # 28a745;
+}
+
+.was-validated .custom-file-input: valid ~ .custom-file-label :: before, .custom-file-input.is-valid ~ .custom-file-label :: before {
+  color de borde: heredar;
+}
+
+.was-validated .custom-file-input: válido ~ .valid-feedback,
+.was-validated .custom-file-input: válido ~ .valid-tooltip, .custom-file-input.is-valid ~ .valid-feedback,
+.custom-file-input.is-valid ~ .valid-tooltip {
+  bloqueo de pantalla;
+}
+
+.was-validated .custom-file-input: valid: focus ~ .custom-file-label, .custom-file-input.is-valid: focus ~ .custom-file-label {
+  caja-sombra: 0 0 0 0.2rem rgba (40, 167, 69, 0.25);
+}
+
+.invalid-feedback {
+  pantalla: ninguna;
+  ancho: 100%;
+  margen superior: 0,25rem;
+  tamaño de letra: 80%;
+  color: # dc3545;
+}
+
+.invalid-tooltip {
+  posición: absoluta;
+  Top 100%;
+  índice z: 5;
+  pantalla: ninguna;
+  ancho máximo: 100%;
+  relleno: .5rem;
+  margen superior: .1rem;
+  tamaño de fuente: .875rem;
+  línea de altura: 1;
+  color: #fff;
+  color de fondo: rgba (220, 53, 69, 0,8);
+  radio del borde: .2rem;
+}
+
+.was-validated .form-control: invalid, .form-control.is-invalid, .was-validated
+.custom-select: inválido,
+.custom-select.is-invalid {
+  color de borde: # dc3545;
+}
+
+.was-validated .form-control: invalid: focus, .form-control.is-invalid: focus, .was-validated
+.custom-select: invalid: focus,
+.custom-select.is-invalid: focus {
+  color de borde: # dc3545;
+  caja-sombra: 0 0 0 0.2rem rgba (220, 53, 69, 0.25);
+}
+
+.was-validated .form-control: inválido ~ .invalid-feedback,
+.was-validated .form-control: invalid ~ .invalid-tooltip, .form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-tooltip, .was-validated
+.custom-select: inválido ~ .invalid-feedback,
+fue validado
+.custom-select: invalid ~ .invalid-tooltip,
+.custom-select.is-invalid ~ .invalid-feedback,
+.custom-select.is-invalid ~ .invalid-tooltip {
+  bloqueo de pantalla;
+}
+
+.was-validated .form-control-file: inválido ~ .invalid-feedback,
+.was-validated .form-control-file: inválido ~ .invalid-tooltip, .form-control-file.is-invalid ~ .invalid-feedback,
+.form-control-file.is-invalid ~ .invalid-tooltip {
+  bloqueo de pantalla;
+}
+
+.was-validated .form-check-input: inválido ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {
+  color: # dc3545;
+}
+
+.was-validated .form-check-input: inválido ~ .invalid-feedback,
+.was-validated .form-check-input: inválido ~ .invalid-tooltip, .form-check-input.is-invalid ~ .invalid-feedback,
+.form-check-input.is-invalid ~ .invalid-tooltip {
+  bloqueo de pantalla;
+}
+
+fue validado .custom-control-input: inválido ~ .custom-control-label, .custom-control-input.is-invalid ~ .custom-control-label {
+  color: # dc3545;
+}
+
+.la-validó .custom-control-input: invalid ~ .custom-control-label :: before, .custom-control-input.is-invalid ~ .custom-control-label :: before {
+  color de fondo: # efa2a9;
+}
+
+.was-validated .custom-control-input: inválido ~ .invalid-feedback,
+fue validado .custom-control-input: inválido ~ .invalid-tooltip, .custom-control-input.is-invalid ~ .invalid-feedback,
+.custom-control-input.is-invalid ~ .invalid-tooltip {
+  bloqueo de pantalla;
+}
+
+fue validado .custom-control-input: inválido: verificado ~ .custom-control-label :: antes, .custom-control-input.is-invalid: verificado ~ .custom-control-label :: antes de {
+  color de fondo: # e4606d;
+}
+
+fue validado .custom-control-input: invalid: focus ~ .custom-control-label :: before, .custom-control-input.is-invalid: focus ~ .custom-control-label :: before {
+  caja-sombra: 0 0 0 1px #fff, 0 0 0 0.2rem rgba (220, 53, 69, 0.25);
+}
+
+.was-validated .custom-file-input: invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
+  color de borde: # dc3545;
+}
+
+.was-validated .custom-file-input: invalid ~ .custom-file-label :: before, .custom-file-input.is-invalid ~ .custom-file-label :: before {
+  color de borde: heredar;
+}
+
+.was-validated .custom-file-input: inválido ~ .invalid-feedback,
+.was-validated .custom-file-input: invalidado ~ .invalid-tooltip, .custom-file-input.is-invalid ~ .invalid-feedback,
+.custom-file-input.is-invalid ~ .invalid-tooltip {
+  bloqueo de pantalla;
+}
+
+.was-validated .custom-file-input: invalid: focus ~ .custom-file-label, .custom-file-input.is-invalid: focus ~ .custom-file-label {
+  caja-sombra: 0 0 0 0.2rem rgba (220, 53, 69, 0.25);
+}
+
+.form-inline {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-flow: envoltura de fila;
+  flex-flow: envoltura de fila;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+}
+
+.form-inline .form-check {
+  ancho: 100%;
+}
+
+@media (ancho mínimo: 576px) {
+  etiqueta .form-inline {
+    pantalla: -ms-flexbox;
+    pantalla: flexión;
+    -ms-flex-align: centro;
+    alinear-artículos: centro;
+    -ms-flex-pack: centro;
+    justificar-contenido: centro;
+    margen inferior: 0;
+  }
+  .form-inline .form-group {
+    pantalla: -ms-flexbox;
+    pantalla: flexión;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    -ms-flex-flow: envoltura de fila;
+    flex-flow: envoltura de fila;
+    -ms-flex-align: centro;
+    alinear-artículos: centro;
+    margen inferior: 0;
+  }
+  .form-inline .form-control {
+    pantalla: bloque en línea;
+    ancho: auto;
+    alineación vertical: medio;
+  }
+  .form-inline .form-control-plaintext {
+    pantalla: bloque en línea;
+  }
+  .form-inline .input-group,
+  .form-inline .custom-select {
+    ancho: auto;
+  }
+  .form-inline .form-check {
+    pantalla: -ms-flexbox;
+    pantalla: flexión;
+    -ms-flex-align: centro;
+    alinear-artículos: centro;
+    -ms-flex-pack: centro;
+    justificar-contenido: centro;
+    ancho: auto;
+    relleno-izquierda: 0;
+  }
+  .form-inline .form-check-input {
+    posición: relativa;
+    margen superior: 0;
+    margen derecho: 0.25rem;
+    margen izquierdo: 0;
+  }
+  .form-inline .custom-control {
+    -ms-flex-align: centro;
+    alinear-artículos: centro;
+    -ms-flex-pack: centro;
+    justificar-contenido: centro;
+  }
+  .form-inline .custom-control-label {
+    margen inferior: 0;
+  }
+}
+
+.btn {
+  pantalla: bloque en línea;
+  peso de la fuente: 400;
+  text-align: center;
+  espacio en blanco: nowrap;
+  alineación vertical: medio;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: ninguno;
+  selección de usuario: ninguna;
+  borde: 1px sólido transparente;
+  relleno: 0.375rem 0.75rem;
+  tamaño de letra: 1rem;
+  línea de altura: 1.5;
+  radio del borde: 0.25rem;
+  transición: color 0.15s facilidad de entrada, color de fondo 0.15s salida de entrada, color de borde 0.15s entrada de salida, box-shadow 0.15s salida de entrada fácil;
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .btn {
+    transición: ninguna;
+  }
+}
+
+.btn: hover, .btn: focus {
+  texto-decoración: ninguno;
+}
+
+.btn: foco, .btn.focus {
+  esquema: 0;
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.btn.disabled, .btn: deshabilitado {
+  opacidad: 0,65;
+}
+
+.btn: no (: deshabilitado): no (. deshabilitado) {
+  cursor: puntero;
+}
+
+.btn: no (: deshabilitado): no (. deshabilitado): activo, .btn: no (: deshabilitado): no (. deshabilitado) .activo {
+  imagen de fondo: ninguna;
+}
+
+a.btn.disabled,
+fieldset: deshabilitado a.btn {
+  punteros-eventos: ninguno;
+}
+
+.btn-primario {
+  color: #fff;
+  color de fondo: # 007bff;
+  color de borde: # 007bff;
+}
+
+.btn-primary: hover {
+  color: #fff;
+  color de fondo: # 0069d9;
+  color de borde: # 0062cc;
+}
+
+.btn-primary: focus, .btn-primary.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.5);
+}
+
+.btn-primary.disabled, .btn-primary: disabled {
+  color: #fff;
+  color de fondo: # 007bff;
+  color de borde: # 007bff;
+}
+
+.btn-primary: no (: deshabilitado): no (.disabled): activo, .btn-primary: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-primary.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 0062cc;
+  color de borde: # 005cbf;
+}
+
+.btn-primary: not (: deshabilitado): not (.disabled): active: focus, .btn-primary: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-primary.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.5);
+}
+
+.btn-secundario {
+  color: #fff;
+  color de fondo: # 6c757d;
+  color de borde: # 6c757d;
+}
+
+.btn-secundario: hover {
+  color: #fff;
+  color de fondo: # 5a6268;
+  color de borde: # 545b62;
+}
+
+.btn-secundario: enfoque, .btn-secondary.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (108, 117, 125, 0.5);
+}
+
+.btn-secondary.disabled, .btn-secondary: disabled {
+  color: #fff;
+  color de fondo: # 6c757d;
+  color de borde: # 6c757d;
+}
+
+.btn-secundario: no (: deshabilitado): no (. deshabilitado): activo, .btn-secundario: no (: deshabilitado): no (. deshabilitado) .activo
+.show> .btn-secondary.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 545b62;
+  color de borde: # 4e555b;
+}
+
+.btn-secundario: no (: deshabilitado): no (. deshabilitado): activo: foco, .btn-secundario: no (: deshabilitado): no (. deshabilitado) .activo: foco,
+.show> .btn-secondary.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (108, 117, 125, 0.5);
+}
+
+.btn-éxito {
+  color: #fff;
+  color de fondo: # 28a745;
+  color de borde: # 28a745;
+}
+
+.btn-success: hover {
+  color: #fff;
+  color de fondo: # 218838;
+  color de borde: # 1e7e34;
+}
+
+.btn-success: focus, .btn-success.focus {
+  caja de sombra: 0 0 0 0.2rem rgba (40, 167, 69, 0.5);
+}
+
+.btn-success.disabled, .btn-success: disabled {
+  color: #fff;
+  color de fondo: # 28a745;
+  color de borde: # 28a745;
+}
+
+.btn-success: no (: deshabilitado): no (.disabled): activo, .btn-success: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-success.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 1e7e34;
+  color de borde: # 1c7430;
+}
+
+.btn-success: not (: deshabilitado): not (.disabled): active: focus, .btn-success: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-success.dropdown-toggle: focus {
+  caja de sombra: 0 0 0 0.2rem rgba (40, 167, 69, 0.5);
+}
+
+.btn-info {
+  color: #fff;
+  color de fondo: # 17a2b8;
+  color de borde: # 17a2b8;
+}
+
+.btn-info: hover {
+  color: #fff;
+  color de fondo: # 138496;
+  color de borde: # 117a8b;
+}
+
+.btn-info: focus, .btn-info.focus {
+  caja de sombra: 0 0 0 0.2rem rgba (23, 162, 184, 0.5);
+}
+
+.btn-info.disabled, .btn-info: deshabilitado {
+  color: #fff;
+  color de fondo: # 17a2b8;
+  color de borde: # 17a2b8;
+}
+
+.btn-info: not (: deshabilitado): no (.disabled): activo, .btn-info: not (: deshabilitado): no (.disabled) .active,
+.show> .btn-info.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 117a8b;
+  color de borde: # 10707f;
+}
+
+.btn-info: not (: deshabilitado): no (.disabled): activo: foco, .btn-info: no (: deshabilitado): no (.disabled) .active: foco,
+.show> .btn-info.dropdown-toggle: focus {
+  caja de sombra: 0 0 0 0.2rem rgba (23, 162, 184, 0.5);
+}
+
+.btn-warning {
+  color: # 212529;
+  color de fondo: # ffc107;
+  color de borde: # ffc107;
+}
+
+.btn-warning: hover {
+  color: # 212529;
+  color de fondo: # e0a800;
+  color de borde: # d39e00;
+}
+
+.btn-warning: focus, .btn-warning.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (255, 193, 7, 0.5);
+}
+
+.btn-warning.disabled, .btn-warning: deshabilitado {
+  color: # 212529;
+  color de fondo: # ffc107;
+  color de borde: # ffc107;
+}
+
+.btn-warning: no (: deshabilitado): no (.disabled): activo, .btn-warning: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-warning.dropdown-toggle {
+  color: # 212529;
+  color de fondo: # d39e00;
+  color de borde: # c69500;
+}
+
+.btn-warning: no (: deshabilitado): no (.disabled): activo: enfoque, .btn-warning: no (: deshabilitado): no (.disabled) .active: foco,
+.show> .btn-warning.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (255, 193, 7, 0.5);
+}
+
+.btn-danger {
+  color: #fff;
+  color de fondo: # dc3545;
+  color de borde: # dc3545;
+}
+
+.btn-danger: hover {
+  color: #fff;
+  color de fondo: # c82333;
+  color de borde: # bd2130;
+}
+
+.btn-danger: focus, .btn-danger.focus {
+  caja de sombra: 0 0 0 0.2rem rgba (220, 53, 69, 0.5);
+}
+
+.btn-danger.disabled, .btn-danger: deshabilitado {
+  color: #fff;
+  color de fondo: # dc3545;
+  color de borde: # dc3545;
+}
+
+.btn-danger: no (: deshabilitado): no (.disabled): activo, .btn-danger: not (: deshabilitado): no (.disabled) .active,
+.show> .btn-danger.dropdown-toggle {
+  color: #fff;
+  color de fondo: # bd2130;
+  color de borde: # b21f2d;
+}
+
+.btn-danger: not (: deshabilitado): no (.disabled): active: focus, .btn-danger: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-danger.dropdown-toggle: focus {
+  caja de sombra: 0 0 0 0.2rem rgba (220, 53, 69, 0.5);
+}
+
+.btn-light {
+  color: # 212529;
+  color de fondo: # f8f9fa;
+  color de borde: # f8f9fa;
+}
+
+.btn-light: hover {
+  color: # 212529;
+  color de fondo: # e2e6ea;
+  color de borde: # dae0e5;
+}
+
+.btn-light: focus, .btn-light.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (248, 249, 250, 0.5);
+}
+
+.btn-light.disabled, .btn-light: desactivado {
+  color: # 212529;
+  color de fondo: # f8f9fa;
+  color de borde: # f8f9fa;
+}
+
+.btn-light: no (: deshabilitado): no (.disabled): activo, .btn-light: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-light.dropdown-toggle {
+  color: # 212529;
+  color de fondo: # dae0e5;
+  color de borde: # d3d9df;
+}
+
+.btn-light: not (: deshabilitado): not (.disabled): active: focus, .btn-light: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-light.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (248, 249, 250, 0.5);
+}
+
+.btn-dark {
+  color: #fff;
+  color de fondo: # 343a40;
+  color de borde: # 343a40;
+}
+
+.btn-dark: hover {
+  color: #fff;
+  color de fondo: # 23272b;
+  color de borde: # 1d2124;
+}
+
+.btn-dark: focus, .btn-dark.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (52, 58, 64, 0.5);
+}
+
+.btn-dark.disabled, .btn-dark: deshabilitado {
+  color: #fff;
+  color de fondo: # 343a40;
+  color de borde: # 343a40;
+}
+
+.btn-dark: no (: deshabilitado): no (.disabled): activo, .btn-dark: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-dark.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 1d2124;
+  color de borde: # 171a1d;
+}
+
+.btn-dark: not (: deshabilitado): not (.disabled): active: focus, .btn-dark: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-dark.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (52, 58, 64, 0.5);
+}
+
+.btn-outline-primary {
+  color: # 007bff;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # 007bff;
+}
+
+.btn-outline-primary: hover {
+  color: #fff;
+  color de fondo: # 007bff;
+  color de borde: # 007bff;
+}
+
+.btn-outline-primary: focus, .btn-outline-primary.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.5);
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary: disabled {
+  color: # 007bff;
+  color de fondo: transparente;
+}
+
+.btn-outline-primary: no (: deshabilitado): no (.disabled): activo, .btn-outline-primary: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 007bff;
+  color de borde: # 007bff;
+}
+
+.btn-outline-primary: not (: deshabilitado): not (.disabled): active: focus, .btn-outline-primary: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-outline-primary.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.5);
+}
+
+.btn-outline-secundario {
+  color: # 6c757d;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # 6c757d;
+}
+
+.btn-outline-secundario: hover {
+  color: #fff;
+  color de fondo: # 6c757d;
+  color de borde: # 6c757d;
+}
+
+.btn-outline-secondary: focus, .btn-outline-secondary.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (108, 117, 125, 0.5);
+}
+
+.btn-outline-secondary.disabled, .btn-outline-secondary: disabled {
+  color: # 6c757d;
+  color de fondo: transparente;
+}
+
+.btn-outline-secondary: no (: deshabilitado): no (.disabled): activo, .btn-outline-secundario: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-secondary.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 6c757d;
+  color de borde: # 6c757d;
+}
+
+.btn-outline-secondary: no (: deshabilitado): no (.disabled): activo: foco, .btn-outline-secundario: no (: deshabilitado): no (.disabled) .active: foco,
+.show> .btn-outline-secondary.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (108, 117, 125, 0.5);
+}
+
+.btn-outline-success {
+  color: # 28a745;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # 28a745;
+}
+
+.btn-outline-success: hover {
+  color: #fff;
+  color de fondo: # 28a745;
+  color de borde: # 28a745;
+}
+
+.btn-outline-success: focus, .btn-outline-success.focus {
+  caja de sombra: 0 0 0 0.2rem rgba (40, 167, 69, 0.5);
+}
+
+.btn-outline-success.disabled, .btn-outline-success: disabled {
+  color: # 28a745;
+  color de fondo: transparente;
+}
+
+.btn-outline-success: no (: deshabilitado): no (.disabled): activo, .btn-outline-success: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-success.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 28a745;
+  color de borde: # 28a745;
+}
+
+.btn-outline-success: not (: deshabilitado): no (.disabled): active: focus, .btn-outline-success: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-outline-success.dropdown-toggle: focus {
+  caja de sombra: 0 0 0 0.2rem rgba (40, 167, 69, 0.5);
+}
+
+.btn-outline-info {
+  color: # 17a2b8;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # 17a2b8;
+}
+
+.btn-outline-info: hover {
+  color: #fff;
+  color de fondo: # 17a2b8;
+  color de borde: # 17a2b8;
+}
+
+.btn-outline-info: focus, .btn-outline-info.focus {
+  caja de sombra: 0 0 0 0.2rem rgba (23, 162, 184, 0.5);
+}
+
+.btn-outline-info.disabled, .btn-outline-info: deshabilitado {
+  color: # 17a2b8;
+  color de fondo: transparente;
+}
+
+.btn-outline-info: no (: deshabilitado): no (.disabled): activo, .btn-outline-info: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-info.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 17a2b8;
+  color de borde: # 17a2b8;
+}
+
+.btn-outline-info: no (: deshabilitado): no (.disabled): activo: foco, .btn-outline-info: no (: deshabilitado): no (.disabled) .active: foco,
+.show> .btn-outline-info.dropdown-toggle: focus {
+  caja de sombra: 0 0 0 0.2rem rgba (23, 162, 184, 0.5);
+}
+
+.btn-outline-warning {
+  color: # ffc107;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # ffc107;
+}
+
+.btn-outline-warning: hover {
+  color: # 212529;
+  color de fondo: # ffc107;
+  color de borde: # ffc107;
+}
+
+.btn-outline-warning: focus, .btn-outline-warning.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (255, 193, 7, 0.5);
+}
+
+.btn-outline-warning.disabled, .btn-outline-warning: deshabilitado {
+  color: # ffc107;
+  color de fondo: transparente;
+}
+
+.btn-outline-warning: no (: deshabilitado): no (.disabled): activo, .btn-outline-warning: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-warning.dropdown-toggle {
+  color: # 212529;
+  color de fondo: # ffc107;
+  color de borde: # ffc107;
+}
+
+.btn-outline-warning: no (: deshabilitado): no (.disabled): activo: foco, .btn-outline-warning: no (: deshabilitado): no (.disabled) .active: foco,
+.show> .btn-outline-warning.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (255, 193, 7, 0.5);
+}
+
+.btn-outline-danger {
+  color: # dc3545;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # dc3545;
+}
+
+.btn-outline-danger: hover {
+  color: #fff;
+  color de fondo: # dc3545;
+  color de borde: # dc3545;
+}
+
+.btn-outline-danger: focus, .btn-outline-danger.focus {
+  caja de sombra: 0 0 0 0.2rem rgba (220, 53, 69, 0.5);
+}
+
+.btn-outline-danger.disabled, .btn-outline-danger: deshabilitado {
+  color: # dc3545;
+  color de fondo: transparente;
+}
+
+.btn-outline-danger: no (: deshabilitado): no (.disabled): activo, .btn-outline-danger: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-danger.dropdown-toggle {
+  color: #fff;
+  color de fondo: # dc3545;
+  color de borde: # dc3545;
+}
+
+.btn-outline-danger: not (: deshabilitado): no (.disabled): active: focus, .btn-outline-danger: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-outline-danger.dropdown-toggle: focus {
+  caja de sombra: 0 0 0 0.2rem rgba (220, 53, 69, 0.5);
+}
+
+.btn-outline-light {
+  color: # f8f9fa;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # f8f9fa;
+}
+
+.btn-outline-light: hover {
+  color: # 212529;
+  color de fondo: # f8f9fa;
+  color de borde: # f8f9fa;
+}
+
+.btn-outline-light: focus, .btn-outline-light.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (248, 249, 250, 0.5);
+}
+
+.btn-outline-light.disabled, .btn-outline-light: deshabilitado {
+  color: # f8f9fa;
+  color de fondo: transparente;
+}
+
+.btn-outline-light: no (: deshabilitado): no (.disabled): activo, .btn-outline-light: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-light.dropdown-toggle {
+  color: # 212529;
+  color de fondo: # f8f9fa;
+  color de borde: # f8f9fa;
+}
+
+.btn-outline-light: no (: deshabilitado): no (.disabled): activo: foco, .btn-outline-light: no (: deshabilitado): no (.disabled) .active: foco,
+.show> .btn-outline-light.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (248, 249, 250, 0.5);
+}
+
+.btn-outline-dark {
+  color: # 343a40;
+  color de fondo: transparente;
+  imagen de fondo: ninguna;
+  color de borde: # 343a40;
+}
+
+.btn-outline-dark: hover {
+  color: #fff;
+  color de fondo: # 343a40;
+  color de borde: # 343a40;
+}
+
+.btn-outline-dark: focus, .btn-outline-dark.focus {
+  caja-sombra: 0 0 0 0.2rem rgba (52, 58, 64, 0.5);
+}
+
+.btn-outline-dark.disabled, .btn-outline-dark: disabled {
+  color: # 343a40;
+  color de fondo: transparente;
+}
+
+.btn-outline-dark: no (: deshabilitado): no (.disabled): activo, .btn-outline-dark: no (: deshabilitado): no (.disabled) .active,
+.show> .btn-outline-dark.dropdown-toggle {
+  color: #fff;
+  color de fondo: # 343a40;
+  color de borde: # 343a40;
+}
+
+.btn-outline-dark: not (: deshabilitado): no (.disabled): active: focus, .btn-outline-dark: not (: disabled): not (.disabled) .active: focus,
+.show> .btn-outline-dark.dropdown-toggle: focus {
+  caja-sombra: 0 0 0 0.2rem rgba (52, 58, 64, 0.5);
+}
+
+.btn-link {
+  peso de la fuente: 400;
+  color: # 007bff;
+  color de fondo: transparente;
+}
+
+.btn-link: hover {
+  color: # 0056b3;
+  texto-decoración: subrayado;
+  color de fondo: transparente;
+  color del borde: transparente;
+}
+
+.btn-link: focus, .btn-link.focus {
+  texto-decoración: subrayado;
+  color del borde: transparente;
+  caja de sombra: ninguna;
+}
+
+.btn-link: deshabilitado, .btn-link.disabled {
+  color: # 6c757d;
+  punteros-eventos: ninguno;
+}
+
+.btn-lg, .btn-group-lg> .btn {
+  relleno: 0.5rem 1rem;
+  tamaño de letra: 1.25rem;
+  línea de altura: 1.5;
+  radio del borde: 0.3rem;
+}
+
+.btn-sm, .btn-group-sm> .btn {
+  relleno: 0.25rem 0.5rem;
+  tamaño de letra: 0.875rem;
+  línea de altura: 1.5;
+  radio del borde: 0.2rem;
+}
+
+.btn-block {
+  bloqueo de pantalla;
+  ancho: 100%;
+}
+
+.btn-block + .btn-block {
+  margen superior: 0.5rem;
+}
+
+entrada [type = "submit"]. btn-block,
+entrada [type = "reset"]. btn-block,
+entrada [tipo = "botón"]. btn-block {
+  ancho: 100%;
+}
+
+.fade {
+  transición: opacidad 0.15s lineal;
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .fade {
+    transición: ninguna;
+  }
+}
+
+.fade: no (.show) {
+  opacidad: 0;
+}
+
+.collapse: no (.show) {
+  pantalla: ninguna;
+}
+
+.collapsing {
+  posición: relativa;
+  altura: 0;
+  desbordamiento: oculto;
+  transición: altura 0.35s facilidad;
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .collapsing {
+    transición: ninguna;
+  }
+}
+
+.caer hasta,
+derecho
+.desplegable,
+.dropleft {
+  posición: relativa;
+}
+
+. dropdown-toggle :: después de {
+  pantalla: bloque en línea;
+  ancho: 0;
+  altura: 0;
+  margen izquierdo: 0.255em;
+  alineación vertical: 0.255em;
+  contenido: "";
+  borde superior: 0.3em sólido;
+  borde derecho: 0.3em sólido transparente;
+  borde inferior: 0;
+  borde izquierdo: 0.3em sólido transparente;
+}
+
+. dropdown-toggle: empty :: after {
+  margen izquierdo: 0;
+}
+
+.Menú desplegable {
+  posición: absoluta;
+  Top 100%;
+  izquierda: 0;
+  índice z: 1000;
+  pantalla: ninguna;
+  flotador izquierdo;
+  ancho mínimo: 10rem;
+  relleno: 0.5rem 0;
+  margen: 0.125rem 0 0;
+  tamaño de letra: 1rem;
+  color: # 212529;
+  alineación de texto: izquierda;
+  estilo de lista: ninguno;
+  color de fondo: #fff;
+  clip de fondo: caja de relleno;
+  borde: 1px rgba sólido (0, 0, 0, 0.15);
+  radio del borde: 0.25rem;
+}
+
+menú desplegable a la derecha
+  derecha: 0;
+  izquierda: auto;
+}
+
+.dropup .dropdown-menu {
+  arriba: auto;
+  parte inferior: 100%;
+  margen superior: 0;
+  margen inferior: 0.125rem;
+}
+
+.dropup .dropdown-toggle :: after {
+  pantalla: bloque en línea;
+  ancho: 0;
+  altura: 0;
+  margen izquierdo: 0.255em;
+  alineación vertical: 0.255em;
+  contenido: "";
+  borde superior: 0;
+  borde derecho: 0.3em sólido transparente;
+  borde inferior: 0.3em sólido;
+  borde izquierdo: 0.3em sólido transparente;
+}
+
+.dropup .dropdown-toggle: empty :: after {
+  margen izquierdo: 0;
+}
+
+.dropright .dropdown-menu {
+  arriba: 0;
+  derecha: auto
+  izquierda: 100%;
+  margen superior: 0;
+  margen izquierdo: 0.125rem;
+}
+
+.dropright .dropdown-toggle :: después de {
+  pantalla: bloque en línea;
+  ancho: 0;
+  altura: 0;
+  margen izquierdo: 0.255em;
+  alineación vertical: 0.255em;
+  contenido: "";
+  borde superior: 0.3em sólido transparente;
+  borde derecho: 0;
+  borde inferior: 0.3em sólido transparente;
+  borde izquierdo: 0.3em sólido;
+}
+
+.dropright .dropdown-toggle: empty :: after {
+  margen izquierdo: 0;
+}
+
+.dropright .dropdown-toggle :: después de {
+  alineación vertical: 0;
+}
+
+.dropleft .dropdown-menu {
+  arriba: 0;
+  derecha: 100%;
+  izquierda: auto;
+  margen superior: 0;
+  margen derecho: 0.125rem;
+}
+
+.dropleft .dropdown-toggle :: después de {
+  pantalla: bloque en línea;
+  ancho: 0;
+  altura: 0;
+  margen izquierdo: 0.255em;
+  alineación vertical: 0.255em;
+  contenido: "";
+}
+
+.dropleft .dropdown-toggle :: después de {
+  pantalla: ninguna;
+}
+
+.dropleft .dropdown-toggle :: before {
+  pantalla: bloque en línea;
+  ancho: 0;
+  altura: 0;
+  margen derecho: 0.255em;
+  alineación vertical: 0.255em;
+  contenido: "";
+  borde superior: 0.3em sólido transparente;
+  borde derecho: 0.3em sólido;
+  borde inferior: 0.3em sólido transparente;
+}
+
+.dropleft .dropdown-toggle: empty :: after {
+  margen izquierdo: 0;
+}
+
+.dropleft .dropdown-toggle :: before {
+  alineación vertical: 0;
+}
+
+.dropdown-menu [x-placement ^ = "top"], .dropdown-menu [x-placement ^ = "right"], .dropdown-menu [x-placement ^ = "bottom"], .dropdown-menu [ x-placement ^ = "left"] {
+  derecha: auto
+  abajo: auto
+}
+
+.downdown-divider {
+  altura: 0;
+  margen: 0.5rem 0;
+  desbordamiento: oculto;
+  borde superior: 1px sólido # e9ecef;
+}
+
+.downdown-item {
+  bloqueo de pantalla;
+  ancho: 100%;
+  relleno: 0.25rem 1.5rem;
+  Limpia los dos;
+  peso de la fuente: 400;
+  color: # 212529;
+  text-align: heredar;
+  espacio en blanco: nowrap;
+  color de fondo: transparente;
+  borde: 0;
+}
+
+.downdown item: hover, .dropdown-item: focus {
+  color: # 16181b;
+  texto-decoración: ninguno;
+  color de fondo: # f8f9fa;
+}
+
+.dropdown-item.active, .dropdown-item: active {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # 007bff;
+}
+
+.dropdown-item.disabled, .dropdown-item: disabled {
+  color: # 6c757d;
+  color de fondo: transparente;
+}
+
+Menú desplegable. Mostrar {
+  bloqueo de pantalla;
+}
+
+.dropdown-header {
+  bloqueo de pantalla;
+  relleno: 0.5rem 1.5rem;
+  margen inferior: 0;
+  tamaño de letra: 0.875rem;
+  color: # 6c757d;
+  espacio en blanco: nowrap;
+}
+
+.downdown-item-text {
+  bloqueo de pantalla;
+  relleno: 0.25rem 1.5rem;
+  color: # 212529;
+}
+
+grupo .btn,
+.btn-grupo-vertical {
+  posición: relativa;
+  pantalla: -ms-inline-flexbox;
+  pantalla: inline-flex;
+  alineación vertical: medio;
+}
+
+.btn-grupo> .btn,
+.btn-grupo-vertical> .btn {
+  posición: relativa;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+}
+
+.btn-group> .btn: hover,
+.btn-group-vertical> .btn: hover {
+  índice z: 1;
+}
+
+.btn-group> .btn: focus, .btn-group> .btn: active, .btn-group> .btn.active,
+.btn-group-vertical> .btn: focus,
+.btn-group-vertical> .btn: activo,
+.btn-group-vertical> .btn.active {
+  índice z: 1;
+}
+
+.btn-group .btn + .btn,
+.btn-group .btn + .btn-group,
+.btn-group .btn-group + .btn,
+.btn-group .btn-group + .btn-group,
+.btn-group-vertical .btn + .btn,
+.btn-group-vertical .btn + .btn-group,
+.btn-group-vertical .btn-group + .btn,
+.btn-group-vertical .btn-group + .btn-group {
+  margen izquierdo: -1px;
+}
+
+.btn-toolbar {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  -ms-flex-pack: inicio;
+  justificar contenido: flex-start;
+}
+
+.btn-toolbar .input-group {
+  ancho: auto;
+}
+
+.btn-group> .btn: first-child {
+  margen izquierdo: 0;
+}
+
+.btn-group> .btn: not (: last-child): not (.dropdown-toggle),
+.btn-group> .btn-group: not (: last-child)> .btn {
+  borde superior-derecho-radio: 0;
+  borde inferior-derecho-radio: 0;
+}
+
+.btn-group> .btn: not (: first-child),
+.btn-group> .btn-group: not (: first-child)> .btn {
+  borde superior-izquierdo-radio: 0;
+  borde inferior-izquierdo-radio: 0;
+}
+
+.dropdown-toggle-split {
+  relleno derecho: 0.5625rem;
+  relleno-izquierda: 0.5625rem;
+}
+
+.dropdown-toggle-split :: after,
+.dropup .dropdown-toggle-split :: after,
+.dropright .dropdown-toggle-split :: después de {
+  margen izquierdo: 0;
+}
+
+.dropleft .dropdown-toggle-split :: before {
+  margen derecho: 0;
+}
+
+.btn-sm + .dropdown-toggle-split, .btn-group-sm> .btn + .dropdown-toggle-split {
+  relleno derecho: 0.375rem;
+  relleno-izquierda: 0.375rem;
+}
+
+.btn-lg + .dropdown-toggle-split, .btn-group-lg> .btn + .dropdown-toggle-split {
+  relleno derecho: 0.75rem;
+  relleno izquierdo: 0,75rem;
+}
+
+.btn-grupo-vertical {
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+  -ms-flex-align: inicio;
+  elementos de alineación: arranque flexible;
+  -ms-flex-pack: centro;
+  justificar-contenido: centro;
+}
+
+.btn-grupo-vertical .btn,
+.btn-group-vertical .btn-group {
+  ancho: 100%;
+}
+
+.btn-group-vertical> .btn + .btn,
+.btn-group-vertical> .btn + .btn-group,
+.btn-group-vertical> .btn-group + .btn,
+.btn-group-vertical> .btn-group + .btn-group {
+  margen superior: -1px;
+  margen izquierdo: 0;
+}
+
+.btn-group-vertical> .btn: not (: last-child): not (.dropdown-toggle),
+.btn-group-vertical> .btn-group: not (: last-child)> .btn {
+  borde inferior-derecho-radio: 0;
+  borde inferior-izquierdo-radio: 0;
+}
+
+.btn-group-vertical> .btn: not (: first-child),
+.btn-group-vertical> .btn-group: not (: first-child)> .btn {
+  borde superior-izquierdo-radio: 0;
+  borde superior-derecho-radio: 0;
+}
+
+.btn-group-toggle> .btn,
+.btn-group-toggle> .btn-group> .btn {
+  margen inferior: 0;
+}
+
+.btn-group-toggle> .btn input [type = "radio"],
+.btn-group-toggle> .btn input [type = "checkbox"],
+.btn-group-toggle> .btn-group> .btn input [tipo = "radio"],
+.bt n-group-toggle> .btn-group> .btn input [tipo = "casilla de verificación"] {
+  posición: absoluta;
+  clip: rect (0, 0, 0, 0);
+  punteros-eventos: ninguno;
+}
+
+.input-group {
+  posición: relativa;
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  -ms-flex-align: estirar;
+  alinear-artículos: estirar;
+  ancho: 100%;
+}
+
+.input-group> .form-control,
+.input-group> .custom-select,
+.input-group> .custom-file {
+  posición: relativa;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  ancho: 1%;
+  margen inferior: 0;
+}
+
+.input-group> .form-control: focus,
+.input-group> .custom-select: focus,
+.input-group> .custom-file: focus {
+  índice z: 3;
+}
+
+.input-group> .form-control + .form-control,
+.input-group> .form-control + .custom-select,
+.input-group> .form-control + .custom-file,
+.input-group> .custom-select + .form-control,
+.input-group> .custom-select + .custom-select,
+.input-group> .custom-select + .custom-file,
+.input-group> .custom-file + .form-control,
+.input-group> .custom-file + .custom-select,
+.input-group> .custom-file + .custom-file {
+  margen izquierdo: -1px;
+}
+
+.input-group> .form-control: not (: last-child),
+.input-group> .custom-select: not (: last-child) {
+  borde superior-derecho-radio: 0;
+  borde inferior-derecho-radio: 0;
+}
+
+.input-group> .form-control: not (: first-child),
+.input-group> .custom-select: not (: first-child) {
+  borde superior-izquierdo-radio: 0;
+  borde inferior-izquierdo-radio: 0;
+}
+
+.input-group> .custom-file {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+}
+
+.input-group> .custom-file: not (: last-child) .custom-file-label,
+.input-group> .custom-file: not (: last-child) .custom-file-label :: after {
+  borde superior-derecho-radio: 0;
+  borde inferior-derecho-radio: 0;
+}
+
+.input-group> .custom-file: not (: first-child) .custom-file-label {
+  borde superior-izquierdo-radio: 0;
+  borde inferior-izquierdo-radio: 0;
+}
+
+.input-group-prepend,
+.input-group-append {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+}
+
+.input-group-prepend .btn,
+.input-group-append .btn {
+  posición: relativa;
+  índice z: 2;
+}
+
+.input-group-prepend .btn + .btn,
+.input-group-prepend .btn + .input-group-text,
+.input-group-prepend .input-group-text + .input-group-text,
+.input-group-prepend .input-group-text + .btn,
+.input-group-append .btn + .btn,
+.input-group-append .btn + .input-group-text,
+.input-group-append .input-group-text + .input-group-text,
+.input-group-append .input-group-text + .btn {
+  margen izquierdo: -1px;
+}
+
+.input-group-prepend {
+  margen derecho: -1px;
+}
+
+.input-group-append {
+  margen izquierdo: -1px;
+}
+
+.input-group-text {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  relleno: 0.375rem 0.75rem;
+  margen inferior: 0;
+  tamaño de letra: 1rem;
+  peso de la fuente: 400;
+  línea de altura: 1.5;
+  color: # 495057;
+  text-align: center;
+  espacio en blanco: nowrap;
+  color de fondo: # e9ecef;
+  borde: 1px sólido # ced4da;
+  radio del borde: 0.25rem;
+}
+
+.input-group-text input [tipo = "radio"],
+.input-group-text input [type = "checkbox"] {
+  margen superior: 0;
+}
+
+.input-group> .input-group-prepend> .btn,
+.input-group> .input-group-prepend> .input-group-text,
+.input-group> .input-group-append: no (: último hijo)> .btn,
+.input-group> .input-group-append: not (: last-child)> .input-group-text,
+.input-group> .input-group-append: last-child> .btn: not (: last-child): not (.dropdown-toggle),
+.input-group> .input-group-append: last-child> .input-group-text: not (: last-child) {
+  borde superior-derecho-radio: 0;
+  borde inferior-derecho-radio: 0;
+}
+
+.input-group> .input-group-append> .btn,
+.input-group> .input-group-append> .input-group-text,
+.input-group> .input-group-prepend: not (: first-child)> .btn,
+.input-group> .input-group-prepend: not (: first-child)> .input-group-text,
+.input-group> .input-group-prepend: first-child> .btn: not (: first-child),
+.input-group> .input-group-prepend: first-child> .input-group-text: not (: first-child) {
+  borde superior-izquierdo-radio: 0;
+  borde inferior-izquierdo-radio: 0;
+}
+
+.custom-control {
+  posición: relativa;
+  bloqueo de pantalla;
+  min-height: 1.5rem;
+  relleno izquierdo: 1.5rem;
+}
+
+.custom-control-inline {
+  pantalla: -ms-inline-flexbox;
+  pantalla: inline-flex;
+  margen derecho: 1rem;
+}
+
+.custom-control-input {
+  posición: absoluta;
+  índice z: -1;
+  opacidad: 0;
+}
+
+.custom-control-input: verificado ~ .custom-control-label :: before {
+  color: #fff;
+  color de fondo: # 007bff;
+}
+
+.custom-control-input: focus ~ .custom-control-label :: before {
+  caja-sombra: 0 0 0 1px #fff, 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.custom-control-input: active ~ .custom-control-label :: before {
+  color: #fff;
+  color de fondo: # b3d7ff;
+}
+
+.custom-control-input: deshabilitado ~ .custom-control-label {
+  color: # 6c757d;
+}
+
+.custom-control-input: deshabilitado ~ .custom-control-label :: before {
+  color de fondo: # e9ecef;
+}
+
+.custom-control-label {
+  posición: relativa;
+  margen inferior: 0;
+}
+
+.custom-control-label :: before {
+  posición: absoluta;
+  superior: 0,25rem;
+  izquierda: -1.5rem;
+  bloqueo de pantalla;
+  ancho: 1rem;
+  altura: 1rem;
+  punteros-eventos: ninguno;
+  contenido: "";
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: ninguno;
+  selección de usuario: ninguna;
+  color de fondo: # dee2e6;
+}
+
+.custom-control-label :: after {
+  posición: absoluta;
+  superior: 0,25rem;
+  izquierda: -1.5rem;
+  bloqueo de pantalla;
+  ancho: 1rem;
+  altura: 1rem;
+  contenido: "";
+  repetición de fondo: no repetición;
+  posición de fondo: centro centro;
+  tamaño de fondo: 50% 50%;
+}
+
+.custom-checkbox .custom-control-label :: antes de {
+  radio del borde: 0.25rem;
+}
+
+.custom-checkbox .custom-control-input: marcado ~ .custom-control-label :: antes de {
+  color de fondo: # 007bff;
+}
+
+.custom-checkbox .custom-control-input: marcado ~ .custom-control-label :: después de {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg xmlns = 'http: //www.w3.org/2000/svg' viewBox = '0 0 8 8'% 3E% 3Cpath fill = '% 23fff' d = 'M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z' /% 3E% 3C / svg% 3E ");
+}
+
+.custom-checkbox .custom-control-input: indeterminado ~ .custom-control-label :: before {
+  color de fondo: # 007bff;
+}
+
+.custom-checkbox .custom-control-input: indeterminado ~ .custom-control-label :: after {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg xmlns = 'http: //www.w3.org/2000/svg' viewBox = '0 0 4 4'% 3E% 3Cpath trazo = '% 23fff' d = 'M0 2h4' /% 3E% 3C / svg% 3E ");
+}
+
+.custom-checkbox .custom-control-input: deshabilitado: marcado ~ .custom-control-label :: antes de {
+  color de fondo: rgba (0, 123, 255, 0.5);
+}
+
+.custom-checkbox .custom-control-input: deshabilitado: indeterminado ~ .custom-control-label :: before {
+  color de fondo: rgba (0, 123, 255, 0.5);
+}
+
+.custom-radio .custom-control-label :: before {
+  radio del borde: 50%;
+}
+
+.custom-radio .custom-control-input: marcado ~ .custom-control-label :: antes de {
+  color de fondo: # 007bff;
+}
+
+.custom-radio .custom-control-input: marcado ~ .custom-control-label :: después de {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg xmlns = 'http: //www.w3.org/2000/svg' viewBox = '- 4 -4 8 8'% 3E % 3Circir r = '3' relleno = '% 23fff' /% 3E% 3C / svg% 3E ");
+}
+
+.custom-radio .custom-control-input: deshabilitado: marcado ~ .custom-control-label :: before {
+  color de fondo: rgba (0, 123, 255, 0.5);
+}
+
+.custom-select {
+  pantalla: bloque en línea;
+  ancho: 100%;
+  altura: calc (2.25rem + 2px);
+  relleno: 0.375rem 1.75rem 0.375rem 0.75rem;
+  línea de altura: 1.5;
+  color: # 495057;
+  alineación vertical: medio;
+  fondo: #fff url ("data: image / svg + xml; charset = utf8,% 3Csvg xmlns = 'http: //www.w3.org/2000/svg' viewBox = '0 0 4 5'% 3E% 3Cpath fill = '% 23343a40' d = 'M2 0L0 2h4zm0 5L0 3h4z' /% 3E% 3C / svg% 3E ") sin repetición derecha 0.75rem center;
+  tamaño de fondo: 8px 10px;
+  borde: 1px sólido # ced4da;
+  radio del borde: 0.25rem;
+  -webkit-apariencia: ninguno;
+  -mez-apariencia: ninguna;
+  apariencia: ninguna;
+}
+
+.custom-select: focus {
+  color de borde: # 80bdff;
+  esquema: 0;
+  caja-sombra: recuadro 0 1px 2px rgba (0, 0, 0, 0.075), 0 0 5px rgba (128, 189, 255, 0.5);
+}
+
+.custom-select: focus :: - ms-value {
+  color: # 495057;
+  color de fondo: #fff;
+}
+
+.custom-select [multiple], .custom-select [size]: not ([size = "1"]) {
+  altura: auto;
+  relleno derecho: 0.75rem;
+  imagen de fondo: ninguna;
+}
+
+.custom-select: deshabilitado {
+  color: # 6c757d;
+  color de fondo: # e9ecef;
+}
+
+.custom-select :: - ms-expand {
+  opacidad: 0;
+}
+
+.custom-select-sm {
+  altura: calc (1.8125rem + 2px);
+  relleno superior: 0.375rem;
+  parte inferior de relleno: 0.375rem;
+  tamaño de letra: 75%;
+}
+
+.custom-select-lg {
+  altura: calc (2.875rem + 2px);
+  relleno superior: 0.375rem;
+  parte inferior de relleno: 0.375rem;
+  tamaño de letra: 125%;
+}
+
+.archivo personalizado {
+  posición: relativa;
+  pantalla: bloque en línea;
+  ancho: 100%;
+  altura: calc (2.25rem + 2px);
+  margen inferior: 0;
+}
+
+.custom-file-input {
+  posición: relativa;
+  índice z: 2;
+  ancho: 100%;
+  altura: calc (2.25rem + 2px);
+  margen: 0;
+  opacidad: 0;
+}
+
+.custom-file-input: focus ~ .custom-file-label {
+  color de borde: # 80bdff;
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.custom-file-input: focus ~ .custom-file-label :: after {
+  color de borde: # 80bdff;
+}
+
+.custom-file-input: lang (en) ~ .custom-file-label :: after {
+  contenido: "Examinar";
+}
+
+.custom-file-label {
+  posición: absoluta;
+  arriba: 0;
+  derecha: 0;
+  izquierda: 0;
+  índice z: 1;
+  altura: calc (2.25rem + 2px);
+  relleno: 0.375rem 0.75rem;
+  línea de altura: 1.5;
+  color: # 495057;
+  color de fondo: #fff;
+  borde: 1px sólido # ced4da;
+  radio del borde: 0.25rem;
+}
+
+.custom-file-label :: after {
+  posición: absoluta;
+  arriba: 0;
+  derecha: 0;
+  abajo: 0;
+  índice z: 3;
+  bloqueo de pantalla;
+  altura: 2.25rem;
+  relleno: 0.375rem 0.75rem;
+  línea de altura: 1.5;
+  color: # 495057;
+  contenido: "Examinar";
+  color de fondo: # e9ecef;
+  borde izquierdo: 1px sólido # ced4da;
+  radio del borde: 0 0.25rem 0.25rem 0;
+}
+
+.rango personalizado {
+  ancho: 100%;
+  relleno-izquierda: 0;
+  color de fondo: transparente;
+  -webkit-apariencia: ninguno;
+  -mez-apariencia: ninguna;
+  apariencia: ninguna;
+}
+
+.custom-range: focus {
+  esquema: ninguno;
+}
+
+.custom-range :: - moz-focus-outside {
+  borde: 0;
+}
+
+.custom-range :: - webkit-slider-thumb {
+  ancho: 1rem;
+  altura: 1rem;
+  margen superior: -0.25rem;
+  color de fondo: # 007bff;
+  borde: 0;
+  radio del borde: 1rem;
+  -webkit-apariencia: ninguno;
+  apariencia: ninguna;
+}
+
+.custom-range :: - webkit-slider-thumb: focus {
+  esquema: ninguno;
+  caja-sombra: 0 0 0 1px #fff, 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.custom-range :: - webkit-slider-thumb: active {
+  color de fondo: # b3d7ff;
+}
+
+.custom-range :: - webkit-slider-runnable-track {
+  ancho: 100%;
+  altura: 0.5rem;
+  color: transparente;
+  cursor: puntero;
+  color de fondo: # dee2e6;
+  color del borde: transparente;
+  radio del borde: 1rem;
+}
+
+.custom-range :: - moz-range-thumb {
+  ancho: 1rem;
+  altura: 1rem;
+  color de fondo: # 007bff;
+  borde: 0;
+  radio del borde: 1rem;
+  -mez-apariencia: ninguna;
+  apariencia: ninguna;
+}
+
+.custom-range :: - moz-range-thumb: focus {
+  esquema: ninguno;
+  caja-sombra: 0 0 0 1px #fff, 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.custom-range :: - moz-range-thumb: active {
+  color de fondo: # b3d7ff;
+}
+
+.custom-range :: - moz-range-track {
+  ancho: 100%;
+  altura: 0.5rem;
+  color: transparente;
+  cursor: puntero;
+  color de fondo: # dee2e6;
+  color del borde: transparente;
+  radio del borde: 1rem;
+}
+
+.custom-range :: - ms-thumb {
+  ancho: 1rem;
+  altura: 1rem;
+  color de fondo: # 007bff;
+  borde: 0;
+  radio del borde: 1rem;
+  apariencia: ninguna;
+}
+
+.custom-range :: - ms-thumb: focus {
+  esquema: ninguno;
+  caja-sombra: 0 0 0 1px #fff, 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.custom-range :: - ms-thumb: active {
+  color de fondo: # b3d7ff;
+}
+
+.custom-range :: - ms-track {
+  ancho: 100%;
+  altura: 0.5rem;
+  color: transparente;
+  cursor: puntero;
+  color de fondo: transparente;
+  color del borde: transparente;
+  ancho del borde: 0.5rem;
+}
+
+.custom-range :: - ms-fill-lower {
+  color de fondo: # dee2e6;
+  radio del borde: 1rem;
+}
+
+.custom-range :: - ms-fill-upper {
+  margen derecho: 15px;
+  color de fondo: # dee2e6;
+  radio del borde: 1rem;
+}
+
+.nav {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  relleno-izquierda: 0;
+  margen inferior: 0;
+  estilo de lista: ninguno;
+}
+
+.nav-link {
+  bloqueo de pantalla;
+  relleno: 0.5rem 1rem;
+}
+
+.nav-link: hover, .nav-link: focus {
+  texto-decoración: ninguno;
+}
+
+.nav-link.disabled {
+  color: # 6c757d;
+}
+
+.nav-tabs {
+  borde inferior: 1px sólido # dee2e6;
+}
+
+.nav-tabs .nav-item {
+  margen inferior: -1px;
+}
+
+.nav-tabs .nav-link {
+  borde: 1px sólido transparente;
+  borde superior-izquierdo-radio: 0.25rem;
+  borde superior-derecho-radio: 0.25rem;
+}
+
+.nav-tabs .nav-link: hover, .nav-tabs .nav-link: focus {
+  color de borde: # e9ecef # e9ecef # dee2e6;
+}
+
+.nav-tabs .nav-link.disabled {
+  color: # 6c757d;
+  color de fondo: transparente;
+  color del borde: transparente;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: # 495057;
+  color de fondo: #fff;
+  color de borde: # dee2e6 # dee2e6 #fff;
+}
+
+.nav-tabs .dropdown-menu {
+  margen superior: -1px;
+  borde superior-izquierdo-radio: 0;
+  borde superior-derecho-radio: 0;
+}
+
+.nav-pills .nav-link {
+  radio del borde: 0.25rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show> .nav-link {
+  color: #fff;
+  color de fondo: # 007bff;
+}
+
+.nav-fill .nav-item {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.nav-justified .nav-item {
+  -ms-flex-preferido-tamaño: 0;
+  base flexible: 0;
+  -ms-flex-positivo: 1;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.tab-content> .tab-pane {
+  pantalla: ninguna;
+}
+
+.tab-content> .active {
+  bloqueo de pantalla;
+}
+
+.navbar {
+  posición: relativa;
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  -ms-flex-pack: justificar;
+  justificar contenido: espacio intermedio;
+  relleno: 0.5rem 1rem;
+}
+
+.navbar> .container,
+.navbar> .container-fluid {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  -ms-flex-pack: justificar;
+  justificar contenido: espacio intermedio;
+}
+
+.navbar-brand {
+  pantalla: bloque en línea;
+  relleno superior: 0.3125rem;
+  parte inferior de relleno: 0.3125rem;
+  margen derecho: 1rem;
+  tamaño de letra: 1.25rem;
+  línea-altura: heredar;
+  espacio en blanco: nowrap;
+}
+
+.navbar-brand: hover, .navbar-brand: focus {
+  texto-decoración: ninguno;
+}
+
+.navbar-nav {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+  relleno-izquierda: 0;
+  margen inferior: 0;
+  estilo de lista: ninguno;
+}
+
+.navbar-nav .nav-link {
+  derecho de relleno: 0;
+  relleno-izquierda: 0;
+}
+
+.navbar-nav .dropdown-menu {
+  posición: estática;
+  flotar: ninguno;
+}
+
+.navbar-text {
+  pantalla: bloque en línea;
+  relleno superior: 0.5rem;
+  relleno de fondo: 0.5rem;
+}
+
+.navbar-collapse {
+  -ms-flex-preferido-tamaño: 100%;
+  base flexible: 100%;
+  -ms-flex-positivo: 1;
+  flex-grow: 1;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+}
+
+.navbar-toggler {
+  relleno: 0.25rem 0.75rem;
+  tamaño de letra: 1.25rem;
+  línea de altura: 1;
+  color de fondo: transparente;
+  borde: 1px sólido transparente;
+  radio del borde: 0.25rem;
+}
+
+.navbar-toggler: hover, .navbar-toggler: focus {
+  texto-decoración: ninguno;
+}
+
+.navbar-toggler: not (: deshabilitado): not (.disabled) {
+  cursor: puntero;
+}
+
+.navbar-toggler-icon {
+  pantalla: bloque en línea;
+  ancho: 1.5em;
+  altura: 1.5em;
+  alineación vertical: medio;
+  contenido: "";
+  fondo: centro de no-repetición centro;
+  tamaño de fondo: 100% 100%;
+}
+
+@media (ancho máximo: 575.98px) {
+  .navbar-expand-sm> .container,
+  .navbar-expand-sm> .container-fluid {
+    derecho de relleno: 0;
+    relleno-izquierda: 0;
+  }
+}
+
+@media (ancho mínimo: 576px) {
+  .navbar-expand-sm {
+    -ms-flex-flow: fila nowrap;
+    flex-flow: fila nowrap;
+    -ms-flex-pack: inicio;
+    justificar contenido: flex-start;
+  }
+  .navbar-expand-sm .navbar-nav {
+    -ms-flex-direction: fila;
+    dirección flexible: fila;
+  }
+  .navbar-expand-sm .navbar-nav .dropdown-menu {
+    posición: absoluta;
+  }
+  .navbar-expand-sm .navbar-nav .nav-link {
+    derecho de relleno: 0.5rem;
+    relleno-izquierda: 0.5rem;
+  }
+  .navbar-expand-sm> .container,
+  .navbar-expand-sm> .container-fluid {
+    -ms-flex-wrap: nowrap;
+    envoltura flexible: nowrap;
+  }
+  .navbar-expand-sm .navbar-collapse {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+    -ms-flex-preferido-tamaño: auto;
+    base flexible: auto;
+  }
+  .navbar-expand-sm .navbar-toggler {
+    pantalla: ninguna;
+  }
+}
+
+@media (ancho máximo: 767.98 px) {
+  .navbar-expand-md> .container,
+  .navbar-expand-md> .container-fluid {
+    derecho de relleno: 0;
+    relleno-izquierda: 0;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .navbar-expand-md {
+    -ms-flex-flow: fila nowrap;
+    flex-flow: fila nowrap;
+    -ms-flex-pack: inicio;
+    justificar contenido: flex-start;
+  }
+  .navbar-expand-md .navbar-nav {
+    -ms-flex-direction: fila;
+    dirección flexible: fila;
+  }
+  .navbar-expand-md .navbar-nav .dropdown-menu {
+    posición: absoluta;
+  }
+  .navbar-expand-md .navbar-nav .nav-link {
+    derecho de relleno: 0.5rem;
+    relleno-izquierda: 0.5rem;
+  }
+  .navbar-expand-md> .container,
+  .navbar-expand-md> .container-fluid {
+    -ms-flex-wrap: nowrap;
+    envoltura flexible: nowrap;
+  }
+  .navbar-expand-md .navbar-collapse {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+    -ms-flex-preferido-tamaño: auto;
+    base flexible: auto;
+  }
+  .navbar-expand-md .navbar-toggler {
+    pantalla: ninguna;
+  }
+}
+
+@media (ancho máximo: 991.98 px) {
+  .navbar-expand-lg> .container,
+  .navbar-expand-lg> .container-fluid {
+    derecho de relleno: 0;
+    relleno-izquierda: 0;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .navbar-expand-lg {
+    -ms-flex-flow: fila nowrap;
+    flex-flow: fila nowrap;
+    -ms-flex-pack: inicio;
+    justificar contenido: flex-start;
+  }
+  .navbar-expand-lg .navbar-nav {
+    -ms-flex-direction: fila;
+    dirección flexible: fila;
+  }
+  .navbar-expand-lg .navbar-nav .dropdown-menu {
+    posición: absoluta;
+  }
+  .navbar-expand-lg .navbar-nav .nav-link {
+    derecho de relleno: 0.5rem;
+    relleno-izquierda: 0.5rem;
+  }
+  .navbar-expand-lg> .container,
+  .navbar-expand-lg> .container-fluid {
+    -ms-flex-wrap: nowrap;
+    envoltura flexible: nowrap;
+  }
+  .navbar-expand-lg .navbar-collapse {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+    -ms-flex-preferido-tamaño: auto;
+    base flexible: auto;
+  }
+  .navbar-expand-lg .navbar-toggler {
+    pantalla: ninguna;
+  }
+}
+
+@media (ancho máximo: 1199.98 px) {
+  .navbar-expand-xl> .container,
+  .navbar-expand-xl> .container-fluid {
+    derecho de relleno: 0;
+    relleno-izquierda: 0;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .navbar-expand-xl {
+    -ms-flex-flow: fila nowrap;
+    flex-flow: fila nowrap;
+    -ms-flex-pack: inicio;
+    justificar contenido: flex-start;
+  }
+  .navbar-expand-xl .navbar-nav {
+    -ms-flex-direction: fila;
+    dirección flexible: fila;
+  }
+  .navbar-expand-xl .navbar-nav .dropdown-menu {
+    posición: absoluta;
+  }
+  .navbar-expand-xl .navbar-nav .nav-link {
+    derecho de relleno: 0.5rem;
+    relleno-izquierda: 0.5rem;
+  }
+  .navbar-expand-xl> .container,
+  .navbar-expand-xl> .container-fluid {
+    -ms-flex-wrap: nowrap;
+    envoltura flexible: nowrap;
+  }
+  .navbar-expand-xl .navbar-collapse {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+    -ms-flex-preferido-tamaño: auto;
+    base flexible: auto;
+  }
+  .navbar-expand-xl .navbar-toggler {
+    pantalla: ninguna;
+  }
+}
+
+.navbar-expand {
+  -ms-flex-flow: fila nowrap;
+  flex-flow: fila nowrap;
+  -ms-flex-pack: inicio;
+  justificar contenido: flex-start;
+}
+
+.navbar-expand> .container,
+.navbar-expand> .container-fluid {
+  derecho de relleno: 0;
+  relleno-izquierda: 0;
+}
+
+.navbar-expandir .navbar-nav {
+  -ms-flex-direction: fila;
+  dirección flexible: fila;
+}
+
+.navbar-expandir .navbar-nav .dropdown-menu {
+  posición: absoluta;
+}
+
+.navbar-expandir .navbar-nav .nav-link {
+  derecho de relleno: 0.5rem;
+  relleno-izquierda: 0.5rem;
+}
+
+.navbar-expand> .container,
+.navbar-expand> .container-fluid {
+  -ms-flex-wrap: nowrap;
+  envoltura flexible: nowrap;
+}
+
+.navbar-expand .navbar-collapse {
+  pantalla: -ms-flexbox! important;
+  pantalla: flex! important;
+  -ms-flex-preferido-tamaño: auto;
+  base flexible: auto;
+}
+
+.navbar-expandir .navbar-toggler {
+  pantalla: ninguna;
+}
+
+.navbar-light .navbar-brand {
+  color: rgba (0, 0, 0, 0.9);
+}
+
+.navbar-light .navbar-brand: hover, .navbar-light .navbar-brand: focus {
+  color: rgba (0, 0, 0, 0.9);
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: rgba (0, 0, 0, 0.5);
+}
+
+.navbar-light .navbar-nav .nav-link: flotar, .navbar-light .navbar-nav .nav-link: focus {
+  color: rgba (0, 0, 0, 0.7);
+}
+
+.navbar-light .navbar-nav .nav-link.disabled {
+  color: rgba (0, 0, 0, 0.3);
+}
+
+.navbar-light .navbar-nav .show> .nav-link,
+.navbar-light .navbar-nav .active> .nav-link,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .nav-link.active {
+  color: rgba (0, 0, 0, 0.9);
+}
+
+.navbar-light .navbar-toggler {
+  color: rgba (0, 0, 0, 0.5);
+  color de borde: rgba (0, 0, 0, 0.1);
+}
+
+.navbar-light .navbar-toggler-icon {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg viewBox = '0 0 30 30' xmlns = 'http: //www.w3.org/2000/svg'%3E%3Cpath stroke = 'rgba (0, 0, 0, 0.5)' stroke-width = '2' stroke-linecap = 'round' stroke-miterlimit = '10 'd =' M4 7h22M4 15h22M4 23h22 '/% 3E% 3C / svg % 3E ");
+}
+
+.navbar-light .navbar-text {
+  color: rgba (0, 0, 0, 0.5);
+}
+
+.navbar-light .navbar-text a {
+  color: rgba (0, 0, 0, 0.9);
+}
+
+.navbar-light .navbar-text a: hover, .navbar-light .navbar-text a: focus {
+  color: rgba (0, 0, 0, 0.9);
+}
+
+.navbar-dark .navbar-brand {
+  color: #fff;
+}
+
+.navbar-dark .navbar-brand: hover, .navbar-dark .navbar-brand: focus {
+  color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba (255, 255, 255, 0.5);
+}
+
+.navbar-dark .navbar-nav .nav-link: flotar, .navbar-dark .navbar-nav .nav-link: focus {
+  color: rgba (255, 255, 255, 0,75);
+}
+
+.navbar-dark .navbar-nav .nav-link.disabled {
+  color: rgba (255, 255, 255, 0,25);
+}
+
+.navbar-dark .navbar-nav .show> .nav-link,
+.navbar-dark .navbar-nav .active> .nav-link,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #fff;
+}
+
+.navbar-dark .navbar-toggler {
+  color: rgba (255, 255, 255, 0.5);
+  color de borde: rgba (255, 255, 255, 0.1);
+}
+
+.navbar-dark .navbar-toggler-icon {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg viewBox = '0 0 30 30' xmlns = 'http: //www.w3.org/2000/svg'%3E%3Cpath stroke = 'rgba (255, 255, 255, 0.5)' stroke-width = '2' stroke-linecap = 'round' stroke-miterlimit = '10 'd =' M4 7h22M4 15h22M4 23h22 '/% 3E% 3C / svg % 3E ");
+}
+
+.navbar-dark .navbar-text {
+  color: rgba (255, 255, 255, 0.5);
+}
+
+.navbar-dark .navbar-text a {
+  color: #fff;
+}
+
+.navbar-dark .navbar-text a: hover, .navbar-dark .navbar-text a: focus {
+  color: #fff;
+}
+
+.card {
+  posición: relativa;
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+  ancho mínimo: 0;
+  ajuste de palabra: palabra de descanso;
+  color de fondo: #fff;
+  clip de fondo: cuadro de borde;
+  borde: 1px rgba sólido (0, 0, 0, 0.125);
+  radio del borde: 0.25rem;
+}
+
+.card> hr {
+  margen derecho: 0;
+  margen izquierdo: 0;
+}
+
+.card> .list-group: first-child .list-group-item: first-child {
+  borde superior-izquierdo-radio: 0.25rem;
+  borde superior-derecho-radio: 0.25rem;
+}
+
+.card> .list-group: last-child .list-group-item: last-child {
+  borde inferior-derecho-radio: 0.25rem;
+  borde inferior-izquierdo-radio: 0.25rem;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  relleno: 1.25rem;
+}
+
+.card-title {
+  margen inferior: 0.75rem;
+}
+
+.card-subtitle {
+  margen superior: -0.375rem;
+  margen inferior: 0;
+}
+
+.card-text: last-child {
+  margen inferior: 0;
+}
+
+.card-link: hover {
+  texto-decoración: ninguno;
+}
+
+.card-link + .card-link {
+  margen izquierdo: 1.25rem;
+}
+
+.card-header {
+  relleno: 0.75rem 1.25rem;
+  margen inferior: 0;
+  color de fondo: rgba (0, 0, 0, 0.03);
+  borde inferior: 1px rgba sólido (0, 0, 0, 0.125);
+}
+
+.card-header: first-child {
+  radio del borde: calc (0.25rem - 1px) calc (0.25rem - 1px) 0 0;
+}
+
+.card-header + .list-group .list-group-item: first-child {
+  borde superior: 0;
+}
+
+.card-footer {
+  relleno: 0.75rem 1.25rem;
+  color de fondo: rgba (0, 0, 0, 0.03);
+  borde superior: 1px rgba sólido (0, 0, 0, 0.125);
+}
+
+.card-footer: last-child {
+  radio del borde: 0 0 calc (0.25rem - 1px) calc (0.25rem - 1px);
+}
+
+.card-header-tabs {
+  margen derecho: -0.625rem;
+  margen inferior: -0.75rem;
+  margen izquierdo: -0.625rem;
+  borde inferior: 0;
+}
+
+.card-header-pills {
+  margen derecho: -0.625rem;
+  margen izquierdo: -0.625rem;
+}
+
+.card-img-overlay {
+  posición: absoluta;
+  arriba: 0;
+  derecha: 0;
+  abajo: 0;
+  izquierda: 0;
+  relleno: 1.25rem;
+}
+
+.card-img {
+  ancho: 100%;
+  radio del borde: calc (0.25rem - 1px);
+}
+
+.card-img-top {
+  ancho: 100%;
+  borde superior izquierdo del radio: calc (0.25rem - 1px);
+  borde superior-derecho-radio: calc (0.25rem - 1px);
+}
+
+.card-img-bottom {
+  ancho: 100%;
+  borde inferior-derecho-radio: calc (0.25rem - 1px);
+  borde inferior-izquierdo-radio: calc (0.25rem - 1px);
+}
+
+.Baraja de carta {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+}
+
+.card-deck .card {
+  margen inferior: 15px;
+}
+
+@media (ancho mínimo: 576px) {
+  .Baraja de carta {
+    -ms-flex-flow: envoltura de fila;
+    flex-flow: envoltura de fila;
+    margen derecho: -15px;
+    margen izquierdo: -15px;
+  }
+  .card-deck .card {
+    pantalla: -ms-flexbox;
+    pantalla: flexión;
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    -ms-flex-direction: columna;
+    dirección flexible: columna;
+    margen derecho: 15px;
+    margen inferior: 0;
+    margen izquierdo: 15px;
+  }
+}
+
+.card-group {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+}
+
+.card-group> .card {
+  margen inferior: 15px;
+}
+
+@media (ancho mínimo: 576px) {
+  .card-group {
+    -ms-flex-flow: envoltura de fila;
+    flex-flow: envoltura de fila;
+  }
+  .card-group> .card {
+    -ms-flex: 1 0 0%;
+    flex: 1 0 0%;
+    margen inferior: 0;
+  }
+  .card-group> .card + .card {
+    margen izquierdo: 0;
+    borde izquierdo: 0;
+  }
+  .card-group> .card: first-child {
+    borde superior-derecho-radio: 0;
+    borde inferior-derecho-radio: 0;
+  }
+  .card-group> .card: first-child .card-img-top,
+  .card-group> .card: primer-hijo .card-header {
+    borde superior-derecho-radio: 0;
+  }
+  .card-group> .card: first-child .card-img-bottom,
+  .card-group> .card: first-child .card-footer {
+    borde inferior-derecho-radio: 0;
+  }
+  .card-group> .card: last-child {
+    borde superior-izquierdo-radio: 0;
+    borde inferior-izquierdo-radio: 0;
+  }
+  .card-group> .card: last-child .card-img-top,
+  .card-group> .card: last-child .card-header {
+    borde superior-izquierdo-radio: 0;
+  }
+  .card-group> .card: last-child .card-img-bottom,
+  .card-group> .card: last-child .card-footer {
+    borde inferior-izquierdo-radio: 0;
+  }
+  .card-group> .card: only-child {
+    radio del borde: 0.25rem;
+  }
+  .card-group> .card: only-child .card-img-top,
+  .card-group> .card: only-child .card-header {
+    borde superior-izquierdo-radio: 0.25rem;
+    borde superior-derecho-radio: 0.25rem;
+  }
+  .card-group> .card: only-child .card-img-bottom,
+  .card-group> .card: only-child .card-footer {
+    borde inferior-derecho-radio: 0.25rem;
+    borde inferior-izquierdo-radio: 0.25rem;
+  }
+  .card-group> .card: not (: first-child): not (: last-child): not (: only-child) {
+    radio del borde: 0;
+  }
+  .card-group> .card: not (: first-child): not (: last-child): not (: only-child) .card-img-top,
+  .card-group> .card: not (: first-child): not (: last-child): not (: only-child) .card-img-bottom,
+  .card-group> .card: not (: first-child): not (: last-child): not (: only-child) .card-header,
+  .card-group> .card: not (: first-child): not (: last-child): not (: only-child) .card-footer {
+    radio del borde: 0;
+  }
+}
+
+.card-columnas .card {
+  margen inferior: 0.75rem;
+}
+
+@media (ancho mínimo: 576px) {
+  .card-columnas {
+    -webkit-column-count: 3;
+    -mez-columna-cuenta: 3;
+    recuento de columnas: 3;
+    -webkit-column-gap: 1.25rem;
+    -moz-column-gap: 1.25rem;
+    hueco de la columna: 1.25rem;
+    huérfanos: 1;
+    viudas: 1;
+  }
+  .card-columnas .card {
+    pantalla: bloque en línea;
+    ancho: 100%;
+  }
+}
+
+.accordion .card: not (: first-of-type): not (: last-of-type) {
+  borde inferior: 0;
+  radio del borde: 0;
+}
+
+.accordion .card: not (: first-of-type) .card-header: first-child {
+  radio del borde: 0;
+}
+
+.accordion .card: primero de tipo {
+  borde inferior: 0;
+  borde inferior-derecho-radio: 0;
+  borde inferior-izquierdo-radio: 0;
+}
+
+.accordion .card: last-of-type {
+  borde superior-izquierdo-radio: 0;
+  borde superior-derecho-radio: 0;
+}
+
+.breadcrumb {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-wrap: envolver;
+  flex-wrap: envolver;
+  relleno: 0.75rem 1rem;
+  margen inferior: 1rem;
+  estilo de lista: ninguno;
+  color de fondo: # e9ecef;
+  radio del borde: 0.25rem;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  relleno-izquierda: 0.5rem;
+}
+
+.breadcrumb-item + .breadcrumb-item :: antes de {
+  pantalla: bloque en línea;
+  derecho de relleno: 0.5rem;
+  color: # 6c757d;
+  contenido: "/";
+}
+
+.breadcrumb-item + .breadcrumb-item: hover :: before {
+  texto-decoración: subrayado;
+}
+
+.breadcrumb-item + .breadcrumb-item: hover :: before {
+  texto-decoración: ninguno;
+}
+
+.breadcrumb-item.active {
+  color: # 6c757d;
+}
+
+.paginación {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  relleno-izquierda: 0;
+  estilo de lista: ninguno;
+  radio del borde: 0.25rem;
+}
+
+.page-link {
+  posición: relativa;
+  bloqueo de pantalla;
+  relleno: 0.5rem 0.75rem;
+  margen izquierdo: -1px;
+  altura de la línea: 1.25;
+  color: # 007bff;
+  color de fondo: #fff;
+  borde: 1px sólido # dee2e6;
+}
+
+.page-link: hover {
+  índice z: 2;
+  color: # 0056b3;
+  texto-decoración: ninguno;
+  color de fondo: # e9ecef;
+  color de borde: # dee2e6;
+}
+
+.page-link: focus {
+  índice z: 2;
+  esquema: 0;
+  caja-sombra: 0 0 0 0.2rem rgba (0, 123, 255, 0.25);
+}
+
+.page-link: not (: deshabilitado): not (.disabled) {
+  cursor: puntero;
+}
+
+.page-item: first-child .page-link {
+  margen izquierdo: 0;
+  borde superior-izquierdo-radio: 0.25rem;
+  borde inferior-izquierdo-radio: 0.25rem;
+}
+
+.page-item: last-child .page-link {
+  borde superior-derecho-radio: 0.25rem;
+  borde inferior-derecho-radio: 0.25rem;
+}
+
+.page-item.active .page-link {
+  índice z: 1;
+  color: #fff;
+  color de fondo: # 007bff;
+  color de borde: # 007bff;
+}
+
+.page-item.disabled .page-link {
+  color: # 6c757d;
+  punteros-eventos: ninguno;
+  cursor: auto;
+  color de fondo: #fff;
+  color de borde: # dee2e6;
+}
+
+.pagination-lg .page-link {
+  relleno: 0.75rem 1.5rem;
+  tamaño de letra: 1.25rem;
+  línea de altura: 1.5;
+}
+
+.pagination-lg .page-item: first-child .page-link {
+  borde superior izquierdo del radio: 0.3rem;
+  borde inferior-izquierdo-radio: 0.3rem;
+}
+
+.pagination-lg .page-item: last-child .page-link {
+  borde superior-derecho-radio: 0.3rem;
+  borde inferior-derecho-radio: 0.3rem;
+}
+
+.pagination-sm .page-link {
+  relleno: 0.25rem 0.5rem;
+  tamaño de letra: 0.875rem;
+  línea de altura: 1.5;
+}
+
+.pagination-sm .page-item: first-child .page-link {
+  borde superior izquierdo del radio: 0.2rem;
+  borde inferior-izquierdo-radio: 0.2rem;
+}
+
+.pagination-sm .page-item: last-child .page-link {
+  borde superior-derecho-radio: 0.2rem;
+  borde inferior-derecho-radio: 0.2rem;
+}
+
+.placa {
+  pantalla: bloque en línea;
+  Relleno: 0.25em 0.4em;
+  tamaño de letra: 75%;
+  peso de la fuente: 700;
+  línea de altura: 1;
+  text-align: center;
+  espacio en blanco: nowrap;
+  alineación vertical: línea de base;
+  radio del borde: 0.25rem;
+}
+
+.badge: vacío {
+  pantalla: ninguna;
+}
+
+.btn .badge {
+  posición: relativa;
+  arriba: -1px;
+}
+
+.badge-pill {
+  derecho de relleno: 0.6em;
+  relleno izquierdo: 0.6em;
+  radio del borde: 10rem;
+}
+
+.badge-primary {
+  color: #fff;
+  color de fondo: # 007bff;
+}
+
+.badge-primary [href]: hover, .badge-primary [href]: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # 0062cc;
+}
+
+.badge-secundaria {
+  color: #fff;
+  color de fondo: # 6c757d;
+}
+
+.badge-secondary [href]: hover, .badge-secondary [href]: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # 545b62;
+}
+
+.badge-success {
+  color: #fff;
+  color de fondo: # 28a745;
+}
+
+.badge-success [href]: hover, .badge-success [href]: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # 1e7e34;
+}
+
+.badge-info {
+  color: #fff;
+  color de fondo: # 17a2b8;
+}
+
+.badge-info [href]: hover, .badge-info [href]: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # 117a8b;
+}
+
+.badge-warning {
+  color: # 212529;
+  color de fondo: # ffc107;
+}
+
+.badge-warning [href]: hover, .badge-warning [href]: focus {
+  color: # 212529;
+  texto-decoración: ninguno;
+  color de fondo: # d39e00;
+}
+
+.badge-danger {
+  color: #fff;
+  color de fondo: # dc3545;
+}
+
+.badge-danger [href]: hover, .badge-danger [href]: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # bd2130;
+}
+
+.badge-light {
+  color: # 212529;
+  color de fondo: # f8f9fa;
+}
+
+.badge-light [href]: hover, .badge-light [href]: focus {
+  color: # 212529;
+  texto-decoración: ninguno;
+  color de fondo: # dae0e5;
+}
+
+.badge-dark {
+  color: #fff;
+  color de fondo: # 343a40;
+}
+
+.badge-dark [href]: hover, .badge-dark [href]: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  color de fondo: # 1d2124;
+}
+
+.jumbotron {
+  relleno: 2rem 1rem;
+  margen inferior: 2rem;
+  color de fondo: # e9ecef;
+  radio del borde: 0.3rem;
+}
+
+@media (ancho mínimo: 576px) {
+  .jumbotron {
+    relleno: 4rem 2rem;
+  }
+}
+
+.jumbotron-fluido {
+  derecho de relleno: 0;
+  relleno-izquierda: 0;
+  radio del borde: 0;
+}
+
+.alerta {
+  posición: relativa;
+  relleno: 0.75rem 1.25rem;
+  margen inferior: 1rem;
+  borde: 1px sólido transparente;
+  radio del borde: 0.25rem;
+}
+
+.alert-header {
+  color: heredar;
+}
+
+.alert-link {
+  peso de la fuente: 700;
+}
+
+.alert-desestimable {
+  derecho de relleno: 4rem;
+}
+
+.alert-desestimable .close {
+  posición: absoluta;
+  arriba: 0;
+  derecha: 0;
+  relleno: 0.75rem 1.25rem;
+  color: heredar;
+}
+
+.alert-primary {
+  color: # 004085;
+  color de fondo: # cce5ff;
+  color de borde: # b8daff;
+}
+
+.alert-primaria hr
+  color de borde superior: # 9fcdff;
+}
+
+.alert-primary .alert-link {
+  color: # 002752;
+}
+
+.alert-secundario {
+  color: # 383d41;
+  color de fondo: # e2e3e5;
+  color de borde: # d6d8db;
+}
+
+.alert-secundario hr
+  color de borde superior: # c8cbcf;
+}
+
+.alert-secundario .alert-link {
+  color: # 202326;
+}
+
+.alert-success {
+  color: # 155724;
+  color de fondo: # d4edda;
+  color de borde: # c3e6cb;
+}
+
+.alert-success hr {
+  color de borde superior: # b1dfbb;
+}
+
+.alert-success .alert-link {
+  color: # 0b2e13;
+}
+
+.alert-info {
+  color: # 0c5460;
+  color de fondo: # d1ecf1;
+  color de borde: # bee5eb;
+}
+
+.alert-info hr {
+  color de borde superior: # abdde5;
+}
+
+.alert-info .alert-link {
+  color: # 062c33;
+}
+
+.alert-warning {
+  color: # 856404;
+  color de fondo: # fff3cd;
+  color del borde: #ffeeba;
+}
+
+.alert-warning hr {
+  color de borde superior: # ffe8a1;
+}
+
+.alert-warning .alert-link {
+  color: # 533f03;
+}
+
+.alert-danger {
+  color: # 721c24;
+  color de fondo: # f8d7da;
+  color de borde: # f5c6cb;
+}
+
+.alert-danger hr {
+  color de borde superior: # f1b0b7;
+}
+
+.alert-danger .alert-link {
+  color: # 491217;
+}
+
+.alert-light {
+  color: # 818182;
+  color de fondo: #fefefe;
+  color de borde: #fdfdfe;
+}
+
+.alert hr luz
+  color de borde superior: # ececf6;
+}
+
+.alert-light .alert-link {
+  color: # 686868;
+}
+
+.alert-dark {
+  color: # 1b1e21;
+  color de fondo: # d6d8d9;
+  color de borde: # c6c8ca;
+}
+
+.alert-dark hr {
+  color de borde superior: # b9bbbe;
+}
+
+.alert-dark .alert-link {
+  color: # 040505;
+}
+
+@ -webkit-keyframes progress-bar-stripes {
+  desde {
+    posición de fondo: 1rem 0;
+  }
+  a {
+    posición de fondo: 0 0;
+  }
+}
+
+@keyframes progress-bar-stripes {
+  desde {
+    posición de fondo: 1rem 0;
+  }
+  a {
+    posición de fondo: 0 0;
+  }
+}
+
+.Progreso {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  altura: 1rem;
+  desbordamiento: oculto;
+  tamaño de letra: 0.75rem;
+  color de fondo: # e9ecef;
+  radio del borde: 0.25rem;
+}
+
+.barra de progreso {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+  -ms-flex-pack: centro;
+  justificar-contenido: centro;
+  color: #fff;
+  text-align: center;
+  espacio en blanco: nowrap;
+  color de fondo: # 007bff;
+  transición: ancho 0,6 s facilidad;
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .barra de progreso {
+    transición: ninguna;
+  }
+}
+
+.progress-bar-rayas {
+  imagen de fondo: gradiente lineal (45deg, rgba (255, 255, 255, 0.15) 25%, transparente 25%, transparente 50%, rgba (255, 255, 255, 0.15) 50%, rgba (255, 255, 255, 0,15) 75%, transparente 75%, transparente);
+  tamaño de fondo: 1rem 1rem;
+}
+
+.progress-bar-animated {
+  -webkit-animation: progress-bar-stripes 1s linear infinite;
+  Animación: progreso-barra-rayas 1s lineal infinito;
+}
+
+.media {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: inicio;
+  elementos de alineación: arranque flexible;
+}
+
+cuerpo medio
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.list-group {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+  relleno-izquierda: 0;
+  margen inferior: 0;
+}
+
+.list-group-item-action {
+  ancho: 100%;
+  color: # 495057;
+  text-align: heredar;
+}
+
+.list-group-item-action: desplazarse, .list-group-item-action: focus {
+  color: # 495057;
+  texto-decoración: ninguno;
+  color de fondo: # f8f9fa;
+}
+
+.list-group-item-action: active {
+  color: # 212529;
+  color de fondo: # e9ecef;
+}
+
+.list-group-item {
+  posición: relativa;
+  bloqueo de pantalla;
+  relleno: 0.75rem 1.25rem;
+  margen inferior: -1px;
+  color de fondo: #fff;
+  borde: 1px rgba sólido (0, 0, 0, 0.125);
+}
+
+.list-group-item: primer hijo {
+  borde superior-izquierdo-radio: 0.25rem;
+  borde superior-derecho-radio: 0.25rem;
+}
+
+.list-group-item: último hijo {
+  margen inferior: 0;
+  borde inferior-derecho-radio: 0.25rem;
+  borde inferior-izquierdo-radio: 0.25rem;
+}
+
+.list-group-item: hover, .list-group-item: focus {
+  índice z: 1;
+  texto-decoración: ninguno;
+}
+
+.list-group-item.disabled, .list-group-item: deshabilitado {
+  color: # 6c757d;
+  color de fondo: #fff;
+}
+
+.list-group-item.active {
+  índice z: 2;
+  color: #fff;
+  color de fondo: # 007bff;
+  color de borde: # 007bff;
+}
+
+.list-group-flush .list-group-item {
+  borde derecho: 0;
+  borde izquierdo: 0;
+  radio del borde: 0;
+}
+
+.list-group-flush: primer hijo .list-group-item: first-child {
+  borde superior: 0;
+}
+
+.list-group-flush: último-niño .list-group-item: último-niño {
+  borde inferior: 0;
+}
+
+.list-group-item-primary {
+  color: # 004085;
+  color de fondo: # b8daff;
+}
+
+.list-group-item-primary-list-group-item-item-action: hover, .list-group-item-primary.list-group-item-action: focus {
+  color: # 004085;
+  color de fondo: # 9fcdff;
+}
+
+.list-group-item-primary.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 004085;
+  color de borde: # 004085;
+}
+
+.list-group-item-secundaria {
+  color: # 383d41;
+  color de fondo: # d6d8db;
+}
+
+.list-group-item-secondary.list-group-item-action: desplazarse, .list-group-item-secondary.list-group-item-action: focus {
+  color: # 383d41;
+  color de fondo: # c8cbcf;
+}
+
+.list-group-item-secondary.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 383d41;
+  color de borde: # 383d41;
+}
+
+.list-group-item-item-success {
+  color: # 155724;
+  color de fondo: # c3e6cb;
+}
+
+.list-group-item-success.list-group-item-action: hover, .list-group-item-success.list-group-item-action: focus {
+  color: # 155724;
+  color de fondo: # b1dfbb;
+}
+
+.list-group-item-success.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 155724;
+  color de borde: # 155724;
+}
+
+.list-group-item-info {
+  color: # 0c5460;
+  color de fondo: # bee5eb;
+}
+
+.list-group-item-info.list-group-item-action: desplazarse, .list-group-item-info.list-group-item-action: focus {
+  color: # 0c5460;
+  color de fondo: # abdde5;
+}
+
+.list-group-item-info.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 0c5460;
+  color de borde: # 0c5460;
+}
+
+.list-group-item-warning {
+  color: # 856404;
+  color de fondo: #ffeeba;
+}
+
+.list-group-item-warning.list-group-item-action: hover, .list-group-item-warning.list-group-item-action: focus {
+  color: # 856404;
+  color de fondo: # ffe8a1;
+}
+
+.list-group-item-warning.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 856404;
+  color de borde: # 856404;
+}
+
+.list-group-item-danger {
+  color: # 721c24;
+  color de fondo: # f5c6cb;
+}
+
+.list-group-item-danger.list-group-item-action: hover, .list-group-item-danger.list-group-item-action: focus {
+  color: # 721c24;
+  color de fondo: # f1b0b7;
+}
+
+.list-group-item-danger.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 721c24;
+  color de borde: # 721c24;
+}
+
+.list-group-item-light {
+  color: # 818182;
+  color de fondo: #fdfdfe;
+}
+
+.list-group-item-light.list-group-item-action: desplazarse, .list-group-item-light.list-group-item-action: focus {
+  color: # 818182;
+  color de fondo: # ececf6;
+}
+
+.list-group-item-light.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 818182;
+  color del borde: # 818182;
+}
+
+.list-group-item-dark {
+  color: # 1b1e21;
+  color de fondo: # c6c8ca;
+}
+
+.list-group-item-dark.list-group-item-action: desplazarse, .list-group-item-dark.list-group-item-action: focus {
+  color: # 1b1e21;
+  color de fondo: # b9bbbe;
+}
+
+.list-group-item-dark.list-group-item-action.active {
+  color: #fff;
+  color de fondo: # 1b1e21;
+  color de borde: # 1b1e21;
+}
+
+.cerca {
+  flotar derecho;
+  tamaño de letra: 1.5rem;
+  peso de la fuente: 700;
+  línea de altura: 1;
+  color: # 000;
+  text-shadow: 0 1px 0 #fff;
+  opacidad: .5;
+}
+
+.close: hover, .close: focus {
+  color: # 000;
+  texto-decoración: ninguno;
+  opacidad: .75;
+}
+
+.close: not (: deshabilitado): not (.disabled) {
+  cursor: puntero;
+}
+
+botón.cerrar {
+  relleno: 0;
+  color de fondo: transparente;
+  borde: 0;
+  -webkit-apariencia: ninguno;
+}
+
+.modal-abierto {
+  desbordamiento: oculto;
+}
+
+.modal {
+  posición: fijo
+  arriba: 0;
+  derecha: 0;
+  abajo: 0;
+  izquierda: 0;
+  índice z: 1050;
+  pantalla: ninguna;
+  desbordamiento: oculto;
+  esquema: 0;
+}
+
+.modal-open .modal {
+  overflow-x: oculto;
+  desbordamiento-y: auto;
+}
+
+.modal-dialog {
+  posición: relativa;
+  ancho: auto;
+  margen: 0.5rem;
+  punteros-eventos: ninguno;
+}
+
+.modal.fade .modal-dialog {
+  transición: -webkit-transform 0.3s eas-out;
+  transición: transformar 0,3s de facilidad de salida;
+  transición: transformar 0.3s se reduce fácilmente, -webkit-transform 0.3s se reduce;
+  -webkit-transform: translate (0, -25%);
+  transformar: traducir (0, -25%);
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .modal.fade .modal-dialog {
+    transición: ninguna;
+  }
+}
+
+.modal.show .modal-dialog {
+  -webkit-transform: translate (0, 0);
+  transformar: traducir (0, 0);
+}
+
+.modal centrado en el diálogo {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  min-height: calc (100% - (0.5rem * 2));
+}
+
+.modal-content {
+  posición: relativa;
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-direction: columna;
+  dirección flexible: columna;
+  ancho: 100%;
+  punteros-eventos: auto;
+  color de fondo: #fff;
+  clip de fondo: caja de relleno;
+  borde: 1px rgba sólido (0, 0, 0, 0.2);
+  radio del borde: 0.3rem;
+  esquema: 0;
+}
+
+telón de fondo
+  posición: fijo
+  arriba: 0;
+  derecha: 0;
+  abajo: 0;
+  izquierda: 0;
+  índice z: 1040;
+  color de fondo: # 000;
+}
+
+.modal-backdrop.fade {
+  opacidad: 0;
+}
+
+.modal-backdrop.show {
+  opacidad: 0.5;
+}
+
+.modal-header {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: inicio;
+  elementos de alineación: arranque flexible;
+  -ms-flex-pack: justificar;
+  justificar contenido: espacio intermedio;
+  relleno: 1rem;
+  borde inferior: 1px sólido # e9ecef;
+  borde superior izquierdo del radio: 0.3rem;
+  borde superior-derecho-radio: 0.3rem;
+}
+
+.modal-header .close {
+  relleno: 1rem;
+  margen: -1rem -1rem -1rem auto;
+}
+
+.modal-title {
+  margen inferior: 0;
+  línea de altura: 1.5;
+}
+
+.modal-cuerpo {
+  posición: relativa;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  relleno: 1rem;
+}
+
+.modal-footer {
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  -ms-flex-pack: final;
+  justificar contenido: flex-end;
+  relleno: 1rem;
+  borde superior: 1px sólido # e9ecef;
+}
+
+.modal-footer>: not (: first-child) {
+  margen izquierdo: .25rem;
+}
+
+.modal-footer>: not (: last-child) {
+  margen derecho: .25rem;
+}
+
+.modal-scrollbar-measure {
+  posición: absoluta;
+  arriba: -9999px;
+  ancho: 50px;
+  altura: 50px;
+  desbordamiento: desplazamiento;
+}
+
+@media (ancho mínimo: 576px) {
+  .modal-dialog {
+    ancho máximo: 500px;
+    margen: 1.75rem auto;
+  }
+  .modal centrado en el diálogo {
+    min-height: calc (100% - (1.75rem * 2));
+  }
+  .modal-sm {
+    ancho máximo: 300px;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .modal-lg {
+    ancho máximo: 800px;
+  }
+}
+
+.tooltip {
+  posición: absoluta;
+  índice z: 1070;
+  bloqueo de pantalla;
+  margen: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  estilo de letra: normal;
+  peso de la fuente: 400;
+  línea de altura: 1.5;
+  alineación de texto: izquierda;
+  text-align: start;
+  texto-decoración: ninguno;
+  texto-sombra: ninguno;
+  transformación de texto: ninguna;
+  espaciado entre letras: normal;
+  pausa de palabra: normal;
+  espaciado de palabras: normal;
+  espacio en blanco: normal;
+  salto de línea: automático;
+  tamaño de letra: 0.875rem;
+  ajuste de palabra: palabra de descanso;
+  opacidad: 0;
+}
+
+.tooltip.show {
+  opacidad: 0,9;
+}
+
+.tooltip .arrow {
+  posición: absoluta;
+  bloqueo de pantalla;
+  ancho: 0.8rem;
+  altura: 0.4rem;
+}
+
+.tooltip .arrow :: antes {
+  posición: absoluta;
+  contenido: "";
+  color del borde: transparente;
+  estilo de borde: sólido;
+}
+
+.bs-tooltip-top, .bs-tooltip-auto [x-placement ^ = "top"] {
+  relleno: 0,4rem 0;
+}
+
+.bs-tooltip-top .arrow, .bs-tooltip-auto [x-placement ^ = "top"] .arrow {
+  abajo: 0;
+}
+
+.bs-tooltip-top .arrow :: before, .bs-tooltip-auto [x-placement ^ = "top"] .arrow :: before {
+  arriba: 0;
+  ancho del borde: 0.4rem 0.4rem 0;
+  color de borde superior: # 000;
+}
+
+.bs-tooltip-right, .bs-tooltip-auto [x-placement ^ = "right"] {
+  relleno: 0 0.4rem;
+}
+
+.bs-tooltip-right .arrow, .bs-tooltip-auto [x-placement ^ = "right"] .arrow {
+  izquierda: 0;
+  ancho: 0.4rem;
+  altura: 0.8rem;
+}
+
+.bs-tooltip-right .arrow :: before, .bs-tooltip-auto [x-placement ^ = "right"] .arrow :: before {
+  derecha: 0;
+  ancho del borde: 0.4rem 0.4rem 0.4rem 0;
+  color de borde derecho: # 000;
+}
+
+.bs-tooltip-bottom, .bs-tooltip-auto [x-placement ^ = "bottom"] {
+  relleno: 0,4rem 0;
+}
+
+.bs-tooltip-bottom .arrow, .bs-tooltip-auto [x-placement ^ = "bottom"] .arrow {
+  arriba: 0;
+}
+
+.bs-tooltip-bottom .arrow :: before, .bs-tooltip-auto [x-placement ^ = "bottom"] .arrow :: before {
+  abajo: 0;
+  ancho del borde: 0 0.4rem 0.4rem;
+  color de borde inferior: # 000;
+}
+
+.bs-tooltip-left, .bs-tooltip-auto [x-placement ^ = "left"] {
+  relleno: 0 0.4rem;
+}
+
+.bs-tooltip-left .arrow, .bs-tooltip-auto [x-placement ^ = "left"] .arrow {
+  derecha: 0;
+  ancho: 0.4rem;
+  altura: 0.8rem;
+}
+
+.bs-tooltip-left .arrow :: before, .bs-tooltip-auto [x-placement ^ = "left"] .arrow :: before {
+  izquierda: 0;
+  ancho del borde: 0.4rem 0 0.4rem 0.4rem;
+  color de borde izquierdo: # 000;
+}
+
+.tooltip-inner {
+  ancho máximo: 200px;
+  relleno: 0.25rem 0.5rem;
+  color: #fff;
+  text-align: center;
+  color de fondo: # 000;
+  radio del borde: 0.25rem;
+}
+
+.popover {
+  posición: absoluta;
+  arriba: 0;
+  izquierda: 0;
+  índice z: 1060;
+  bloqueo de pantalla;
+  ancho máximo: 276px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  estilo de letra: normal;
+  peso de la fuente: 400;
+  línea de altura: 1.5;
+  alineación de texto: izquierda;
+  text-align: start;
+  texto-decoración: ninguno;
+  texto-sombra: ninguno;
+  transformación de texto: ninguna;
+  espaciado entre letras: normal;
+  pausa de palabra: normal;
+  espaciado de palabras: normal;
+  espacio en blanco: normal;
+  salto de línea: automático;
+  tamaño de letra: 0.875rem;
+  ajuste de palabra: palabra de descanso;
+  color de fondo: #fff;
+  clip de fondo: caja de relleno;
+  borde: 1px rgba sólido (0, 0, 0, 0.2);
+  radio del borde: 0.3rem;
+}
+
+.popover .arrow {
+  posición: absoluta;
+  bloqueo de pantalla;
+  ancho: 1rem;
+  altura: 0.5rem;
+  margen: 0 0.3rem;
+}
+
+.popover .arrow :: before, .popover .arrow :: after {
+  posición: absoluta;
+  bloqueo de pantalla;
+  contenido: "";
+  color del borde: transparente;
+  estilo de borde: sólido;
+}
+
+.bs-popover-top, .bs-popover-auto [x-placement ^ = "top"] {
+  margen inferior: 0.5rem;
+}
+
+.bs-popover-top .arrow, .bs-popover-auto [x-placement ^ = "top"] .arrow {
+  parte inferior: calc ((0.5rem + 1px) * -1);
+}
+
+.bs-popover-top .arrow :: before, .bs-popover-auto [x-placement ^ = "top"] .arrow :: before,
+.bs-popover-top .arrow :: después,
+.bs-popover-auto [x-placement ^ = "top"] .arrow :: after {
+  ancho del borde: 0.5rem 0.5rem 0;
+}
+
+.bs-popover-top .arrow :: before, .bs-popover-auto [x-placement ^ = "top"] .arrow :: before {
+  abajo: 0;
+  color de borde superior: rgba (0, 0, 0, 0,25);
+}
+
+
+.bs-popover-top .arrow :: después,
+.bs-popover-auto [x-placement ^ = "top"] .arrow :: after {
+  abajo: 1px;
+  color de borde superior: #fff;
+}
+
+.bs-popover-right, .bs-popover-auto [x-placement ^ = "right"] {
+  margen izquierdo: 0.5rem;
+}
+
+.bs-popover-right .arrow, .bs-popover-auto [x-placement ^ = "right"] .arrow {
+  izquierda: calc ((0.5rem + 1px) * -1);
+  ancho: 0.5rem;
+  altura: 1rem;
+  margen: 0.3rem 0;
+}
+
+.bs-popover-right .arrow :: before, .bs-popover-auto [x-placement ^ = "right"] .arrow :: before,
+.bs-popover-right .arrow :: after,
+.bs-popover-auto [x-placement ^ = "right"] .arrow :: after {
+  ancho del borde: 0.5rem 0.5rem 0.5rem 0;
+}
+
+.bs-popover-right .arrow :: before, .bs-popover-auto [x-placement ^ = "right"] .arrow :: before {
+  izquierda: 0;
+  color de borde derecho: rgba (0, 0, 0, 0,25);
+}
+
+
+.bs-popover-right .arrow :: after,
+.bs-popover-auto [x-placement ^ = "right"] .arrow :: after {
+  izquierda: 1px;
+  color de borde derecho: #fff;
+}
+
+.bs-popover-bottom, .bs-popover-auto [x-placement ^ = "bottom"] {
+  margen superior: 0.5rem;
+}
+
+.bs-popover-bottom .arrow, .bs-popover-auto [x-placement ^ = "bottom"] .arrow {
+  arriba: calc ((0.5rem + 1px) * -1);
+}
+
+.bs-popover-bottom .arrow :: before, .bs-popover-auto [x-placement ^ = "bottom"] .arrow :: before,
+.bs-popover-bottom .arrow :: after,
+.bs-popover-auto [x-placement ^ = "bottom"] .arrow :: after {
+  ancho del borde: 0 0.5rem 0.5rem 0.5rem;
+}
+
+.bs-popover-bottom .arrow :: before, .bs-popover-auto [x-placement ^ = "bottom"] .arrow :: before {
+  arriba: 0;
+  color de borde inferior: rgba (0, 0, 0, 0,25);
+}
+
+
+.bs-popover-bottom .arrow :: after,
+.bs-popover-auto [x-placement ^ = "bottom"] .arrow :: after {
+  superior: 1px;
+  color de borde inferior: #fff;
+}
+
+.bs-popover-bottom .popover-header :: antes, .bs-popover-auto [x-placement ^ = "bottom"] .popover-header :: before {
+  posición: absoluta;
+  arriba: 0;
+  izquierda: 50%;
+  bloqueo de pantalla;
+  ancho: 1rem;
+  margen izquierdo: -0.5rem;
+  contenido: "";
+  borde inferior: 1px sólido # f7f7f7;
+}
+
+.bs-popover-left, .bs-popover-auto [x-placement ^ = "left"] {
+  margen derecho: 0.5rem;
+}
+
+.bs-popover-left .arrow, .bs-popover-auto [x-placement ^ = "left"] .arrow {
+  derecha: calc ((0.5rem + 1px) * -1);
+  ancho: 0.5rem;
+  altura: 1rem;
+  margen: 0.3rem 0;
+}
+
+.bs-popover-left .arrow :: before, .bs-popover-auto [x-placement ^ = "left"] .arrow :: before,
+.bs-popover-left .arrow :: after,
+.bs-popover-auto [x-placement ^ = "left"] .arrow :: after {
+  ancho del borde: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.bs-popover-left .arrow :: before, .bs-popover-auto [x-placement ^ = "left"] .arrow :: before {
+  derecha: 0;
+  color de borde izquierdo: rgba (0, 0, 0, 0.25);
+}
+
+
+.bs-popover-left .arrow :: after,
+.bs-popover-auto [x-placement ^ = "left"] .arrow :: after {
+  derecha: 1px;
+  color de borde izquierdo: #fff;
+}
+
+.popover-header {
+  relleno: 0.5rem 0.75rem;
+  margen inferior: 0;
+  tamaño de letra: 1rem;
+  color: heredar;
+  color de fondo: # f7f7f7;
+  borde inferior: 1px sólido #ebebeb;
+  borde superior izquierdo del radio: calc (0,3rem - 1px);
+  borde superior-derecho-radio: calc (0.3rem - 1px);
+}
+
+.popover-header: vacío {
+  pantalla: ninguna;
+}
+
+.popover-body {
+  relleno: 0.5rem 0.75rem;
+  color: # 212529;
+}
+
+.carousel {
+  posición: relativa;
+}
+
+.carousel-inner {
+  posición: relativa;
+  ancho: 100%;
+  desbordamiento: oculto;
+}
+
+.carousel-item {
+  posición: relativa;
+  pantalla: ninguna;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  ancho: 100%;
+  transición: -webkit-transformar 0,6s facilidad;
+  transición: transformar 0,6s de facilidad;
+  transición: transformar la facilidad de 0.6s, -webkit-transformar la facilidad de 0.6s;
+  -webkit-backface-visibilidad: oculto;
+  Backface-visibilidad: oculto;
+  -webkit-perspectiva: 1000px;
+  perspectiva: 1000px;
+}
+
+Pantalla @media y (preferente-movimiento reducido: reducir) {
+  .carousel-item {
+    transición: ninguna;
+  }
+}
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+  bloqueo de pantalla;
+}
+
+.carousel-item-next,
+.carousel-item-prev {
+  posición: absoluta;
+  arriba: 0;
+}
+
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right {
+  -webkit-transform: translateX (0);
+  transformar: traducirX (0);
+}
+
+@supports ((-webkit-transform-style: preserve-3d) o (transform-style: preserve-3d)) {
+  .carousel-item-next.carousel-item-left,
+  .carousel-item-prev.carousel-item-right {
+    -webkit-transform: translate3d (0, 0, 0);
+    transformar: translate3d (0, 0, 0);
+  }
+}
+
+.carousel-item-next,
+.active.carousel-item-right {
+  -webkit-transform: translateX (100%);
+  transformar: traducirX (100%);
+}
+
+@supports ((-webkit-transform-style: preserve-3d) o (transform-style: preserve-3d)) {
+  .carousel-item-next,
+  .active.carousel-item-right {
+    -webkit-transform: translate3d (100%, 0, 0);
+    transformar: translate3d (100%, 0, 0);
+  }
+}
+
+.carousel-item-prev,
+.active.carousel-item-left {
+  -webkit-transform: translateX (-100%);
+  transformar: traducirX (-100%);
+}
+
+@supports ((-webkit-transform-style: preserve-3d) o (transform-style: preserve-3d)) {
+  .carousel-item-prev,
+  .active.carousel-item-left {
+    -webkit-transform: translate3d (-100%, 0, 0);
+    transformar: translate3d (-100%, 0, 0);
+  }
+}
+
+.carousel-fade .carousel-item {
+  opacidad: 0;
+  duración de la transición: .6s;
+  propiedad de transición: opacidad;
+}
+
+.carousel-fade .carousel-item.active,
+.carousel-fade .carousel-item-next.carousel-item-left,
+.carousel-fade .carousel-item-prev.carousel-item-right {
+  opacidad: 1;
+}
+
+.carousel-fade .active.carousel-item-left,
+.carousel-fade .active.carousel-item-right {
+  opacidad: 0;
+}
+
+.carousel-fade .carousel-item-next,
+.carousel-fade .carousel-item-prev,
+.carousel-fade .carousel-item.active,
+.carousel-fade .active.carousel-item-left,
+.carousel-fade .active.carousel-item-prev {
+  -webkit-transform: translateX (0);
+  transformar: traducirX (0);
+}
+
+@supports ((-webkit-transform-style: preserve-3d) o (transform-style: preserve-3d)) {
+  .carousel-fade .carousel-item-next,
+  .carousel-fade .carousel-item-prev,
+  .carousel-fade .carousel-item.active,
+  .carousel-fade .active.carousel-item-left,
+  .carousel-fade .active.carousel-item-prev {
+    -webkit-transform: translate3d (0, 0, 0);
+    transformar: translate3d (0, 0, 0);
+  }
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  posición: absoluta;
+  arriba: 0;
+  abajo: 0;
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-align: centro;
+  alinear-artículos: centro;
+  -ms-flex-pack: centro;
+  justificar-contenido: centro;
+  ancho: 15%;
+  color: #fff;
+  text-align: center;
+  opacidad: 0.5;
+}
+
+.carousel-control-prev: hover, .carousel-control-prev: focus,
+.carousel-control-next: hover,
+.carousel-control-next: focus {
+  color: #fff;
+  texto-decoración: ninguno;
+  esquema: 0;
+  opacidad: .9;
+}
+
+.carousel-control-prev {
+  izquierda: 0;
+}
+
+.carousel-control-next {
+  derecha: 0;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  pantalla: bloque en línea;
+  ancho: 20px;
+  altura: 20px;
+  fondo: centro transparente sin repetición centro;
+  tamaño de fondo: 100% 100%;
+}
+
+.carousel-control-prev-icon {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg xmlns = 'http: //www.w3.org/2000/svg' fill = '% 23fff' viewBox = '0 0 8 8 '% 3E% 3Cpath d =' M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z '/% 3E% 3C / svg% 3E ");
+}
+
+.carousel-control-next-icon {
+  background-image: url ("data: image / svg + xml; charset = utf8,% 3Csvg xmlns = 'http: //www.w3.org/2000/svg' fill = '% 23fff' viewBox = '0 0 8 8 '% 3E% 3Cpath d =' M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z '/% 3E% 3C / svg% 3E ");
+}
+
+indicadores de carrusel {
+  posición: absoluta;
+  derecha: 0;
+  abajo: 10px;
+  izquierda: 0;
+  índice z: 15;
+  pantalla: -ms-flexbox;
+  pantalla: flexión;
+  -ms-flex-pack: centro;
+  justificar-contenido: centro;
+  relleno-izquierda: 0;
+  margen derecho: 15%;
+  margen izquierdo: 15%;
+  estilo de lista: ninguno;
+}
+
+.carousel-indicadores li {
+  posición: relativa;
+  -ms-flex: 0 1 auto;
+  flex: 0 1 auto;
+  ancho: 30px;
+  altura: 3px;
+  margen derecho: 3px;
+  margen izquierdo: 3px;
+  texto-sangría: -999px;
+  cursor: puntero;
+  color de fondo: rgba (255, 255, 255, 0.5);
+}
+
+.carousel-indicadores li :: antes de {
+  posición: absoluta;
+  arriba: -10px;
+  izquierda: 0;
+  pantalla: bloque en línea;
+  ancho: 100%;
+  altura: 10px;
+  contenido: "";
+}
+
+.carousel-indicadores li :: después de {
+  posición: absoluta;
+  abajo: -10px;
+  izquierda: 0;
+  pantalla: bloque en línea;
+  ancho: 100%;
+  altura: 10px;
+  contenido: "";
+}
+
+Indicadores de carrusel .activo {
+  color de fondo: #fff;
+}
+
+.carousel-caption {
+  posición: absoluta;
+  derecha: 15%;
+  abajo: 20px;
+  izquierda: 15%;
+  índice z: 10;
+  acolchado superior: 20px;
+  parte inferior de relleno: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.align-baseline {
+  alineación vertical: línea de base! importante;
+}
+
+.align-top {
+  alineación vertical: superior! importante;
+}
+
+.align-middle {
+  alineación vertical: medio importante!
+}
+
+.align-bottom {
+  alineación vertical: inferior! importante;
+}
+
+.align-text-bottom {
+  vertical-align: text-bottom! important;
+}
+
+.align-text-top {
+  vertical-align: text-top! important;
+}
+
+.bg-primario {
+  color de fondo: # 007bff! important;
+}
+
+a.bg-primary: hover, a.bg-primary: focus,
+button.bg-primary: hover,
+button.bg-primary: focus {
+  color de fondo: # 0062cc! important;
+}
+
+.bg-secundario {
+  color de fondo: # 6c757d! importante;
+}
+
+a.bg-secundario: hover, a.bg-secundario: foco,
+button.bg-secundario: hover,
+button.bg-secundario: foco {
+  color de fondo: # 545b62! importante;
+}
+
+.bg-success {
+  color de fondo: # 28a745! importante;
+}
+
+a.bg-success: hover, a.bg-success: focus,
+button.bg-success: hover,
+button.bg-success: focus {
+  color de fondo: # 1e7e34! important;
+}
+
+.bg-info {
+  color de fondo: # 17a2b8! importante;
+}
+
+a.bg-info: hover, a.bg-info: focus,
+button.bg-info: hover,
+button.bg-info: focus {
+  color de fondo: # 117a8b! importante;
+}
+
+.bg-warning {
+  color de fondo: # ffc107! important;
+}
+
+a.bg-warning: hover, a.bg-warning: enfocar,
+button.bg-warning: hover,
+button.bg-warning: focus {
+  color de fondo: # d39e00! important;
+}
+
+.bg-danger {
+  color de fondo: # dc3545! importante;
+}
+
+a.bg-danger: hover, a.bg-danger: focus,
+button.bg-danger: hover,
+button.bg-danger: focus {
+  color de fondo: # bd2130! important;
+}
+
+.bg-light {
+  color de fondo: # f8f9fa! important;
+}
+
+a.bg-light: hover, a.bg-light: focus,
+button.bg-light: hover,
+button.bg-light: focus {
+  color de fondo: # dae0e5! important;
+}
+
+.bg-dark {
+  color de fondo: # 343a40! importante;
+}
+
+a.bg-dark: hover, a.bg-dark: focus,
+button.bg-dark: hover,
+button.bg-dark: focus {
+  color de fondo: # 1d2124! important;
+}
+
+.bg-blanco {
+  color de fondo: #fff! important;
+}
+
+.bg-transparente {
+  fondo-color: transparente! importante;
+}
+
+.frontera {
+  borde: 1px sólido # dee2e6! important;
+}
+
+.border-top {
+  border-top: 1px solid # dee2e6! important;
+}
+
+.border-right {
+  borde derecho: 1px sólido # dee2e6! important;
+}
+
+.border-bottom {
+  borde inferior: 1px sólido # dee2e6! important;
+}
+
+.border-left {
+  borde izquierdo: 1px sólido # dee2e6! important;
+}
+
+.border-0 {
+  frontera: 0! importante;
+}
+
+.border-top-0 {
+  borde superior: 0! importante;
+}
+
+.border-right-0 {
+  borde derecho: 0! importante;
+}
+
+.border-bottom-0 {
+  borde inferior: 0! importante;
+}
+
+.border-left-0 {
+  borde izquierdo: 0! importante;
+}
+
+.border-primary {
+  color de borde: # 007bff! important;
+}
+
+.border-secundaria {
+  color de borde: # 6c757d! importante;
+}
+
+.border-success {
+  color de borde: # 28a745! importante;
+}
+
+.border-info {
+  color de borde: # 17a2b8! importante;
+}
+
+.border-warning {
+  color de borde: # ffc107! important;
+}
+
+peligro
+  color de borde: # dc3545! importante;
+}
+
+.border-light {
+  color de borde: # f8f9fa! important;
+}
+
+.border-dark {
+  color de borde: # 343a40! importante;
+}
+
+.border-blanco {
+  color de borde: #fff! important;
+}
+
+redondeado {
+  radio del borde: 0.25rem! important;
+}
+
+. redondeado
+  borde superior-izquierdo-radio: 0.25rem! important;
+  borde superior-derecho-radio: 0.25rem! important;
+}
+
+a la derecha
+  borde superior-derecho-radio: 0.25rem! important;
+  borde inferior-derecha-radio: 0.25rem! important;
+}
+
+.
+  borde inferior-derecha-radio: 0.25rem! important;
+  borde inferior-izquierdo-radio: 0.25rem! important;
+}
+
+rodeo a la izquierda
+  borde superior-izquierdo-radio: 0.25rem! important;
+  borde inferior-izquierdo-radio: 0.25rem! important;
+}
+
+círculo redondo
+  radio del borde: ¡50%! importante;
+}
+
+.rounded-0 {
+  radio del borde: 0! importante;
+}
+
+.clearfix :: después de {
+  bloqueo de pantalla;
+  Limpia los dos;
+  contenido: "";
+}
+
+.d-none {
+  pantalla: ninguna! importante;
+}
+
+.d-inline {
+  pantalla: en línea! importante;
+}
+
+.d-inline-block {
+  display: inline-block! important;
+}
+
+.d-block {
+  pantalla: bloque! importante;
+}
+
+.d-table {
+  pantalla: tabla! importante;
+}
+
+.d-table-row {
+  pantalla: tabla-fila! importante;
+}
+
+.d-table-cell {
+  display: table-cell! important;
+}
+
+.d-flex {
+  pantalla: -ms-flexbox! important;
+  pantalla: flex! important;
+}
+
+.d-inline-flex {
+  pantalla: -ms-inline-flexbox! important;
+  pantalla: inline-flex! important;
+}
+
+@media (ancho mínimo: 576px) {
+  .d-sm-none {
+    pantalla: ninguna! importante;
+  }
+  .d-sm-inline {
+    pantalla: en línea! importante;
+  }
+  .d-sm-inline-block {
+    display: inline-block! important;
+  }
+  .d-sm-block {
+    pantalla: bloque! importante;
+  }
+  .d-sm-table {
+    pantalla: tabla! importante;
+  }
+  .d-sm-table-row {
+    pantalla: tabla-fila! importante;
+  }
+  .d-sm-table-cell {
+    display: table-cell! important;
+  }
+  .d-sm-flex {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+  }
+  .d-sm-inline-flex {
+    pantalla: -ms-inline-flexbox! important;
+    pantalla: inline-flex! important;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .d-md-none {
+    pantalla: ninguna! importante;
+  }
+  .d-md-inline {
+    pantalla: en línea! importante;
+  }
+  .d-md-inline-block {
+    display: inline-block! important;
+  }
+  .d-md-block {
+    pantalla: bloque! importante;
+  }
+  .d-md-table {
+    pantalla: tabla! importante;
+  }
+  .d-md-table-row {
+    pantalla: tabla-fila! importante;
+  }
+  .d-md-table-cell {
+    display: table-cell! important;
+  }
+  .d-md-flex {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+  }
+  .d-md-inline-flex {
+    pantalla: -ms-inline-flexbox! important;
+    pantalla: inline-flex! important;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .d-lg-none {
+    pantalla: ninguna! importante;
+  }
+  .d-lg-inline {
+    pantalla: en línea! importante;
+  }
+  .d-lg-inline-block {
+    display: inline-block! important;
+  }
+  .d-lg-block {
+    pantalla: bloque! importante;
+  }
+  .d-lg-table {
+    pantalla: tabla! importante;
+  }
+  .d-lg-table-row {
+    pantalla: tabla-fila! importante;
+  }
+  .d-lg-table-cell {
+    display: table-cell! important;
+  }
+  .d-lg-flex {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+  }
+  .d-lg-inline-flex {
+    pantalla: -ms-inline-flexbox! important;
+    pantalla: inline-flex! important;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .d-xl-none {
+    pantalla: ninguna! importante;
+  }
+  .d-xl-inline {
+    pantalla: en línea! importante;
+  }
+  .d-xl-inline-block {
+    display: inline-block! important;
+  }
+  .d-xl-block {
+    pantalla: bloque! importante;
+  }
+  .d-xl-table {
+    pantalla: tabla! importante;
+  }
+  .d-xl-table-row {
+    pantalla: tabla-fila! importante;
+  }
+  .d-xl-table-cell {
+    display: table-cell! important;
+  }
+  .d-xl-flex {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+  }
+  .d-xl-inline-flex {
+    pantalla: -ms-inline-flexbox! important;
+    pantalla: inline-flex! important;
+  }
+}
+
+@media print {
+  .d-print-none {
+    pantalla: ninguna! importante;
+  }
+  .d-print-inline {
+    pantalla: en línea! importante;
+  }
+  .d-print-inline-block {
+    display: inline-block! important;
+  }
+  .d-print-block {
+    pantalla: bloque! importante;
+  }
+  .d-print-table {
+    pantalla: tabla! importante;
+  }
+  .d-print-table-row {
+    pantalla: tabla-fila! importante;
+  }
+  .d-print-table-cell {
+    display: table-cell! important;
+  }
+  .d-print-flex {
+    pantalla: -ms-flexbox! important;
+    pantalla: flex! important;
+  }
+  .d-print-inline-flex {
+    pantalla: -ms-inline-flexbox! important;
+    pantalla: inline-flex! important;
+  }
+}
+
+.embed-responsive {
+  posición: relativa;
+  bloqueo de pantalla;
+  ancho: 100%;
+  relleno: 0;
+  desbordamiento: oculto;
+}
+
+.embed-responsive :: before {
+  bloqueo de pantalla;
+  contenido: "";
+}
+
+.embed-responsive .embed-responsive-item,
+. ifed-responsive iframe,
+.embed-responsive embed,
+Objeto sensible.
+video .embed-responsive {
+  posición: absoluta;
+  arriba: 0;
+  abajo: 0;
+  izquierda: 0;
+  ancho: 100%;
+  altura: 100%;
+  borde: 0;
+}
+
+.embed-responsive-21by9 :: before {
+  relleno superior: 42.857143%;
+}
+
+.embed-responsive-16by9 :: before {
+  relleno superior: 56,25%;
+}
+
+.embed-responsive-4by3 :: before {
+  relleno superior: 75%;
+}
+
+.embed-responsive-1by1 :: before {
+  relleno superior: 100%;
+}
+
+.flex-row {
+  -ms-flex-direction: fila! importante;
+  dirección flexible: fila! importante;
+}
+
+.flex-column {
+  -ms-flex-direction: columna! importante;
+  dirección flexible: ¡columna! importante;
+}
+
+.flex-row-reverse {
+  -ms-flex-direction: row-reverse! important;
+  dirección de flexión: ¡fila-reversa! importante;
+}
+
+.flex-column-reverse {
+  -ms-flex-direction: columna-reverso! importante;
+  dirección de flexión: columna-reverso! importante;
+}
+
+.flex-wrap {
+  -ms-flex-wrap: wrap! importante;
+  flex-wrap: wrap! importante;
+}
+
+.flex-nowrap {
+  -ms-flex-wrap: nowrap! important;
+  flex-wrap: ¡ahora envuelve! importante;
+}
+
+.flex-wrap-reverse {
+  -ms-flex-wrap: wrap-reverse! importante;
+  flex-wrap: wrap-reverse! importante;
+}
+
+.flex-fill {
+  -ms-flex: 1 1 auto! important;
+  flex: 1 1 auto! importante;
+}
+
+.flex-grow-0 {
+  -ms-flex-positivo: 0! importante;
+  flex-grow: 0! importante;
+}
+
+.flex-grow-1 {
+  -ms-flex-positivo: 1! importante;
+  flex-grow: 1! importante;
+}
+
+.flex-shrink-0 {
+  -ms-flex-negativo: 0! importante;
+  flexión-encogimiento: 0! importante;
+}
+
+.flex-shrink-1 {
+  -ms-flex-negativo: 1! importante;
+  flexión-encogimiento: 1! importante;
+}
+
+.justify-content-start {
+  -ms-flex-pack: comienzo! importante;
+  justify-content: flex-start! important;
+}
+
+.justify-content-end {
+  -ms-flex-pack: ¡fin! importante;
+  justify-content: flex-end! important;
+}
+
+.justify-content-center {
+  -ms-flex-pack: centro! importante;
+  justificar-contenido: centro! importante;
+}
+
+.justificar-contenido-entre
+  -ms-flex-pack: justifica! importante;
+  justificar contenido: espacio intermedio importante;
+}
+
+.justificar-contenido-alrededor
+  -ms-flex-pack: distribuye! importante;
+  justify-content: space-around! important;
+}
+
+.align-items-start {
+  -ms-flex-align: start! important;
+  alinear-elementos: flex-start! importante;
+}
+
+.align-items-end {
+  -ms-flex-align: ¡fin! importante;
+  elementos de alineación: extremo flexible! importante;
+}
+
+.align-items-center {
+  -ms-flex-align: ¡centro! importante;
+  alinear-elementos: centro! importante;
+}
+
+.align-items-baseline {
+  -ms-flex-align: baseline! important;
+  alinear-elementos: línea de base! importante;
+}
+
+.align-items-stretch {
+  -ms-flex-align: estirar! importante;
+  alinear-artículos: estirar! importante;
+}
+
+.alig n-content-start {
+  -ms-flex-line-pack: start! important;
+  align-content: flex-start! important;
+}
+
+.align-content-end {
+  -ms-flex-line-pack: ¡fin! importante;
+  alinear-contenido: flex-end! importante;
+}
+
+.align-content-center {
+  -ms-flex-line-pack: centro! importante;
+  alinear-contenido: centro! importante;
+}
+
+.align-content-between {
+  -ms-flex-line-pack: justify! important;
+  alinear contenido: espacio intermedio importante;
+}
+
+.align-content-around {
+  -ms-flex-line-pack: distribuye! importante;
+  alinear-contenido: espacio-alrededor! importante;
+}
+
+.align-content-stretch {
+  -ms-flex-line-pack: stretch! important;
+  alinear-contenido: estirar! importante;
+}
+
+.align-self-auto {
+  -ms-flex-item-align: auto! important;
+  align-self: auto! important;
+}
+
+.align-self-start {
+  -ms-flex-item-align: start! important;
+  align-self: flex-start! important;
+}
+
+.align-self-end {
+  -ms-flex-item-align: end! important;
+  align-self: flex-end! important;
+}
+
+.align-self-center {
+  -ms-flex-item-align: center! important;
+  alinearse: ¡centro! importante;
+}
+
+.align-self-baseline {
+  -ms-flex-item-align: baseline! important;
+  align-self: baseline! important;
+}
+
+.align-self-stretch {
+  -ms-flex-item-align: stretch! important;
+  alinearse: estirar! importante;
+}
+
+@media (ancho mínimo: 576px) {
+  .flex-sm-row {
+    -ms-flex-direction: fila! importante;
+    dirección flexible: fila! importante;
+  }
+  .flex-sm-column {
+    -ms-flex-direction: columna! importante;
+    dirección flexible: ¡columna! importante;
+  }
+  .flex-sm-row-reverse {
+    -ms-flex-direction: row-reverse! important;
+    dirección de flexión: ¡fila-reversa! importante;
+  }
+  .flex-sm-column-reverse {
+    -ms-flex-direction: columna-reverso! importante;
+    dirección de flexión: columna-reverso! importante;
+  }
+  .flex-sm-wrap {
+    -ms-flex-wrap: wrap! importante;
+    flex-wrap: wrap! importante;
+  }
+  .flex-sm-nowrap {
+    -ms-flex-wrap: nowrap! important;
+    flex-wrap: ¡ahora envuelve! importante;
+  }
+  .flex-sm-wrap-reverse {
+    -ms-flex-wrap: wrap-reverse! importante;
+    flex-wrap: wrap-reverse! importante;
+  }
+  .flex-sm-fill {
+    -ms-flex: 1 1 auto! important;
+    flex: 1 1 auto! importante;
+  }
+  .flex-sm-grow-0 {
+    -ms-flex-positivo: 0! importante;
+    flex-grow: 0! importante;
+  }
+  .flex-sm-grow-1 {
+    -ms-flex-positivo: 1! importante;
+    flex-grow: 1! importante;
+  }
+  .flex-sm-shrink-0 {
+    -ms-flex-negativo: 0! importante;
+    flexión-encogimiento: 0! importante;
+  }
+  .flex-sm-shrink-1 {
+    -ms-flex-negativo: 1! importante;
+    flexión-encogimiento: 1! importante;
+  }
+  .justify-content-sm-start {
+    -ms-flex-pack: comienzo! importante;
+    justify-content: flex-start! important;
+  }
+  .justify-content-sm-end {
+    -ms-flex-pack: ¡fin! importante;
+    justify-content: flex-end! important;
+  }
+  .justify-content-sm-center {
+    -ms-flex-pack: centro! importante;
+    justificar-contenido: centro! importante;
+  }
+  .justify-content-sm-between {
+    -ms-flex-pack: justifica! importante;
+    justificar contenido: espacio intermedio importante;
+  }
+  .justify-content-sm-around {
+    -ms-flex-pack: distribuye! importante;
+    justify-content: space-around! important;
+  }
+  .align-items-sm-start {
+    -ms-flex-align: start! important;
+    alinear-elementos: flex-start! importante;
+  }
+  .align-items-sm-end {
+    -ms-flex-align: ¡fin! importante;
+    elementos de alineación: extremo flexible! importante;
+  }
+  .align-items-sm-center {
+    -ms-flex-align: ¡centro! importante;
+    alinear-elementos: centro! importante;
+  }
+  .align-items-sm-baseline {
+    -ms-flex-align: baseline! important;
+    alinear-elementos: línea de base! importante;
+  }
+  .align-items-sm-stretch {
+    -ms-flex-align: estirar! importante;
+    alinear-artículos: estirar! importante;
+  }
+  .align-content-sm-start {
+    -ms-flex-line-pack: start! important;
+    align-content: flex-start! important;
+  }
+  .align-content-sm-end {
+    -ms-flex-line-pack: ¡fin! importante;
+    alinear-contenido: flex-end! importante;
+  }
+  .align-content-sm-center {
+    -ms-flex-line-pack: centro! importante;
+    alinear-contenido: centro! importante;
+  }
+  .align-content-sm-between {
+    -ms-flex-line-pack: justify! important;
+    alinear contenido: espacio intermedio importante;
+  }
+  .align-content-sm-around {
+    -ms-flex-line-pack: distribuye! importante;
+    alinear-contenido: espacio-alrededor! importante;
+  }
+  .align-content-sm-stretch {
+    -ms-flex-line-pack: stretch! important;
+    alinear-contenido: estirar! importante;
+  }
+  .align-self-sm-auto {
+    -ms-flex-item-align: auto! important;
+    align-self: auto! important;
+  }
+  .align-self-sm-start {
+    -ms-flex-item-align: start! important;
+    align-self: flex-start! important;
+  }
+  .align-self-sm-end {
+    -ms-flex-item-align: end! important;
+    align-self: flex-end! important;
+  }
+  .align-self-sm-center {
+    -ms-flex-item-align: center! important;
+    alinearse: ¡centro! importante;
+  }
+  .align-self-sm-baseline {
+    -ms-flex-item-align: baseline! important;
+    align-self: baseline! important;
+  }
+  .align-self-sm-stretch {
+    -ms-flex-item-align: stretch! important;
+    alinearse: estirar! importante;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .flex-md-row {
+    -ms-flex-direction: fila! importante;
+    dirección flexible: fila! importante;
+  }
+  .flex-md-column {
+    -ms-flex-direction: columna! importante;
+    dirección flexible: ¡columna! importante;
+  }
+  .flex-md-row-reverse {
+    -ms-flex-direction: row-reverse! important;
+    dirección de flexión: ¡fila-reversa! importante;
+  }
+  .flex-md-column-reverse {
+    -ms-flex-direction: columna-reverso! importante;
+    dirección de flexión: columna-reverso! importante;
+  }
+  .flex-md-wrap {
+    -ms-flex-wrap: wrap! importante;
+    flex-wrap: wrap! importante;
+  }
+  .flex-md-nowrap {
+    -ms-flex-wrap: nowrap! important;
+    flex-wrap: ¡ahora envuelve! importante;
+  }
+  .flex-md-wrap-reverse {
+    -ms-flex-wrap: wrap-reverse! importante;
+    flex-wrap: wrap-reverse! importante;
+  }
+  .flex-md-fill {
+    -ms-flex: 1 1 auto! important;
+    flex: 1 1 auto! importante;
+  }
+  .flex-md-grow-0 {
+    -ms-flex-positivo: 0! importante;
+    flex-grow: 0! importante;
+  }
+  .flex-md-grow-1 {
+    -ms-flex-positivo: 1! importante;
+    flex-grow: 1! importante;
+  }
+  .flex-md-shrink-0 {
+    -ms-flex-negativo: 0! importante;
+    flexión-encogimiento: 0! importante;
+  }
+  .flex-md-shrink-1 {
+    -ms-flex-negativo: 1! importante;
+    flexión-encogimiento: 1! importante;
+  }
+  .justify-content-md-start {
+    -ms-flex-pack: comienzo! importante;
+    justify-content: flex-start! important;
+  }
+  .justify-content-md-end {
+    -ms-flex-pack: ¡fin! importante;
+    justify-content: flex-end! important;
+  }
+  .justify-content-md-center {
+    -ms-flex-pack: centro! importante;
+    justificar-contenido: centro! importante;
+  }
+  .justify-content-md-between {
+    -ms-flex-pack: justifica! importante;
+    justificar contenido: espacio intermedio importante;
+  }
+  .justify-content-md-around {
+    -ms-flex-pack: distribuye! importante;
+    justify-content: space-around! important;
+  }
+  .align-items-md-start {
+    -ms-flex-align: start! important;
+    alinear-elementos: flex-start! importante;
+  }
+  .align-items-md-end {
+    -ms-flex-align: ¡fin! importante;
+    elementos de alineación: extremo flexible! importante;
+  }
+  .align-items-md-center {
+    -ms-flex-align: ¡centro! importante;
+    alinear-elementos: centro! importante;
+  }
+  .align-items-md-baseline {
+    -ms-flex-align: baseline! important;
+    alinear-elementos: línea de base! importante;
+  }
+  .align-items-md-stretch {
+    -ms-flex-align: estirar! importante;
+    alinear-artículos: estirar! importante;
+  }
+  .align-content-md-start {
+    -ms-flex-line-pack: start! important;
+    align-content: flex-start! important;
+  }
+  .align-content-md-end {
+    -ms-flex-line-pack: ¡fin! importante;
+    alinear-contenido: flex-end! importante;
+  }
+  .align-content-md-center {
+    -ms-flex-line-pack: centro! importante;
+    alinear-contenido: centro! importante;
+  }
+  .align-content-md-between {
+    -ms-flex-line-pack: justify! important;
+    alinear contenido: espacio intermedio importante;
+  }
+  .align-content-md-around {
+    -ms-flex-line-pack: distribuye! importante;
+    alinear-contenido: espacio-alrededor! importante;
+  }
+  .align-content-md-stretch {
+    -ms-flex-line-pack: stretch! important;
+    alinear-contenido: estirar! importante;
+  }
+  .align-self-md-auto {
+    -ms-flex-item-align: auto! important;
+    align-self: auto! important;
+  }
+  .align-self-md-start {
+    -ms-flex-item-align: start! important;
+    align-self: flex-start! important;
+  }
+  .align-self-md-end {
+    -ms-flex-item-align: end! important;
+    align-self: flex-end! important;
+  }
+  .align-self-md-center {
+    -ms-flex-item-align: center! important;
+    alinearse: ¡centro! importante;
+  }
+  .align-self-md-baseline {
+    -ms-flex-item-align: baseline! important;
+    align-self: baseline! important;
+  }
+  .align-self-md-stretch {
+    -ms-flex-item-align: stretch! important;
+    alinearse: estirar! importante;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .flex-lg-row {
+    -ms-flex-direction: fila! importante;
+    dirección flexible: fila! importante;
+  }
+  .flex-lg-column {
+    -ms-flex-direction: columna! importante;
+    dirección flexible: ¡columna! importante;
+  }
+  .flex-lg-row-reverse {
+    -ms-flex-direction: row-reverse! important;
+    dirección de flexión: ¡fila-reversa! importante;
+  }
+  .flex-lg-column-reverse {
+    -ms-flex-direction: columna-reverso! importante;
+    dirección de flexión: columna-reverso! importante;
+  }
+  .flex-lg-wrap {
+    -ms-flex-wrap: wrap! importante;
+    flex-wrap: wrap! importante;
+  }
+  .flex-lg-nowrap {
+    -ms-flex-wrap: nowrap! important;
+    flex-wrap: ¡ahora envuelve! importante;
+  }
+  .flex-lg-wrap-reverse {
+    -ms-flex-wrap: wrap-reverse! importante;
+    flex-wrap: wrap-reverse! importante;
+  }
+  .flex-lg-fill {
+    -ms-flex: 1 1 auto! important;
+    flex: 1 1 auto! importante;
+  }
+  .flex-lg-grow-0 {
+    -ms-flex-positivo: 0! importante;
+    flex-grow: 0! importante;
+  }
+  .flex-lg-grow-1 {
+    -ms-flex-positivo: 1! importante;
+    flex-grow: 1! importante;
+  }
+  .flex-lg-shrink-0 {
+    -ms-flex-negativo: 0! importante;
+    flexión-encogimiento: 0! importante;
+  }
+  .flex-lg-shrink-1 {
+    -ms-flex-negativo: 1! importante;
+    flexión-encogimiento: 1! importante;
+  }
+  .justify-content-lg-start {
+    -ms-flex-pack: comienzo! importante;
+    justify-content: flex-start! important;
+  }
+  .justify-content-lg-end {
+    -ms-flex-pack: ¡fin! importante;
+    justify-content: flex-end! important;
+  }
+  .justify-content-lg-center {
+    -ms-flex-pack: centro! importante;
+    justificar-contenido: centro! importante;
+  }
+  .justify-content-lg-between {
+    -ms-flex-pack: justifica! importante;
+    justificar contenido: espacio intermedio importante;
+  }
+  .justify-content-lg-around {
+    -ms-flex-pack: distribuye! importante;
+    justify-content: space-around! important;
+  }
+  .align-items-lg-start {
+    -ms-flex-align: start! important;
+    alinear-elementos: flex-start! importante;
+  }
+  .align-items-lg-end {
+    -ms-flex-align: ¡fin! importante;
+    elementos de alineación: extremo flexible! importante;
+  }
+  .align-items-lg-center {
+    -ms-flex-align: ¡centro! importante;
+    alinear-elementos: centro! importante;
+  }
+  .align-items-lg-baseline {
+    -ms-flex-align: baseline! important;
+    alinear-elementos: línea de base! importante;
+  }
+  .align-items-lg-stretch {
+    -ms-flex-align: estirar! importante;
+    alinear-artículos: estirar! importante;
+  }
+  .align-content-lg-start {
+    -ms-flex-line-pack: start! important;
+    align-content: flex-start! important;
+  }
+  .align-content-lg-end {
+    -ms-flex-line-pack: ¡fin! importante;
+    alinear-contenido: flex-end! importante;
+  }
+  .align-content-lg-center {
+    -ms-flex-line-pack: centro! importante;
+    alinear-contenido: centro! importante;
+  }
+  .align-content-lg-between {
+    -ms-flex-line-pack: justify! important;
+    alinear contenido: espacio intermedio importante;
+  }
+  .align-content-lg-around {
+    -ms-flex-line-pack: distribuye! importante;
+    alinear-contenido: espacio-alrededor! importante;
+  }
+  .align-content-lg-stretch {
+    -ms-flex-line-pack: stretch! important;
+    alinear-contenido: estirar! importante;
+  }
+  .align-self-lg-auto {
+    -ms-flex-item-align: auto! important;
+    align-self: auto! important;
+  }
+  .align-self-lg-start {
+    -ms-flex-item-align: start! important;
+    align-self: flex-start! important;
+  }
+  .align-self-lg-end {
+    -ms-flex-item-align: end! important;
+    align-self: flex-end! important;
+  }
+  .align-self-lg-center {
+    -ms-flex-item-align: center! important;
+    alinearse: ¡centro! importante;
+  }
+  .align-self-lg-baseline {
+    -ms-flex-item-align: baseline! important;
+    align-self: baseline! important;
+  }
+  .align-self-lg-stretch {
+    -ms-flex-item-align: stretch! important;
+    alinearse: estirar! importante;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .flex-xl-row {
+    -ms-flex-direction: fila! importante;
+    dirección flexible: fila! importante;
+  }
+  .flex-xl-column {
+    -ms-flex-direction: columna! importante;
+    dirección flexible: ¡columna! importante;
+  }
+  .flex-xl-row-reverse {
+    -ms-flex-direction: row-reverse! important;
+    dirección de flexión: ¡fila-reversa! importante;
+  }
+  .flex-xl-column-reverse {
+    -ms-flex-direction: columna-reverso! importante;
+    dirección de flexión: columna-reverso! importante;
+  }
+  .flex-xl-wrap {
+    -ms-flex-wrap: wrap! importante;
+    flex-wrap: wrap! importante;
+  }
+  .flex-xl-nowrap {
+    -ms-flex-wrap: nowrap! important;
+    flex-wrap: ¡ahora envuelve! importante;
+  }
+  .flex-xl-wrap-reverse {
+    -ms-flex-wrap: wrap-reverse! importante;
+    flex-wrap: wrap-reverse! importante;
+  }
+  .flex-xl-fill {
+    -ms-flex: 1 1 auto! important;
+    flex: 1 1 auto! importante;
+  }
+  .flex-xl-grow-0 {
+    -ms-flex-positivo: 0! importante;
+    flex-grow: 0! importante;
+  }
+  .flex-xl-grow-1 {
+    -ms-flex-positivo: 1! importante;
+    flex-grow: 1! importante;
+  }
+  .flex-xl-shrink-0 {
+    -ms-flex-negativo: 0! importante;
+    flexión-encogimiento: 0! importante;
+  }
+  .flex-xl-shrink-1 {
+    -ms-flex-negativo: 1! importante;
+    flexión-encogimiento: 1! importante;
+  }
+  .justify-content-xl-start {
+    -ms-flex-pack: comienzo! importante;
+    justify-content: flex-start! important;
+  }
+  .justify-content-xl-end {
+    -ms-flex-pack: ¡fin! importante;
+    justify-content: flex-end! important;
+  }
+  .justify-content-xl-center {
+    -ms-flex-pack: centro! importante;
+    justificar-contenido: centro! importante;
+  }
+  .justify-content-xl-between {
+    -ms-flex-pack: justifica! importante;
+    justificar contenido: espacio intermedio importante;
+  }
+  .justify-content-xl-around {
+    -ms-flex-pack: distribuye! importante;
+    justify-content: space-around! important;
+  }
+  .align-items-xl-start {
+    -ms-flex-align: start! important;
+    alinear-elementos: flex-start! importante;
+  }
+  .align-items-xl-end {
+    -ms-flex-align: ¡fin! importante;
+    elementos de alineación: extremo flexible! importante;
+  }
+  .align-items-xl-center {
+    -ms-flex-align: ¡centro! importante;
+    alinear-elementos: centro! importante;
+  }
+  .align-items-xl-baseline {
+    -ms-flex-align: baseline! important;
+    alinear-elementos: línea de base! importante;
+  }
+  .align-items-xl-stretch {
+    -ms-flex-align: estirar! importante;
+    alinear-artículos: estirar! importante;
+  }
+  .align-content-xl-start {
+    -ms-flex-line-pack: start! important;
+    align-content: flex-start! important;
+  }
+  .align-content-xl-end {
+    -ms-flex-line-pack: ¡fin! importante;
+    alinear-contenido: flex-end! importante;
+  }
+  .align-content-xl-center {
+    -ms-flex-line-pack: centro! importante;
+    alinear-contenido: centro! importante;
+  }
+  .align-content-xl-between {
+    -ms-flex-line-pack: justify! important;
+    alinear contenido: espacio intermedio importante;
+  }
+  .align-content-xl-around {
+    -ms-flex-line-pack: distribuye! importante;
+    alinear-contenido: espacio-alrededor! importante;
+  }
+  .align-content-xl-stretch {
+    -ms-flex-line-pack: stretch! important;
+    alinear-contenido: estirar! importante;
+  }
+  .align-self-xl-auto {
+    -ms-flex-item-align: auto! important;
+    align-self: auto! important;
+  }
+  .align-self-xl-start {
+    -ms-flex-item-align: start! important;
+    align-self: flex-start! important;
+  }
+  .align-self-xl-end {
+    -ms-flex-item-align: end! important;
+    align-self: flex-end! important;
+  }
+  .align-self-xl-center {
+    -ms-flex-item-align: center! important;
+    alinearse: ¡centro! importante;
+  }
+  .align-self-xl-baseline {
+    -ms-flex-item-align: baseline! important;
+    align-self: baseline! important;
+  }
+  .align-self-xl-stretch {
+    -ms-flex-item-align: stretch! important;
+    alinearse: estirar! importante;
+  }
+}
+
+.flotador izquierdo {
+  flotar: a la izquierda! importante
+}
+
+.flotar derecho {
+  flotar: cierto! importante;
+}
+
+flote-ninguno {
+  flotar: ninguno! importante;
+}
+
+@media (ancho mínimo: 576px) {
+  .float-sm-left {
+    flotar: a la izquierda! importante
+  }
+  .float-sm-right {
+    flotar: cierto! importante;
+  }
+  .float-sm-none {
+    flotar: ninguno! importante;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .float-md-left {
+    flotar: a la izquierda! importante
+  }
+  .float-md-right {
+    flotar: cierto! importante;
+  }
+  .float-md-none {
+    flotar: ninguno! importante;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .float-lg-left {
+    flotar: a la izquierda! importante
+  }
+  .float-lg-right {
+    flotar: cierto! importante;
+  }
+  .float-lg-none {
+    flotar: ninguno! importante;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .float-xl-left {
+    flotar: a la izquierda! importante
+  }
+  .float-xl-right {
+    flotar: cierto! importante;
+  }
+  .float-xl-none {
+    flotar: ninguno! importante;
+  }
+}
+
+.position-static {
+  Posición: ¡estática! importante;
+}
+
+.posicion relativa
+  posición: relativa! importante;
+}
+
+.posicion absoluta {
+  posición: absoluta! importante;
+}
+
+.posicion fija
+  posición: fijo! importante;
+}
+
+.posicion pegajosa {
+  posición: -webkit-sticky! important;
+  posición: pegajosa! importante;
+}
+
+.fixed-top {
+  posición: fijo
+  arriba: 0;
+  derecha: 0;
+  izquierda: 0;
+  índice z: 1030;
+}
+
+.fixed-bottom {
+  posición: fijo
+  derecha: 0;
+  abajo: 0;
+  izquierda: 0;
+  índice z: 1030;
+}
+
+@supports ((position: -webkit-sticky) o (position: sticky)) {
+  .sticky-top {
+    posición: -webkit-sticky;
+    posición: pegajosa;
+    arriba: 0;
+    índice z: 1020;
+  }
+}
+
+.sr-only {
+  posición: absoluta;
+  ancho: 1px;
+  altura: 1px;
+  relleno: 0;
+  desbordamiento: oculto;
+  clip: rect (0, 0, 0, 0);
+  espacio en blanco: nowrap;
+  borde: 0;
+}
+
+.sr-only-focusable: active, .sr-only-focusable: focus {
+  posición: estática;
+  ancho: auto;
+  altura: auto;
+  desbordamiento: visible;
+  clip: auto;
+  espacio en blanco: normal;
+}
+
+.shadow-sm {
+  caja-sombra: 0 0.125rem 0.25rem rgba (0, 0, 0, 0.075)! important!
+}
+
+.shadow {
+  caja-sombra: 0 0.5rem 1rem rgba (0, 0, 0, 0.15)! important!
+}
+
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba (0, 0, 0, 0.175)! important;
+}
+
+.shadow-none {
+  caja de sombra: ninguna! importante;
+}
+
+.w-25 {
+  ancho: 25%! importante;
+}
+
+.w-50 {
+  ancho: 50%! importante;
+}
+
+.w-75 {
+  ancho: 75%! importante;
+}
+
+.w-100 {
+  ancho: 100%! importante;
+}
+
+.w-auto {
+  ancho: auto! importante;
+}
+
+.h-25 {
+  altura: 25%! importante;
+}
+
+.h-50 {
+  altura: 50%! importante;
+}
+
+.h-75 {
+  altura: 75%! importante;
+}
+
+.h-100 {
+  altura: 100%! importante;
+}
+
+.h-auto {
+  altura: auto! importante;
+}
+
+.mw-100 {
+  ancho máximo: 100%! importante;
+}
+
+.mh-100 {
+  Altura máxima: 100%! importante;
+}
+
+.m-0 {
+  margen: 0! importante;
+}
+
+.mt-0,
+.my-0 {
+  margen superior: 0! importante;
+}
+
+.mr-0,
+.mx-0 {
+  margen derecho: 0! importante;
+}
+
+.mb-0,
+.my-0 {
+  margen inferior: 0! importante;
+}
+
+.ml-0,
+.mx-0 {
+  margen izquierdo: 0! importante;
+}
+
+.m-1 {
+  margen: 0.25rem! importante;
+}
+
+.mt-1,
+.my-1 {
+  margen superior: 0.25rem! important;
+}
+
+.mr-1,
+.mx-1 {
+  margen derecho: 0.25rem! importante;
+}
+
+.mb-1,
+.my-1 {
+  margen inferior: 0.25rem! important;
+}
+
+.ml-1,
+.mx-1 {
+  margen izquierdo: 0.25rem! important;
+}
+
+.m-2 {
+  margen: 0.5rem! importante;
+}
+
+.mt-2,
+.my-2 {
+  margen superior: 0.5rem! importante;
+}
+
+.mr-2,
+.mx-2 {
+  margen derecho: 0.5rem! importante;
+}
+
+.mb-2,
+.my-2 {
+  margen inferior: 0.5rem! importante;
+}
+
+.ml-2,
+.mx-2 {
+  margen izquierdo: 0.5rem! important;
+}
+
+.m-3 {
+  margen: 1rem! importante;
+}
+
+.mt-3,
+.my-3 {
+  margen superior: 1rem! importante;
+}
+
+.mr-3,
+.mx-3 {
+  margen derecho: 1rem! importante;
+}
+
+.mb-3,
+.my-3 {
+  margen inferior: 1rem! importante;
+}
+
+.ml-3,
+.mx-3 {
+  margen izquierdo: 1rem! importante;
+}
+
+.m-4 {
+  margen: 1.5rem! importante;
+}
+
+.mt-4,
+.my-4 {
+  margen superior: 1.5rem! importante;
+}
+
+.mr-4,
+.mx-4 {
+  margen derecho: 1.5rem! importante;
+}
+
+.mb-4,
+.my-4 {
+  margen inferior: 1.5rem! importante;
+}
+
+.ml-4,
+.mx-4 {
+  margen izquierdo: 1.5rem! importante;
+}
+
+.m-5 {
+  margen: 3rem! importante;
+}
+
+.mt-5,
+.my-5 {
+  margen superior: ¡3rem! importante;
+}
+
+.mr-5,
+.mx-5 {
+  margen derecho: 3rem! importante;
+}
+
+.mb-5,
+.my-5 {
+  margen inferior: ¡3rem! importante;
+}
+
+.ml-5,
+.mx-5 {
+  margen izquierdo: 3rem! importante;
+}
+
+.p-0 {
+  relleno: 0! importante;
+}
+
+.pt-0,
+.py-0 {
+  acolchado superior: 0! importante;
+}
+
+.pr-0,
+.px-0 {
+  derecho de relleno: 0! importante;
+}
+
+.pb-0,
+.py-0 {
+  relleno de fondo: 0! importante;
+}
+
+.pl-0,
+.px-0 {
+  relleno izquierdo: 0! importante;
+}
+
+.p-1 {
+  relleno: 0.25rem! important;
+}
+
+.pt-1,
+.py-1 {
+  acolchado superior: 0.25rem! important;
+}
+
+.pr-1,
+.px-1 {
+  relleno derecho: 0.25rem! important;
+}
+
+.pb-1,
+.py-1 {
+  relleno de fondo: 0.25rem! important;
+}
+
+.pl-1,
+.px-1 {
+  relleno izquierdo: 0.25rem! important;
+}
+
+.p-2 {
+  Relleno: 0.5rem! importante;
+}
+
+.pt-2,
+.py-2 {
+  acolchado superior: 0.5rem! important;
+}
+
+.pr-2,
+.px-2 {
+  derecho de relleno: 0.5rem! important;
+}
+
+.pb-2,
+.py-2 {
+  relleno de fondo: 0.5rem! important;
+}
+
+.pl-2,
+.px-2 {
+  relleno-izquierda: 0.5rem! important;
+}
+
+.p-3 {
+  relleno: 1rem! importante;
+}
+
+.pt-3,
+.py-3 {
+  acolchado superior: 1rem! important;
+}
+
+.pr-3,
+.px-3 {
+  derecho de relleno: 1rem! importante;
+}
+
+.pb-3,
+.py-3 {
+  relleno de fondo: 1rem! importante;
+}
+
+.pl-3,
+.px-3 {
+  relleno izquierdo: 1rem! important;
+}
+
+.p-4 {
+  relleno: 1.5rem! importante;
+}
+
+.pt-4,
+.py-4 {
+  acolchado superior: 1.5rem! important;
+}
+
+.pr-4,
+.px-4 {
+  derecho de relleno: 1.5rem! important;
+}
+
+.pb-4,
+.py-4 {
+  relleno de fondo: 1.5rem! importante;
+}
+
+.pl-4,
+.px-4 {
+  relleno izquierdo: 1.5rem! important;
+}
+
+.p-5 {
+  Relleno: 3rem! importante;
+}
+
+.pt-5,
+.py-5 {
+  acolchado superior: 3rem! important;
+}
+
+.pr-5,
+.px-5 {
+  derecho de relleno: 3rem! important;
+}
+
+.pb-5,
+.py-5 {
+  relleno de fondo: 3rem! importante;
+}
+
+.pl-5,
+.px-5 {
+  relleno-izquierda: 3rem! important;
+}
+
+.m-auto {
+  margen: auto! importante;
+}
+
+.mt-auto,
+.my-auto {
+  margen superior: auto! importante;
+}
+
+.mr-auto,
+.mx-auto {
+  margen derecho: auto! importante;
+}
+
+.mb-auto,
+.my-auto {
+  margen inferior: auto! importante;
+}
+
+.ml-auto,
+.mx-auto {
+  margen izquierdo: auto! importante;
+}
+
+@media (ancho mínimo: 576px) {
+  .m-sm-0 {
+    margen: 0! importante;
+  }
+  .mt-sm-0,
+  .my-sm-0 {
+    margen superior: 0! importante;
+  }
+  .mr-sm-0,
+  .mx-sm-0 {
+    margen derecho: 0! importante;
+  }
+  .mb-sm-0,
+  .my-sm-0 {
+    margen inferior: 0! importante;
+  }
+  .ml-sm-0,
+  .mx-sm-0 {
+    margen izquierdo: 0! importante;
+  }
+  .m-sm-1 {
+    margen: 0.25rem! importante;
+  }
+  .mt-sm-1,
+  .my-sm-1 {
+    margen superior: 0.25rem! important;
+  }
+  .mr-sm-1,
+  .mx-sm-1 {
+    margen derecho: 0.25rem! importante;
+  }
+  .mb-sm-1,
+  .my-sm-1 {
+    margen inferior: 0.25rem! important;
+  }
+  .ml-sm-1,
+  .mx-sm-1 {
+    margen izquierdo: 0.25rem! important;
+  }
+  .m-sm-2 {
+    margen: 0.5rem! importante;
+  }
+  .mt-sm-2,
+  .my-sm-2 {
+    margen superior: 0.5rem! importante;
+  }
+  .mr-sm-2,
+  .mx-sm-2 {
+    margen derecho: 0.5rem! importante;
+  }
+  .mb-sm-2,
+  .my-sm-2 {
+    margen inferior: 0.5rem! importante;
+  }
+  .ml-sm-2,
+  .mx-sm-2 {
+    margen izquierdo: 0.5rem! important;
+  }
+  .m-sm-3 {
+    margen: 1rem! importante;
+  }
+  .mt-sm-3,
+  .my-sm-3 {
+    margen superior: 1rem! importante;
+  }
+  .mr-sm-3,
+  .mx-sm-3 {
+    margen derecho: 1rem! importante;
+  }
+  .mb-sm-3,
+  .my-sm-3 {
+    margen inferior: 1rem! importante;
+  }
+  .ml-sm-3,
+  .mx-sm-3 {
+    margen izquierdo: 1rem! importante;
+  }
+  .m-sm-4 {
+    margen: 1.5rem! importante;
+  }
+  .mt-sm-4,
+  .my-sm-4 {
+    margen superior: 1.5rem! importante;
+  }
+  .mr-sm-4,
+  .mx-sm-4 {
+    margen derecho: 1.5rem! importante;
+  }
+  .mb-sm-4,
+  .my-sm-4 {
+    margen inferior: 1.5rem! importante;
+  }
+  .ml-sm-4,
+  .mx-sm-4 {
+    margen izquierdo: 1.5rem! importante;
+  }
+  .m-sm-5 {
+    margen: 3rem! importante;
+  }
+  .mt-sm-5,
+  .my-sm-5 {
+    margen superior: ¡3rem! importante;
+  }
+  .mr-sm-5,
+  .mx-sm-5 {
+    margen derecho: 3rem! importante;
+  }
+  .mb-sm-5,
+  .my-sm-5 {
+    margen inferior: ¡3rem! importante;
+  }
+  .ml-sm-5,
+  .mx-sm-5 {
+    margen izquierdo: 3rem! importante;
+  }
+  .p-sm-0 {
+    relleno: 0! importante;
+  }
+  .pt-sm-0,
+  .py-sm-0 {
+    acolchado superior: 0! importante;
+  }
+  .pr-sm-0,
+  .px-sm-0 {
+    derecho de relleno: 0! importante;
+  }
+  .pb-sm-0,
+  .py-sm-0 {
+    relleno de fondo: 0! importante;
+  }
+  .pl-sm-0,
+  .px-sm-0 {
+    relleno izquierdo: 0! importante;
+  }
+  .p-sm-1 {
+    relleno: 0.25rem! important;
+  }
+  .pt-sm-1,
+  .py-sm-1 {
+    acolchado superior: 0.25rem! important;
+  }
+  .pr-sm-1,
+  .px-sm-1 {
+    relleno derecho: 0.25rem! important;
+  }
+  .pb-sm-1,
+  .py-sm-1 {
+    relleno de fondo: 0.25rem! important;
+  }
+  .pl-sm-1,
+  .px-sm-1 {
+    relleno izquierdo: 0.25rem! important;
+  }
+  .p-sm-2 {
+    Relleno: 0.5rem! importante;
+  }
+  .pt-sm-2,
+  .py-sm-2 {
+    acolchado superior: 0.5rem! important;
+  }
+  .pr-sm-2,
+  .px-sm-2 {
+    derecho de relleno: 0.5rem! important;
+  }
+  .pb-sm-2,
+  .py-sm-2 {
+    relleno de fondo: 0.5rem! important;
+  }
+  .pl-sm-2,
+  .px-sm-2 {
+    relleno-izquierda: 0.5rem! important;
+  }
+  .p-sm-3 {
+    relleno: 1rem! importante;
+  }
+  .pt-sm-3,
+  .py-sm-3 {
+    acolchado superior: 1rem! important;
+  }
+  .pr-sm-3,
+  .px-sm-3 {
+    derecho de relleno: 1rem! importante;
+  }
+  .pb-sm-3,
+  .py-sm-3 {
+    relleno de fondo: 1rem! importante;
+  }
+  .pl-sm-3,
+  .px-sm-3 {
+    relleno izquierdo: 1rem! important;
+  }
+  .p-sm-4 {
+    relleno: 1.5rem! importante;
+  }
+  .pt-sm-4,
+  .py-sm-4 {
+    acolchado superior: 1.5rem! important;
+  }
+  .pr-sm-4,
+  .px-sm-4 {
+    derecho de relleno: 1.5rem! important;
+  }
+  .pb-sm-4,
+  .py-sm-4 {
+    relleno de fondo: 1.5rem! importante;
+  }
+  .pl-sm-4,
+  .px-sm-4 {
+    relleno izquierdo: 1.5rem! important;
+  }
+  .p-sm-5 {
+    Relleno: 3rem! importante;
+  }
+  .pt-sm-5,
+  .py-sm-5 {
+    acolchado superior: 3rem! important;
+  }
+  .pr-sm-5,
+  .px-sm-5 {
+    derecho de relleno: 3rem! important;
+  }
+  .pb-sm-5,
+  .py-sm-5 {
+    relleno de fondo: 3rem! importante;
+  }
+  .pl-sm-5,
+  .px-sm-5 {
+    relleno-izquierda: 3rem! important;
+  }
+  .m-sm-auto {
+    margen: auto! importante;
+  }
+  .mt-sm-auto,
+  .my-sm-auto {
+    margen superior: auto! importante;
+  }
+  .mr-sm-auto,
+  .mx-sm-auto {
+    margen derecho: auto! importante;
+  }
+  .mb-sm-auto,
+  .my-sm-auto {
+    margen inferior: auto! importante;
+  }
+  .ml-sm-auto,
+  .mx-sm-auto {
+    margen izquierdo: auto! importante;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .m-md-0 {
+    margen: 0! importante;
+  }
+  .mt-md-0,
+  .my-md-0 {
+    margen superior: 0! importante;
+  }
+  .mr-md-0,
+  .mx-md-0 {
+    margen derecho: 0! importante;
+  }
+  .mb-md-0,
+  .my-md-0 {
+    margen inferior: 0! importante;
+  }
+  .ml-md-0,
+  .mx-md-0 {
+    margen izquierdo: 0! importante;
+  }
+  .m-md-1 {
+    margen: 0.25rem! importante;
+  }
+  .mt-md-1,
+  .my-md-1 {
+    margen superior: 0.25rem! important;
+  }
+  .mr-md-1,
+  .mx-md-1 {
+    margen derecho: 0.25rem! importante;
+  }
+  .mb-md-1,
+  .my-md-1 {
+    margen inferior: 0.25rem! important;
+  }
+  .ml-md-1,
+  .mx-md-1 {
+    margen izquierdo: 0.25rem! important;
+  }
+  .m-md-2 {
+    margen: 0.5rem! importante;
+  }
+  .mt-md-2,
+  .my-md-2 {
+    margen superior: 0.5rem! importante;
+  }
+  .mr-md-2,
+  .mx-md-2 {
+    margen derecho: 0.5rem! importante;
+  }
+  .mb-md-2,
+  .my-md-2 {
+    margen inferior: 0.5rem! importante;
+  }
+  .ml-md-2,
+  .mx-md-2 {
+    margen izquierdo: 0.5rem! important;
+  }
+  .m-md-3 {
+    margen: 1rem! importante;
+  }
+  .mt-md-3,
+  .my-md-3 {
+    margen superior: 1rem! importante;
+  }
+  .mr-md-3,
+  .mx-md-3 {
+    margen derecho: 1rem! importante;
+  }
+  .mb-md-3,
+  .my-md-3 {
+    margen inferior: 1rem! importante;
+  }
+  .ml-md-3,
+  .mx-md-3 {
+    margen izquierdo: 1rem! importante;
+  }
+  .m-md-4 {
+    margen: 1.5rem! importante;
+  }
+  .mt-md-4,
+  .my-md-4 {
+    margen superior: 1.5rem! importante;
+  }
+  .mr-md-4,
+  .mx-md-4 {
+    margen derecho: 1.5rem! importante;
+  }
+  .mb-md-4,
+  .my-md-4 {
+    margen inferior: 1.5rem! importante;
+  }
+  .ml-md-4,
+  .mx-md-4 {
+    margen izquierdo: 1.5rem! importante;
+  }
+  .m-md-5 {
+    margen: 3rem! importante;
+  }
+  .mt-md-5,
+  .my-md-5 {
+    margen superior: ¡3rem! importante;
+  }
+  .mr-md-5,
+  .mx-md-5 {
+    margen derecho: 3rem! importante;
+  }
+  .mb-md-5,
+  .my-md-5 {
+    margen inferior: ¡3rem! importante;
+  }
+  .ml-md-5,
+  .mx-md-5 {
+    margen izquierdo: 3rem! importante;
+  }
+  .p-md-0 {
+    relleno: 0! importante;
+  }
+  .pt-md-0,
+  .py-md-0 {
+    acolchado superior: 0! importante;
+  }
+  .pr-md-0,
+  .px-md-0 {
+    derecho de relleno: 0! importante;
+  }
+  .pb-md-0,
+  .py-md-0 {
+    relleno de fondo: 0! importante;
+  }
+  .pl-md-0,
+  .px-md-0 {
+    relleno izquierdo: 0! importante;
+  }
+  .p-md-1 {
+    relleno: 0.25rem! important;
+  }
+  .pt-md-1,
+  .py-md-1 {
+    acolchado superior: 0.25rem! important;
+  }
+  .pr-md-1,
+  .px-md-1 {
+    relleno derecho: 0.25rem! important;
+  }
+  .pb-md-1,
+  .py-md-1 {
+    relleno de fondo: 0.25rem! important;
+  }
+  .pl-md-1,
+  .px-md-1 {
+    relleno izquierdo: 0.25rem! important;
+  }
+  .p-md-2 {
+    Relleno: 0.5rem! importante;
+  }
+  .pt-md-2,
+  .py-md-2 {
+    acolchado superior: 0.5rem! important;
+  }
+  .pr-md-2,
+  .px-md-2 {
+    derecho de relleno: 0.5rem! important;
+  }
+  .pb-md-2,
+  .py-md-2 {
+    relleno de fondo: 0.5rem! important;
+  }
+  .pl-md-2,
+  .px-md-2 {
+    relleno-izquierda: 0.5rem! important;
+  }
+  .p-md-3 {
+    relleno: 1rem! importante;
+  }
+  .pt-md-3,
+  .py-md-3 {
+    acolchado superior: 1rem! important;
+  }
+  .pr-md-3,
+  .px-md-3 {
+    derecho de relleno: 1rem! importante;
+  }
+  .pb-md-3,
+  .py-md-3 {
+    relleno de fondo: 1rem! importante;
+  }
+  .pl-md-3,
+  .px-md-3 {
+    relleno izquierdo: 1rem! important;
+  }
+  .p-md-4 {
+    relleno: 1.5rem! importante;
+  }
+  .pt-md-4,
+  .py-md-4 {
+    acolchado superior: 1.5rem! important;
+  }
+  .pr-md-4,
+  .px-md-4 {
+    derecho de relleno: 1.5rem! important;
+  }
+  .pb-md-4,
+  .py-md-4 {
+    relleno de fondo: 1.5rem! importante;
+  }
+  .pl-md-4,
+  .px-md-4 {
+    relleno izquierdo: 1.5rem! important;
+  }
+  .p-md-5 {
+    Relleno: 3rem! importante;
+  }
+  .pt-md-5,
+  .py-md-5 {
+    acolchado superior: 3rem! important;
+  }
+  .pr-md-5,
+  .px-md-5 {
+    derecho de relleno: 3rem! important;
+  }
+  .pb-md-5,
+  .py-md-5 {
+    relleno de fondo: 3rem! importante;
+  }
+  .pl-md-5,
+  .px-md-5 {
+    relleno-izquierda: 3rem! important;
+  }
+  .m-md-auto {
+    margen: auto! importante;
+  }
+  .mt-md-auto,
+  .my-md-auto {
+    margen superior: auto! importante;
+  }
+  .mr-md-auto,
+  .mx-md-auto {
+    margen derecho: auto! importante;
+  }
+  .mb-md-auto,
+  .my-md-auto {
+    margen inferior: auto! importante;
+  }
+  .ml-md-auto,
+  .mx-md-auto {
+    margen izquierdo: auto! importante;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .m-lg-0 {
+    margen: 0! importante;
+  }
+  .mt-lg-0,
+  .my-lg-0 {
+    margen superior: 0! importante;
+  }
+  .mr-lg-0,
+  .mx-lg-0 {
+    margen derecho: 0! importante;
+  }
+  .mb-lg-0,
+  .my-lg-0 {
+    margen inferior: 0! importante;
+  }
+  .ml-lg-0,
+  .mx-lg-0 {
+    margen izquierdo: 0! importante;
+  }
+  .m-lg-1 {
+    margen: 0.25rem! importante;
+  }
+  .mt-lg-1,
+  .my-lg-1 {
+    margen superior: 0.25rem! important;
+  }
+  .mr-lg-1,
+  .mx-lg-1 {
+    margen derecho: 0.25rem! importante;
+  }
+  .mb-lg-1,
+  .my-lg-1 {
+    margen inferior: 0.25rem! important;
+  }
+  .ml-lg-1,
+  .mx-lg-1 {
+    margen izquierdo: 0.25rem! important;
+  }
+  .m-lg-2 {
+    margen: 0.5rem! importante;
+  }
+  .mt-lg-2,
+  .my-lg-2 {
+    margen superior: 0.5rem! importante;
+  }
+  .mr-lg-2,
+  .mx-lg-2 {
+    margen derecho: 0.5rem! importante;
+  }
+  .mb-lg-2,
+  .my-lg-2 {
+    margen inferior: 0.5rem! importante;
+  }
+  .ml-lg-2,
+  .mx-lg-2 {
+    margen izquierdo: 0.5rem! important;
+  }
+  .m-lg-3 {
+    margen: 1rem! importante;
+  }
+  .mt-lg-3,
+  .my-lg-3 {
+    margen superior: 1rem! importante;
+  }
+  .mr-lg-3,
+  .mx-lg-3 {
+    margen derecho: 1rem! importante;
+  }
+  .mb-lg-3,
+  .my-lg-3 {
+    margen inferior: 1rem! importante;
+  }
+  .ml-lg-3,
+  .mx-lg-3 {
+    margen izquierdo: 1rem! importante;
+  }
+  .m-lg-4 {
+    margen: 1.5rem! importante;
+  }
+  .mt-lg-4,
+  .my-lg-4 {
+    margen superior: 1.5rem! importante;
+  }
+  .mr-lg-4,
+  .mx-lg-4 {
+    margen derecho: 1.5rem! importante;
+  }
+  .mb-lg-4,
+  .my-lg-4 {
+    margen inferior: 1.5rem! importante;
+  }
+  .ml-lg-4,
+  .mx-lg-4 {
+    margen izquierdo: 1.5rem! importante;
+  }
+  .m-lg-5 {
+    margen: 3rem! importante;
+  }
+  .mt-lg-5,
+  .my-lg-5 {
+    margen superior: ¡3rem! importante;
+  }
+  .mr-lg-5,
+  .mx-lg-5 {
+    margen derecho: 3rem! importante;
+  }
+  .mb-lg-5,
+  .my-lg-5 {
+    margen inferior: ¡3rem! importante;
+  }
+  .ml-lg-5,
+  .mx-lg-5 {
+    margen izquierdo: 3rem! importante;
+  }
+  .p-lg-0 {
+    relleno: 0! importante;
+  }
+  .pt-lg-0,
+  .py-lg-0 {
+    acolchado superior: 0! importante;
+  }
+  .pr-lg-0,
+  .px-lg-0 {
+    derecho de relleno: 0! importante;
+  }
+  .pb-lg-0,
+  .py-lg-0 {
+    relleno de fondo: 0! importante;
+  }
+  .pl-lg-0,
+  .px-lg-0 {
+    relleno izquierdo: 0! importante;
+  }
+  .p-lg-1 {
+    relleno: 0.25rem! important;
+  }
+  .pt-lg-1,
+  .py-lg-1 {
+    acolchado superior: 0.25rem! important;
+  }
+  .pr-lg-1,
+  .px-lg-1 {
+    relleno derecho: 0.25rem! important;
+  }
+  .pb-lg-1,
+  .py-lg-1 {
+    relleno de fondo: 0.25rem! important;
+  }
+  .pl-lg-1,
+  .px-lg-1 {
+    relleno izquierdo: 0.25rem! important;
+  }
+  .p-lg-2 {
+    Relleno: 0.5rem! importante;
+  }
+  .pt-lg-2,
+  .py-lg-2 {
+    acolchado superior: 0.5rem! important;
+  }
+  .pr-lg-2,
+  .px-lg-2 {
+    derecho de relleno: 0.5rem! important;
+  }
+  .pb-lg-2,
+  .py-lg-2 {
+    relleno de fondo: 0.5rem! important;
+  }
+  .pl-lg-2,
+  .px-lg-2 {
+    relleno-izquierda: 0.5rem! important;
+  }
+  .p-lg-3 {
+    relleno: 1rem! importante;
+  }
+  .pt-lg-3,
+  .py-lg-3 {
+    acolchado superior: 1rem! important;
+  }
+  .pr-lg-3,
+  .px-lg-3 {
+    derecho de relleno: 1rem! importante;
+  }
+  .pb-lg-3,
+  .py-lg-3 {
+    relleno de fondo: 1rem! importante;
+  }
+  .pl-lg-3,
+  .px-lg-3 {
+    relleno izquierdo: 1rem! important;
+  }
+  .p-lg-4 {
+    relleno: 1.5rem! importante;
+  }
+  .pt-lg-4,
+  .py-lg-4 {
+    acolchado superior: 1.5rem! important;
+  }
+  .pr-lg-4,
+  .px-lg-4 {
+    derecho de relleno: 1.5rem! important;
+  }
+  .pb-lg-4,
+  .py-lg-4 {
+    relleno de fondo: 1.5rem! importante;
+  }
+  .pl-lg-4,
+  .px-lg-4 {
+    relleno izquierdo: 1.5rem! important;
+  }
+  .p-lg-5 {
+    Relleno: 3rem! importante;
+  }
+  .pt-lg-5,
+  .py-lg-5 {
+    acolchado superior: 3rem! important;
+  }
+  .pr-lg-5,
+  .px-lg-5 {
+    derecho de relleno: 3rem! important;
+  }
+  .pb-lg-5,
+  .py-lg-5 {
+    relleno de fondo: 3rem! importante;
+  }
+  .pl-lg-5,
+  .px-lg-5 {
+    relleno-izquierda: 3rem! important;
+  }
+  .m-lg-auto {
+    margen: auto! importante;
+  }
+  .mt-lg-auto,
+  .my-lg-auto {
+    margen superior: auto! importante;
+  }
+  .mr-lg-auto,
+  .mx-lg-auto {
+    margen derecho: auto! importante;
+  }
+  .mb-lg-auto,
+  .my-lg-auto {
+    margen inferior: auto! importante;
+  }
+  .ml-lg-auto,
+  .mx-lg-auto {
+    margen izquierdo: auto! importante;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .m-xl-0 {
+    margen: 0! importante;
+  }
+  .mt-xl-0,
+  .my-xl-0 {
+    margen superior: 0! importante;
+  }
+  .mr-xl-0,
+  .mx-xl-0 {
+    margen derecho: 0! importante;
+  }
+  .mb-xl-0,
+  .my-xl-0 {
+    margen inferior: 0! importante;
+  }
+  .ml-xl-0,
+  .mx-xl-0 {
+    margen izquierdo: 0! importante;
+  }
+  .m-xl-1 {
+    margen: 0.25rem! importante;
+  }
+  .mt-xl-1,
+  .my-xl-1 {
+    margen superior: 0.25rem! important;
+  }
+  .mr-xl-1,
+  .mx-xl-1 {
+    margen derecho: 0.25rem! importante;
+  }
+  .mb-xl-1,
+  .my-xl-1 {
+    margen inferior: 0.25rem! important;
+  }
+  .ml-xl-1,
+  .mx-xl-1 {
+    margen izquierdo: 0.25rem! important;
+  }
+  .m-xl-2 {
+    margen: 0.5rem! importante;
+  }
+  .mt-xl-2,
+  .my-xl-2 {
+    margen superior: 0.5rem! importante;
+  }
+  .mr-xl-2,
+  .mx-xl-2 {
+    margen derecho: 0.5rem! importante;
+  }
+  .mb-xl-2,
+  .my-xl-2 {
+    margen inferior: 0.5rem! importante;
+  }
+  .ml-xl-2,
+  .mx-xl-2 {
+    margen izquierdo: 0.5rem! important;
+  }
+  .m-xl-3 {
+    margen: 1rem! importante;
+  }
+  .mt-xl-3,
+  .my-xl-3 {
+    margen superior: 1rem! importante;
+  }
+  .mr-xl-3,
+  .mx-xl-3 {
+    margen derecho: 1rem! importante;
+  }
+  .mb-xl-3,
+  .my-xl-3 {
+    margen inferior: 1rem! importante;
+  }
+  .ml-xl-3,
+  .mx-xl-3 {
+    margen izquierdo: 1rem! importante;
+  }
+  .m-xl-4 {
+    margen: 1.5rem! importante;
+  }
+  .mt-xl-4,
+  .my-xl-4 {
+    margen superior: 1.5rem! importante;
+  }
+  .mr-xl-4,
+  .mx-xl-4 {
+    margen derecho: 1.5rem! importante;
+  }
+  .mb-xl-4,
+  .my-xl-4 {
+    margen inferior: 1.5rem! importante;
+  }
+  .ml-xl-4,
+  .mx-xl-4 {
+    margen izquierdo: 1.5rem! importante;
+  }
+  .m-xl-5 {
+    margen: 3rem! importante;
+  }
+  .mt-xl-5,
+  .my-xl-5 {
+    margen superior: ¡3rem! importante;
+  }
+  .mr-xl-5,
+  .mx-xl-5 {
+    margen derecho: 3rem! importante;
+  }
+  .mb-xl-5,
+  .my-xl-5 {
+    margen inferior: ¡3rem! importante;
+  }
+  .ml-xl-5,
+  .mx-xl-5 {
+    margen izquierdo: 3rem! importante;
+  }
+  .p-xl-0 {
+    relleno: 0! importante;
+  }
+  .pt-xl-0,
+  .py-xl-0 {
+    acolchado superior: 0! importante;
+  }
+  .pr-xl-0,
+  .px-xl-0 {
+    derecho de relleno: 0! importante;
+  }
+  .pb-xl-0,
+  .py-xl-0 {
+    relleno de fondo: 0! importante;
+  }
+  .pl-xl-0,
+  .px-xl-0 {
+    relleno izquierdo: 0! importante;
+  }
+  .p-xl-1 {
+    relleno: 0.25rem! important;
+  }
+  .pt-xl-1,
+  .py-xl-1 {
+    acolchado superior: 0.25rem! important;
+  }
+  .pr-xl-1,
+  .px-xl-1 {
+    relleno derecho: 0.25rem! important;
+  }
+  .pb-xl-1,
+  .py-xl-1 {
+    relleno de fondo: 0.25rem! important;
+  }
+  .pl-xl-1,
+  .px-xl-1 {
+    relleno izquierdo: 0.25rem! important;
+  }
+  .p-xl-2 {
+    Relleno: 0.5rem! importante;
+  }
+  .pt-xl-2,
+  .py-xl-2 {
+    acolchado superior: 0.5rem! important;
+  }
+  .pr-xl-2,
+  .px-xl-2 {
+    derecho de relleno: 0.5rem! important;
+  }
+  .pb-xl-2,
+  .py-xl-2 {
+    relleno de fondo: 0.5rem! important;
+  }
+  .pl-xl-2,
+  .px-xl-2 {
+    relleno-izquierda: 0.5rem! important;
+  }
+  .p-xl-3 {
+    relleno: 1rem! importante;
+  }
+  .pt-xl-3,
+  .py-xl-3 {
+    acolchado superior: 1rem! important;
+  }
+  .pr-xl-3,
+  .px-xl-3 {
+    derecho de relleno: 1rem! importante;
+  }
+  .pb-xl-3,
+  .py-xl-3 {
+    relleno de fondo: 1rem! importante;
+  }
+  .pl-xl-3,
+  .px-xl-3 {
+    relleno izquierdo: 1rem! important;
+  }
+  .p-xl-4 {
+    relleno: 1.5rem! importante;
+  }
+  .pt-xl-4,
+  .py-xl-4 {
+    acolchado superior: 1.5rem! important;
+  }
+  .pr-xl-4,
+  .px-xl-4 {
+    derecho de relleno: 1.5rem! important;
+  }
+  .pb-xl-4,
+  .py-xl-4 {
+    relleno de fondo: 1.5rem! importante;
+  }
+  .pl-xl-4,
+  .px-xl-4 {
+    relleno izquierdo: 1.5rem! important;
+  }
+  .p-xl-5 {
+    Relleno: 3rem! importante;
+  }
+  .pt-xl-5,
+  .py-xl-5 {
+    acolchado superior: 3rem! important;
+  }
+  .pr-xl-5,
+  .px-xl-5 {
+    derecho de relleno: 3rem! important;
+  }
+  .pb-xl-5,
+  .py-xl-5 {
+    relleno de fondo: 3rem! importante;
+  }
+  .pl-xl-5,
+  .px-xl-5 {
+    relleno-izquierda: 3rem! important;
+  }
+  .m-xl-auto {
+    margen: auto! importante;
+  }
+  .mt-xl-auto,
+  .my-xl-auto {
+    margen superior: auto! importante;
+  }
+  .mr-xl-auto,
+  .mx-xl-auto {
+    margen derecho: auto! importante;
+  }
+  .mb-xl-auto,
+  .my-xl-auto {
+    margen inferior: auto! importante;
+  }
+  .ml-xl-auto,
+  .mx-xl-auto {
+    margen izquierdo: auto! importante;
+  }
+}
+
+.text-monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monoespacia;
+}
+
+.text-justify {
+  text-align: justify! important;
+}
+
+.text-nowrap {
+  espacio en blanco: ahora es importante!
+}
+
+.text-truncate {
+  desbordamiento: oculto;
+  desbordamiento de texto: puntos suspensivos;
+  espacio en blanco: nowrap;
+}
+
+.text-left {
+  text-align: left! important;
+}
+
+.text-right {
+  text-align: right! important;
+}
+
+.text-center {
+  text-align: center! important;
+}
+
+@media (ancho mínimo: 576px) {
+  .text-sm-left {
+    text-align: left! important;
+  }
+  .text-sm-right {
+    text-align: right! important;
+  }
+  .text-sm-center {
+    text-align: center! important;
+  }
+}
+
+@media (ancho mínimo: 768px) {
+  .text-md-left {
+    text-align: left! important;
+  }
+  .text-md-right {
+    text-align: right! important;
+  }
+  .text-md-center {
+    text-align: center! important;
+  }
+}
+
+@media (ancho mínimo: 992 px) {
+  .text-lg-left {
+    text-align: left! important;
+  }
+  .text-lg-right {
+    text-align: right! important;
+  }
+  .text-lg-center {
+    text-align: center! important;
+  }
+}
+
+@media (ancho mínimo: 1200 px) {
+  .text-xl-left {
+    text-align: left! important;
+  }
+  .text-xl-right {
+    text-align: right! important;
+  }
+  .text-xl-center {
+    text-align: center! important;
+  }
+}
+
+.text-minúsculas {
+  transformar texto: minúscula! importante;
+}
+
+.text-mayúsculas {
+  transformar texto: mayúsculas! importante;
+}
+
+.text-mayúscula {
+  transformar texto: capitalizar! importante;
+}
+
+.font-weight-light {
+  fuente de peso: 300! importante;
+}
+
+.font-weight-normal {
+  Peso de la fuente: 400! importante;
+}
+
+.font-weight-bold {
+  fuente de peso: 700! importante;
+}
+
+.font-italic {
+  estilo de letra: cursiva! importante;
+}
+
+.text-blanco {
+  color: #fff! important;
+}
+
+.text-primary {
+  color: # 007bff! importante;
+}
+
+a.text-primary: hover, a.text-primary: focus {
+  color: # 0062cc! importante;
+}
+
+.text-secundario {
+  color: # 6c757d! importante;
+}
+
+a.text-secondary: hover, a.text-secondary: focus {
+  color: # 545b62! importante;
+}
+
+.text-success {
+  color: # 28a745! importante;
+}
+
+a.text-success: hover, a.text-success: focus {
+  color: # 1e7e34! importante;
+}
+
+.text-info {
+  color: # 17a2b8! importante;
+}
+
+a.text-info: hover, a.text-info: focus {
+  color: # 117a8b! importante;
+}
+
+.text-warning {
+  color: # ffc107! importante;
+}
+
+a.text-warning: hover, a.text-warning: focus {
+  color: # d39e00! importante;
+}
+
+.text-danger {
+  color: # dc3545! importante;
+}
+
+a.text-danger: hover, a.text-danger: focus {
+  color: # bd2130! importante;
+}
+
+.text-light {
+  color: # f8f9fa! important;
+}
+
+a.text-light: hover, a.text-light: focus {
+  color: # dae0e5! importante;
+}
+
+.text-dark {
+  color: # 343a40! importante;
+}
+
+a.text-dark: hover, a.text-dark: focus {
+  color: # 1d2124! importante;
+}
+
+.text-body {
+  color: # 212529! importante;
+}
+
+.text-muted {
+  color: # 6c757d! importante;
+}
+
+.text-black-50 {
+  color: rgba (0, 0, 0, 0.5)! importante;
+}
+
+.text-white-50 {
+  color: rgba (255, 255, 255, 0.5)! importante;
+}
+
+.text-hide {
+  fuente: 0/0 a;
+  color: transparente;
+  texto-sombra: ninguno;
+  color de fondo: transparente;
+  borde: 0;
+}
+
+.visible {
+  visibilidad: visible! importante;
+}
+
+.invisible {
+  visibilidad: oculta! importante;
+}
+
+@media print {
+  *,
+  *::antes de,
+  *::después {
+    text-shadow: none! important;
+    caja de sombra: ninguna! importante;
+  }
+  a: no (.btn) {
+    texto-decoración: subrayado;
+  }
+  abbr [título] :: después de {
+    contenido: "(" attr (title) ")";
+  }
+  pre {
+    espacio en blanco: pre-wrap! importante;
+  }
+  pre,
+  blockquote {
+    borde: 1px sólido # adb5bd;
+    Page-break-inside: evitar;
+  }
+  thead {
+    pantalla: table-header-group;
+  }
+  tr
+  img {
+    Page-break-inside: evitar;
+  }
+  pag,
+  h2,
+  h3 {
+    huérfanos: 3;
+    viudas: 3;
+  }
+  h2,
+  h3 {
+    salto de página después: evitar;
+  }
+  @página {
+    tamaño: a3;
+  }
+  cuerpo {
+    ancho mínimo: 992px! importante;
+  }
+  .envase {
+    ancho mínimo: 992px! importante;
+  }
+  .navbar {
+    pantalla: ninguna;
+  }
+  .placa {
+    borde: 1px sólido # 000;
+  }
+  .mesa {
+    Colapso de la frontera: ¡colapso! importante;
+  }
+  .tta td,
+  .table th {
+    color de fondo: #fff! important;
+  }
+  con borde de mesa,
+  .td-bordered td {
+    borde: 1px sólido # dee2e6! important;
+  }
+  .table-oscuro {
+    color: heredar;
+  }
+  .Tabla oscura
+  .td-dark td,
+  .tabla-thead thead,
+  .t-dark tbody + tbody {
+    color de borde: # dee2e6;
+  }
+  .table .thead-dark th {
+    color: heredar;
+    color de borde: # dee2e6;
+  }
+}
+/ * # sourceMappingURL = bootstrap.css.map * /

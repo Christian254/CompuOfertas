@@ -35,19 +35,25 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nombre</label>
                         <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese el nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="nombre del producto">
+                            <input class="form-control"  type="text" placeholder="Ingrese el nombre" id="nombre" name="nombre" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="nombre del producto" value="{{producto.nombre}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Marca</label>
                         <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese la marca" id="marca" name="marca" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="marca del producto">
+                            <input class="form-control"  type="text" placeholder="Ingrese la marca" id="marca" name="marca" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="marca del producto" value="{{producto.marca}}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Descripción</label>
                         <div class="col-sm-6">
-                            <input class="form-control"  type="text" placeholder="Ingrese la descripcion" id="descripcion" name="descripcion" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="descripcion del producto">
+                            <input class="form-control"  type="text" placeholder="Ingrese la descripcion" id="descripcion" name="descripcion" pattern="[a-zA-Z]{1-15}" required="required" data-toggle="tooltip" data-placement="top" title="descripcion del producto" value="{{producto.descripcion}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Imagen</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="file" id="img" name="img" placeholder="Imagen" required="required" accept=".jpg, .jpeg, .png"src="{{producto.img}}" multiple>
                         </div>
                     </div>
                     <div class="form-group">
