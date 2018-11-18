@@ -483,3 +483,14 @@ def editarReserva(request, id):
 			'res':res,
 		}
 	return render(request,"cliente/editarReserva.html", context) 
+
+def buscador(request):
+   consulta = request.GET.get('consulta', '')
+   querys = (Q(nombre__icontains=consulta) | Q(categoria__nombre__icontains=consulta))
+   productos = Producto.objects.filter(querys)
+
+   if productos:
+   		contexto = paginacion_productos(request,productos,6)
+   		return render(request, 'cliente/articulos.html', contexto)
+   else:
+   		return render(request, 'cliente/articulos.html', {'error2':'No se encontraron productos'})
