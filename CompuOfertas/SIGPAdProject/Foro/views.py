@@ -279,6 +279,30 @@ def getChatUser(user):
 	return datos
 
 
+def get_servicio_usuario(request, pk):
+	user = User.objects.get(id=pk)
+
+	#Empleados
+	try:
+		emp = Empleado.objects.get(usuario=user)
+		if emp:
+			data = json.dumps([{'usuario':user.username, "nombre":emp.nombre, "foto":unicode(emp.foto)}], cls=DjangoJSONEncoder)
+	except Exception :
+		emp = None
+	
+	#Clientes
+	try:
+		cli = Cliente.objects.get(usuario=user)
+		if cli:
+			data = json.dumps([{'usuario':user.username, "nombre":cli.nombre, "foto":unicode(cli.foto)}], cls=DjangoJSONEncoder)
+	except Exception:
+		cli = None
+	
+	if emp == None and cli == None:
+		data = json.dumps([], cls=DjangoJSONEncoder)
+	return HttpResponse(data, content_type='application/json')
+
+
 def get_servicio_mini_chat(request,receptor_id): #El emisor, no se necesita para estar logeado.
 	user = request.user
 	mensajes = serializers.serialize("json",get_parametros_mini_chat(user.id,receptor_id),use_natural_foreign_keys=True)
@@ -294,6 +318,8 @@ def get_parametros_mini_chat(id_emisor,id_receptor):
 		return chat.mensaje_set.all()
 	except Exception as e:
 		return []
+
+
 
 def enviar_mensajes_mini_chat(id_emisor,id_receptor, mensaje):
 	try:
