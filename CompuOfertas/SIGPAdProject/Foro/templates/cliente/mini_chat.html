@@ -1,196 +1,387 @@
 {% extends "exterior/foro_interior.html" %}  
 {% load staticfiles %}
 {% block cssMensaje %}
-    <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
-    <link rel="stylesheet" href="{% static '/css/bootstrap4.css'%}">
-    <script src="{% static "console_1.js" %}"></script>
-    <script src="{% static "events_runner.js" %}"></script>
-    <script src="{% static "css_live_reload_init.js" %}"></script>
-    <meta charset='UTF-8'>
-    <meta name="robots" content="noindex">
-    <script src="{% static "js/hoy3lrg.js" %}"></script>
-    <script>
-        try{ 
-          Typekit.load({ async: true });
-        }catch(e){}
-    </script>
-    <link rel='stylesheet prefetch' href="{% static "css/frame.css" %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
-    <link rel='stylesheet prefetch' href="{% static "css/reset.min.css" %}">
-    <link rel='stylesheet prefetch' href="{% static "css/font-awesome.min.css" %}">
+<link href="{% static 'css/mini_chat.css'%}" rel="stylesheet" type="text/css">
+<style>
+
+body {
+  background: #e9e9e9;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.chat {
+  background: #ffffff;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.chat header {
+  background: #bd6982;
+  padding: 10px 15px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: move;
+}
+.chat header:before,
+.chat header:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.chat header h2,
+.chat .body ul li .content h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  float: left;
+}
+.chat header h2 a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.chat header .tools {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  float: right;
+}
+.chat header .tools li {
+  display: inline-block;
+  margin-right: 6px;
+}
+.chat header .tools li:last-child {
+  margin: 0;
+}
+.chat header .tools li a {
+  color: #ffffff;
+  text-decoration: none;
+  -webkit-transition: all 0.3s linear 0s;
+  -moz-transition: all 0.3s linear 0s;
+  -ms-transition: all 0.3s linear 0s;
+  -o-transition: all 0.3s linear 0s;
+  transition: all 0.3s linear 0s;
+}
+.chat .body {
+  position: relative;
+  max-height: 360px;
+  overflow-y: scroll;
+}
+.chat .body .search {
+  display: none;
+  width: 100%;
+}
+.chat .body .search.opened {
+  display: block;
+}
+.chat .body .search input {
+  width: 100%;
+  margin: 0;
+  padding: 10px 15px;
+  border: none;
+  -webkti-box-size: border-box;
+  -moz-box-size: border-box;
+  box-size: border-box;
+}
+.chat .body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #f2f2f2;
+}
+.chat .body ul li {
+  position: relative;
+  background: #ffffff;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.chat .body ul li:before,
+.chat .body ul li:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+.chat .body ul li:hover .thumbnail {
+  background: #bd6982;
+}
+.chat .body ul li:nth-child(2n) {
+  background: #f2f2f2;
+}
+.chat .body ul li .thumbnail {
+  display: inline-block;
+  background: #bfbfbf;
+  width: 50px;
+  color: #ffffff;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: background 0.3s linear 0s;
+  -moz-transition: background 0.3s linear 0s;
+  -ms-transition: background 0.3s linear 0s;
+  -o-transition: background 0.3s linear 0s;
+  transition: background 0.3s linear 0s;
+}
+.chat .body ul li .thumbnail img {
+  width: 100%;
+}
+.chat .body ul li .content {
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: top;
+  line-height: 1;
+}
+.chat .body ul li .content h3 {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  color: #808080;
+}
+.chat .body ul li .content .preview {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin-bottom: 5px;
+  color: #cccccc;
+  font-size: 12px;
+}
+.chat .body ul li .content .meta {
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.chat .body ul li .content .meta a {
+  color: #999999;
+  text-decoration: none;
+}
+.chat .body ul li .content .meta a:hover {
+  text-decoration: underline;
+}
+.chat .body ul li .message {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.chat footer a {
+  background: #bd6982;
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.chat footer a:hover {
+  background: #cd8ca0;
+  -webkit-transition: background 0.3s linear 0s;
+  -moz-transition: background 0.3s linear 0s;
+  -ms-transition: background 0.3s linear 0s;
+  -o-transition: background 0.3s linear 0s;
+  transition: background 0.3s linear 0s;
+}
+.info {
+  width: 300px;
+  margin: 25px auto;
+  text-align: center;
+}
+.info h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: #333333;
+}
+.info span {
+  color: #666666;
+  font-size: 12px;
+}
+.info span a {
+  color: #000000;
+  text-decoration: none;
+}
+.info span .fa {
+  color: #bd6982;
+}
+.info span .spoilers {
+  color: #999999;
+  margin-top: 5px;
+  font-size: 10px;
+}
+</style>
 {% endblock cssMensaje %}
-
-{% block pestania %}
-{% endblock %}
-
 {% block Body %}
-    {% if yo.is_authenticated %}
-        <div id="frame" style="min-width: 150px; max-width: 1000px; height: 92vh; min-height: 100px; max-height: 625px;">
-        <div class="content">
-            <div class="contact-profile">
-                {% if primer %}
-                    {% for cl in primer.cliente_set.all %}
-                        {% if cl.foto %}
-                            <img src="/media/{{cl.foto}}" alt="" />
-                        {% else %}
-                            <img src="{% static "images/user.png" %}" alt="" />
-                        {% endif %}
-                    {% endfor %}
-                    {% for cl in primer.empleado_set.all %}
-                        {% if cl.foto %}
-                            <img src="/media/{{cl.foto}}" alt="" />
-                        {% else %}
-                            <img src="{% static "images/user.png" %}" alt="" />
-                        {% endif %}
-                    {% endfor %}
-                    <p> {{primer.username}}</p>
-                    <div class="social-media" hidden="">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                        <i class="fa fa-instagram" aria-hidden="true"></i>
-                    </div>
-                {% else %}
-                    <img src="{% static "images/anonimo.png" %}" alt="" />
-                    <p> Seleccione un destinatario </p>
-                    <div class="social-media" hidden="">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                        <i class="fa fa-instagram" aria-hidden="true"></i>
-                    </div>
-                {% endif %}
-                {% if error %}
-                    <div class="social-media">
-                        <h3 class="alert-danger">{{error}}</h3>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="messages">
-                <ul>
-                    {% if chat %}
-                        {% for c in chat.mensaje_set.all %}
-                            {% if c.enviado == yo.id %}
-                                <li class="sent" style="margin-left: 0px;">
-                                {% if yo.cliente_set.all %}
-                                    {% for cl in yo.cliente_set.all %}
-                                        {% if cl.foto %}
-                                            <img src="/media/{{cl.foto}}" alt="" />
-                                        {% else %}
-                                            <img src="{% static "images/user.png" %}" alt="" />
-                                        {% endif %}
-                                    {% endfor %}
-                                {% elif yo.empleado_set.all %}
-                                    {% for cl in yo.empleado_set.all %}
-                                        {% if cl.foto %}
-                                            <img src="/media/{{cl.foto}}" alt="" />
-                                        {% else %}
-                                            <img src="{% static "images/user.png" %}" alt="" />
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    <img src="{% static "images/user.png" %}" alt="" />
-                                {% endif %}
-                                    <p> {{c.msj}} </p>
+
+<section>
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="bold">Scrollable Menu</h2>
+            <div class="btn-group">
+                    <div class="dropup">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                              Dropup button
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="card card-info">
+                                        <div class="card card-header">
+                                            Encabezado
+                                        </div>
+                                        <div class="card-body">
+                                            Hola
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            Footer
+                                        </div>
+                                    </div>
                                 </li>
-                            {% else %}
-                                    <li class="replies">
-                                    {% if primer.cliente_set.all %}
-                                        {% for cl in primer.cliente_set.all %}
-                                            {% if cl.foto %}
-                                                <img src="/media/{{cl.foto}}" alt="" />
-                                            {% else %}
-                                                <img src="{% static "images/user.png" %}" alt="" />
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% elif primer.empleado_set.all %}
-                                        {% for cl in primer.empleado_set.all %}
-                                            {% if cl.foto %}
-                                                <img src="/media/{{cl.foto}}" alt="" />
-                                            {% else %}
-                                                <img src="{% static "images/user.png" %}" alt="" />
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        <img src="{% static "images/user.png" %}" alt="" />
-                                    {% endif %}
-                                        <p>{{c.msj}}</p>
-                                    </li>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                            <li class="replies">
-                                <img src="{% static "images/user.png" %}" alt="" />
-                                <p>Selecciona un chat!!!</p>
-                            </li>
-                    {% endif %}
-                        <div id="mostrar">
-                              
-                        </div>
-                    </ul>
-                </div>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="message-input">
-                        <div class="wrap">
-                            <input type="text" placeholder="Escriba su mensaje..." style="font-size: 15px;" name="msg" id="msg" required="" title="introdusca su mensaje" oninvalid="this.setCustomValidity('Ingrese un mensaje, como lo pensas mandar vacio!!!!!')" />
-                            <i class="fa fa-bullhorn attachment" aria-hidden="true"></i>
-                            <button type="submit" class="submit"><span><i class="fa fa-upload" aria-hidden="true"></i></span></button>
-                        </div>
+                            </ul>
                     </div>
-                </form>
             </div>
-        </div>
-        <script src='stopExecutionOnTimeout.js'></script>
-        <script src='jquery-2.1.0.js'></script>
-        <script >
-            $(".messages").animate({ scrollTop: $(document).height() }, "fast");
-            $("#profile-img").click(function() {
-                $("#status-options").toggleClass("active");
-                });
+            <div class="btn-group">
+                    <button type="button" class="btn btn-secondary">Secondary</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                    Secondary </button>
+                    <ul class="dropdown-menu">
+                      <li>
+                           <div class='chat'>
+                            <header>
+                              <h2 class='title'>
+                                <a href='https://www.elegantthemes.com/'>ElegantThemes</a>
+                              </h2>
+                              <ul class='tools'>
+                                <li>
+                                  <a class='fa fa-gear' href='#'></a>
+                                </li>
+                                <li>
+                                  <a class='fa fa-search' href='#'></a>
+                                </li>
+                              </ul>
+                            </header>
+                            <div class='body'>
+                              <div class='search'>
+                                <input placeholder='Search...' type='text'>
+                              </div>
+                              <ul>
+                                <li>
+                                  <a class='thumbnail' href='#'>
+                                    NR
+                                  </a>
+                                  <div class='content'>
+                                    <h3>Nick Roach</h3>
+                                    <span class='preview'>hey how are things going on the...</span>
+                                    <span class='meta'>
+                                      2h ago &middot;
+                                      <a href='#'>Category</a>
+                                      &middot;
+                                      <a href='#'>Reply</a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <a class='thumbnail' href='#'>
+                                    KS
+                                  </a>
+                                  <div class='content'>
+                                    <h3>Kenny Sing</h3>
+                                    <span class='preview'>make sure you take a look at the...</span>
+                                    <span class='meta'>
+                                      3h ago &middot;
+                                      <a href='#'>Category</a>
+                                      &middot;
+                                      <a href='#'>Reply</a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <a class='thumbnail' href='#'>
+                                    MS
+                                  </a>
+                                  <div class='content'>
+                                    <h3>Mitch Skolnik</h3>
+                                    <span class='preview'>i love wood grain things!</span>
+                                    <span class='meta'>
+                                      6h ago &middot;
+                                      <a href='#'>Category</a>
+                                      &middot;
+                                      <a href='#'>Reply</a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <a class='thumbnail' href='#'>
+                                    YP
+                                  </a>
+                                  <div class='content'>
+                                    <h3>Yuriy Portnykh</h3>
+                                    <span class='preview'>check issues for the latest version...</span>
+                                    <span class='meta'>
+                                      10h ago &middot;
+                                      <a href='#'>Category</a>
+                                      &middot;
+                                      <a href='#'>Reply</a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <a class='thumbnail' href='#'>
+                                    JR
+                                  </a>
+                                  <div class='content'>
+                                    <h3>Josh Ronk</h3>
+                                    <span class='preview'>make sure to do the following by...</span>
+                                    <span class='meta'>
+                                      2d ago &middot;
+                                      <a href='#'>Category</a>
+                                      &middot;
+                                      <a href='#'>Reply</a>
+                                    </span>
+                                  </div>
+                                </li>
+                                <li>
+                                  <a class='thumbnail' href='#'>
+                                    BM
+                                  </a>
+                                  <div class='content'>
+                                    <h3>Benjamin Mueller</h3>
+                                    <span class='preview'>Hi nice to meet you!</span>
+                                    <span class='meta'>
+                                      1w ago &middot;
+                                      <a href='#'>Category</a>
+                                      &middot;
+                                      <a href='#'>Reply</a>
+                                    </span>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <footer>
+                              <a href='#'>View All Messages</a>
+                            </footer>
+                        </div>
+                      </li>
+                    </ul>
+            </div>
+    </div>
+</section>
 
-            $(".expand-button").click(function() {
-                $("#profile").toggleClass("expanded");
-                $("#contacts").toggleClass("expanded");
-                });
 
-            $("#status-options ul li").click(function() {
-                $("#profile-img").removeClass();
-                $("#status-online").removeClass("active");
-                $("#status-away").removeClass("active");
-                $("#status-busy").removeClass("active");
-                $("#status-offline").removeClass("active");
-                $(this).addClass("active");
-                if($("#status-online").hasClass("active")) {
-                    $("#profile-img").addClass("online");
-                } else if ($("#status-away").hasClass("active")) {
-                    $("#profile-img").addClass("away");
-                } else if ($("#status-busy").hasClass("active")) {
-                    $("#profile-img").addClass("busy");
-                } else if ($("#status-offline").hasClass("active")) {
-                    $("#profile-img").addClass("offline");
-                } else {
-                    $("#profile-img").removeClass();
-                };
-                $("#status-options").removeClass("active");
-            });
 
-            function peticion() {
-                $.get("/servicio_mensajeria/{{yo.id}}/{{primer.id}}",function(data,status){
-                    for(let i=0;i<data.length;i++){
-                        var valor = data[i].fields;                       
-                        var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
-                        $(lista).appendTo($('.messages ul'));
-                        $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
-                    }
-                });
-            }
 
-            $(document).ready(function(){
-                var refreshId = setInterval(peticion, 3000);
-                $.ajaxSetup({ cache: false });
-            });
-            $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
-            </script>    
-    {% else %}
-            <h1>para estar aqui debe registrarse</h1>
-    {% endif %}
 {% endblock Body %}
+
+{% block Script %}
+<script>
+    $('#openBtn').click(function(){
+        $('#myModal').modal({show:true})
+    });
+</script>
+{% endblock Script %}

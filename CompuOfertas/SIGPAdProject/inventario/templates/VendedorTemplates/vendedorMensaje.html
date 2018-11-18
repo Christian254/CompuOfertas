@@ -1,6 +1,6 @@
-{% extends "exterior/foro_interior.html" %} 
+{% extends 'baseUser.html' %}
 {% load staticfiles %}
-{% block cssMensaje %}
+{% block CSS %}
     <script type="text/javascript" src="{% static 'alertas/alertas.js' %}"></script>
     <link rel="stylesheet" href="{% static '/css/bootstrap4.css'%}">
     <script src="{% static "console_1.js" %}"></script>
@@ -29,79 +29,22 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'exterior/css/freelancer.css'%}" rel="stylesheet">
-{% endblock cssMensaje %}
+{% endblock CSS %}
 
-{% block Footer %}
-{% endblock Footer %}
+{% block pestania %}
+{% endblock %}
 
 {% block Body %}
 
-<style>
-    html,body{
-        height:100%;
-        width:100%;
-    }
-
-    .imagen{
-        height: 200%;
-        width: 100%;
-        border-radius: 15px;
-    }
-
-    .alto{
-        height: 220px;
-        border: 10px solid transparent;
-        margin-bottom: 25px;
-    }
-
-
-    .color{
-          padding: 10px;
-          background-color: #FFFFFF;
-          border-radius: 15px;
-          color:#262a33;
-    }
-
-    @media (min-width: 992px) {
-
-        #mainNav {
-            padding-top: 0.4rem;
-            padding-bottom: 0.4rem;
-            -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
-            transition: padding-top 0.3s, padding-bottom 0.3s;
-        }
-
-        .padd {
-            padding-top: 6rem;
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-
-    }
-
-    .bg-dos{
-        background-color: #1bd6b2;
-    }
-    .color{
-        height: 100%;
-        color: black;
-    }
-
-
-    .colrs{
-        background-color:rgba(38, 42, 51, 1)
-    }
-
-</style>
     {% if yo.is_authenticated %}
-        <div id="frame" style="min-width: 150px; max-width: 8000px; height: 92vh; min-height: 100px; max-height: 625px; margin-top:45px;">
+        <div id="frame" style="min-width: 150px; max-width: 8000px; height: 92vh; min-height: 100px; max-height: 625px;">
             <div id="sidepanel">
                 <div id="profile">
                     <div class="wrap">
                     {% if yo.cliente_set.all %}
                         {% for cl in yo.cliente_set.all %}
                             {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}" alt="" height="50px"  class="online"/>
+                                <img  id="profile-img" src="/media/{{cl.foto}}" alt=""  class="online" height="40px"/>
                             {% else %}
                                 <img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
@@ -109,7 +52,7 @@
                     {% elif yo.empleado_set.all %}
                         {% for cl in yo.empleado_set.all %}
                             {% if cl.foto %}
-                                <img  id="profile-img" src="/media/{{cl.foto}}"  class="online" height="50px" alt="foto empleado" />
+                                <img  id="profile-img" src="/media/{{cl.foto}}" height="40px"  class="online" alt="foto empleado"/>
                             {% else %}
                                 <img id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />
                             {% endif %}
@@ -156,7 +99,7 @@
                                 {% if cl.foto %}
                                 <img src="/media/{{cl.foto}}" alt="" height="40px" />
                                 {% else %}
-                                <img src="{% static "images/user.png" %}" alt=""  />
+                                <img src="{% static "images/user.png" %}" alt="" />
                                 {% endif %}
                                 {% endfor %}
                                 {% elif us.empleado_set.all %}
@@ -232,7 +175,7 @@
                                 {% if yo.cliente_set.all %}
                                     {% for cl in yo.cliente_set.all %}
                                         {% if cl.foto %}
-                                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
+                                            <img src="/media/{{cl.foto}}" alt="" />
                                         {% else %}
                                             <img src="{% static "images/user.png" %}" alt="" />
                                         {% endif %}
@@ -240,7 +183,7 @@
                                 {% elif yo.empleado_set.all %}
                                     {% for cl in yo.empleado_set.all %}
                                         {% if cl.foto %}
-                                            <img src="/media/{{cl.foto}}" alt="" height="40px" />
+                                            <img src="/media/{{cl.foto}}" alt="" />
                                         {% else %}
                                             <img src="{% static "images/user.png" %}" alt="" />
                                         {% endif %}
@@ -255,7 +198,7 @@
                                     {% if primer.cliente_set.all %}
                                         {% for cl in primer.cliente_set.all %}
                                             {% if cl.foto %}
-                                                <img src="/media/{{cl.foto}}" alt="" height="30px" />
+                                                <img src="/media/{{cl.foto}}" alt="" />
                                             {% else %}
                                                 <img src="{% static "images/user.png" %}" alt="" />
                                             {% endif %}
@@ -263,7 +206,7 @@
                                     {% elif primer.empleado_set.all %}
                                         {% for cl in primer.empleado_set.all %}
                                             {% if cl.foto %}
-                                                <img src="/media/{{cl.foto}}" alt="" height="30px" />
+                                                <img src="/media/{{cl.foto}}" alt="" />
                                             {% else %}
                                                 <img src="{% static "images/user.png" %}" alt="" />
                                             {% endif %}
@@ -336,7 +279,7 @@
                 $.get("/servicio_mensajeria/{{yo.id}}/{{primer.id}}",function(data,status){
                     for(let i=0;i<data.length;i++){
                         var valor = data[i].fields;                       
-                        var lista=`<li class="replies"><img src="mikeross.png" alt="" /><p> ${valor.msj}</p></li>`
+                        var lista=`<li class="replies"><img src="${valor.img}" alt="" /><p> ${valor.msj}</p></li>`
                         $(lista).appendTo($('.messages ul'));
                         $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
                     }

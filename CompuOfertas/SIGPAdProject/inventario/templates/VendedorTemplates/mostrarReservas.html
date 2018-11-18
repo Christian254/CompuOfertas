@@ -1,0 +1,67 @@
+{% extends "baseUser.html" %} 
+{% load staticfiles %} 
+{% block Script %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+	<script type="text/javascript" src="{% static 'ajax/mostrarVenta.js' %}"></script>
+{% endblock Script %}
+{% block CSS %}
+    <style>
+	table th {
+  		text-align: center;
+		}
+	table tr {
+  			text-align: center;
+		}
+</style>
+{% endblock CSS %}
+{% block Body %}
+  <div class="container">
+		<div class="row">
+			<div class="col">
+				{% if mensaje %}
+        			<ul>
+            		<div class="alert alert-danger">
+                		<h4 class="text-center font-weight-bold">{{mensaje}}</h4>
+            		</div>
+        			</ul>
+        		{% endif %}
+				{% if error %}
+        			<ul>
+            		<div class="alert alert-danger">
+                		<h4 class="text-center font-weight-bold">{{error}}</h4>
+            		</div>
+        			</ul> 
+        		{% else %}       
+        		
+				<table id="mostrarVenta" class="table table-bordered">
+					<thead class="bg-primary">
+						<tr>
+							<th>Cliente</th>
+							<th>Producto</th>
+							<th>Cantidad</th>
+							<th>Fecha</th>
+							<th>Acción</th>					
+						</tr>
+					</thead>
+					<tbody>
+					{% for r in reserva  %}
+					<tr>
+						<td>{{r.carrito.usuario}}</td>
+						<td>{{r.producto.nombre}}</td>
+						<td>{{r.cantidad}}</td>
+						<td>{{r.fecha_hora}}</td>
+						<td class="text-center">
+                        <a class="btn btn-success" href="/aceptarReserva/{{r.id}}"> Aceptar Reserva</a>
+                        <a class="btn btn-danger" href="/eliminarReserva/{{r.id}}"> Cancelar</a></td>
+					</tr>																	
+					{% endfor %}											
+					</tbody>
+				</table>
+				{% endif %}
+			</div>
+		</div>		
+	</div> 
+
+{% endblock Body %}

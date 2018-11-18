@@ -50,6 +50,12 @@ class Valoracion(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
+class Reserva(models.Model):
+    carrito = models.ForeignKey(Carrito,on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
+    cantidad= models.IntegerField(default=0)
+    fecha_hora = models.DateTimeField(default=datetime.now)
+
 #clase aun faltara a ponerla a prueba, se creara una nueva cada compra y venta
 class Kardex(models.Model):
     fecha = models.DateField(blank=False,auto_now_add=True, auto_now=False)

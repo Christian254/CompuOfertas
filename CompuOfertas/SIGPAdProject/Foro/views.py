@@ -29,17 +29,23 @@ def MiniChat(request):
 		'yo':yo,
 	}
 	return render(request, 'cliente/mini_chat.html', context)
-
+'''
+def ExteriorMiniChat(request):
+	if request.user.is_authenticated():
+		user = request.user
+		context = {
+			'user':user,
+		}
+		return render(request, 'base_exterior.html', context)
+	else:
+		render(request, 'base_exterior.html', {})
+'''
 #@permission_required('SIGPAd.es_cliente')
 def mensajes(request,pk):
 	user = request.user
 	error = ''
-	usersEmpleados = User.objects.filter(empleado__estado__gte=1).exclude(username=user.username)
-	userCliente = User.objects.filter(cliente__estado__gte=1).exclude(username=user.username)
 	chats = Chat.objects.filter(receptor=user) 
 	chats2 = Chat.objects.filter(emisor=user.username)
-	print(chats)
-	print(chats2)
 	datos = []
 	for x in chats:
 		us = User.objects.get(username=x.emisor)
@@ -57,26 +63,43 @@ def mensajes(request,pk):
 	primer = None
 	try:
 		primer = User.objects.get(pk=pk)
-		if contactos:
-			chat =Chat.objects.all()
-			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
-			msj = chat.mensaje_set.all().filter(estado=0)
-			for x in msj:
-				x.estado=1
-				x.save()
-			if request.method == 'POST':
-				c = request.POST.get('msg',None)
-				chat.ultimo=c
-				chat.save()
-				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
-				mens.save()
+		chat =Chat.objects.all()
+		chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+		msj = chat.mensaje_set.all().filter(estado=0)
+		for x in msj:
+			x.estado=1
+			x.save()
+		if request.method == 'POST':
+			c = request.POST.get('msg',None)
+			chat.ultimo=c
+			chat.save()
+			mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+			mens.save()
 	except Exception as e:
 		print(e.message)
 		if 'object has no attribute' in e.message:
-			error = "Para enviar un nuevo mensaje tiene que buscar el usuario en \"add contact\""
-	contexto={'usuarios':usersEmpleados,'clientes':userCliente,'contactos':contactos,'primer':primer,'chat':chat,'yo':user,'error':error}
-	return render(request,'cliente/mensajes.html',contexto)
-
+			error=''
+			if request.method == 'POST':
+				c = request.POST.get('msg',None)
+				print(c)
+				chat = Chat(emisor=user.username,receptor=primer, conectado=1,estado=1,ultimo=c)
+				chat.save()
+				mens = Mensaje(chat=chat,msj=c,enviado=user.id)
+				mens.save()
+	consulta = request.GET.get('consulta')
+	if consulta:
+		cont = []
+		for x in contactos:
+			if consulta in x.username:
+				cont.append(x)
+		contactos = cont
+		primer=None
+		chat=None
+	contexto={'contactos':contactos,'primer':primer,'chat':chat,'yo':user,'error':error}
+	if user.empleado_set.all():
+		return render(request,'VendedorTemplates/vendedorMensaje.html',contexto)
+	else:
+		return render(request,'cliente/mensajes.html',contexto)
 
 def nuevoMensaje(request):
 	user = request.user
@@ -146,7 +169,10 @@ def nuevoMensaje(request):
 		return redirect("/mensajes/0")
 
 	contexto={'usuarios':empleados,'clientes':cliente,'yo':user}
-	return render(request,'cliente/nuevoMensaje.html',contexto)
+	if user.empleado_set.all():
+		return render(request,'VendedorTemplates/vendedorNuevoMsj.html',contexto)
+	else:
+		return render(request,'cliente/nuevoMensaje.html',contexto)
 
 
 def enviarNuevoMensaje(request, pk):
@@ -185,7 +211,7 @@ def enviarNuevoMensaje(request, pk):
 def servicio_mensajeria(request,emisor_id,receptor_id): #chat
 	user = request.user
 	if user.id==int(emisor_id) or user.id==int(receptor_id):
-		mensajes = serializers.serialize("json",getChat(emisor_id,receptor_id,True,user.id),use_natural_foreign_keys=True)
+		mensajes = json.dumps(list(getChat(emisor_id,receptor_id,True,user.id)), cls=DjangoJSONEncoder)
 	else:
 		mensajes = serializers.serialize("json",[],use_natural_foreign_keys=True)
 	return HttpResponse(mensajes, content_type='application/json')
@@ -199,14 +225,16 @@ def getChat(id_emisor,id_receptor,contactos,id):
 		primer = User.objects.get(pk=id_receptor)
 		user = User.objects.get(pk=id_emisor)
 		if contactos:
+			datos = []
 			chat =Chat.objects.all()
 			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
 			c = chat.mensaje_set.all().filter(estado=0).exclude(enviado=id)
 			for x in c:
 				x.estado=1
 				x.save()
-			print(c)
-			return c
+				img = ''
+				datos.append({"model":"Foro.mensaje","pk":x.id,"fields":{"ids":x.id,"msj":x.msj,"img":img}})
+			return datos
 	except Exception as e:
 		return []
 
@@ -228,15 +256,52 @@ def getChatUser(user):
 		if val > 0:
 			m = m1.latest("id")
 			if m.enviado != user.id:
-				datos.append({"model":"Foro.mensaje","pk":m.id,"fields":{"ids":m.id,"msj":m.msj,"username":x.emisor,"enviado":m.enviado}})
+				mens = ''
+				if len(m.msj)>40:
+					mens = m.msj[:40:1]
+				else:
+					val = 40 - len(m.msj)
+					mens = m.msj+" " + "_"*val 
+				datos.append({"model":"Foro.mensaje","pk":m.id,"fields":{"ids":m.id,"msj":mens,"username":x.emisor,"enviado":m.enviado,"fecha":m.fecha_hora.strftime("%d-%m-%y %H:%M:%S")}})
 	for x in chats2:
 		m1 = x.mensaje_set.all().filter(estado=0)
 		val = len(m1)
 		if val > 0 :
 			m = m1.latest("id")
 			if m.enviado != user.id:
-				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":m.msj,"username":x.receptor.username,"enviado":m.enviado}})
+				mens = ''
+				if len(m.msj)>40:
+					mens = m.msj[:40:1]
+				else:
+					val = 40 - len(m.msj)
+					mens = m.msj+" " + "_"*val 
+				datos.append({"model":"Foro.mensaje","pk":m.id, "fields":{"ids":m.id,"msj":mens,"username":x.receptor.username,"enviado":m.enviado,"fecha":m.fecha_hora.strftime("%d-%m-%y %H:%M:%S")}})
 	return datos
+
+
+def get_servicio_usuario(request, pk):
+	user = User.objects.get(id=pk)
+
+	#Empleados
+	try:
+		emp = Empleado.objects.get(usuario=user)
+		if emp:
+			data = json.dumps([{'usuario':user.username, "nombre":emp.nombre, "foto":unicode(emp.foto)}], cls=DjangoJSONEncoder)
+	except Exception :
+		emp = None
+	
+	#Clientes
+	try:
+		cli = Cliente.objects.get(usuario=user)
+		if cli:
+			data = json.dumps([{'usuario':user.username, "nombre":cli.nombre, "foto":unicode(cli.foto)}], cls=DjangoJSONEncoder)
+	except Exception:
+		cli = None
+	
+	if emp == None and cli == None:
+		data = json.dumps([], cls=DjangoJSONEncoder)
+	return HttpResponse(data, content_type='application/json')
+
 
 def get_servicio_mini_chat(request,receptor_id): #El emisor, no se necesita para estar logeado.
 	user = request.user
@@ -253,6 +318,8 @@ def get_parametros_mini_chat(id_emisor,id_receptor):
 		return chat.mensaje_set.all()
 	except Exception as e:
 		return []
+
+
 
 def enviar_mensajes_mini_chat(id_emisor,id_receptor, mensaje):
 	try:
@@ -283,7 +350,7 @@ def articulo(request):
 
 def detalleArticulo(request, id):
 	try:
-		detalle = Producto.objects.get(id=id)
+		detalle = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='').get(id=id)
 		mi_valoracion = Valoracion.objects.get(Q(producto = detalle) & Q(usuario=request.user))	
 		contexto = {'art': detalle, 'puntuacion':mi_valoracion.puntuacion}
 		if request.method == 'POST':		
@@ -309,14 +376,55 @@ def detalleArticulo(request, id):
 				else:
 					carrito_usuario = Carrito.objects.get(usuario=request.user)			
 					detalle.carrito.add(carrito_usuario)
-					messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
-					return redirect('/detalleArticulo/{}'.format(detalle.id))
+					existe = Reserva.objects.filter(Q(producto_id = id) & Q(carrito_id = carrito_usuario.id))
+					if existe:
+						messages.error(request, 'Ya se reservó este artículo')
+					else:
+						carrito_usuario = Carrito.objects.get(usuario=request.user)			
+						detalle.carrito.add(carrito_usuario)
+						existencia= int(detalle.inventario.existencia)
+						cantidad = request.POST.get('cantidad',None)
+						cant=int(cantidad)
+
+						if cant > existencia:
+							messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
+						else:
+							reserva=Reserva()
+							reserva.carrito_id=carrito_usuario.id
+							reserva.producto_id=id
+							reserva.cantidad=cantidad
+							reserva.save()
+							messages.success(request, 'Se reservó el artículo {}'.format(detalle.nombre))
+
+							#Restar existencia
+							nueva_existencia=existencia-cant
+							detalle.inventario.existencia=nueva_existencia
+							detalle.inventario.save()
+							return redirect('/detalleArticulo/{}'.format(detalle.id))
+
 			except Carrito.DoesNotExist:
 				carrito_usuario = Carrito()
 				carrito_usuario.usuario = request.user
 				carrito_usuario.save()
 				detalle.carrito.add(carrito_usuario)
-				messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
+				existencia= int(detalle.inventario.existencia)
+				cantidad = request.POST.get('cantidad',None)
+				cant=int(cantidad)
+
+				if cant > existencia:
+					messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
+				else:
+					reserva=Reserva()
+					reserva.carrito_id=carrito_usuario.id
+					reserva.producto_id=id
+					reserva.cantidad=cantidad
+					reserva.save()
+
+					#Restar existencia
+					nueva_existencia=existencia-cant
+					detalle.inventario.existencia=nueva_existencia
+					detalle.inventario.save()
+					messages.success(request, 'Se reservo el articulo {}'.format(detalle.nombre))
 				return redirect('/detalleArticulo/{}'.format(detalle.id))		
 		return render(request,'cliente/detalleArticulo.html', contexto)
 	except Valoracion.DoesNotExist:		
@@ -328,6 +436,9 @@ def detalleArticulo(request, id):
 		detalle = Producto.objects.get(id=id)		
 		contexto = {'art': detalle, 'puntuacion':0}
 		return render(request,'cliente/detalleArticulo.html', contexto)
+	except Producto.DoesNotExist:
+		return render(request,'cliente/articulos.html',{'error':'No existe el producto solicitado'})
+
 
 def paginacion_productos(request,articulos,elementos):
 	paginator = Paginator(articulos, elementos)
@@ -347,9 +458,9 @@ def paginacion_productos(request,articulos,elementos):
 def pre_orden(request):	
 	try:
 		carrito = Carrito.objects.get(usuario=request.user)
-		productos = Producto.objects.filter(carrito = carrito)		
-		if productos:
-			contexto = {'art': productos}
+		reserva = Reserva.objects.filter(carrito = carrito)		
+		if reserva:
+			contexto = {'reserva':reserva}
 			return render(request,'cliente/carrito.html',contexto)
 		else:
 			return render(request,'cliente/carrito.html',{'error':'No se han reservado articulos'})
@@ -357,9 +468,44 @@ def pre_orden(request):
 		return render(request,'cliente/carrito.html',{'error':'No se han reservado articulos'})
 
 def eliminar_pre(request, id):
-	p = Producto.objects.get(id=id)
-	carrito_usuario = Carrito.objects.get(usuario=request.user)			
-	p.carrito.remove(carrito_usuario)
-	messages.success(request, 'Se elimino de la pre-orden el articulo {}'.format(p.nombre))
+	r = Reserva.objects.get(id=id)
+
+	#Sumar existencia
+	cantidad = int(r.cantidad)
+	existencia = int(r.producto.inventario.existencia)
+	r.producto.inventario.existencia = cantidad+existencia
+	r.producto.inventario.save()
+
+	r.delete()
+	messages.success(request, 'Se eliminó de la pre-orden el articulo {}'.format(r.producto.nombre))
 	return redirect('/preorden')
 
+def editarReserva(request, id):
+	res = Reserva.objects.get(id=id)
+	if request.method == 'POST':
+		existencia = int(res.producto.inventario.existencia)
+		cant_res= int(res.cantidad)
+		cantidad=request.POST.get('cantidad',None)
+		cant=int(cantidad)
+		existencia_real=existencia+cant_res
+
+		if cant > existencia_real:
+			messages.error(request, 'No se pudo realizar la reserva. Existencia del articulo: {}'.format(existencia))
+		else:
+			res.cantidad = cantidad
+			res.save()
+			messages.success(request, 'Se actualizó el artículo {}'.format(res.producto.nombre))
+
+			#Restar existencia
+			res.producto.inventario.existencia=existencia+cant_res-cant
+			res.producto.inventario.save()
+	else:
+		context = {
+			'res':res,
+		}
+		return render(request,"cliente/editarReserva.html", context)
+		
+	context = {
+			'res':res,
+		}
+	return render(request,"cliente/editarReserva.html", context) 

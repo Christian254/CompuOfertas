@@ -41,6 +41,13 @@
     label:hover~label {
         color: orange;
     }
+    .color{
+        color: #c00;
+    }
+    .negrita{
+        margin-top: 10px;
+        font-weight: bold;
+    }
     
     input[type="radio"]:checked~label {
         color: orange;
@@ -111,17 +118,26 @@
         <div class="modal-content container">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Reservar Articulo</h5>
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-footer">
+            <div class="center">
+                <h5 class="color">Tres Artículos Máximo</h5>
                 <form action="" method="post">
                     {% csrf_token %}
+                    Cantidad de productos a reservar: 
+                    <input type="number" id="cantidad" name="cantidad" required min="1" max="3">
+                    <div class="negrita">
+                        Importante: La reserva ofrece garantía para dos días máximo
+                    </div>
+            </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="Submit" class="btn btn-primary">Reservar</button>
+                </div>
                 </form>
-            </div>
         </div>
     </div>
 </div>
