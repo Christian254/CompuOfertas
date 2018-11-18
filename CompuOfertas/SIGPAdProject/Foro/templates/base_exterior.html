@@ -49,6 +49,10 @@
           bottom: 0px;
         }
 
+        textarea{
+          resize: none;
+        }
+
     </style>
     {% block CSS %} {% endblock CSS %}
 
@@ -92,6 +96,8 @@
 
     
   <script type="text/javascript">
+
+
 
     $(document).ready(function() {
   
@@ -158,7 +164,7 @@
                       <div id="aqui_va_chat${i}" style="padding-left: 10px; border:3px;"></div>
                       <div class="dropup">
                         <div id="contenedor"> 
-                          <button id="boton${i}" type="button" class="btn btn-secondary" data-toggle="dropdown" onclick="abrir(${i},${valor.enviado})" style="display: inline; margin-right: 7px"> ${valor.username} </button>
+                          <button id="boton${i}" type="button" class="btn btn-secondary"  onclick="abrir(${i},${valor.enviado}, nombre)" style="display: inline; margin-right: 7px"> ${valor.username} </button>
                         </div>
                       </div>
                     </div>`;
@@ -171,20 +177,19 @@
 
     function cerrar(i){
       $("#boton"+i).show();
-      $("#chat"+i).hide();
-
-      
+      $("#chat"+i).hide();    
     }
 
-    function abrir(i,id_chat) {
+    function abrir(i,id_chat,name) {
+          var nombre_chat = "";
+          
+
           $("#boton"+i).hide();
           $("#aqui_va_chat"+i).empty();
           var lis = `
           <div id="chat${i}" class="chat">
                           <header>
                                 <h2 id="nombre_mini${i}" class='title'">
-                                 <!--Nombre-->
-                                 ${i}
                                 </h2>
                                 <ul class='tools'>
                                   <li>
@@ -200,7 +205,17 @@
                             </ul>
                           </div>
                           <footer class="footer2">
-                              <a href='#'>Introduce un mensaje</a>
+                            <form>
+                              ¡Envía un mensaje!
+                              <div class="row">
+                                <div class="col-md-9">
+                                  <textarea id="textarea" cols="25" rows="2" maxlength="9" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
+                                </div>
+                                <div class="col-md-3">
+                                  <button type="submit" class="btn btn-secondary fa fa-envelope"></button>  
+                                </div>                                
+                              </div>
+                              </form>
                           </footer>
                         </div>
           `;
@@ -236,7 +251,6 @@
             foto_otro = `<img  id="profile-img" src="/media/${foto_otro}" class="online" alt="" />`;
           }
       });
-
       
 
       $.get("/get_servicio_mini_chat/"+id_chat, function(data,status){
@@ -283,7 +297,12 @@
                               </div>
                             </li>
                             `;
-              }             
+              }     
+
+                            $("#nombre_mini"+i).empty();
+              var nombre_l = `<p>${receptor_otro_nombre}</p>`;
+              $(nombre_l).appendTo($("#nombre_mini"+i));
+                              
               $(lista).appendTo($(cor));
             }
         });
