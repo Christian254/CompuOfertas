@@ -4,6 +4,7 @@
 {% block META %}
     <!-- Mini Chat -->
     <link href="{% static 'css/mini_chat.css'%}" rel="stylesheet" type="text/css">
+
 {% endblock META %}
 
 {% block CSS %}
@@ -77,6 +78,54 @@
 {% endblock CSS %}
 
 {% block Navegacion %}
+
+<style>
+    html,body{
+            height:100%;
+            width:100%;
+    }
+
+    .color{
+          padding: 10px;
+          background-color: #FFFFFF;
+          border-radius: 15px;
+          color:#262a33;
+    }
+
+    @media (min-width: 992px) {
+
+        #mainNav {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+            -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+            transition: padding-top 0.3s, padding-bottom 0.3s;
+        }
+
+        .padd {
+            padding-top: 6rem;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+
+    }
+
+    .bg-dos{
+        background-color: #1bd6b2;
+    }
+    .color{
+        height: 100%;
+        color: black;
+    }
+
+
+    .colrs{
+        background-color:rgba(38, 42, 51, 1)
+    }
+
+</style>
+
+
+
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
         <div class="container">
@@ -92,6 +141,9 @@
               </li>
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/preorden">Carrito de Compras</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/nuevoMensaje/">nuevo contacto</a>
               </li>
               <li class="nav-item mx-0 mx-lg-1 dropdown">
                 <a href="" data-toggle="dropdown" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"> <i class="fa fa-envelope"></i> <span class="badge badge color_1" id="cant">0</span></a>

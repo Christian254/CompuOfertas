@@ -1343,16 +1343,28 @@ def mostrarInventario(request):
 			Q(codigo__icontains = consulta)
 			).distinct()
 	if request.method == 'POST':
-		mensaje = request.POST.get('mensaje',None)
-		if mensaje != None:
-			title = "mensaje: {} ".format(empleado.nombre)
-			for x in admin:
-				error = error + enviarCorreo(title,mensaje,x.email)
-			error = error + enviarCorreo(title,mensaje,superUser.email)
-			if error:
-				pass
-			else:
-				exito = 'Mensajes enviados con exito'
+		accion = request.POST.get('accion',None)
+		if accion=='mensaje':
+			mensaje = request.POST.get('mensaje',None)
+			if mensaje != None:
+				title = "mensaje: {} ".format(empleado.nombre)
+				for x in admin:
+					error = error + enviarCorreo(title,mensaje,x.email)
+				error = error + enviarCorreo(title,mensaje,superUser.email)
+				if error:
+					pass
+				else:
+					exito = 'Mensajes enviados con exito'
+		elif accion=='precio':
+			precio = request.POST.get('nuevoPrecio',None)
+			if precio != None:
+				pr = round(Decimal(precio),2)
+				if pr >= 0:
+					id_producto = request.POST.get('id_producto',None)
+					prod = Producto.objects.get(pk=id_producto)
+					inventario = prod.inventario
+					inventario.precio_venta_producto = precio
+					inventario.save()
 	paginator = Paginator(producto, 7)
 	parametros = request.GET.copy()
 	if parametros.has_key('page'):

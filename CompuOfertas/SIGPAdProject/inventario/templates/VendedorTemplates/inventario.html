@@ -162,7 +162,7 @@
                         <th>marca</th>
                         <th>existencia</th>
                         <th>precio</th>
-                        <th>Accion</th>
+                        <th class="text-center"> Accion</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,6 +186,12 @@
                                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="link"></span>
                                     </font>
                                     kardex
+                                </a>
+                                <a href="#" class="col-xs-5 text-xs-center" onclick="mostrarModal({{p.inventario.existencia}}, {{p.id}})">
+                                    <font size="4">
+                                        <span class="glyphicon glyphicon-usd" aria-hidden="true" id="link"></span>
+                                    </font>
+                                    precio
                                 </a> 
                             </div>
                         </td>
@@ -231,7 +237,7 @@
             <div class="modal-body">
                 <form method="POST">
                     {% csrf_token %}
-                    <input type="text" name="accion" id="accion" hidden="">
+                    <input type="text" name="accion" id="accion" hidden="" value="mensaje">
                     <div class="form-group row">
                         <label for="de" class="col-md-8 col-form-label">De: <strong>{{empleado.nombre}} {{empleado.apellido}}</strong> </label>
                     </div>
@@ -260,6 +266,56 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="idprecio" tabindex="-1" role="dialog" aria-labelledy="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title">Cambiar precio de venta</h5>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="accion" id="accion" hidden="" value="precio">
+                    <label>El precio actual es: <strong id="pre">  </strong> El precio sugerido es: <strong id="presu">  </strong> </label>
+                    <p>
+                        <label>Nuevo precio: </label>
+                        <input type="number" name="nuevoPrecio" step="0.01" id="nuevoPrecio" class="control" value="0" min="0.01" required="">
+                        <input type="number" name="id_producto" step="0.01" id="id_producto" value="0"  required="" hidden="">
+                    </p>
+                    <input type="submit" name="aceptar" value="guardar" class="btn btn-success aceptar">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary aceptar" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function mostrarModal(precio, id_producto){
+        var valor = document.getElementById('id_producto');
+        valor.value=id_producto;
+        $('#pre').text(precio);
+        var precio_sugerido = precio * 1.25;
+        $('#presu').text(precio_sugerido);
+        $('#idprecio').modal('show');
+    }
+</script>
+
+
+
+
+
+
+
+
+
 
 {%else%}
 <h1>usuario anonimo</h1>
