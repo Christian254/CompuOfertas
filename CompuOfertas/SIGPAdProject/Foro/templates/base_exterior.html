@@ -25,7 +25,7 @@
     <link href="{% static 'exterior/vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
+    <script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script>
     <!-- Plugin CSS -->
     <link href="{% static 'exterior/vendor/magnific-popup/magnific-popup.css'%}" rel="stylesheet" type="text/css">
 
@@ -53,6 +53,14 @@
           resize: none;
         }
 
+        .dropbtn {
+            background-color: #1bd6b2;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
     </style>
     {% block CSS %} {% endblock CSS %}
 
@@ -72,6 +80,7 @@
     {% endblock Footer %}
 
     {% if user.is_authenticated %}
+    {{exito}}
     <div id="prueba_2"></div>
   {% endif %}
     <!-- Bootstrap core JavaScript -->
@@ -164,7 +173,7 @@
                       <div id="aqui_va_chat${i}" style="padding-left: 10px; border:3px;"></div>
                       <div class="dropup">
                         <div id="contenedor"> 
-                          <button id="boton${i}" type="button" class="btn btn-secondary"  onclick="abrir(${i},${valor.enviado}, nombre)" style="display: inline; margin-right: 7px"> ${valor.username} </button>
+                          <button id="boton${i}" type="button" class="btn dropbtn btn-secondary"  onclick="abrir(${i},${valor.enviado})"> ${valor.username} </button>
                         </div>
                       </div>
                     </div>`;
@@ -180,9 +189,7 @@
       $("#chat"+i).hide();    
     }
 
-    function abrir(i,id_chat,name) {
-          var nombre_chat = "";
-          
+    function abrir(i,id_chat) {
 
           $("#boton"+i).hide();
           $("#aqui_va_chat"+i).empty();
@@ -204,18 +211,19 @@
                             <ul id="msj${i}" class="msj">
                             </ul>
                           </div>
-                          <footer class="footer2">
-                            <form>
-                              ¡Envía un mensaje!
-                              <div class="row">
-                                <div class="col-md-9">
-                                  <textarea id="textarea" cols="25" rows="2" maxlength="9" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
-                                </div>
-                                <div class="col-md-3">
-                                  <button type="submit" class="btn btn-secondary fa fa-envelope"></button>  
-                                </div>                                
+                          <footer id="footer${i}" class="footer2">
+                            <form id="formulario${i}" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" >
+                            {% csrf_token %}
+                            ¡Envía un mensaje!
+                            <div class="row">
+                              <div class="col-md-9">
+                                <textarea id="mensaje${i}" cols="25" rows="2" maxlength="299" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
                               </div>
-                              </form>
+                              <div class="col-md-3">
+                                <button type="button" class="btn btn-secondary fa fa-envelope" onclick="submit_ajax(${i},${id_chat})"></button> 
+                              </div>                                
+                              </div>
+                            </form>
                           </footer>
                         </div>
           `;
@@ -228,11 +236,13 @@
     function agregarMensajes(i,id_chat){
       var id_user = {{user.id}};
       var emisor_yo_nombre, receptor_otro_nombre;
+      var user_emisor, user_receptor;
       var foto_yo, foto_otro;
 
       $.get("/servicio_usuario/"+id_user, function(data,status){
           var us = data[0];
           emisor_yo_nombre = us.nombre;
+          user_emisor = us.usuario;
           foto_yo = us.foto;
           if(foto_yo == ""){          
             foto_yo = `<img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />`;
@@ -244,6 +254,7 @@
       $.get("/servicio_usuario/"+id_chat, function(data,status){
           var us_2 = data[0];
           receptor_otro_nombre = us_2.nombre;
+          user_receptor = us_2.usuario;
           foto_otro = us_2.foto;
           if(foto_otro == ""){          
             foto_otro = `<img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />`;
@@ -259,6 +270,7 @@
             var lista;
 
             $(cor).empty();
+
             for (let k = 0; k <= data.length; k++) {
               var valor = data[k].fields;
               var date = new Date(valor.fecha_hora);
@@ -299,13 +311,39 @@
                             `;
               }     
 
-                            $("#nombre_mini"+i).empty();
-              var nombre_l = `<p>${receptor_otro_nombre}</p>`;
-              $(nombre_l).appendTo($("#nombre_mini"+i));
-                              
+              $("#nombre_mini"+i).empty();
+              var nombre_l = `<p>${user_receptor} ${receptor_otro_nombre}</p>`;
+              $(nombre_l).appendTo($("#nombre_mini"+i));          
               $(lista).appendTo($(cor));
+
             }
         });
+    }
+
+    //Formulario
+
+    function submit_ajax(i, id_receptor){
+      var id_user = {{user.id}};
+      var msg = $('#mensaje'+i).val();
+      if (msg != "") {
+        $.ajax({
+            type:'POST',
+            url: '/enviar_mensaje_mini_chat/'+id_receptor+"/"+id_user,
+            data:{
+              mensaje:$('#mensaje'+i).val(),
+              csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            beforeSend: function (){
+
+            },
+            success:function(){
+              $('#mensaje'+i).val("");
+            }
+          });
+      }else{
+        swal("Envíe un mensaje");
+      }
+     
     }
 
     //Adentro.

@@ -16,6 +16,7 @@ from inventario.models import *
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 from SIGPAd.models import *
 
 # Create your views here.
@@ -321,20 +322,44 @@ def get_parametros_mini_chat(id_emisor,id_receptor):
 
 
 
-def enviar_mensajes_mini_chat(id_emisor,id_receptor, mensaje):
+def enviar_mensajes_mini_chat(request,id_emisor,id_receptor):
 	try:
-		primer = User.objects.get(pk=id_emisor)
-		user = User.objects.get(pk=id_receptor)
-		chat =Chat.objects.all()
-		chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
-		chat.ultimo = mensaje
-		chat.save()
-		msg =  Mensaje(chat=chat,msj=mensaje,enviado=primer.id)
-		msg.save()
-		return True
+		if request.method=="POST":
+			mensaje = request.POST.get('mensaje',None)
+			primer = User.objects.get(pk=id_emisor)
+			user = User.objects.get(pk=id_receptor)
+			chat =Chat.objects.all()
+			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+			chat.ultimo = mensaje
+			chat.save()
+			msg =  Mensaje(chat=chat,msj=mensaje,enviado=user.id)
+			msg.save()
+		return JsonResponse({'result':'ok'})
 
 	except Exception as e:
-		return False
+		return JsonResponse({'result':'not ok'})
+
+
+
+def nuevo_mensaje_mini_chat(request, id_enviado):
+	try:
+		user = request.user
+		enviado = User.objects.get(id=id_enviado)
+		chat =Chat.objects.all()
+		chat=chat.filter(Q(receptor=user,emisor=enviado.username)|Q(receptor=enviado,emisor=user.username)).distinct().first()
+		if request.method=='POST':
+			mensaje = "request.POST.get('mensaje',None)"
+			if mensaje != None:
+				chat.ultimo = mensaje
+				chat.save()
+				msg =  Mensaje(chat=chat,msj=mensaje,enviado=user.id)
+				msg.save()
+				context = {
+					'exito':"Exito",
+				}
+		return JsonResponse({'result':'ok'})
+	except Exception as e:
+		return JsonResponse({'result':'not ok'})
 
 def articulo(request):
 	try:
