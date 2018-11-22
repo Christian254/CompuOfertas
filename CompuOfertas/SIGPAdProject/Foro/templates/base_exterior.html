@@ -117,11 +117,6 @@
     });
 
 
-    function alerta(){
-      $('#footer_botones').on('click', 'button', function(){
-
-      })
-    }
 
         //Para el footer de botones.
         function peticionChat() {
@@ -173,7 +168,10 @@
                       <div id="aqui_va_chat${i}" style="padding-left: 10px; border:3px;"></div>
                       <div class="dropup">
                         <div id="contenedor"> 
-                          <button id="boton${i}" type="button" class="btn dropbtn btn-secondary"  onclick="abrir(${i},${valor.enviado})"> ${valor.username} </button>
+                          <div class="btn-group">
+                            <button class="btn dropbtn btn-secondary" id="boton${i}" type="button" onclick="abrir(${i},${valor.enviado})"> ${valor.username}</button> 
+                            <button class="btn dropbtn btn-secondary fa fa-times" id="boton_cerrar${i}" onclick="cerrar_boton(${i})" style="padding-left: 10px;"></button>
+                          </div>
                         </div>
                       </div>
                     </div>`;
@@ -186,12 +184,20 @@
 
     function cerrar(i){
       $("#boton"+i).show();
-      $("#chat"+i).hide();    
+      $("#chat"+i).hide();   
+      $("#boton_cerrar"+i).show(); 
     }
 
+    function cerrar_boton(i){
+      $("#boton"+i).remove();
+      $("#chat"+i).remove();  
+      $("#boton_cerrar"+i).remove();
+
+    }
     function abrir(i,id_chat) {
 
           $("#boton"+i).hide();
+          $("#boton_cerrar"+i).hide();
           $("#aqui_va_chat"+i).empty();
           var lis = `
           <div id="chat${i}" class="chat">
@@ -200,10 +206,10 @@
                                 </h2>
                                 <ul class='tools'>
                                   <li>
-                                    <a class='fa fa-gear' href='#'></a>
+                                    <a class='fa fa-gear' href='#'>${i} ${id_chat}</a>
                                   </li>
                                   <li>
-                                    <button class="btn btn-secondary fa fa-times" href='#' onclick="cerrar(${i})"></button>  
+                                    <button id="cerrar_chat${i}" class="btn btn-secondary fa fa-user-times" href='#' onclick="cerrar(${i})"></button>  
                                   </li>
                                 </ul>
                           </header>

@@ -80,6 +80,11 @@
                                 {% if validar %}	
                                     <h3 class="alert-danger">{{validar}}</h3>
                                 {% endif %}
+                                {% if exito %}
+                                    <div class="alert alert-success" role="alert">
+                                        {{exito}} -> <a href="/" class="alert-link">Inicio</a>.
+                                    </div>
+                                {% endif %}
                                 <hr class="star-dark mb-5">
                                 <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="needs-validation" novalidate>
                                         {% csrf_token %}

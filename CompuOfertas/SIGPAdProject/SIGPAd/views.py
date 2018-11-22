@@ -575,7 +575,10 @@ def registrarCliente(request):
 			user.save()
 			cliente.usuario = user
 			cliente.save()
-			return redirect('/registrarCliente')
+			context = {
+				'exito':"Éxito al registrarte, ingresa ubicandote en la página principal",
+			}
+			return render(request, 'exterior/registrar_cliente.html', context)
 		else:
 			validar = "Las contraseñas son diferentes"
 			context = { 'validar':validar }
