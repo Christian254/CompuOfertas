@@ -86,6 +86,31 @@
         background-color:rgba(38, 42, 51, 1)
     }
 
+	ul.pagination {
+	    display: inline-block;
+	    padding: 0;
+	    margin: 0;
+	}
+
+	ul.pagination li {display: inline;}
+
+	ul.pagination li a {
+	    color: black;
+	    float: left;
+	    padding: 8px 16px;
+	    text-decoration: none;
+	    transition: background-color .3s;
+	}
+
+	ul.pagination li a.active {
+	    background-color: #4CAF50;
+	    color: white;
+	}
+
+	ul.pagination li a:hover:not(.active) {background-color: #ddd;}
+
+
+
 </style>
 
 {% if user.is_superuser %}
@@ -148,20 +173,23 @@
 		            <nav aria-label="Page navigation example">
 		                <ul class="pagination">
 		                    {% if usuarios.has_previous %}
-		                    <li class="page-item"><a class="page-link" href="?pageEm={{ usuarios.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+		                    <li><a href="?pageEm={{ usuarios.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
 		                    {%else%}
-		                    <li class="page-item"><a class="page-link">Anterior</a></li>
+		                    <li ><a >Anterior</a></li>
 		                    {% endif %} 
+
 		                    {% for i in usuarios.paginator.page_range %} 
 		                    	{% if usuarios.number == i %}
-		                    		<li class="active"><span><font size="3">{{ i }}</font> <span class="sr-only">(current)</span></span></li>
+		                    		<li class="active"><a href=""><span>{{ i }} <span class="sr-only">(current)</span></span></a></li>
 		                    	{% else %}
 		                    		<li><a href="?pageEm={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
 		                    	{% endif %} 
-		                    {% endfor %} {% if usuarios.has_next %}
-		                    <li class="page-item"><a class="page-link" href="?pageEm={{ usuarios.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+		                    {% endfor %} 
+
+		                    {% if usuarios.has_next %}
+		                    <li><a  href="?pageEm={{ usuarios.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
 		                    {%else%}
-		                    <li class="page-item"><a class="page-link">Siguiente</a></li>
+		                    <li ><a >Siguiente</a></li>
 		                    {% endif %}
 		                </ul>                        
 		            </nav>
@@ -197,18 +225,18 @@
 		            <nav aria-label="Page navigation example">
 		                <ul class="pagination">
 		                    {% if clientes.has_previous %}
-		                    <li class="page-item"><a class="page-link" href="?pageCl={{ clientes.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
+		                    <li><a href="?pageCl={{ clientes.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a></li>
 		                    {%else%}
-		                    <li class="page-item"><a class="page-link">Anterior</a></li>
+		                    <li><a >Anterior</a></li>
 		                    {% endif %} {% for i in clientes.paginator.page_range %} {% if clientes.number == i %}
-		                    <li class="active"><span><font size="3">{{ i }}</font> <span class="sr-only">(current)</span></span>
+		                    <li class="active"><a href=""><span>{{ i }} <span class="sr-only">(current)</span></span></a>
 		                    </li>
 		                    {% else %}
 		                    <li><a class="active" href="?pageCl={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{ i }}</a></li>
 		                    {% endif %} {% endfor %} {% if clientes.has_next %}
-		                    <li class="page-item"><a class="page-link" href="?pageCl={{ clientes.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
+		                    <li><a  href="?pageCl={{ clientes.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Siguiente</a></li>
 		                    {%else%}
-		                    <li class="page-item"><a class="page-link">Siguiente</a></li>
+		                    <li><a >Siguiente</a></li>
 		                    {% endif %}
 		                </ul>                        
 		            </nav>
