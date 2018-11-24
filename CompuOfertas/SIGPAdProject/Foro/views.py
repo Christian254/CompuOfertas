@@ -179,6 +179,19 @@ def nuevoMensaje(request):
 def enviarNuevoMensaje(request, pk):
 	user = request.user
 	new_contactos = User.objects.get(pk=pk)
+	empleado = None
+	cliente = None
+	error=''
+	empleado = new_contactos.empleado_set.all()
+	if len(empleado)>0:
+		empleado = empleado.first()
+	else:
+		cliente = new_contactos.cliente_set.all()
+		if len(cliente)>0:
+			cliente = cliente.first()
+		else:
+			error='No es cliente ni usuario, no existe'
+
 	if request.method=='POST':
 		try:
 			c = request.POST.get('msg',None)
@@ -205,8 +218,9 @@ def enviarNuevoMensaje(request, pk):
 				mens.save()
 		return redirect("/mensajes/0")
 
-	contexto={'contactos':new_contactos,'yo':user}
+	contexto={'contactos':new_contactos,'yo':user,'cliente':cliente,'empleado':empleado,'error':error}
 	return render(request,'cliente/enviarNuevoMensaje.html',contexto)
+
 
 
 def servicio_mensajeria(request,emisor_id,receptor_id): #chat
