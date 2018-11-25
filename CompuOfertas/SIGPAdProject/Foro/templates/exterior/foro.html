@@ -40,14 +40,6 @@
           color: white;
         }
 
-    #map {
-        background : #7391ad;
-        width      : 100%;
-    }
-    #map {
-        border : 0;
-        height : 250px;
-    }
       </style>
 
 {% endblock CSS %}
@@ -75,6 +67,9 @@
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="" data-toggle="modal" data-target="#login">Iniciar Sesión</a>
               </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                  <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/registrarCliente">Registrarse</a>
+                </li>              
             </ul>
           </div>
         </div>
@@ -210,10 +205,13 @@
           <hr class="star-light mb-5">
           <div class="row">
             <div class="col-lg-4 ml-auto text-center">
-              <p class="lead">CompuOfertas es una empresa iniciada en el año 2006, dedicada a la venta y reparación de equipo informáticos (refurbished). Brindamos a nuestros clientes soluciones practicas y eficientes.</p>
+                <i class="fa fa-check fa-5x" aria-hidden="true"></i>
+                <b>Acerca de:</b>
+                <p class="lead">CompuOfertas es una empresa iniciada en el año 2006, dedicada a la venta y reparación de equipo informáticos (refurbished). Brindamos a nuestros clientes soluciones practicas y eficientes.</p>
             </div>
             <div class="col-lg-4 mr-auto">
-              <p class="lead text-center"><b>Donde encontrarás:</b>
+              <i class="fa fa-desktop fa-5x" aria-hidden="true"></i>
+              <b class="text-center">Donde encontrarás:</b>
               <ul class="lead">
                 <li>Venta de computadoras.</li>  
                 <li>Accesorios.</li>
@@ -221,6 +219,11 @@
                 <li>Repuestos para diferentes modelos y marcas de computadores.</li>
               </ul>
               </p>
+            </div>
+            <div class="col-lg-4 ml-auto text-center">
+                <i class="fa fa-trophy fa-5x" aria-hidden="true"></i>
+                <b>Excelentes Productos</b>
+                <p class="lead">Ofrecemos productos de excelente calidad, innovación y variedad a precios accesibles contribuyendo así para la mejor inversión de su dinero.</p>
             </div>
 
           </div>
