@@ -40,6 +40,14 @@
           color: white;
         }
 
+    #map {
+        background : #7391ad;
+        width      : 100%;
+    }
+    #map {
+        border : 0;
+        height : 250px;
+    }
       </style>
 
 {% endblock CSS %}
@@ -201,19 +209,24 @@
           <h2 class="text-center text-uppercase text-white">¿Quiénes somos?</h2>
           <hr class="star-light mb-5">
           <div class="row">
-            <div class="col-lg-4 ml-auto">
-              <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+            <div class="col-lg-4 ml-auto text-center">
+              <p class="lead">CompuOfertas es una empresa iniciada en el año 2006, dedicada a la venta y reparación de equipo informáticos (refurbished). Brindamos a nuestros clientes soluciones practicas y eficientes.</p>
             </div>
             <div class="col-lg-4 mr-auto">
-              <p class="lead">Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+              <p class="lead text-center"><b>Donde encontrarás:</b>
+              <ul class="lead">
+                <li>Venta de computadoras.</li>  
+                <li>Accesorios.</li>
+                <li>Reparación</li>
+                <li>Repuestos para diferentes modelos y marcas de computadores.</li>
+              </ul>
+              </p>
             </div>
+
           </div>
           <div class="text-center mt-4">
-            <a class="btn btn-xl btn-outline-light" href="#">
-              <i class="fas fa-download mr-2"></i>
-              Download Now!
-            </a>
           </div>
+          
         </div>
       </section>
   
@@ -271,9 +284,14 @@
         <div class="container">
           <div class="row">
             <div class="col-md-4 mb-5 mb-lg-0">
-              <h4 class="text-uppercase mb-4">Ubicación</h4>
-              <p class="lead mb-0">1ª Calle poniente y 15ª Av norte, Edificio Medico Quirúrgico local 4
-                <br>San Salvador El Salvador.</p>
+              <h4 class="text-uppercase mb-4">SUCURSALES</h4>
+              <ul>
+                <li><p>1ª Calle poniente y 15ª Av norte, Edificio Medico Quirúrgico local 4
+                <br>San Salvador El Salvador.</p></li>
+                <li><p>Alameda Roosvelt Nº2425 Local C, Contiguo a Western Union 1101
+                    <br>San Salvador El Salvador.
+                </p></li>
+              </ul>
             </div>
             <div class="col-md-4 mb-5 mb-lg-0">
               <h4 class="text-uppercase mb-4">Around the Web</h4>
@@ -309,6 +327,15 @@
               <h4 class="text-uppercase mb-4">Telefóno:</h4>
               <p class="lead mb-0">(503) 2562-9722  <br> 7293-6254 </p>
             </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12 mt-4">
+                <h4 class="text-uppercase mb-4">Ubicación</h4>
+                <p class="lead"><i class="fa fa-location-arrow " aria-hidden="true"></i> 
+                    <i>Visitenos en:</i> Alameda Roosvelt Nº2425 Local C, Contiguo a Western Union 1101 San SalvadorEl Salvador.
+                </p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3876.3004044371764!2d-89.214528!3d13.700247!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xec898008f259d1e6!2sCompuOfertas!5e0!3m2!1ses!2ses!4v1543116865536" width="100%" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+              </div>
           </div>
         </div>
       </footer>
@@ -572,4 +599,6 @@
           }
 </script>
 
+<script src="{% static 'exterior/js/OpenLayers.js'%}"></script>
+<script src="{% static 'exterior/js/kml-layer.js'%}"></script>
 {% endblock Script %}
