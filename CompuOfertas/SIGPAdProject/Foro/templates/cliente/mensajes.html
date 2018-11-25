@@ -9,6 +9,7 @@
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <script src="{% static "js/hoy3lrg.js" %}"></script>
+    <script src="{% static "js/jquery-ui-datepicker.min.js" %}"></script>
     <script>
         try{ 
           Typekit.load({ async: true });
@@ -91,6 +92,159 @@
     .colrs{
         background-color:rgba(38, 42, 51, 1)
     }
+
+/* Reset */
+.ui-datepicker,
+.ui-datepicker table,
+.ui-datepicker tr,
+.ui-datepicker td,
+.ui-datepicker th {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-spacing: 0;
+}
+
+/* Calendar Wrapper */
+.ui-datepicker {
+    display: none;
+    width: 294px;
+    padding: 35px;
+    cursor: default;
+
+    text-transform: uppercase;
+    font-family: Tahoma;
+    font-size: 12px;
+
+    background: #141517;    
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    -webkit-box-shadow: 0px 1px 1px rgba(255,255,255, .1), inset 0px 1px 1px rgb(0,0,0);
+    -moz-box-shadow: 0px 1px 1px rgba(255,255,255, .1), inset 0px 1px 1px rgb(0,0,0);
+    box-shadow: 0px 1px 1px rgba(255,255,255, .1), inset 0px 1px 1px rgb(0,0,0);
+}
+
+/* Calendar Header */
+.ui-datepicker-header {
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+.ui-datepicker-title { text-align: center; }
+
+/* Month */
+.ui-datepicker-month {
+    position: relative;
+    padding-right: 15px;
+    color: #565656;
+}
+
+.ui-datepicker-month:before {
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    content: '';
+
+    background: #a5cd4e;
+    background: -moz-linear-gradient(top, #a5cd4e 0%, #6b8f1a 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a5cd4e), color-stop(100%,#6b8f1a));
+    background: -webkit-linear-gradient(top, #a5cd4e 0%,#6b8f1a 100%);
+    background: -o-linear-gradient(top, #a5cd4e 0%,#6b8f1a 100%);
+    background: -ms-linear-gradient(top, #a5cd4e 0%,#6b8f1a 100%);
+    background: linear-gradient(top, #a5cd4e 0%,#6b8f1a 100%);
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+/* Year */
+.ui-datepicker-year {
+    padding-left: 8px;
+    color: #a8a8a8;
+}
+
+/* Prev Next Month */
+.ui-datepicker-prev,
+.ui-datepicker-next {
+    position: absolute;
+    top: -2px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.ui-datepicker-prev {
+    left: 0;
+    padding-left: 0;
+}
+
+.ui-datepicker-next {
+    right: 0;
+    padding-right: 0;
+}
+
+.ui-datepicker-prev span,
+.ui-datepicker-next span{
+    display: block;
+    width: 5px;
+    height: 10px;
+    text-indent: -9999px;
+
+    background-image: url(../img/arrows.png);
+}
+
+.ui-datepicker-prev span { background-position: 0px 0px; }
+
+.ui-datepicker-next span { background-position: -5px 0px; }
+
+.ui-datepicker-prev-hover span { background-position: 0px -10px; }
+
+.ui-datepicker-next-hover span { background-position: -5px -10px; }
+
+/* Calendar "Days" */
+.ui-datepicker-calendar th {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    
+    text-align: center;
+    font-weight: normal;
+    color: #a8a8a8;
+}
+
+.ui-datepicker-calendar td {
+    padding: 0 7px;
+    
+    text-align: center;
+    line-height: 26px;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+    display: block;
+    width: 26px;
+    outline: none;
+
+    text-decoration: none;
+    color: #a8a8a8;
+    
+    border: 1px solid transparent;
+}
+
+/* Day Active State*/
+.ui-datepicker-calendar .ui-state-active {
+    color: #6a9113;
+    border-color: #6a9113;
+}
+
+/* Other Months Days*/
+.ui-datepicker-other-month .ui-state-default { color: #565656; }
+
 
 </style>
     {% if yo.is_authenticated %}
@@ -181,8 +335,8 @@
                 </ul>
             </div>
             <div id="bottom-bar">
-                <button id="addcontact" onclick="location.href='/nuevoMensaje'"><a href="/nuevoMensaje" style="font-size: 15px;"><i class="fa fa-plus" aria-hidden="true"></i> <span>Add contact</span></a></button>
-                <button id="settings"> <a href="" style="font-size: 15px;"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></a></button>
+                <button id="addcontact" onclick="location.href='/nuevoMensaje'"><a href="/nuevoMensaje" style="font-size: 15px;"><i class="fa fa-plus" aria-hidden="true"></i> <span>Agregrar contacto</span></a></button>
+                <button id="settings"> <a href="" style="font-size: 15px;"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Editar perfil</span></a></button>
             </div>
         </div>
         <div class="content">
@@ -291,13 +445,16 @@
                     <div class="message-input">
                         <div class="wrap">
                             <input type="text" placeholder="Escriba su mensaje..." style="font-size: 15px;" maxlength="290" max="290" name="msg" id="msg" required="" title="introdusca su mensaje" oninvalid="this.setCustomValidity('Ingrese un mensaje, como lo pensas mandar vacio!!!!!')" />
-                            <i class="fa fa-bullhorn attachment" aria-hidden="true"></i>
-                            <button type="submit" class="submit"><span><i class="fa fa-upload" aria-hidden="true"></i></span></button>
+                            <a onclick="addFecha()"><i class="fa fa-calendar attachment" aria-hidden="true"></i></a>
+                            <button type="submit" class="submit"><span><i class="fa fa-send" aria-hidden="true"></i></span></button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+
+
+
         <script src='stopExecutionOnTimeout.js'></script>
         <script src='jquery-2.1.0.js'></script>
         <script >
@@ -341,6 +498,14 @@
                         $(".messages").animate({ scrollTop: $(document).height()+10000000 }, "fast");
                     }
                 });
+            }
+
+            function addFecha(){
+                var inp =  document.getElementById('msg');
+                var v = inp.value;
+                inp.value="";
+                var f = new Date();
+                inp.value=v+" "+f.getDate()+"/"+(f.getMonth() +1) + "/" + f.getFullYear(); 
             }
 
             $(document).ready(function(){
