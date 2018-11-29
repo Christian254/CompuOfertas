@@ -109,7 +109,6 @@
 
 
     $(document).ready(function() {
-  
         var refreshId = setInterval(peticionChat, 3000);
         $.ajaxSetup({
             cache: false
@@ -178,6 +177,7 @@
                   $(lista_2).appendTo($('#footer_botones'));
                 }
             $(lista).appendTo($('#msjUser'));
+
             }
         });
     }
@@ -195,7 +195,6 @@
 
     }
     function abrir(i,id_chat) {
-
           $("#boton"+i).hide();
           $("#boton_cerrar"+i).hide();
           $("#aqui_va_chat"+i).empty();
@@ -236,7 +235,7 @@
           $(lis).appendTo($('#aqui_va_chat'+i));
           agregarMensajes(i,id_chat);
           setInterval( function() { agregarMensajes(i,id_chat); }, 3000);
-                        
+          $(".chat .body").animate({ scrollTop: $(document).height()+10000000 }, "fast");            
     }
 
     function agregarMensajes(i,id_chat){
@@ -321,7 +320,6 @@
               var nombre_l = `<p>${user_receptor} ${receptor_otro_nombre}</p>`;
               $(nombre_l).appendTo($("#nombre_mini"+i));          
               $(lista).appendTo($(cor));
-
             }
         });
     }

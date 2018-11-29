@@ -344,6 +344,10 @@ def enviar_mensajes_mini_chat(request,id_emisor,id_receptor):
 			user = User.objects.get(pk=id_receptor)
 			chat =Chat.objects.all()
 			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+			visto = chat.mensaje_set.all().filter(estado=0)
+			for v in visto:
+				v.estado = 1
+				v.save()
 			chat.ultimo = mensaje
 			chat.save()
 			msg =  Mensaje(chat=chat,msj=mensaje,enviado=user.id)
