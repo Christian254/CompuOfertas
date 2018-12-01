@@ -77,8 +77,6 @@
 {% endblock Navegacion %}
 
 {% block Body %}
-
-
       <!-- Header -->
       <header class="masthead bg-primary text-white text-center">
         <div class="container">
@@ -129,73 +127,65 @@
   
       <!-- Portfolio Grid Section -->
       <section class="portfolio" id="portfolio">
-        <div class="container">
-          <h2 class="text-center text-uppercase text-secondary mb-0">Catalógo
-          </h2>
-          <hr class="star-dark mb-5">
-          <div class="row">
-            <div class="col-md-6 col-lg-4">
-              <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-1">
-                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                    <i class="fas fa-search-plus fa-3x"></i>
+          <div class="container mt-5">
+              {% if error %}
+                  <div class="alert-info">
+                      <h5 class="text-center">{{error}}</h5>
                   </div>
-                </div>
-                <img class="img-fluid" src="{% static 'exterior/img/portfolio/cabin.png' %}" alt="">
-              </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-2">
-                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                    <i class="fas fa-search-plus fa-3x"></i>
+              {% else %}
+              <div class="row mt-5">    
+                      {% for p in art %}
+                      <div class="col-sm-12 col-md-6 col-lg-4 mt-4">
+                          <div class="card text-center mb-3" style="height: 20rem;">
+                              <div class="text-center">
+                                  <div class="existencia">
+                                      Existencia: {{p.inventario.existencia}}
+                                  </div>
+                                  <img src="{{p.img.url}}" alt="" class="card-img-top img-fluid" style="width: 24rem; height: 16rem;">
+                                  <a href="" class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#iniciar">
+                                      <i class="fa fa-eye" aria-hidden="true"></i> {{p.nombre}}
+                                  </a>  
+                              </div>                                            
+                          </div>
+                      </div>
+                      {%endfor%}
+              
                   </div>
-                </div>
-                <img class="img-fluid" src="{% static 'exterior/img/portfolio/cake.png' %}" alt="">
-              </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-3">
-                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                    <i class="fas fa-search-plus fa-3x"></i>
-                  </div>
-                </div>
-                <img class="img-fluid" src="{% static 'exterior/img/portfolio/circus.png' %}" alt="">
-              </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-4">
-                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                    <i class="fas fa-search-plus fa-3x"></i>
-                  </div>
-                </div>
-                <img class="img-fluid" src="{% static 'exterior/img/portfolio/game.png' %}" alt="">
-              </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-5">
-                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                    <i class="fas fa-search-plus fa-3x"></i>
-                  </div>
-                </div>
-                <img class="img-fluid" src="{% static 'exterior/img/portfolio/safe.png' %}" alt="">
-              </a>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-6">
-                <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
-                  <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
-                    <i class="fas fa-search-plus fa-3x"></i>
-                  </div>
-                </div>
-                <img class="img-fluid" src="{% static 'exterior/img/portfolio/submarine.png' %}" alt="">
-              </a>
-            </div>
+              </div>
+              <div class="row mt-5 justify-content-center" id="pag">
+                  <nav aria-label="Page navigation example">
+                      <ul class="pagination">
+                          {% if art.has_previous%}
+                          <li class="page-item">
+                              <a class="page-link" id="anterior-pag" href="?page={{ art.previous_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">Anterior</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item">
+                              <a class="page-link disabled">Anterior</a>
+                          </li>
+                          {%endif%} {% for i in art.paginator.page_range %} {% if art.number == i %}
+                          <li class="page-item active numPag " val="{{i}}">
+                              <a class="page-link" href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}">{{i}}</a>
+                          </li>
+                          {% else %}
+                          <li class="page-item numPag">
+                              <a class="page-link " href="?page={{ i }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{i}}">{{i}}</a>
+                          </li>
+                          {%endif%} {%endfor%} {% if art.has_next %}
+                          <li class="page-item">
+                              <a class="page-link" id="siguiente-pag" href="?page={{ art.next_page_number }}{% if parametros.urlencode %}&{{ parametros.urlencode }}{% endif %}" val="{{ art.next_page_number }}">Siguiente</a>
+                          </li> {%else%}
+                          <li class="page-item ">
+                              <a class="page-link disabled">Siguiente</a>
+                          </li>
+                          {%endif%}
+                      </ul>
+                  </nav>
+              </div>
+              {% endif %}
+              
           </div>
-        </div>
+
       </section>
   
       <!-- About Section -->
@@ -555,6 +545,33 @@
                     </form>
                 </div>
                 <div class="col-md-1"></div>
+              </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade letra" id="iniciar" tabindex="-1" role="dialog" aria-labelledy="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header colors">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="color:white;">&times;</span>
+                </button>
+                <h5 class="modal-title">Para ingresar aqui, inicie sesion</h5>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img class="img-fluid d-block mx-auto alto" src="{% static 'exterior/img/compu_oferta_2.png'%}" alt="">
+                    <hr class="star-dark mb-5">
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <h5 class="modal-title">Inicie sesion!!!!!!!!!!!!</h5>
+                </div>
+                <div class="modal-footer col-md-12">
+                  <button type="button" class="btn btn-danger aceptar" data-dismiss="modal">Cerrar</button>
+                </div>
               </div>
         </div>
     </div>

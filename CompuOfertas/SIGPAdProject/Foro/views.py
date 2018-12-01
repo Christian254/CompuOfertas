@@ -21,7 +21,16 @@ from SIGPAd.models import *
 
 # Create your views here.
 def ForoIndex(request):
-	return render(request, 'exterior/foro.html', {})
+	try:
+		articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
+		if articulos:
+			contexto = paginacion_productos(request,articulos,6)
+			return render(request, 'exterior/foro.html', contexto)
+		else:
+			return render(request, 'exterior/foro.html', {'error':'No hay productos para mostrar'})
+	except Producto.DoesNotExist:
+		return render(request, 'exterior/foro.html', {'error':'Ocurrió un error'})
+
 
 @login_required
 def MiniChat(request):

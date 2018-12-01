@@ -43,9 +43,9 @@ def  iniciar_sesion(request):
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
-			return render(request, 'exterior/foro.html', context)
+			return redirect('/foro')
 	context = {}
-	return render(request, 'exterior/foro.html', {})
+	return redirect('/foro')
 
 #Vista administrador.
 
@@ -649,8 +649,8 @@ def index(request):
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
-			return render(request, 'exterior/foro.html', context)
-	return render(request, 'exterior/foro.html', {})
+			return redirect('/foro')
+	return redirect('/foro')
 
 
 def planilla(request,idplanilla):
