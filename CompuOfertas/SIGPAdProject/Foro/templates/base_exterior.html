@@ -106,16 +106,12 @@
     
   <script type="text/javascript">
 
-
-
     $(document).ready(function() {
         var refreshId = setInterval(peticionChat, 3000);
         $.ajaxSetup({
             cache: false
         });
     });
-
-
 
         //Para el footer de botones.
         function peticionChat() {
@@ -155,21 +151,21 @@
                   </a><br><br><br>
                 </li>
                 </p>`;
-                var val = "dr"+i;
+                var val = "dr"+valor.enviado;
                 var dr = null;
                 dr = document.getElementById(val);
                 if (dr) {
 
                 }else{
-                     var lista_2 = `<input type="number" value="${i}"  id="dr${i}" hidden="">
+                     var lista_2 = `<input type="number" value="${valor.enviado}"  id="dr${valor.enviado}" hidden="">
                      <div class="btn-group">
-                      <input type="number" value="${i}"  id="ch${i}" hidden="">
-                      <div id="aqui_va_chat${i}" style="padding-left: 10px; border:3px;"></div>
+                      <input type="number" value="${valor.enviado}"  id="ch${valor.enviado}" hidden="">
+                      <div id="aqui_va_chat${valor.enviado}" style="padding-left: 10px; border:3px;"></div>
                       <div class="dropup">
                         <div id="contenedor"> 
                           <div class="btn-group">
-                            <button class="btn dropbtn btn-secondary" id="boton${i}" type="button" onclick="abrir(${i},${valor.enviado})"> ${valor.username}</button> 
-                            <button class="btn dropbtn btn-secondary fa fa-times" id="boton_cerrar${i}" onclick="cerrar_boton(${i})" style="padding-left: 10px;"></button>
+                            <button class="btn dropbtn btn-secondary" id="boton${valor.enviado}" type="button" onclick="abrir(${valor.enviado},${valor.enviado})"> ${valor.username}</button> 
+                            <button class="btn dropbtn btn-secondary fa fa-times" id="boton_cerrar${valor.enviado}" onclick="cerrar_boton(${i})" style="padding-left: 10px;"></button>
                           </div>
                         </div>
                       </div>
@@ -350,57 +346,6 @@
      
     }
 
-    //Adentro.
-    function abrir_mini_chat(name,correlativo,id_chat){        
-        $.get("/mini_chat/"+id_chat, function(data,status){
-
-            var id_user = {{user.id}};
-            var cant = data.length;
-
-            $("#prueba_2").empty();
-            $("#prueba").empty();
-            
-            for (let i = 0; i <= data.length; i++) {
-                var valor = data[i].fields;
-                var d = document.getElementsByClassName('prueba');
-
-
-                  /*  var lista = `<li id="lista"> 
-                  <a href="/mensajes/${valor.msj}" class="mail"> 
-                    <span class="photo">
-                      <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
-                    </span> 
-                    <span class="subject"> 
-                      <span class="from">
-                        ${id_user}
-                      </span> 
-                      <span class="time">
-                        justo ahora 
-                      </span>  
-                    </span> 
-                    <span class="message">
-                        ${valor.msj}
-                    </span> 
-                  </a>
-                </li> <br> `;
-                $(lista).appendTo($('#prueba'));*/
-                var lista = [];
-                if(id_user == valor.enviado){
-                  lista = `<p>chat:${correlativo}</p>
-                  <p><b>Emisor:</b>${id_user} ${valor.msj}</p>`;
-                }else{
-                  lista = `<p><b>Receptor:</b>${valor.enviado} ${valor.msj}</p>`;
-                }
-                
-                $(lista).appendTo($('#prueba_2'));
-                $(lista).appendTo($('#prueba'));
-
-
-
-            }
-
-        });
-    }
 
 </script>
   {% endif %}
