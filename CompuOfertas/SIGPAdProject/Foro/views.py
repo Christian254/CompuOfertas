@@ -22,6 +22,22 @@ from SIGPAd.models import *
 # Create your views here.
 def ForoIndex(request):
 	try:
+		if request.method == 'POST':
+			username = request.POST.get('usr', None)
+			password = request.POST.get('pwd', None)
+			user = authenticate(username=username, password=password)
+			if user:
+				login(request, user)
+				if user.has_perm('SIGPAd.view_superuser'):
+					return redirect('/indexAdministrador')
+				elif user.has_perm('SIGPAd.view_seller'):
+					return redirect('/indexVendedor')
+				else:
+					return redirect('/articulos')
+			else:
+				validar = "Credenciales erróneas."
+				context = {'validar':validar}
+				return redirect('/foro')
 		articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
 		if articulos:
 			contexto = paginacion_productos(request,articulos,6)
