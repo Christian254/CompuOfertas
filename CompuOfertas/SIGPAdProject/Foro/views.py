@@ -22,6 +22,7 @@ from SIGPAd.models import *
 # Create your views here.
 def ForoIndex(request):
 	try:
+		validar=''
 		if request.method == 'POST':
 			username = request.POST.get('usr', None)
 			password = request.POST.get('pwd', None)
@@ -36,14 +37,13 @@ def ForoIndex(request):
 					return redirect('/articulos')
 			else:
 				validar = "Credenciales erróneas."
-				context = {'validar':validar}
-				return redirect('/foro')
 		articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
 		if articulos:
 			contexto = paginacion_productos(request,articulos,6)
+			contexto['validar'] = validar
 			return render(request, 'exterior/foro.html', contexto)
 		else:
-			return render(request, 'exterior/foro.html', {'error':'No hay productos para mostrar'})
+			return render(request, 'exterior/foro.html', {'error':'No hay productos para mostrar','validar':validar})
 	except Producto.DoesNotExist:
 		return render(request, 'exterior/foro.html', {'error':'Ocurrió un error'})
 
