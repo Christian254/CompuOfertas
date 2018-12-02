@@ -28,4 +28,5 @@ urlpatterns = [
 	url(r'nuevo_mensaje_mini_chat/(?P<id_enviado>\d+)$',login_required(nuevo_mensaje_mini_chat), name="NuevoMensajeMiniChat"),
 	url(r'enviar_mensaje_mini_chat/(?P<id_emisor>\d+)/(?P<id_receptor>\d+)$',login_required(enviar_mensajes_mini_chat), name="EnviarMensajeMiniChat"),
 	url(r'chat$',login_required(MiniChat), name="MiniChat"),
+	url(r'foro_index_mensaje$', ForoIndexMensaje, name='ForoIndexMensaje'),
 ]

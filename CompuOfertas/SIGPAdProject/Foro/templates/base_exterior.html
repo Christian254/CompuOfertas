@@ -49,7 +49,7 @@
           bottom: 0px;
         }
 
-        textarea{
+        .textfooter{
           resize: none;
         }
 
@@ -219,7 +219,7 @@
                             ¡Envía un mensaje!
                             <div class="row">
                               <div class="col-md-9">
-                                <textarea id="mensaje${i}" cols="25" rows="2" maxlength="299" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
+                                <textarea id="mensaje${i}" class="textfooter" cols="25" rows="2" maxlength="299" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
                               </div>
                               <div class="col-md-3">
                                 <button type="button" class="btn btn-secondary fa fa-envelope" onclick="submit_ajax(${i},${id_chat})"></button> 

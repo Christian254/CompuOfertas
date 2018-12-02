@@ -18,6 +18,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from SIGPAd.models import *
+from inventario.views import *
 
 # Create your views here.
 def ForoIndex(request):
@@ -46,6 +47,27 @@ def ForoIndex(request):
 			return render(request, 'exterior/foro.html', {'error':'No hay productos para mostrar'})
 	except Producto.DoesNotExist:
 		return render(request, 'exterior/foro.html', {'error':'Ocurrió un error'})
+
+def ForoIndexMensaje(request):
+	admin = Empleado.objects.filter(puesto__nombre='Gerente')
+	superUser = User.objects.filter(is_superuser=True).first()
+	error = ''
+	nombre = request.POST.get('nombre',None)
+	email = request.POST.get('email',None)
+	mensaje = request.POST.get('mensaje',None)
+	if mensaje != None:
+		title = "Mensaje:"+nombre
+		mensaje_nuevo = "Correo:"+email+"\n"+mensaje
+		for x in admin:
+			error = error + enviarCorreo(title,mensaje_nuevo,x.email)
+			error = error + enviarCorreo(title,mensaje_nuevo,superUser.email)
+			if error:
+				pass
+			else:
+				exito = 'Mensajes enviados con exito'
+	context = {
+	}
+	return render(request, 'exterior/foro.html',context)
 
 
 @login_required
