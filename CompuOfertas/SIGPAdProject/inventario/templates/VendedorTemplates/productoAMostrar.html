@@ -1,21 +1,17 @@
 {% extends "baseUser.html" %} 
 {% load staticfiles %}
 {% block Script %}
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'js/dataTables.bootstrap4.min.js' %}"></script>
-    <script>
-            $(document).ready(function(){
-                var table = $('#productos').dataTable({"pagingType": "full_numbers"});
-            });
-    </script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+  <script>
+    $(document).ready(function(){
+        var table = $('#productos').dataTable({
+        "pagingType": "full_numbers"});
+    });
+  </script>
 {% endblock Script %}
 {% block CSS %}
-    <link href="{% static 'css/bootstrap.css' %}" >
-    <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap4.min.css' %}" >
 {% endblock CSS %}
 {% block Body %}
   <p></p>
@@ -44,7 +40,17 @@
             <td>{{p.codigo}}</td>
             <td>{{p.nombre}}</td>
             <td>{{p.marca}}</td>
-            <td></td>
+            <td><form id="cambio" action="" method="post">
+                {% csrf_token %}
+                <p>
+                <input type="checkbox" id="estado" name="estado" value="on" {% if estado == 0 %} checked {% endif %}>
+                <input type="checkbox" id="cambio" name="cambio" value="off" indeterinate='' {% if estado == 1 %} checked {% endif %}>
+                </p>
+                <a href="{% url 'inventario:editarProducto' p.id %}">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+              </form> 
+            </td>
           </tr>
         {% endfor %}
         </tbody>

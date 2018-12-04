@@ -1050,6 +1050,24 @@ def activarProducto(request, pk):
 @permission_required('SIGPAd.view_seller')
 def productoAMostrar(request):
 	productos = Producto.objects.all()
+	try:
+		contexto = {'estado': productos.estadoForo}
+		if request.method == 'POST':
+			try:
+				cambio = request.POST.get('cambio')
+				if (cambio):
+					el_cambio = int(cambio)
+					if(el_cambio<1 or el_cambio>5):					
+						messages.error(request, 'El cambio no puede efectuarse')						
+						return redirect('/productoAMostrar.html')
+					else:
+						producto.estadoForo = el_cambio					
+						producto.estadoForo.save()
+						return redirect('/productoAMostrar.html')
+			except:
+				print("Error")
+	except:
+		print("Error")
 	return render(request, 'VendedorTemplates/productoAMostrar.html', {'productos':productos})
 
 @permission_required('SIGPAd.view_seller')
