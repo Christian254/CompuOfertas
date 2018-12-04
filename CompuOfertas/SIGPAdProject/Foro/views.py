@@ -16,11 +16,59 @@ from inventario.models import *
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
 from SIGPAd.models import *
+from inventario.views import *
 
 # Create your views here.
 def ForoIndex(request):
-	return render(request, 'exterior/foro.html', {})
+	try:
+		if request.method == 'POST':
+			username = request.POST.get('usr', None)
+			password = request.POST.get('pwd', None)
+			user = authenticate(username=username, password=password)
+			if user:
+				login(request, user)
+				if user.has_perm('SIGPAd.view_superuser'):
+					return redirect('/indexAdministrador')
+				elif user.has_perm('SIGPAd.view_seller'):
+					return redirect('/indexVendedor')
+				else:
+					return redirect('/articulos')
+			else:
+				validar = "Credenciales erróneas."
+				context = {'validar':validar}
+				return redirect('/foro')
+		articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
+		if articulos:
+			contexto = paginacion_productos(request,articulos,6)
+			return render(request, 'exterior/foro.html', contexto)
+		else:
+			return render(request, 'exterior/foro.html', {'error':'No hay productos para mostrar'})
+	except Producto.DoesNotExist:
+		return render(request, 'exterior/foro.html', {'error':'Ocurrió un error'})
+
+def ForoIndexMensaje(request):
+	admin = Empleado.objects.filter(puesto__nombre='Gerente')
+	superUser = User.objects.filter(is_superuser=True).first()
+	error = ''
+	nombre = request.POST.get('nombre',None)
+	email = request.POST.get('email',None)
+	mensaje = request.POST.get('mensaje',None)
+	if mensaje != None:
+		title = "Mensaje:"+nombre
+		mensaje_nuevo = "Correo:"+email+"\n"+mensaje
+		for x in admin:
+			error = error + enviarCorreo(title,mensaje_nuevo,x.email)
+			error = error + enviarCorreo(title,mensaje_nuevo,superUser.email)
+			if error:
+				pass
+			else:
+				exito = 'Mensajes enviados con exito'
+	context = {
+	}
+	return render(request, 'exterior/foro.html',context)
+
 
 @login_required
 def MiniChat(request):
@@ -178,6 +226,19 @@ def nuevoMensaje(request):
 def enviarNuevoMensaje(request, pk):
 	user = request.user
 	new_contactos = User.objects.get(pk=pk)
+	empleado = None
+	cliente = None
+	error=''
+	empleado = new_contactos.empleado_set.all()
+	if len(empleado)>0:
+		empleado = empleado.first()
+	else:
+		cliente = new_contactos.cliente_set.all()
+		if len(cliente)>0:
+			cliente = cliente.first()
+		else:
+			error='No es cliente ni usuario, no existe'
+
 	if request.method=='POST':
 		try:
 			c = request.POST.get('msg',None)
@@ -204,8 +265,9 @@ def enviarNuevoMensaje(request, pk):
 				mens.save()
 		return redirect("/mensajes/0")
 
-	contexto={'contactos':new_contactos,'yo':user}
+	contexto={'contactos':new_contactos,'yo':user,'cliente':cliente,'empleado':empleado,'error':error}
 	return render(request,'cliente/enviarNuevoMensaje.html',contexto)
+
 
 
 def servicio_mensajeria(request,emisor_id,receptor_id): #chat
@@ -321,20 +383,48 @@ def get_parametros_mini_chat(id_emisor,id_receptor):
 
 
 
-def enviar_mensajes_mini_chat(id_emisor,id_receptor, mensaje):
+def enviar_mensajes_mini_chat(request,id_emisor,id_receptor):
 	try:
-		primer = User.objects.get(pk=id_emisor)
-		user = User.objects.get(pk=id_receptor)
-		chat =Chat.objects.all()
-		chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
-		chat.ultimo = mensaje
-		chat.save()
-		msg =  Mensaje(chat=chat,msj=mensaje,enviado=primer.id)
-		msg.save()
-		return True
+		if request.method=="POST":
+			mensaje = request.POST.get('mensaje',None)
+			primer = User.objects.get(pk=id_emisor)
+			user = User.objects.get(pk=id_receptor)
+			chat =Chat.objects.all()
+			chat=chat.filter(Q(receptor=primer,emisor=user.username)|Q(receptor=user,emisor=primer.username)).distinct().first()
+			visto = chat.mensaje_set.all().filter(estado=0)
+			for v in visto:
+				v.estado = 1
+				v.save()
+			chat.ultimo = mensaje
+			chat.save()
+			msg =  Mensaje(chat=chat,msj=mensaje,enviado=user.id)
+			msg.save()
+		return JsonResponse({'result':'ok'})
 
 	except Exception as e:
-		return False
+		return JsonResponse({'result':'not ok'})
+
+
+
+def nuevo_mensaje_mini_chat(request, id_enviado):
+	try:
+		user = request.user
+		enviado = User.objects.get(id=id_enviado)
+		chat =Chat.objects.all()
+		chat=chat.filter(Q(receptor=user,emisor=enviado.username)|Q(receptor=enviado,emisor=user.username)).distinct().first()
+		if request.method=='POST':
+			mensaje = "request.POST.get('mensaje',None)"
+			if mensaje != None:
+				chat.ultimo = mensaje
+				chat.save()
+				msg =  Mensaje(chat=chat,msj=mensaje,enviado=user.id)
+				msg.save()
+				context = {
+					'exito':"Exito",
+				}
+		return JsonResponse({'result':'ok'})
+	except Exception as e:
+		return JsonResponse({'result':'not ok'})
 
 def articulo(request):
 	try:

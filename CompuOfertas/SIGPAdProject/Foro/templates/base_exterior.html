@@ -25,7 +25,7 @@
     <link href="{% static 'exterior/vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-
+    <script src="https://unpkg.com/sweetalert2@7.22.2/dist/sweetalert2.all.js"></script>
     <!-- Plugin CSS -->
     <link href="{% static 'exterior/vendor/magnific-popup/magnific-popup.css'%}" rel="stylesheet" type="text/css">
 
@@ -49,8 +49,16 @@
           bottom: 0px;
         }
 
-        textarea{
+        .textfooter{
           resize: none;
+        }
+
+        .dropbtn {
+            background-color: #1bd6b2;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
         }
 
     </style>
@@ -72,6 +80,7 @@
     {% endblock Footer %}
 
     {% if user.is_authenticated %}
+    {{exito}}
     <div id="prueba_2"></div>
   {% endif %}
     <!-- Bootstrap core JavaScript -->
@@ -97,22 +106,12 @@
     
   <script type="text/javascript">
 
-
-
     $(document).ready(function() {
-  
         var refreshId = setInterval(peticionChat, 3000);
         $.ajaxSetup({
             cache: false
         });
     });
-
-
-    function alerta(){
-      $('#footer_botones').on('click', 'button', function(){
-
-      })
-    }
 
         //Para el footer de botones.
         function peticionChat() {
@@ -152,39 +151,48 @@
                   </a><br><br><br>
                 </li>
                 </p>`;
-                var val = "dr"+i;
+                var val = "dr"+valor.enviado;
                 var dr = null;
                 dr = document.getElementById(val);
                 if (dr) {
 
                 }else{
-                     var lista_2 = `<input type="number" value="${i}"  id="dr${i}" hidden="">
+                     var lista_2 = `<input type="number" value="${valor.enviado}"  id="dr${valor.enviado}" hidden="">
                      <div class="btn-group">
-                      <input type="number" value="${i}"  id="ch${i}" hidden="">
-                      <div id="aqui_va_chat${i}" style="padding-left: 10px; border:3px;"></div>
+                      <input type="number" value="${valor.enviado}"  id="ch${valor.enviado}" hidden="">
+                      <div id="aqui_va_chat${valor.enviado}" style="padding-left: 10px; border:3px;"></div>
                       <div class="dropup">
                         <div id="contenedor"> 
-                          <button id="boton${i}" type="button" class="btn btn-secondary"  onclick="abrir(${i},${valor.enviado}, nombre)" style="display: inline; margin-right: 7px"> ${valor.username} </button>
+                          <div class="btn-group">
+                            <button class="btn dropbtn btn-secondary" id="boton${valor.enviado}" type="button" onclick="abrir(${valor.enviado},${valor.enviado})"> ${valor.username}</button> 
+                            <button class="btn dropbtn btn-secondary fa fa-times" id="boton_cerrar${valor.enviado}" onclick="cerrar_boton(${valor.enviado})" style="padding-left: 10px;"></button>
+                          </div>
                         </div>
                       </div>
                     </div>`;
                   $(lista_2).appendTo($('#footer_botones'));
                 }
             $(lista).appendTo($('#msjUser'));
+
             }
         });
     }
 
     function cerrar(i){
       $("#boton"+i).show();
-      $("#chat"+i).hide();    
+      $("#chat"+i).hide();   
+      $("#boton_cerrar"+i).show(); 
     }
 
-    function abrir(i,id_chat,name) {
-          var nombre_chat = "";
-          
+    function cerrar_boton(i){
+      $("#boton"+i).remove();
+      $("#chat"+i).remove();  
+      $("#boton_cerrar"+i).remove();
 
+    }
+    function abrir(i,id_chat) {
           $("#boton"+i).hide();
+          $("#boton_cerrar"+i).hide();
           $("#aqui_va_chat"+i).empty();
           var lis = `
           <div id="chat${i}" class="chat">
@@ -193,10 +201,11 @@
                                 </h2>
                                 <ul class='tools'>
                                   <li>
-                                    <a class='fa fa-gear' href='#'></a>
+                                    <a class='fa fa-gear' href='#'>${i} ${id_chat}</a>
                                   </li>
                                   <li>
-                                    <button class="btn btn-secondary fa fa-times" href='#' onclick="cerrar(${i})"></button>  
+                                    <button id="cerrar_chat_hide${i}" class="btn btn-secondary fa fa-window-minimize" href='#' onclick="cerrar(${i})"></button> 
+                                    <button id="cerrar_chat${i}" class="btn btn-secondary fa fa-user-times" href='#' onclick="cerrar_boton(${i})"></button> 
                                   </li>
                                 </ul>
                           </header>
@@ -204,35 +213,38 @@
                             <ul id="msj${i}" class="msj">
                             </ul>
                           </div>
-                          <footer class="footer2">
-                            <form>
-                              ¡Envía un mensaje!
-                              <div class="row">
-                                <div class="col-md-9">
-                                  <textarea id="textarea" cols="25" rows="2" maxlength="9" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
-                                </div>
-                                <div class="col-md-3">
-                                  <button type="submit" class="btn btn-secondary fa fa-envelope"></button>  
-                                </div>                                
+                          <footer id="footer${i}" class="footer2">
+                            <form id="formulario${i}" action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" >
+                            {% csrf_token %}
+                            ¡Envía un mensaje!
+                            <div class="row">
+                              <div class="col-md-9">
+                                <textarea id="mensaje${i}" class="textfooter" cols="25" rows="2" maxlength="299" rows="3" style="overflow:auto;width=100px;" required=""></textarea>
                               </div>
-                              </form>
+                              <div class="col-md-3">
+                                <button type="button" class="btn btn-secondary fa fa-envelope" onclick="submit_ajax(${i},${id_chat})"></button> 
+                              </div>                                
+                              </div>
+                            </form>
                           </footer>
                         </div>
           `;
           $(lis).appendTo($('#aqui_va_chat'+i));
           agregarMensajes(i,id_chat);
           setInterval( function() { agregarMensajes(i,id_chat); }, 3000);
-                        
+          $(".chat .body").animate({ scrollTop: $(document).height()+10000000 }, "fast");            
     }
 
     function agregarMensajes(i,id_chat){
       var id_user = {{user.id}};
       var emisor_yo_nombre, receptor_otro_nombre;
+      var user_emisor, user_receptor;
       var foto_yo, foto_otro;
 
       $.get("/servicio_usuario/"+id_user, function(data,status){
           var us = data[0];
           emisor_yo_nombre = us.nombre;
+          user_emisor = us.usuario;
           foto_yo = us.foto;
           if(foto_yo == ""){          
             foto_yo = `<img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />`;
@@ -244,6 +256,7 @@
       $.get("/servicio_usuario/"+id_chat, function(data,status){
           var us_2 = data[0];
           receptor_otro_nombre = us_2.nombre;
+          user_receptor = us_2.usuario;
           foto_otro = us_2.foto;
           if(foto_otro == ""){          
             foto_otro = `<img  id="profile-img" src="{% static "images/user.png" %}" class="online" alt="" />`;
@@ -259,6 +272,7 @@
             var lista;
 
             $(cor).empty();
+
             for (let k = 0; k <= data.length; k++) {
               var valor = data[k].fields;
               var date = new Date(valor.fecha_hora);
@@ -272,8 +286,8 @@
                                 </a>
                                 
                                 <div class='content'>
-                                  <h3>${emisor_yo_nombre}</h3>
-                                  <span class='preview' style="color:black;">${valor.msj}</span>
+                                  <h3 style="color:black;">${emisor_yo_nombre}</h3>
+                                  <span class='preview' style="color:#2c3e50;;">${valor.msj}</span>
                                   <span class='meta'>
                                     ${valor.fecha_hora} &middot;
                                   </span>
@@ -299,66 +313,40 @@
                             `;
               }     
 
-                            $("#nombre_mini"+i).empty();
-              var nombre_l = `<p>${receptor_otro_nombre}</p>`;
-              $(nombre_l).appendTo($("#nombre_mini"+i));
-                              
+              $("#nombre_mini"+i).empty();
+              var nombre_l = `<p>${user_receptor} ${receptor_otro_nombre}</p>`;
+              $(nombre_l).appendTo($("#nombre_mini"+i));          
               $(lista).appendTo($(cor));
             }
         });
     }
 
-    //Adentro.
-    function abrir_mini_chat(name,correlativo,id_chat){        
-        $.get("/mini_chat/"+id_chat, function(data,status){
+    //Formulario
 
-            var id_user = {{user.id}};
-            var cant = data.length;
+    function submit_ajax(i, id_receptor){
+      var id_user = {{user.id}};
+      var msg = $('#mensaje'+i).val();
+      if (msg != "") {
+        $.ajax({
+            type:'POST',
+            url: '/enviar_mensaje_mini_chat/'+id_receptor+"/"+id_user,
+            data:{
+              mensaje:$('#mensaje'+i).val(),
+              csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            beforeSend: function (){
 
-            $("#prueba_2").empty();
-            $("#prueba").empty();
-            
-            for (let i = 0; i <= data.length; i++) {
-                var valor = data[i].fields;
-                var d = document.getElementsByClassName('prueba');
-
-
-                  /*  var lista = `<li id="lista"> 
-                  <a href="/mensajes/${valor.msj}" class="mail"> 
-                    <span class="photo">
-                      <img id="profile-img" src="{% static "images/user.png" %}"  class="online"  height="40" width="40" />
-                    </span> 
-                    <span class="subject"> 
-                      <span class="from">
-                        ${id_user}
-                      </span> 
-                      <span class="time">
-                        justo ahora 
-                      </span>  
-                    </span> 
-                    <span class="message">
-                        ${valor.msj}
-                    </span> 
-                  </a>
-                </li> <br> `;
-                $(lista).appendTo($('#prueba'));*/
-                var lista = [];
-                if(id_user == valor.enviado){
-                  lista = `<p>chat:${correlativo}</p>
-                  <p><b>Emisor:</b>${id_user} ${valor.msj}</p>`;
-                }else{
-                  lista = `<p><b>Receptor:</b>${valor.enviado} ${valor.msj}</p>`;
-                }
-                
-                $(lista).appendTo($('#prueba_2'));
-                $(lista).appendTo($('#prueba'));
-
-
-
+            },
+            success:function(){
+              $('#mensaje'+i).val("");
             }
-
-        });
+          });
+      }else{
+        swal("Envíe un mensaje");
+      }
+     
     }
+
 
 </script>
   {% endif %}

@@ -43,9 +43,9 @@ def  iniciar_sesion(request):
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
-			return render(request, 'exterior/foro.html', context)
+			return redirect('/foro')
 	context = {}
-	return render(request, 'exterior/foro.html', {})
+	return redirect('/foro')
 
 #Vista administrador.
 
@@ -575,7 +575,10 @@ def registrarCliente(request):
 			user.save()
 			cliente.usuario = user
 			cliente.save()
-			return redirect('/registrarCliente')
+			context = {
+				'exito':"Éxito al registrarte, ingresa ubicandote en la página principal",
+			}
+			return render(request, 'exterior/registrar_cliente.html', context)
 		else:
 			validar = "Las contraseñas son diferentes"
 			context = { 'validar':validar }
@@ -646,8 +649,8 @@ def index(request):
 		else:
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
-			return render(request, 'exterior/foro.html', context)
-	return render(request, 'exterior/foro.html', {})
+			return redirect('/foro')
+	return redirect('/foro')
 
 
 def planilla(request,idplanilla):
