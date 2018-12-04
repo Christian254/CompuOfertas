@@ -428,7 +428,7 @@ def nuevo_mensaje_mini_chat(request, id_enviado):
 
 def articulo(request):
 	try:
-		articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
+		articulos = Producto.objects.filter(Q(inventario__existencia__gte=1) & Q(estadoForo = True)).exclude(Q(inventario__precio_venta_producto=0)).exclude(Q(img=''))
 		if articulos:
 			contexto = paginacion_productos(request,articulos,6)
 			return render(request, 'cliente/articulos.html', contexto)

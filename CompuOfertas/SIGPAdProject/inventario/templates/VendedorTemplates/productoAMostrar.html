@@ -12,6 +12,14 @@
   </script>
 {% endblock Script %}
 {% block CSS %}
+<style>
+  table th {
+  		text-align: center;
+		}
+	table tr {
+  			text-align: center;
+		}
+</style>
 {% endblock CSS %}
 {% block Body %}
   <p></p>
@@ -40,16 +48,11 @@
             <td>{{p.codigo}}</td>
             <td>{{p.nombre}}</td>
             <td>{{p.marca}}</td>
-            <td><form id="cambio" action="" method="post">
-                {% csrf_token %}
-                <p>
-                <input type="checkbox" id="estado" name="estado" value="on" {% if estado == 0 %} checked {% endif %}>
-                <input type="checkbox" id="cambio" name="cambio" value="off" indeterinate='' {% if estado == 1 %} checked {% endif %}>
-                </p>
+            <td>
                 <a href="{% url 'inventario:editarProducto' p.id %}">
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </a>
-              </form> 
+              
             </td>
           </tr>
         {% endfor %}

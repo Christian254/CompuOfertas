@@ -779,7 +779,7 @@ def registrarProducto(request,pk):
 		descripcion = request.POST.get('descripcion',None)
 		marca = request.POST.get('marca',None)
 		img = request.FILES.get('img',None)
-		if codigo!=None and nombre!=None and descripcion!=None and marca!=None and img!=None:
+		if codigo!=None and nombre!=None and descripcion!=None and marca!=None:
 			try:
 				inventario = Inventario()
 				inventario.save()
@@ -883,9 +883,22 @@ def editarProducto(request, pk):
 				producto.nombre = request.POST.get('nombre',None)
 				producto.marca = request.POST.get('marca',None)
 				producto.descripcion = request.POST.get('descripcion',None)
-				producto.img = request.FILES.get('img',None)
+				exito =''
+				if request.FILES.get('img',None):					
+					producto.img = request.FILES.get('img',None)
+				#Si ya tiene imagen				
+				if request.POST.get('estado', None):
+					if producto.img:
+						producto.estadoForo = True
+						exito='Producto guardado y mostrado'						
+					else:
+						exito='No se puede mostrar producto sin imagen'
+						producto.estadoForo = False						
+				else: 
+					producto.estadoForo = False	
+					exito='Guardado pero sin mostrar'
 				producto.save()
-				exito='Producto guardado con exito'
+				
 			except Exception as e:
 				print(e.message)
 				if 'column codigo is not unique' in e.message:
