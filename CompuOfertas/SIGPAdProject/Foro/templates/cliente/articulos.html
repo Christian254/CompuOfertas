@@ -35,8 +35,10 @@
         margin-bottom: 10px;
         font-weight: bold;
     }
-    
-    
+    .buscador{
+        margin-bottom: 10px;
+        float: right;
+    }
     
     input[type="radio"]:checked~label {
         color: orange;
@@ -52,8 +54,29 @@
             <div class="alert-info">
                 <h5 class="text-center">{{error}}</h5>
             </div>
+        {% elif error2 %}
+        <a href="/articulos" class="btn btn-success" style="margin-right: 150px">Mostrar Todos</a>
+            <div class="buscador">
+                <form action="/buscador/" method="GET">
+                    {% csrf_token %}
+                    <button class="btn btn-success" type="submit">Buscar</button>
+                    <input  style="width: 230px;" name="consulta" placeholder="Busca tu producto o categoría" id="buscador">
+                </form>
+            </div>
+            <div class="alert-info" style="clear: both;">
+                <h5 class="text-center">{{error2}}</h5>
+            </div>
+        
         {% else %}
-        <div class="row mt-5">    
+        <a href="/articulos" class="btn btn-success" style="margin-right: 150px">Mostrar Todos</a>
+        <div class="buscador">
+        <form action="/buscador/" method="GET">
+            {% csrf_token %}
+                <button class="btn btn-success" type="submit">Buscar</button>
+                <input  style="width: 230px;" name="consulta" placeholder="Busca tu producto o categoría" id="buscador">
+        </form>
+        </div>
+        <div class="row mt-5" style="clear: both;">    
                 {% for p in art %}
                 <div class="col-sm-12 col-md-6 col-lg-4 mt-4">
                     <div class="card text-center mb-3" style="height: 20rem;">

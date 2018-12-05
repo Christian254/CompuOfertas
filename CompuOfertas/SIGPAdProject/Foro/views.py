@@ -599,3 +599,14 @@ def editarReserva(request, id):
 			'res':res,
 		}
 	return render(request,"cliente/editarReserva.html", context) 
+
+def buscador(request):
+   consulta = request.GET.get('consulta', '')
+   querys = (Q(nombre__icontains=consulta) | Q(categoria__nombre__icontains=consulta) & Q(inventario__existencia__gte=1) & Q(estadoForo = True))
+   productos = Producto.objects.filter(querys).exclude(Q(inventario__precio_venta_producto=0)).exclude(Q(img=''))
+
+   if productos:
+   		contexto = paginacion_productos(request,productos,6)
+   		return render(request, 'cliente/articulos.html', contexto)
+   else:
+   		return render(request, 'cliente/articulos.html', {'error2':'No se encontraron productos'})
