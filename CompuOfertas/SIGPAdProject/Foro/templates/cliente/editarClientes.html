@@ -1,0 +1,106 @@
+{% extends "exterior/foro_interior.html" %} 
+{% load staticfiles %}
+{% block Body %}
+{% if messages %}
+        <ul class="messages" style="margin-top: 100px">
+            {% for message in messages %}
+            <div {% if message.tags %} class="{{ message.tags }} text-center" {% endif %}>
+                <h5 class="font-weight-bold">{{ message }}</h5>
+            </div>
+            {% endfor %}
+        </ul>
+{% endif %}
+    
+    <div class="row mt-5 justify-content-center">
+      <div class="col-sm-6 tab-content">
+            <div class="header">
+                    <!--<div class="actions"> <a class="minimize" href="#"><i class="fa fa-chevron-down"></i></a><a class="close-down" href="#"><i class="fa fa-times"></i></a> </div>-->
+                    <h3 class="content-header"><strong>Datos</strong></h3>
+            </div>
+            <hr>
+            <h5 class="content-header"><strong>Información personal</strong></h5>
+            <div class="porlets-content">
+                    <form action="" method="POST" role="form" enctype="multipart/form-data" accept-charset="UTF-8" class="form-horizontal row-border" >
+                        {% csrf_token %}
+                        <div class="form-group">
+                                <label class="col-sm-3 control-label">Nombre</label>
+                                <div class="col-sm-9">
+                                  <input class="form-control" type="nombre" id="nombre" name="nombre" required="required" pattern="[a-zA-Z]{1-15}" value="{{cliente.nombre}}" >
+                                </div>
+                              </div><!--/form-group--> 
+                  
+                        <div class="form-group">
+                                <label class="col-sm-3 control-label">Apellido</label>
+                                    <div class="col-sm-9">
+                                      <input class="form-control" type="apellido" id="apellido" name="apellido" required="required" pattern="[a-zA-Z]{1-15}" value="{{cliente.apellido}}" >
+                                    </div>
+                        </div><!--/form-group--> 
+
+                        <div class="form-group">
+                                <label class="col-sm-3 control-label">DUI</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="dui" name="dui" value="{{cliente.dui}}" pattern="[0-9]{8}" required="required">
+                                </div>
+                        </div><!--/form-group-->
+
+                        <div class="form-group">
+                                      <label class="col-sm-3 control-label">Email</label>
+                                      <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="email" name="email" value="{{cliente.email}}" pattern="[a-zA-Z]{1-15}" required="required">
+                                  </div>
+                        </div><!--/form-group--><div class="form-group">
+                                <label class="col-sm-3 control-label">Sexo</label>
+                                <div class="col-sm-9">
+                                    <select id="sexo" class="input100 has val" name="sexo" value="{{cliente.sexo}}">
+                                        <option id="masculino" value="masculino">Masculino</option>
+                                        <option id="femenino" value="femenino">Femenino</option>
+                                    </select>
+                                </div>
+                        </div><!--/form-group--> 
+            
+                        <div class="bottom">
+                          <button type="submit" class="btn btn-primary">Actualizar</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 justify-content-center">
+      <div class="col-sm-6 tab-content">
+         <hr>
+           <h5 class="col-md-6"><strong>Foto</strong></h5>
+        <div class="porlets-content">
+          <form class="form-inline" action="{% url 'Foro:editarFotoCliente' pk=cliente.id %}" method="post" enctype="multipart/form-data" class="form-horizontal row-border" >
+              {% csrf_token %}
+            <div class="form-group">
+                {% if cliente.foto %}
+                      <label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+                      <div class="col-sm-9">
+                          <input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" src="{{cliente.foto.url}}" multiple>
+                      </div>
+                {% else %}
+                    <label class="col-sm-3 control-label">Foto: (PNG, JPG, JPEG)</label>
+                    <label> ¡Aún no ha subido imagen! </label>
+                    <div class="col-sm-9">
+                        <input type="file" id="foto" name="foto" accept=".jpg, .jpeg, .png" multiple>
+                    </div>
+                   {% endif %}
+               </div>
+            <div class="form-group">
+                {% if cliente.foto %}
+                    <label class="col-sm-3 control-label">Foto</label>
+                        <div class="col-sm-9">
+                            <img src="{{cliente.foto.url}}" alt="" class="img-rounded img-responsive"  width="200" height="200" />
+                        </div> 
+                {% else %} 
+                                <!-- No existe foto -->
+                {% endif %}
+                <div class="bottom">
+                        <input type="submit" class="btn btn-primary" id="guardar" name="submit" value="Guardar foto">
+                </div><!--/form-group-->
+            </div>
+        </div>
+       </div>
+    </div>
+    
+{% endblock Body %}

@@ -598,4 +598,41 @@ def editarReserva(request, id):
 	context = {
 			'res':res,
 		}
-	return render(request,"cliente/editarReserva.html", context) 
+	return render(request,"cliente/editarReserva.html", context)
+
+def editarClientes(request):
+	existe = None
+	try:
+		usuario = request.user
+		cliente = Cliente.objects.get(usuario=usuario)
+	except Empleado.DoesNotExist:
+		cliente = None
+	if request.POST:
+			cliente.nombre = request.POST.get('nombre',None)
+			cliente.apellido = request.POST.get('apellido',None)
+			cliente.dui = request.POST.get('dui',None)
+			cliente.email = request.POST.get('email',None)
+			cliente.sexo = request.POST.get('sexo',None)
+			cliente.save()
+			return redirect("/")
+	else:
+		context = {
+				'cliente':cliente,
+			}
+	return render(request,"cliente/editarClientes.html", context)
+
+def editarFotoCliente(request,pk):
+	try:
+		cliente = Cliente.objects.get(pk=pk)
+	except Cliente.DoesNotExist:
+		cliente = None
+	if cliente is not None:
+		if request.method == 'POST':
+			cliente.foto = request.FILES.get('foto',None) 
+			cliente.save()
+			return redirect("/")
+		else:
+			context = {
+				'cliente':cliente,
+			}
+		return render(request,"cliente/editarClientes.html", context)
