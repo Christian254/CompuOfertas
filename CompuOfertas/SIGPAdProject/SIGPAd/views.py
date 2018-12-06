@@ -44,6 +44,7 @@ def  iniciar_sesion(request):
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
 			return render(request, 'exterior/foro.html', context)
+	context = {}
 	return render(request, 'exterior/foro.html', context)
 
 #Vista administrador.
