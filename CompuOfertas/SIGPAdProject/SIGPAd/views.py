@@ -20,7 +20,7 @@ from SIGPAd.models import *
 from django.db import IntegrityError
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import UpdateView, CreateView
-
+from Foro.views import *
 
 
 
@@ -598,6 +598,7 @@ def indexCliente(request):
 #Foro
 def index(request):
 	user = request.user
+	contexto = {}
 	if user.is_authenticated():
 		if user.is_superuser:
 			return render(request,'AdministradorTemplates/adminIndex.html',{})
@@ -608,6 +609,15 @@ def index(request):
 			else:
 				return redirect('/articulos')
 	else:
+		try:
+			articulos = Producto.objects.filter(inventario__existencia__gte=1).exclude(Q(inventario__precio_venta_producto=0) ).exclude(img='')
+			if articulos:
+				contexto = paginacion_productos(request,articulos,6)
+			else:
+				contexto = {'error':'No hay productos para mostrar'}
+		except Producto.DoesNotExist:
+			contexto = {'error':'No hay productos para mostrar'}
+
 		try:
 			user = User.objects.all()
 			i= len(user)
@@ -650,8 +660,8 @@ def index(request):
 			validar = "Credenciales erróneas."
 			context = {'validar':validar}
 			return render(request, 'exterior/foro.html', context)
-	context = {}
-	return render(request, 'exterior/foro.html', context)
+
+	return render(request, 'exterior/foro.html', contexto)
 
 
 def planilla(request,idplanilla):

@@ -78,6 +78,13 @@
     .colrs{
         background-color:rgba(38, 42, 51, 1)
     }
+
+    img{
+        height: 10px;
+        width: 10px;
+    }
+
+
 </style>
 
 
@@ -101,13 +108,13 @@
             <div class="col-md-12" align="center">
                     {% if cliente %}
                         {% if cliente.foto %}
-                            <img  id="profile-img" src="/media/{{cliente.foto}}" alt="" height="50px"  class="img-responsive img-portfolio img-hover"/>
+                            <img  id="profile-img" src="/media/{{cliente.foto}}" alt="" class="img-responsive img-portfolio img-hover"  height="60" width="50"/>
                         {% else %}
                             <img  id="profile-img" src="{% static "images/user.png" %}" class="img-responsive img-portfolio img-hover" alt="" />
                         {% endif %}
                     {% elif empleado %}
                         {% if empleado.foto %}
-                            <img  id="profile-img" src="/media/{{empleado.foto}}"  class="img-responsive img-portfolio img-hover" height="50px" alt="foto empleado" />
+                            <img  id="profile-img" src="/media/{{empleado.foto}}"  class="img-responsive img-portfolio img-hover" height="60" width="60" alt="foto empleado" />
                         {% else %}
                             <img id="profile-img" src="{% static "images/user.png" %}" class="img-responsive img-portfolio img-hover" alt="" />
                         {% endif %}
