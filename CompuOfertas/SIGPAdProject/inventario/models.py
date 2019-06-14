@@ -6,7 +6,7 @@ from SIGPAd.models import *
 from datetime import datetime
 from decimal import *
 from Foro.models import Carrito
-
+from django.utils.encoding import smart_unicode
 # Create your models here.
 
 # Modelos del Sprint #2.0    
@@ -15,8 +15,8 @@ class Inventario(models.Model):
     precio_venta_producto = models.DecimalField(max_digits=10,decimal_places=2,default=0)
     precio_promedio_compra = models.DecimalField(max_digits=8,decimal_places=2,default=0)
     existencia = models.IntegerField(default=0)
-    def natural_key(self):
-        return (self.existencia, self.precio_venta_producto)
+    def __str__(self):
+        return (str(self.id))
 
 class Categoria(models.Model):
     codigo = models.CharField(max_length=10,unique=True)
@@ -70,7 +70,8 @@ class Kardex(models.Model):
     montoSalida =models.DecimalField(max_digits=20,decimal_places=2)
     montoExistencia= models.DecimalField(max_digits=20,decimal_places=2)
     producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
-
+    def __str__(self):
+        return self.producto.nombre
 
 class Proveedor(models.Model):
     razon_social = models.CharField(max_length=256)
@@ -90,8 +91,8 @@ class Compra(models.Model):
     descripcion = models.CharField(max_length=100)
     fecha_hora = models.DateTimeField(default=datetime.now)
 
-    def _strftime():
-        return datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+    def __str__(self):
+        return self.descripcion
 
 class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -99,6 +100,9 @@ class DetalleCompra(models.Model):
     cantidad = models.IntegerField(default=0)
     precio_compra = models.DecimalField(max_digits=10,decimal_places=2)
     descuento = models.DecimalField(max_digits=8,decimal_places=2)
+
+    def __str__(self):
+        return self.producto.descripcion
 
     def save(self, *args, **kwargs):
         kards = Kardex.objects.filter(producto=self.producto)
@@ -145,6 +149,8 @@ class Venta(models.Model):
     fecha_hora = models.DateTimeField(default=datetime.now)
     nombre_cliente = models.CharField(max_length=20,blank=True,null=True) #Cliente que llega a la tienda y no esta en el sistema.
     dui_cliente = models.CharField(max_length=10, blank=True, null=True) #Cliente que llega a la tienda y no esta en el sistema.
+    def __unicode__(self):
+        return smart_unicode(self.descripcion)
 
 class DetalleVenta(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
@@ -153,3 +159,5 @@ class DetalleVenta(models.Model):
     precio_unitario = models.DecimalField(max_digits=8,decimal_places=2)
     descuento = models.DecimalField(max_digits=7,decimal_places=2)
     total = models.DecimalField(max_digits=20,decimal_places=2)
+    def __unicode__(self):
+        return smart_unicode(self.venta.descripcion)
