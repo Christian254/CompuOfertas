@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.utils.html import format_html
 from django.utils.translation import ugettext as _
 from inventario.models import *
-from django.utils.encoding import smart_unicode
+
 
 # Create your models here.
 class Puesto(models.Model):
@@ -96,8 +96,8 @@ class Cliente(models.Model):
 	dui = models.CharField(max_length=10, blank=True, null=True)
 	estado = models.IntegerField(default=1)
 	foto = models.ImageField(upload_to="foto_cliente", null=True,blank=True)
-	def __unicode__(self):
-		return smart_unicode(self.nombre)
+	def __str__(self):
+		return self.nombre
 
 	class Meta:
 		permissions = (

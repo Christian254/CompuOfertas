@@ -7,7 +7,7 @@ from models import *
 # Register your models here.
 
 class EmpleadoAdmin(admin.ModelAdmin):
-	list_display = ('nombre','puesto') 
+	list_display = ('usuario','imagen') 
 admin.site.register(Empleado, EmpleadoAdmin)
 
 class ClienteAdmin(admin.ModelAdmin):
@@ -39,15 +39,15 @@ class CategoriaAdmin(admin.ModelAdmin):
 admin.site.register(Categoria, CategoriaAdmin)
 
 class DetalleCompraAdmin(admin.ModelAdmin):
-	list_display = ('producto','cantidad') 
+	pass
 admin.site.register(DetalleCompra, DetalleCompraAdmin)
 
 class ProductoAdmin(admin.ModelAdmin):
-	list_display = ('descripcion','inventario', 'categoria') 
+	pass
 admin.site.register(Producto, ProductoAdmin)
 
 class CompraAdmin(admin.ModelAdmin):
-	list_display = ('descripcion','proveedor', 'fecha_hora') 
+	pass
 admin.site.register(Compra, CompraAdmin)
 
 class VentaAdmin(admin.ModelAdmin):
@@ -55,7 +55,7 @@ class VentaAdmin(admin.ModelAdmin):
 admin.site.register(Venta, VentaAdmin)
 
 class InventarioAdmin(admin.ModelAdmin):
-	list_display = ('id', 'existencia','precio_venta_producto')
+	pass
 admin.site.register(Inventario, InventarioAdmin)
 
 class DetalleVentaAdmin(admin.ModelAdmin):
